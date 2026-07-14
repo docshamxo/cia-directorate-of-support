@@ -15,9 +15,253 @@
 
 ---
 
-## Quick start
+## Full setup (follow every step)
 
-You need **Python 3.10+**.
+Do these steps in order. Do not skip any command.
+
+### Step 1 — Install Git
+
+**Windows**
+
+1. Download Git: https://git-scm.com/download/win
+2. Run the installer (default options are fine)
+3. Open **PowerShell** or **Command Prompt**
+4. Run:
+
+```bash
+git --version
+```
+
+You should see a version number (for example `git version 2.51.0`).
+
+**macOS**
+
+```bash
+xcode-select --install
+git --version
+```
+
+Or install from https://git-scm.com/download/mac and then run:
+
+```bash
+git --version
+```
+
+**Linux (Debian / Ubuntu)**
+
+```bash
+sudo apt update
+sudo apt install -y git
+git --version
+```
+
+**Linux (Fedora)**
+
+```bash
+sudo dnf install -y git
+git --version
+```
+
+---
+
+### Step 2 — Install Python 3.10 or newer
+
+**Windows**
+
+1. Download Python: https://www.python.org/downloads/
+2. Run the installer
+3. Check **Add python.exe to PATH**
+4. Click **Install Now**
+5. Close and reopen PowerShell / Command Prompt
+6. Run:
+
+```bash
+python --version
+py --version
+python -m pip --version
+```
+
+Any of `python` or `py` working is fine. You need version **3.10** or higher (example: `Python 3.12.0`).
+
+If `python` is not found but `py` works, use `py` in every command below instead of `python`.
+
+**macOS**
+
+```bash
+brew install python
+python3 --version
+python3 -m pip --version
+```
+
+On macOS/Linux, use `python3` and `python3 -m pip` in every command below if `python` is not found.
+
+**Linux (Debian / Ubuntu)**
+
+```bash
+sudo apt update
+sudo apt install -y python3 python3-pip python3-venv
+python3 --version
+python3 -m pip --version
+```
+
+**Linux (Fedora)**
+
+```bash
+sudo dnf install -y python3 python3-pip
+python3 --version
+python3 -m pip --version
+```
+
+---
+
+### Step 3 — Download this repository
+
+```bash
+git clone https://github.com/docshamxo/cia-directorate-of-support.git
+```
+
+---
+
+### Step 4 — Enter the project folder
+
+```bash
+cd cia-directorate-of-support
+```
+
+Confirm you are in the right place:
+
+```bash
+pwd
+```
+
+Windows PowerShell alternative:
+
+```powershell
+Get-Location
+```
+
+You should be inside a folder named `cia-directorate-of-support`.
+
+List files:
+
+```bash
+ls
+```
+
+Windows PowerShell alternative:
+
+```powershell
+dir
+```
+
+You should see files like `README.md`, `setup.py`, `run_all.py`, `requirements.txt`, and folders like `ds`, `osec`, `ote`, `grs`, `esd`, `common`, `assets`, `tools`.
+
+---
+
+### Step 5 — Upgrade pip
+
+Windows:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+macOS / Linux:
+
+```bash
+python3 -m pip install --upgrade pip
+```
+
+---
+
+### Step 6 — Install project packages
+
+Windows:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+macOS / Linux:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+This installs:
+
+- `discord.py`
+- `python-dotenv`
+
+---
+
+### Step 7 — Create your private `.env` file
+
+Windows (Command Prompt):
+
+```bash
+copy .env.example .env
+```
+
+Windows (PowerShell):
+
+```powershell
+Copy-Item .env.example .env
+```
+
+macOS / Linux:
+
+```bash
+cp .env.example .env
+```
+
+Confirm it exists:
+
+Windows:
+
+```bash
+dir .env
+```
+
+macOS / Linux:
+
+```bash
+ls -la .env
+```
+
+`.env` is private. Never commit it to GitHub.
+
+---
+
+### Step 8 — Add Discord webhook URLs
+
+1. Open `.env` in any text editor (Notepad, VS Code, nano, etc.)
+2. For each empty `WEBHOOK_...=` line, paste the Discord webhook URL after the `=`
+3. Save the file
+
+Example line after editing:
+
+```env
+WEBHOOK_DS_CHAIN_OF_COMMAND=https://discord.com/api/webhooks/1234567890/abcdefghijk
+```
+
+How to get a Discord webhook URL:
+
+1. Open Discord
+2. Edit the target channel
+3. Open **Integrations** → **Webhooks**
+4. Create or copy a webhook URL
+5. Paste it into the matching key in `.env`
+
+All keys are listed in the [Announcer list](#announcer-list) below and in [`.env.example`](.env.example).
+
+---
+
+### Step 9 — Optional one-command setup next time
+
+After Git and Python are already installed, these three commands do steps 3–7:
+
+Windows:
 
 ```bash
 git clone https://github.com/docshamxo/cia-directorate-of-support.git
@@ -25,61 +269,98 @@ cd cia-directorate-of-support
 python setup.py
 ```
 
-`setup.py` installs dependencies and creates a local `.env` file.
+macOS / Linux:
 
-1. Open `.env`
-2. Paste each Discord webhook URL next to the matching `WEBHOOK_...` key
-3. Save the file
+```bash
+git clone https://github.com/docshamxo/cia-directorate-of-support.git
+cd cia-directorate-of-support
+python3 setup.py
+```
 
-Do **not** commit `.env`.
+`setup.py` will:
+
+1. Copy `.env.example` to `.env` if `.env` does not exist
+2. Run `python -m pip install -r requirements.txt`
+
+You must still complete **Step 8** (paste webhook URLs into `.env`) yourself.
 
 ---
 
-## Run
+## Run commands
 
-Always run commands from the repository root.
+Run every command from the project root:
 
-**One channel**
+```bash
+cd cia-directorate-of-support
+```
+
+If `python` does not work on your system, use `python3` instead.
+
+### Run one channel
 
 ```bash
 python ds/chain_of_command.py
+python ds/public_information.py
+python ds/server_regulations.py
+python osec/information.py
+python osec/staff_documents.py
+python osec/spp_information.py
+python osec/open_positions.py
+python ote/coc.py
+python ote/public_information.py
+python ote/program_overview.py
+python ote/staff_documents.py
+python ote/open_positions.py
+python grs/coc.py
+python grs/information.py
+python grs/staff_documents.py
+python esd/coc.py
+python esd/information.py
 ```
 
-**All channels (17)**
+### Run every channel
 
 ```bash
 python run_all.py
 ```
 
-More examples:
+That runs all 17 announcers in the order shown in the list above.
 
-```bash
-python osec/information.py
-python ote/coc.py
-python grs/staff_documents.py
-python esd/information.py
-```
-
-Each office folder has its own README with every script listed.
-
----
-
-## Update content
-
-| Task | File / folder |
-|------|----------------|
-| Change names, ranks, mottos, org blurbs | [`common/cia_common.py`](common/cia_common.py) |
-| Change one channel's embeds | Script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
-| Point a script at a different Discord channel | Edit that key in `.env` |
-| Replace a logo | Same filename in [`assets/logos/`](assets/logos/) |
-
-After edits:
+### Check the repo after you edit files
 
 ```bash
 python tools/validate_repo.py
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for adding new announcers.
+---
+
+## Update content
+
+| What you want to change | What to edit |
+|-------------------------|--------------|
+| Names, ranks, mottos, office descriptions | [`common/cia_common.py`](common/cia_common.py) |
+| One Discord channel's embeds | The matching script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
+| Which Discord channel a script posts to | That script's key inside `.env` |
+| A logo image | Same filename in [`assets/logos/`](assets/logos/) |
+| Order of `run_all.py` | [`run_all.py`](run_all.py) |
+
+### Save and check your changes
+
+```bash
+python tools/validate_repo.py
+```
+
+### Commit and push your changes to GitHub
+
+```bash
+git status
+git add .
+git status
+git commit -m "Describe your change here"
+git push
+```
+
+Full contributor steps: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
@@ -116,10 +397,8 @@ Directorate of Support (DS)
 
 ## Announcer list
 
-Scripts run by `python run_all.py`, in order:
-
-| # | Command | `.env` key |
-|---|---------|------------|
+| # | Run command | `.env` key |
+|---|-------------|------------|
 | 1 | `python ds/chain_of_command.py` | `WEBHOOK_DS_CHAIN_OF_COMMAND` |
 | 2 | `python ds/public_information.py` | `WEBHOOK_DS_PUBLIC_INFORMATION` |
 | 3 | `python ds/server_regulations.py` | `WEBHOOK_DS_SERVER_REGULATIONS` |
@@ -144,7 +423,7 @@ Scripts run by `python run_all.py`, in order:
 
 | Doc | What it covers |
 |-----|----------------|
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Editing and adding scripts |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Editing, validating, and pushing changes |
 | [SECURITY.md](SECURITY.md) | Keeping webhooks private |
 | [common/README.md](common/README.md) | Shared library |
 | [tools/README.md](tools/README.md) | Validation tool |

@@ -2,15 +2,26 @@
 
 [← Back to main README](../README.md)
 
+## Run the validator
+
+From the repository root:
+
 ```bash
+cd cia-directorate-of-support
 python tools/validate_repo.py
 ```
 
-Checks that:
+macOS / Linux if needed:
 
-- every script in `run_all.py` exists
-- webhook keys match `.env.example`
-- logos are present
+```bash
+python3 tools/validate_repo.py
+```
+
+## What it checks
+
+- every script listed in `run_all.py` exists
+- webhook keys in code match `.env.example`
+- logo files are present
 - Python files compile
 
-Run this after you change scripts or env keys.
+Run this after any script, catalog, or webhook-key change.

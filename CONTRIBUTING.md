@@ -1,6 +1,6 @@
 # Contributing
 
-Keep changes small and run the checks before you push.
+Follow the full install steps in [README.md](README.md) first (`git`, Python, clone, packages, `.env`).
 
 ## Everyday edits
 
@@ -14,17 +14,71 @@ Keep changes small and run the checks before you push.
 
 ## After you change code
 
+From the repository root:
+
+```bash
+cd cia-directorate-of-support
+python tools/validate_repo.py
+```
+
+macOS / Linux if needed:
+
+```bash
+python3 tools/validate_repo.py
+```
+
+## Commit and push
+
+```bash
+git status
+git add .
+git status
+git commit -m "Describe your change here"
+git push
+```
+
+If this is your first push from a new clone of your fork:
+
+```bash
+git push -u origin HEAD
+```
+
+CI on GitHub runs the same validation automatically.
+
+## Adding a new announcer
+
+Do every step:
+
+1. Copy an existing script in the correct office folder.
+2. Rename it.
+3. Edit the embeds in that new script.
+4. Change the webhook line to a new key, for example:
+
+```python
+WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_NEW_CHANNEL")
+```
+
+5. Add the same key to [`.env.example`](.env.example):
+
+```env
+WEBHOOK_OSEC_NEW_CHANNEL=
+```
+
+6. Add the same key to your local `.env` and paste the webhook URL.
+7. Add the script to [`run_all.py`](run_all.py).
+8. Update that office README.
+9. Update the announcer list in [README.md](README.md).
+10. Run:
+
 ```bash
 python tools/validate_repo.py
 ```
 
-Then commit and open a pull request. CI runs the same checks automatically.
+11. Commit and push:
 
-## Adding a new announcer
-
-1. Create the script in the right office folder (copy an existing one).
-2. Use `c.require_webhook("WEBHOOK_...")` for the Discord URL.
-3. Add the matching key to [`.env.example`](.env.example) and your local `.env`.
-4. Register it in [`run_all.py`](run_all.py).
-5. Update that office's README and the catalog in the root README.
-6. Run `python tools/validate_repo.py`.
+```bash
+git status
+git add .
+git commit -m "Add new announcer script"
+git push
+```
