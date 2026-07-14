@@ -47,7 +47,6 @@ Shared organizational copy, roles, ranks, colors, logos, and webhook helpers liv
 cia-directorate-of-support/
 ├── README.md                 # This file
 ├── SECURITY.md               # Webhook / secret handling
-├── LICENSE
 ├── requirements.txt
 ├── .env.example              # Webhook variable template (17 keys)
 ├── run_all.py                # Runs all 17 announcers in order
@@ -188,9 +187,3 @@ Only run `run_all.py` when you intend to update every configured channel.
 | [assets/README.md](assets/README.md) | Logos and diagrams inventory |
 | [SECURITY.md](SECURITY.md) | Secret handling |
 | [`.env.example`](.env.example) | Webhook variable template |
-
----
-
-## License
-
-Proprietary. See [LICENSE](LICENSE).
