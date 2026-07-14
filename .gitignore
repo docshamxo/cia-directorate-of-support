@@ -22,3 +22,4 @@ Thumbs.db
 # Local tooling
 _maps.json
 .debug/
+.ruff_cache/

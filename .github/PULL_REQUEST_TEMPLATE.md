@@ -4,6 +4,6 @@
 
 ## Checklist
 
-- [ ] `python tools/validate_repo.py` passes locally
-- [ ] Announcer catalog / `.env.example` keys updated if scripts were added or renamed
-- [ ] No secrets (webhook URLs, tokens) included in the diff
+- [ ] Ran `python tools/validate_repo.py`
+- [ ] Updated READMEs / `.env.example` if scripts or webhook keys changed
+- [ ] No `.env` secrets in this PR

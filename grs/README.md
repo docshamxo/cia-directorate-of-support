@@ -1,30 +1,34 @@
 # Global Response Staff (GRS)
 
-[← Repository root](../README.md)
+[← Back to main README](../README.md)
 
-Operational security element under the **Office of Security (OSEC)** — rapid deployment, high-threat site security, and direct-action support.
+Parent: OSEC
 
-## Scripts (3)
+## Install / setup (once)
 
-| Script | Label | Purpose | Environment variable |
-|--------|-------|---------|----------------------|
-| [`coc.py`](coc.py) | GRS Chain of Command | GRS leadership and hierarchy | `WEBHOOK_GRS_COC` |
-| [`information.py`](information.py) | GRS Information | Mission and office information | `WEBHOOK_GRS_INFORMATION` |
-| [`staff_documents.py`](staff_documents.py) | GRS Staff Documents | Staff documentation and resources | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+```bash
+python setup.py
+```
+
+Then put Discord webhook URLs in `.env`.
 
 ## Run
 
 ```bash
-# From repository root
 python grs/coc.py
 python grs/information.py
 python grs/staff_documents.py
 ```
 
-## Related
+## Scripts
 
-| Unit | Path |
-|------|------|
-| Office of Security | [`../osec/`](../osec/) |
-| Executive Security Detail | [`../esd/`](../esd/) |
-| Shared library | [`../common/`](../common/) |
+| Script | What it posts | `.env` key |
+|--------|---------------|------------|
+| [`coc.py`](coc.py) | GRS chain of command | `WEBHOOK_GRS_COC` |
+| [`information.py`](information.py) | GRS information | `WEBHOOK_GRS_INFORMATION` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+
+## Edit
+
+- Shared names / org text → [`../common/cia_common.py`](../common/cia_common.py)
+- This channel's embeds → the script above

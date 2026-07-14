@@ -1,24 +1,21 @@
 # Office of Training & Education (OTE)
 
-[← Repository root](../README.md)
+[← Back to main README](../README.md)
 
-Training office under the **Directorate of Support (DS)**. Operates the Agency Officer Training Program.  
-Motto: **SCIENTIA EST LUX LUCIS**
+Motto: **SCIENTIA EST LUX LUCIS**  
+Parent: DS
 
-## Scripts (5)
+## Install / setup (once)
 
-| Script | Label | Purpose | Environment variable |
-|--------|-------|---------|----------------------|
-| [`coc.py`](coc.py) | OTE Chain of Command | OTE leadership and hierarchy | `WEBHOOK_OTE_COC` |
-| [`public_information.py`](public_information.py) | OTE Public Information | Public-facing OTE overview | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
-| [`program_overview.py`](program_overview.py) | OTE Program Overview | Officer Training Program overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
-| [`staff_documents.py`](staff_documents.py) | OTE Staff Documents | Instructor and staff documentation | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
-| [`open_positions.py`](open_positions.py) | OTE Open Positions | Open training and staff roles | `WEBHOOK_OTE_OPEN_POSITIONS` |
+```bash
+python setup.py
+```
+
+Then put Discord webhook URLs in `.env`.
 
 ## Run
 
 ```bash
-# From repository root
 python ote/coc.py
 python ote/public_information.py
 python ote/program_overview.py
@@ -26,9 +23,17 @@ python ote/staff_documents.py
 python ote/open_positions.py
 ```
 
-## Related
+## Scripts
 
-| Unit | Path |
-|------|------|
-| Directorate of Support | [`../ds/`](../ds/) |
-| Shared library | [`../common/`](../common/) |
+| Script | What it posts | `.env` key |
+|--------|---------------|------------|
+| [`coc.py`](coc.py) | OTE chain of command | `WEBHOOK_OTE_COC` |
+| [`public_information.py`](public_information.py) | Public OTE information | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
+| [`program_overview.py`](program_overview.py) | Officer Training Program overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
+| [`open_positions.py`](open_positions.py) | Open positions | `WEBHOOK_OTE_OPEN_POSITIONS` |
+
+## Edit
+
+- Shared names / org text → [`../common/cia_common.py`](../common/cia_common.py)
+- This channel's embeds → the script above

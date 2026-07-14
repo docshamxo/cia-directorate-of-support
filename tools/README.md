@@ -1,14 +1,16 @@
 # Tools
 
-[← Repository root](../README.md)
-
-Maintenance utilities used locally and in CI.
-
-| Script | Purpose |
-|--------|---------|
-| [`validate_repo.py`](validate_repo.py) | Confirms catalog paths, webhook keys, logos, and Python compile cleanliness |
+[← Back to main README](../README.md)
 
 ```bash
-# From repository root
 python tools/validate_repo.py
 ```
+
+Checks that:
+
+- every script in `run_all.py` exists
+- webhook keys match `.env.example`
+- logos are present
+- Python files compile
+
+Run this after you change scripts or env keys.

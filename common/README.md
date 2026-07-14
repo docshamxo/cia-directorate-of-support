@@ -1,42 +1,26 @@
 # Common
 
-[← Repository root](../README.md)
+[← Back to main README](../README.md)
 
-Shared configuration and Discord helpers used by every announcer script.
+Shared settings used by every announcer.
 
-## Files
+## Main file
 
-| File | Purpose |
-|------|---------|
-| [`__init__.py`](__init__.py) | Package marker for `from common import cia_common` |
-| [`cia_common.py`](cia_common.py) | Organizational copy, personnel data, colors, logos, embed helpers, webhook send |
+[`cia_common.py`](cia_common.py) — edit this to update:
 
-## What lives in `cia_common.py`
+- mottos and office descriptions
+- chain-of-command names / ranks
+- Discord bot display names
+- logo paths, colors, and embed helpers
 
-| Section | Contents |
-|---------|----------|
-| Assets | Logo paths under `assets/logos/` |
-| Branding | Embed colors, bot display names, community URLs |
-| Bulletin | DS / OSEC / OTE / GRS / ESD descriptions and mottos |
-| Personnel | Roles, ranks, and chain-of-command data |
-| Formatting | `roles_text`, `ranks_text`, `bullets`, link helpers |
-| Embeds | `embed`, `disclaimer_embed`, `chain_intro_embed`, `important_notice_embed` |
-| Delivery | `require_webhook`, `send_webhook` |
+## After editing
 
-## Key APIs
-
-```python
-from common import cia_common as c
-
-url = c.require_webhook("WEBHOOK_DS_CHAIN_OF_COMMAND")
-c.send_webhook(url, embeds, username=c.BOT_DS)
+```bash
+python tools/validate_repo.py
 ```
 
-| Helper | Purpose |
-|--------|---------|
-| `require_webhook(env_key)` | Load a Discord webhook URL from `.env` |
-| `embed(...)` | Build a styled Discord embed |
-| `send_webhook(...)` | Post embeds (and optional logo files) to a webhook |
-| `roles_text` / `ranks_text` / `bullets` | Format CoC and list fields |
+Then run the announcer(s) you care about, for example:
 
-Update organizational text and personnel here so all offices stay consistent.
+```bash
+python ds/chain_of_command.py
+```

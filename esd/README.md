@@ -1,28 +1,32 @@
 # Executive Security Detail (ESD)
 
-[← Repository root](../README.md)
+[← Back to main README](../README.md)
 
-Close-protection unit under the **Office of Security (OSEC)** — personal security for High Value Targets (HVTs), senior leadership, and VIPs.
+Parent: OSEC
 
-## Scripts (2)
+## Install / setup (once)
 
-| Script | Label | Purpose | Environment variable |
-|--------|-------|---------|----------------------|
-| [`coc.py`](coc.py) | ESD Chain of Command | ESD leadership and hierarchy | `WEBHOOK_ESD_COC` |
-| [`information.py`](information.py) | ESD Information | Mission and office information | `WEBHOOK_ESD_INFORMATION` |
+```bash
+python setup.py
+```
+
+Then put Discord webhook URLs in `.env`.
 
 ## Run
 
 ```bash
-# From repository root
 python esd/coc.py
 python esd/information.py
 ```
 
-## Related
+## Scripts
 
-| Unit | Path |
-|------|------|
-| Office of Security | [`../osec/`](../osec/) |
-| Global Response Staff | [`../grs/`](../grs/) |
-| Shared library | [`../common/`](../common/) |
+| Script | What it posts | `.env` key |
+|--------|---------------|------------|
+| [`coc.py`](coc.py) | ESD chain of command | `WEBHOOK_ESD_COC` |
+| [`information.py`](information.py) | ESD information | `WEBHOOK_ESD_INFORMATION` |
+
+## Edit
+
+- Shared names / org text → [`../common/cia_common.py`](../common/cia_common.py)
+- This channel's embeds → the script above
