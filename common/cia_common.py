@@ -1,7 +1,18 @@
+# === FILE HEADER ===
+# Title: CIA Common
+# Path: common/cia_common.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 Shared Discord helpers and configuration loader for CIA DS announcers.
 
-Editable data lives in config/*.yaml — not in this file:
+Editable data lives in config/*.yaml - not in this file:
   - config/branding.yaml      colors, bots, logos, community URLs
   - config/organization.yaml  mottos, about text, offices, disclaimers
   - config/personnel.yaml     chain-of-command names and ranks
@@ -320,3 +331,8 @@ def send_webhook(
     webhook = SyncWebhook.from_url(webhook_url)
     webhook.send(embeds=embeds, username=username, files=files or [])
     print("Sent successfully!")
+
+# === FILE FOOTER ===
+# End of file: common/cia_common.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

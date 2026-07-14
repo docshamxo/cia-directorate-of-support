@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Information
+# Path: esd/information.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+# === END FILE HEADER ===
+
 """
 CIA ESD information announcer.
 
@@ -90,3 +99,8 @@ def send_esd_information() -> None:
 
 if __name__ == "__main__":
     send_esd_information()
+
+# === FILE FOOTER ===
+# End of file: esd/information.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

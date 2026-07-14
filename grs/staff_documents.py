@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Staff Documents
+# Path: grs/staff_documents.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA GRS staff documents announcer.
 
@@ -99,3 +109,8 @@ def send_grs_staff_documents() -> None:
 
 if __name__ == "__main__":
     send_grs_staff_documents()
+
+# === FILE FOOTER ===
+# End of file: grs/staff_documents.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

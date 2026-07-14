@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Information
+# Path: grs/information.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA GRS information announcer.
 
@@ -103,3 +113,8 @@ def send_grs_information() -> None:
 
 if __name__ == "__main__":
     send_grs_information()
+
+# === FILE FOOTER ===
+# End of file: grs/information.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

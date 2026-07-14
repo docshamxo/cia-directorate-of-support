@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Chain Of Command
+# Path: ds/chain_of_command.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+# === END FILE HEADER ===
+
 """
 CIA Directorate of Support chain of command announcer.
 
@@ -147,3 +156,8 @@ def send_chain_of_command() -> None:
 
 if __name__ == "__main__":
     send_chain_of_command()
+
+# === FILE FOOTER ===
+# End of file: ds/chain_of_command.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

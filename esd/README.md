@@ -1,3 +1,18 @@
+<!--
+=== FILE HEADER ===
+Title: ESD README
+Path: esd/README.md
+Created: 2026-07-14
+Created by: docshamxo
+Modified:
+  - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+  - 2026-07-14 | docshamxo | Polish repository presentation and align documentation.
+  - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+  - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+  - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+=== END FILE HEADER ===
+-->
+
 # Executive Security Detail (ESD)
 
 [← Back to main README](../README.md)
@@ -54,3 +69,10 @@ Then run:
 ```bash
 python tools/validate_repo.py
 ```
+
+<!--
+=== FILE FOOTER ===
+End of file: esd/README.md
+Maintained by: docshamxo
+=== END FILE FOOTER ===
+-->

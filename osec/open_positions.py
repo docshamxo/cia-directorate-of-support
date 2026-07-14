@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Open Positions
+# Path: osec/open_positions.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA OSEC open positions announcer.
 
@@ -99,3 +109,8 @@ def send_open_positions() -> None:
 
 if __name__ == "__main__":
     send_open_positions()
+
+# === FILE FOOTER ===
+# End of file: osec/open_positions.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Program Overview
+# Path: ote/program_overview.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA OTE program overview announcer.
 
@@ -92,3 +102,8 @@ def send_officer_training_program_overview() -> None:
 
 if __name__ == "__main__":
     send_officer_training_program_overview()
+
+# === FILE FOOTER ===
+# End of file: ote/program_overview.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

@@ -1,3 +1,18 @@
+<!--
+=== FILE HEADER ===
+Title: Common README
+Path: common/README.md
+Created: 2026-07-14
+Created by: docshamxo
+Modified:
+  - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+  - 2026-07-14 | docshamxo | Polish repository presentation and align documentation.
+  - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+  - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+  - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+=== END FILE HEADER ===
+-->
+
 # Common
 
 [← Back to main README](../README.md)
@@ -33,3 +48,10 @@ cd cia-directorate-of-support
 python tools/validate_repo.py
 python ds/chain_of_command.py
 ```
+
+<!--
+=== FILE FOOTER ===
+End of file: common/README.md
+Maintained by: docshamxo
+=== END FILE FOOTER ===
+-->

@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: SPP Information
+# Path: osec/spp_information.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA OSEC Security Phase Program information announcer.
 
@@ -142,3 +152,8 @@ def send_osec_spp_information() -> None:
 
 if __name__ == "__main__":
     send_osec_spp_information()
+
+# === FILE FOOTER ===
+# End of file: osec/spp_information.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

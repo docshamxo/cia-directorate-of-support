@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Organization
+# Path: config/organization.yaml
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 ds:
   motto: WE GO AS ONE
   classification: PUBLIC AFFAIRS
@@ -56,3 +65,8 @@ copy:
   disclaimer_links: All text and links listed here are marked as **UNCLASSIFIED**.
   disclaimer_classified: Classification markings apply to linked documents as indicated above. All channel
     text is marked **UNCLASSIFIED** unless otherwise stated.
+
+# === FILE FOOTER ===
+# End of file: config/organization.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

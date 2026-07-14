@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Personnel
+# Path: config/personnel.yaml
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 agency_executive:
 - abbrev: DIR
   title: Director of the Central Intelligence Agency
@@ -118,3 +127,8 @@ grs_esd_low_command:
   title: Security Supervisor
 - abbrev: TSA
   title: Tactical Security Agent
+
+# === FILE FOOTER ===
+# End of file: config/personnel.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

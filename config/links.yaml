@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Links
+# Path: config/links.yaml
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 community:
   roblox_group_ds: https://www.roblox.com/share/g/945806945
   roblox_group_osec: https://www.roblox.com/communities/288542436/CIA-Office-of-Security#!/about
@@ -62,3 +71,8 @@ grs:
     tryout_guide: https://docs.google.com/document/d/1e199RDQlZ2sxU-qgAGB_jBM0ksPb-DVkNmXlburxNA0/edit?usp=sharing
   information:
     handbook: https://docs.google.com/document/d/1vCBNGn-Vv07FAqVUYle5AFGMy-5yXQJkRDGpYYhBsIU/edit?usp=sharing
+
+# === FILE FOOTER ===
+# End of file: config/links.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

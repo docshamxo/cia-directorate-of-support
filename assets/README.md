@@ -1,3 +1,15 @@
+<!--
+=== FILE HEADER ===
+Title: Assets README
+Path: assets/README.md
+Created: 2026-07-14
+Created by: docshamxo
+Modified:
+  - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+  - 2026-07-14 | docshamxo | Polish repository presentation and align documentation.
+=== END FILE HEADER ===
+-->
+
 # Assets
 
 [← Repository root](../README.md)
@@ -27,3 +39,10 @@ Reference visuals (not attached automatically by announcers).
 | [`diagrams/ESGxGRS.png`](diagrams/ESGxGRS.png) | ESG / GRS relationship diagram |
 
 Keep filenames stable; renaming a logo requires a matching update in `common/cia_common.py`.
+
+<!--
+=== FILE FOOTER ===
+End of file: assets/README.md
+Maintained by: docshamxo
+=== END FILE FOOTER ===
+-->

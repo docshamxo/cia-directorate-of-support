@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Server Regulations
+# Path: ds/server_regulations.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+# === END FILE HEADER ===
+
 """
 CIA DS server regulations announcer.
 
@@ -125,3 +134,8 @@ def send_server_regulations() -> None:
 
 if __name__ == "__main__":
     send_server_regulations()
+
+# === FILE FOOTER ===
+# End of file: ds/server_regulations.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

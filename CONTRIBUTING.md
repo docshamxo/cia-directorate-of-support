@@ -1,3 +1,16 @@
+<!--
+=== FILE HEADER ===
+Title: Contributing
+Path: CONTRIBUTING.md
+Created: 2026-07-14
+Created by: docshamxo
+Modified:
+  - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+  - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+  - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+=== END FILE HEADER ===
+-->
+
 # Contributing
 
 Follow the full install steps in [README.md](README.md) first (`git`, Python, clone, packages, `.env`).
@@ -29,14 +42,18 @@ From the repository root:
 
 ```bash
 cd cia-directorate-of-support
+python tools/sync_file_banners.py
 python tools/validate_repo.py
 ```
 
 macOS / Linux if needed:
 
 ```bash
+python3 tools/sync_file_banners.py
 python3 tools/validate_repo.py
 ```
+
+`sync_file_banners.py` refreshes each file's header (title, path, created date, created by, modification log) and footer from Git history. Created by / maintained by is **docshamxo**.
 
 ## Commit and push
 
@@ -94,3 +111,10 @@ git add .
 git commit -m "Add new announcer script"
 git push
 ```
+
+<!--
+=== FILE FOOTER ===
+End of file: CONTRIBUTING.md
+Maintained by: docshamxo
+=== END FILE FOOTER ===
+-->

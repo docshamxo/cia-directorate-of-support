@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Git Ignore
+# Path: .gitignore
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+# === END FILE HEADER ===
+
 # Secrets
 .env
 webhooks.local.*
@@ -23,3 +33,8 @@ Thumbs.db
 _maps.json
 .debug/
 .ruff_cache/
+
+# === FILE FOOTER ===
+# End of file: .gitignore
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

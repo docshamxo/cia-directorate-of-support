@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Public Information
+# Path: ote/public_information.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA OTE public information announcer.
 
@@ -64,3 +74,8 @@ def send_ote_public_information() -> None:
 
 if __name__ == "__main__":
     send_ote_public_information()
+
+# === FILE FOOTER ===
+# End of file: ote/public_information.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===
