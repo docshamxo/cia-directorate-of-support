@@ -8,6 +8,7 @@ Modified:
   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
   - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
   - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+  - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 === END FILE HEADER ===
 -->
 
