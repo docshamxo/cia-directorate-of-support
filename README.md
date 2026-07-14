@@ -1,6 +1,6 @@
-# CIA Directorate of Support
+﻿# CIA Directorate of Support
 
-Discord announcer scripts for the **Directorate of Support (DS)** community — chain of command, public information, staff documents, open positions, and server regulations.
+Discord announcer scripts for the **Directorate of Support (DS)** community â€” chain of command, public information, staff documents, open positions, and server regulations.
 
 > Motto: **WE GO AS ONE**
 
@@ -8,18 +8,18 @@ Discord announcer scripts for the **Directorate of Support (DS)** community — 
 
 ```
 cia-directorate-of-support/
-├── assets/
-│   ├── logos/          # DS, OSEC, OTE, GRS, ESD logos
-│   └── diagrams/       # Org / relationship diagrams
-├── common/             # Shared config, roles, Discord helpers
-├── ds/                 # Directorate-level announcements
-├── osec/               # Office of Security
-├── ote/                # Office of Training & Education
-├── grs/                # Global Response Staff
-├── esd/                # Executive Security Detail
-├── run_all.py          # Run every announcer in order
-├── .env.example        # Webhook URL template
-└── requirements.txt
+â”œâ”€â”€ assets/
+â”‚   â”œâ”€â”€ logos/          # DS, OSEC, OTE, GRS, ESD logos
+â”‚   â””â”€â”€ diagrams/       # Org / relationship diagrams
+â”œâ”€â”€ common/             # Shared config, roles, Discord helpers
+â”œâ”€â”€ ds/                 # Directorate-level announcements
+â”œâ”€â”€ osec/               # Office of Security
+â”œâ”€â”€ ote/                # Office of Training & Education
+â”œâ”€â”€ grs/                # Global Response Staff
+â”œâ”€â”€ esd/                # Executive Security Detail
+â”œâ”€â”€ run_all.py          # Run every announcer in order
+â”œâ”€â”€ .env.example        # Webhook URL template
+â””â”€â”€ requirements.txt
 ```
 
 Each office folder has its own README describing the scripts it contains.
@@ -28,9 +28,9 @@ Each office folder has its own README describing the scripts it contains.
 
 | Office | Role |
 |--------|------|
-| **DS** | Directorate backbone — CoC, public info, server regulations |
-| **OSEC** | Internal security — information, staff docs, SPP, open positions |
-| **OTE** | Officer Training Program — CoC, curriculum, staffing |
+| **DS** | Directorate backbone â€” CoC, public info, server regulations |
+| **OSEC** | Internal security â€” information, staff docs, SPP, open positions |
+| **OTE** | Officer Training Program â€” CoC, curriculum, staffing |
 | **GRS** | Operational security element under OSEC |
 | **ESD** | Close protection / HVT security under OSEC |
 
@@ -39,7 +39,7 @@ Each office folder has its own README describing the scripts it contains.
 1. **Clone and install**
 
    ```bash
-   git clone https://github.com/shameerrao/cia-directorate-of-support.git
+   git clone https://github.com/docshamxo/cia-directorate-of-support.git
    cd cia-directorate-of-support
    python -m pip install -r requirements.txt
    ```
