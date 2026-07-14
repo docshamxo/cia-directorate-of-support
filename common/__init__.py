@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
 #   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
+#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 # === END FILE HEADER ===
 
 """Shared CIA Directorate of Support library."""

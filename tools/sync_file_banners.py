@@ -4,7 +4,7 @@
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Initial creation
+#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 # === END FILE HEADER ===
 
 """
