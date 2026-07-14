@@ -14,10 +14,11 @@ Modified:
   - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
+  - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 === END FILE HEADER ===
 -->
 
-﻿﻿<p align="center">
+<p align="center">
   <img src="assets/logos/DS.png" alt="Directorate of Support" width="148">
 </p>
 
@@ -29,7 +30,7 @@ Modified:
 </p>
 
 <p align="center">
-  <a href="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml"><img src="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml"><img src="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
 </p>
 
 ---
