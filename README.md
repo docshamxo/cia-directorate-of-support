@@ -1,4 +1,22 @@
-﻿<p align="center">
+<!--
+=== FILE HEADER ===
+Title: README
+Path: README.md
+Created: 2026-07-14
+Created by: docshamxo
+Modified:
+  - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+  - 2026-07-14 | docshamxo | Point clone URL at docshamxo account.
+  - 2026-07-14 | docshamxo | Polish repository presentation and align documentation.
+  - 2026-07-14 | docshamxo | Remove copyright and license notices.
+  - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
+  - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+  - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+  - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+=== END FILE HEADER ===
+-->
+
+﻿﻿<p align="center">
   <img src="assets/logos/DS.png" alt="Directorate of Support" width="148">
 </p>
 
@@ -330,8 +348,11 @@ That runs all 17 announcers in the order shown in the list above.
 ### Check the repo after you edit files
 
 ```bash
+python tools/sync_file_banners.py
 python tools/validate_repo.py
 ```
+
+`sync_file_banners.py` updates the header and footer on every text file (title, path, created date, created by **docshamxo**, modification log, and footer maintainer line).
 
 ---
 
@@ -436,3 +457,10 @@ Directorate of Support (DS)
 | [common/README.md](common/README.md) | Shared library / config loader |
 | [tools/README.md](tools/README.md) | Validation tool |
 | [`.env.example`](.env.example) | Webhook key template |
+
+<!--
+=== FILE FOOTER ===
+End of file: README.md
+Maintained by: docshamxo
+=== END FILE FOOTER ===
+-->

@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Validate Repo
+# Path: tools/validate_repo.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 Validate repository consistency for the CIA DS announcer suite.
 
@@ -17,6 +27,7 @@ from __future__ import annotations
 import ast
 import compileall
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -43,6 +54,10 @@ REQUIRED_CONFIG = (
     ROOT / "config" / "personnel.yaml",
     ROOT / "config" / "links.yaml",
 )
+
+HEADER_MARKER = "=== FILE HEADER ==="
+FOOTER_MARKER = "=== FILE FOOTER ==="
+SKIP_BANNER_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
 
 
 def fail(message: str) -> None:
@@ -142,6 +157,35 @@ def validate_config() -> None:
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 
+def validate_banners() -> None:
+    result = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    missing: list[str] = []
+    for raw in result.stdout.split(b"\0"):
+        if not raw:
+            continue
+        rel = raw.decode("utf-8")
+        path = ROOT / rel
+        if not path.is_file() or path.suffix.lower() in SKIP_BANNER_SUFFIXES:
+            continue
+        if any(part in {".git", ".venv", "venv", "__pycache__"} for part in path.parts):
+            continue
+        text = path.read_text(encoding="utf-8")
+        if HEADER_MARKER not in text or FOOTER_MARKER not in text:
+            missing.append(rel)
+    if missing:
+        fail(
+            "Missing file header/footer banners in: "
+            + ", ".join(missing)
+            + ". Run: python tools/sync_file_banners.py"
+        )
+    print("File banners: header and footer present on tracked text files")
+
+
 def validate_compile() -> None:
     ok = compileall.compile_dir(
         str(ROOT),
@@ -174,6 +218,7 @@ def main() -> None:
     validate_webhooks()
     validate_logos()
     validate_config()
+    validate_banners()
     validate_ast_parse()
     validate_compile()
     print("\nAll repository checks passed.")
@@ -181,3 +226,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# === FILE FOOTER ===
+# End of file: tools/validate_repo.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

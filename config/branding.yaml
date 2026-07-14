@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Branding
+# Path: config/branding.yaml
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 colors:
   ds: '0x1E3F78'
   osec: '0x1E3F78'
@@ -17,3 +26,8 @@ bots:
   ote_alt: CIA | Office of Training & Education Bot
   grs: CIA | Global Response Staff
   esd: CIA | Executive Security Detail
+
+# === FILE FOOTER ===
+# End of file: config/branding.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

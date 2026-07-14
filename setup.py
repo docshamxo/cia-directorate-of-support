@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Setup
+# Path: setup.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
+#   - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
+# === END FILE HEADER ===
+
 """
 One-command setup for new contributors.
 
@@ -51,3 +61,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# === FILE FOOTER ===
+# End of file: setup.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

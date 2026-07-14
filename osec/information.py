@@ -1,3 +1,13 @@
+# === FILE HEADER ===
+# Title: Information
+# Path: osec/information.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
+# === END FILE HEADER ===
+
 """
 CIA OSEC information announcer.
 
@@ -102,3 +112,8 @@ def send_osec_information() -> None:
 
 if __name__ == "__main__":
     send_osec_information()
+
+# === FILE FOOTER ===
+# End of file: osec/information.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

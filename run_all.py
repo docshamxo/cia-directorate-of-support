@@ -1,3 +1,12 @@
+# === FILE HEADER ===
+# Title: Run All
+# Path: run_all.py
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+# === END FILE HEADER ===
+
 """
 Run all CIA Directorate of Support Discord announcer scripts.
 
@@ -55,3 +64,8 @@ def run_all() -> None:
 
 if __name__ == "__main__":
     run_all()
+
+# === FILE FOOTER ===
+# End of file: run_all.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===
