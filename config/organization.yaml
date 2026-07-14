@@ -1,0 +1,58 @@
+ds:
+  motto: WE GO AS ONE
+  classification: PUBLIC AFFAIRS
+  about: 'The **Directorate of Support (DS)** is the Agency''s backbone — responsible for internal security,
+    physical protection, and the readiness of every officer who serves. While other directorates operate
+    at the sharp end of the mission, DS ensures the people, facilities, and operatives behind them remain
+    protected and properly prepared.
+
+
+    The Directorate is organized into subordinate offices, each safeguarding a distinct pillar of Agency
+    operations: securing the institution from within, and forging the officers who carry the mission forward.'
+  offices:
+  - Office of Training & Education (OTE)
+  - Office of Security (OSEC)
+osec:
+  motto: PROTECT · DETECT · RESPOND
+  about: 'The **Office of Security (OSEC)** is the Agency''s internal law-enforcement and protective arm.
+    Its officers serve as the Agency''s guards and security force — safeguarding facilities, screening
+    access, and enforcing internal security protocol across every CIA site.
+
+
+    Two specialized sub-units operate beneath OSEC, handling escalated and high-priority protective taskings.'
+  sub_units:
+  - Global Response Staff (GRS)
+  - Executive Security Detail (ESD)
+ote:
+  motto: SCIENTIA EST LUX LUCIS
+  about: The **Office of Training & Education (OTE)** runs the Agency's **Officer Training Program** —
+    recruiting, instructing, and certifying every new officer before they are cleared for active duty.
+    OTE oversees tradecraft instruction, academy curriculum, and continuing professional development.
+  pillars:
+  - title: Recruitment & Selection
+    description: Screening and onboarding new applicants into the Agency's officer pipeline, ensuring
+      every candidate meets the standard before training begins.
+  - title: Tradecraft Instruction
+    description: Core academy curriculum — fieldcraft, security protocol, and operational discipline taught
+      to every officer prior to active deployment.
+  - title: Continuing Development
+    description: Ongoing professional education and re-certification keeping active officers current with
+      Agency doctrine and standards.
+grs:
+  about: The Agency's operational-focused security element — rapid deployment, high-threat site security,
+    and direct-action support for field operations worldwide.
+esd:
+  about: A dedicated close-protection unit responsible for the personal security of High Value Targets
+    (HVTs), senior leadership, and VIPs during travel and operations.
+copy:
+  chain_of_command_intro: 'The Chain of Command is the structured hierarchy used to maintain order, accountability,
+    and clear communication. All instructions, concerns, and requests should flow through your immediate
+    supervisor before moving upward through leadership.
+
+
+    Do not bypass ranks by directing issues to senior leadership when a lower-ranking supervisor is available
+    and appropriate. Always consult the next rank above you rather than escalating to the highest authority.'
+  disclaimer: All text here is marked as **UNCLASSIFIED**.
+  disclaimer_links: All text and links listed here are marked as **UNCLASSIFIED**.
+  disclaimer_classified: Classification markings apply to linked documents as indicated above. All channel
+    text is marked **UNCLASSIFIED** unless otherwise stated.

@@ -17,15 +17,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_OPEN_POSITIONS")
 
-URL_LOWCOM_APPLICATION = "https://forms.gle/SWfWLkmvFr7ZnHMV7"
-URL_MIDCOM_APPLICATION = "https://forms.gle/2SZaDfVeUpYDBgAZ6"
-URL_APPLICATION_RESULTS_CHANNEL = (
-    "https://discord.com/channels/1442014369507446918/1495761226674733179"
-)
-
-LAST_UPDATED = "June 20th, 2026"
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.embed(
@@ -44,7 +35,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             description=(
                 "LOWCOM members operate within the Office, assisting with **base operations** "
                 "and maintaining standards across all ranks.\n\n"
-                f"{c.link('CIA | Office of Security LOWCOM Application', URL_LOWCOM_APPLICATION)}"
+                f"{c.link('CIA | Office of Security LOWCOM Application', c.url('osec.open_positions.lowcom_application'))}"
             ),
         ),
         c.embed(
@@ -53,14 +44,14 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "MIDCOM members lead within the Office, assisting with **base operations, tryouts, "
                 "phases, and events**. They help bring in new recruits, host events, manage LOWCOM "
                 "personnel, and support a wide range of operational duties.\n\n"
-                f"{c.link('CIA | Office of Security MIDCOM Application', URL_MIDCOM_APPLICATION)}"
+                f"{c.link('CIA | Office of Security MIDCOM Application', c.url('osec.open_positions.midcom_application'))}"
             ),
         ),
         c.embed(
             title="Application Schedule",
             description=(
                 "Positions tend to open every **Sunday**, following the weekly quota reset.\n\n"
-                f"*Last updated: {LAST_UPDATED}*"
+                f"*Last updated: {c.url('osec.open_positions.last_updated')}*"
             ),
         ),
         c.embed(
@@ -89,7 +80,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Application Results",
             description=(
                 "**Do not ask for results, updates, or status.** Doing so is an instant fail.\n\n"
-                f"You will be pinged in [#application-results]({URL_APPLICATION_RESULTS_CHANNEL}) "
+                f"You will be pinged in [#application-results]({c.url('osec.open_positions.application_results_channel')}) "
                 "when your application has been graded."
             ),
         ),

@@ -37,6 +37,13 @@ REQUIRED_LOGOS = {
     "esd": ROOT / "assets" / "logos" / "ESD.png",
 }
 
+REQUIRED_CONFIG = (
+    ROOT / "config" / "branding.yaml",
+    ROOT / "config" / "organization.yaml",
+    ROOT / "config" / "personnel.yaml",
+    ROOT / "config" / "links.yaml",
+)
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -114,6 +121,27 @@ def validate_logos() -> None:
     print(f"Logos: {len(REQUIRED_LOGOS)} present")
 
 
+def validate_config() -> None:
+    for path in REQUIRED_CONFIG:
+        if not path.is_file():
+            fail(f"Missing config file: {path.relative_to(ROOT)}")
+
+    try:
+        import yaml  # noqa: F401
+    except ImportError as exc:
+        fail(f"PyYAML is required: {exc}")
+
+    # Importing loads and validates YAML shape used by announcers.
+    import sys
+
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from common import cia_common as c
+
+    _ = c.DS_MOTTO, c.AGENCY_EXECUTIVE, c.LOGOS, c.url("community.discord_invite")
+    print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
+
+
 def validate_compile() -> None:
     ok = compileall.compile_dir(
         str(ROOT),
@@ -145,6 +173,7 @@ def main() -> None:
     validate_catalog()
     validate_webhooks()
     validate_logos()
+    validate_config()
     validate_ast_parse()
     validate_compile()
     print("\nAll repository checks passed.")

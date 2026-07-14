@@ -18,11 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_GRS_INFORMATION")
 
-URL_HANDBOOK = (
-    "https://docs.google.com/document/d/1vCBNGn-Vv07FAqVUYle5AFGMy-5yXQJkRDGpYYhBsIU/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.embed(
@@ -61,7 +56,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Handbook",
                     "CIA GRS | Handbook",
-                    URL_HANDBOOK,
+                    c.url('\1'),
                     "Primary reference for GRS policy and standards.",
                 ),
             ),

@@ -18,20 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_INFORMATION")
 
-URL_HANDBOOK = (
-    "https://docs.google.com/document/d/1IsygYp9657PKnGqmQyMxTvi50BCJvWVgTaIW7lZPN2U/edit?usp=sharing"
-)
-URL_ORBAT = (
-    "https://docs.google.com/spreadsheets/d/12pMdf-XiYeHBCX99zO4cmuek8xQr4SL3lAoQcReowWk/edit?usp=sharing"
-)
-URL_CODE_OF_AGENCY_CONDUCT = (
-    "https://docs.google.com/document/d/1McFfJx3IItYHdEdUYdrMT5fiI2spyRu03cif_CyXIZk/edit?usp=sharing"
-)
-URL_CIVILIAN_ACCESS = (
-    "https://docs.google.com/document/d/1M37oQhF5HF5AUHV4qNMgb2GdhFbv1WxbmRYWsgI5MHo/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.embed(
@@ -57,7 +43,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "ORBAT",
                     "CIA OSEC | ORBAT",
-                    URL_ORBAT,
+                    c.url('osec.information.orbat'),
                     "UNCLASSIFIED.",
                 ),
             ),
@@ -72,19 +58,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Handbook",
                     "CIA Office of Security Handbook",
-                    URL_HANDBOOK,
+                    c.url('osec.information.handbook'),
                     "CONTROLLED UNCLASSIFIED INFORMATION (CUI). Authorized personnel only.",
                 ),
                 c.link_field(
                     "Conduct",
                     "Code of Agency Conduct",
-                    URL_CODE_OF_AGENCY_CONDUCT,
+                    c.url('osec.information.code_of_agency_conduct'),
                     "UNCLASSIFIED.",
                 ),
                 c.link_field(
                     "Civilian Access",
                     "CIA | Civilian Access",
-                    URL_CIVILIAN_ACCESS,
+                    c.url('osec.information.civilian_access'),
                     "UNCLASSIFIED.",
                 ),
             ),

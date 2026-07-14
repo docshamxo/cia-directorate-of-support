@@ -18,11 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_PUBLIC_INFORMATION")
 
-PROGRAM_OVERVIEW_URL = (
-    "https://docs.google.com/document/d/1UCAJHZYt0rABO0bTRUWcm5euThNKd8otEkAFsfMeJ-c/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
@@ -46,7 +41,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "How OTE is organized, who may apply or participate, how the chain of command "
                 "works, what each phase covers, and how scheduling and key dates are handled. "
                 "Read this first when you join or when policy or structure changes.\n\n"
-                f"{c.link('CIA | Officer Training Program Overview', PROGRAM_OVERVIEW_URL)}"
+                f"{c.link('CIA | Officer Training Program Overview', c.url('ote.public_information.program_overview'))}"
             ),
         ),
         c.embed(

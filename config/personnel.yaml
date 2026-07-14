@@ -1,0 +1,120 @@
+agency_executive:
+- abbrev: DIR
+  title: Director of the Central Intelligence Agency
+  holder: YepaInvictus
+- abbrev: DDIR
+  title: Deputy Director of the Central Intelligence Agency
+  holder: laks_l
+- abbrev: EDIR
+  title: Executive Director of the Central Intelligence Agency
+  holder: ashlyn
+- abbrev: CoS
+  title: Chief of Staff
+  holder: Kaoetern1ty
+- abbrev: IG
+  title: Inspector General
+  holder: VACANT
+ds_leadership:
+- abbrev: CDSD
+  title: Component Director, Directorate of Support
+  holder: ClassifiedDark24
+- abbrev: DCDSD
+  title: Deputy Component Director, Directorate of Support
+  holder: docshamxo
+ote_high_command:
+- abbrev: DTE
+  title: Director of Training and Education
+  holder: Shaikhuu
+- abbrev: DDTE
+  title: Deputy Director of Training and Education
+  holder: Railorbsj
+- abbrev: ADTE
+  title: Assistant Director of Training and Education
+  holder: AndyShotSecond
+- abbrev: D
+  title: Dean
+  holder: miqila0shu
+ote_staff_ranks:
+- abbrev: SP
+  title: Senior Professor
+- abbrev: P
+  title: Professor
+- abbrev: AP
+  title: Associate Professor
+osec_high_command:
+- abbrev: DS
+  title: Director of Security
+  holder: Dustykingeric
+- abbrev: DDS
+  title: Deputy Director of Security
+  holder: liveurlite
+- abbrev: ADS
+  title: Assistant Director of Security
+  holder: Rattler_289
+- abbrev: Supt
+  title: Superintendent
+  holder: Foxxy_Fan
+osec_main_chief_marshals:
+- abbrev: CM
+  title: Chief Marshal
+  holder: Jamalclop
+- abbrev: CM
+  title: Chief Marshal
+  holder: Killjoy_74k
+- abbrev: CM
+  title: Chief Marshal
+  holder: Idk_Manti
+- abbrev: CM
+  title: Chief Marshal
+  holder: QueenIrealsub
+grs_command:
+- abbrev: CM
+  title: Chief Marshal
+  holder: kkthegoaty2_0
+- abbrev: DCM
+  title: Deputy Chief Marshal
+  holder: MrPallen
+esd_command:
+- abbrev: CM
+  title: Chief Marshal
+  holder: xBlq_h
+- abbrev: DCM
+  title: Deputy Chief Marshal
+  holder: Ghostfac32009
+osec_middle_command:
+- abbrev: CM
+  title: Chief Marshal
+- abbrev: DCM
+  title: Deputy Chief Marshal
+- abbrev: SI
+  title: Security Inspector
+- abbrev: SC
+  title: Security Captain
+- abbrev: SCL
+  title: Security Chief Lieutenant
+osec_low_command:
+- abbrev: SL
+  title: Security Lieutenant
+- abbrev: SCO
+  title: Security Conduct Officer
+- abbrev: SS
+  title: Security Supervisor
+- abbrev: TSA
+  title: Tactical Security Agent
+- abbrev: SSA
+  title: Senior Security Agent
+- abbrev: SA
+  title: Security Agent
+- abbrev: JSA
+  title: Junior Security Agent
+- abbrev: SP1/SP2
+  title: Security Program Candidates
+grs_esd_low_command:
+- abbrev: SL
+  title: Security Lieutenant
+- abbrev: SCO
+  title: Security Conduct Officer
+- abbrev: SS
+  title: Security Supervisor
+- abbrev: TSA
+  title: Tactical Security Agent
