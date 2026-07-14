@@ -9,7 +9,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 # === END FILE HEADER ===
 
-discord.py>=2.3.0
+discord.py>=2.7.1
 python-dotenv>=1.0.0
 PyYAML>=6.0.0
 
