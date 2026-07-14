@@ -1,0 +1,24 @@
+# Secrets
+.env
+webhooks.local.*
+*.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local tooling
+_maps.json
+.debug/
