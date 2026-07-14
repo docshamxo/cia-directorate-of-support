@@ -38,10 +38,14 @@ def main() -> None:
 
     print(
         "\nSetup complete.\n"
-        "Next steps:\n"
-        "  1. Open .env and paste your Discord webhook URLs\n"
-        "  2. Run one channel:  python ds/chain_of_command.py\n"
-        "  3. Or run all:       python run_all.py\n"
+        "Next steps (do not skip):\n"
+        "  1. Open .env in a text editor\n"
+        "  2. Paste each Discord webhook URL after the matching WEBHOOK_...=\n"
+        "  3. Save .env\n"
+        "  4. Run one channel:  python ds/chain_of_command.py\n"
+        "  5. Or run all:       python run_all.py\n"
+        "\n"
+        "Full step-by-step guide (Git + Python install included): README.md\n"
     )
 
 
