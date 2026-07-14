@@ -1,1 +1,1 @@
-﻿"""Shared CIA Directorate of Support library."""
+"""Shared CIA Directorate of Support library."""

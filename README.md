@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml"><img src="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
+
+<p align="center">
   <a href="#repository-layout">Layout</a> ·
   <a href="#organization">Organization</a> ·
   <a href="#announcer-catalog">Catalog</a> ·
@@ -48,8 +52,16 @@ cia-directorate-of-support/
 ├── README.md                 # This file
 ├── SECURITY.md               # Webhook / secret handling
 ├── requirements.txt
+├── ruff.toml                 # Lint configuration
 ├── .env.example              # Webhook variable template (17 keys)
 ├── run_all.py                # Runs all 17 announcers in order
+├── .github/
+│   ├── workflows/ci.yml      # CI: Ruff + repository validation
+│   ├── dependabot.yml        # Weekly dependency updates
+│   └── PULL_REQUEST_TEMPLATE.md
+├── tools/
+│   ├── README.md
+│   └── validate_repo.py      # Catalog / webhook / asset checks
 ├── assets/
 │   ├── README.md
 │   ├── logos/                # DS, OSEC, OTE, GRS, ESD
@@ -172,6 +184,14 @@ python run_all.py
 
 Only run `run_all.py` when you intend to update every configured channel.
 
+**Validate repository health**
+
+```bash
+python tools/validate_repo.py
+```
+
+CI runs the same checks (plus Ruff) on every push and pull request to `main`.
+
 ---
 
 ## Documentation index
@@ -185,5 +205,7 @@ Only run `run_all.py` when you intend to update every configured channel.
 | [esd/README.md](esd/README.md) | Executive Security Detail scripts |
 | [common/README.md](common/README.md) | Shared library reference |
 | [assets/README.md](assets/README.md) | Logos and diagrams inventory |
+| [tools/README.md](tools/README.md) | Validation utilities |
 | [SECURITY.md](SECURITY.md) | Secret handling |
 | [`.env.example`](.env.example) | Webhook variable template |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Continuous integration |
