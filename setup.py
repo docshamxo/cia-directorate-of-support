@@ -1,0 +1,49 @@
+"""
+One-command setup for new contributors.
+
+Usage (from the repository root):
+    python setup.py
+"""
+
+from __future__ import annotations
+
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+ENV_PATH = ROOT / ".env"
+ENV_EXAMPLE = ROOT / ".env.example"
+REQUIREMENTS = ROOT / "requirements.txt"
+
+
+def main() -> None:
+    print("CIA Directorate of Support — setup\n")
+
+    if not ENV_EXAMPLE.is_file():
+        raise SystemExit("Missing .env.example. Are you in the repository root?")
+
+    if ENV_PATH.exists():
+        print("1) .env already exists — left unchanged")
+    else:
+        shutil.copy(ENV_EXAMPLE, ENV_PATH)
+        print("1) Created .env from .env.example")
+
+    print("2) Installing Python packages...")
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", "-r", str(REQUIREMENTS)],
+        cwd=ROOT,
+    )
+
+    print(
+        "\nSetup complete.\n"
+        "Next steps:\n"
+        "  1. Open .env and paste your Discord webhook URLs\n"
+        "  2. Run one channel:  python ds/chain_of_command.py\n"
+        "  3. Or run all:       python run_all.py\n"
+    )
+
+
+if __name__ == "__main__":
+    main()
