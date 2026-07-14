@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
+#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 # === END FILE HEADER ===
 
 """
@@ -253,7 +254,7 @@ def strip_existing(text: str, style: str) -> str:
 def apply_banners(path: Path) -> bool:
     rel = path.relative_to(ROOT).as_posix()
     style = style_for(path)
-    original = path.read_text(encoding="utf-8")
+    original = path.read_text(encoding="utf-8-sig").replace("\ufeff", "")
     body = strip_existing(original, style).rstrip() + "\n"
 
     title = title_for(path)

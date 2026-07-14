@@ -7,6 +7,7 @@
 #   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
 #   - 2026-07-14 | docshamxo | Bump Actions to Node 24-compatible majors.
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
+#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 # === END FILE HEADER ===
 
 name: CI
@@ -21,8 +22,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  # Do not cancel in-progress runs on main; cancelled runs can briefly mark the badge as failing.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   validate:
