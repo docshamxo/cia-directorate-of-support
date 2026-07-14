@@ -48,8 +48,8 @@ python grs/staff_documents.py
 
 ## Edit
 
-- Shared names / org text → [`../common/cia_common.py`](../common/cia_common.py)
-- This channel's embeds → the script above
+- Names / ranks / mottos / links → [`../config/`](../config/) YAML files
+- This channel's embed layout → the script above
 
 Then run:
 

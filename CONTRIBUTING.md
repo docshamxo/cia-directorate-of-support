@@ -4,15 +4,26 @@ Follow the full install steps in [README.md](README.md) first (`git`, Python, cl
 
 ## Everyday edits
 
+Prefer editing YAML under [`config/`](config/) instead of hardcoding values in Python.
+
 | What you want to change | Where to edit |
 |-------------------------|---------------|
-| Names, ranks, mottos, org text | [`common/cia_common.py`](common/cia_common.py) |
-| One channel's Discord embeds | The script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
+| Names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| Mottos, about text, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
+| Colors, bot usernames, logo filenames | [`config/branding.yaml`](config/branding.yaml) |
+| Document / form / community links | [`config/links.yaml`](config/links.yaml) |
+| One channel's Discord embed layout | The script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
 | Webhook target channel | Your local `.env` (never commit it) |
-| Logos | [`assets/logos/`](assets/logos/) — keep the same filenames |
+| Logo image files | [`assets/logos/`](assets/logos/) — keep the same filenames |
 | Run order for everything | [`run_all.py`](run_all.py) |
 
-## After you change code
+In announcer scripts, load links with:
+
+```python
+c.url('osec.information.handbook')
+```
+
+## After you change code or config
 
 From the repository root:
 
@@ -58,23 +69,24 @@ Do every step:
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_NEW_CHANNEL")
 ```
 
-5. Add the same key to [`.env.example`](.env.example):
+5. Add any document URLs to [`config/links.yaml`](config/links.yaml) and read them with `c.url('...')`.
+6. Add the webhook key to [`.env.example`](.env.example):
 
 ```env
 WEBHOOK_OSEC_NEW_CHANNEL=
 ```
 
-6. Add the same key to your local `.env` and paste the webhook URL.
-7. Add the script to [`run_all.py`](run_all.py).
-8. Update that office README.
-9. Update the announcer list in [README.md](README.md).
-10. Run:
+7. Add the same key to your local `.env` and paste the webhook URL.
+8. Add the script to [`run_all.py`](run_all.py).
+9. Update that office README.
+10. Update the announcer list in [README.md](README.md).
+11. Run:
 
 ```bash
 python tools/validate_repo.py
 ```
 
-11. Commit and push:
+12. Commit and push:
 
 ```bash
 git status

@@ -192,6 +192,7 @@ This installs:
 
 - `discord.py`
 - `python-dotenv`
+- `PyYAML`
 
 ---
 
@@ -338,11 +339,16 @@ python tools/validate_repo.py
 
 | What you want to change | What to edit |
 |-------------------------|--------------|
-| Names, ranks, mottos, office descriptions | [`common/cia_common.py`](common/cia_common.py) |
-| One Discord channel's embeds | The matching script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
+| Names and ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| Mottos, about text, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
+| Colors, bot names, logo filenames | [`config/branding.yaml`](config/branding.yaml) |
+| Document / form / Roblox / Discord links | [`config/links.yaml`](config/links.yaml) |
+| One Discord channel's embed layout | The matching script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
 | Which Discord channel a script posts to | That script's key inside `.env` |
 | A logo image | Same filename in [`assets/logos/`](assets/logos/) |
 | Order of `run_all.py` | [`run_all.py`](run_all.py) |
+
+Most day-to-day updates are YAML edits under [`config/`](config/). See [config/README.md](config/README.md).
 
 ### Save and check your changes
 
@@ -367,12 +373,13 @@ Full contributor steps: [CONTRIBUTING.md](CONTRIBUTING.md)
 ## Folders
 
 ```text
+config/   Editable YAML (names, links, branding, org text)
 ds/       Directorate of Support
 osec/     Office of Security
 ote/      Office of Training & Education
 grs/      Global Response Staff
 esd/      Executive Security Detail
-common/   Shared text, roles, Discord helpers
+common/   Loads config + Discord helpers
 assets/   Logos and diagrams
 tools/    Validation helpers
 ```
@@ -424,7 +431,8 @@ Directorate of Support (DS)
 | Doc | What it covers |
 |-----|----------------|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Editing, validating, and pushing changes |
+| [config/README.md](config/README.md) | YAML config guide |
 | [SECURITY.md](SECURITY.md) | Keeping webhooks private |
-| [common/README.md](common/README.md) | Shared library |
+| [common/README.md](common/README.md) | Shared library / config loader |
 | [tools/README.md](tools/README.md) | Validation tool |
 | [`.env.example`](.env.example) | Webhook key template |

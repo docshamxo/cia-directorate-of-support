@@ -1,20 +1,31 @@
 """
-Shared configuration, organizational reference data, and Discord helpers
-for CIA Directorate of Support announcer scripts.
+Shared Discord helpers and configuration loader for CIA DS announcers.
 
-Organizational descriptions are aligned with the YFPA CIA Organizational Bulletin.
+Editable data lives in config/*.yaml — not in this file:
+  - config/branding.yaml      colors, bots, logos, community URLs
+  - config/organization.yaml  mottos, about text, offices, disclaimers
+  - config/personnel.yaml     chain-of-command names and ranks
+  - config/links.yaml         document / form / channel URLs
 """
 
 from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 import discord
+import yaml
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CONFIG_DIR = REPO_ROOT / "config"
+ASSETS_DIR = REPO_ROOT / "assets"
+LOGOS_DIR = ASSETS_DIR / "logos"
+
+load_dotenv(REPO_ROOT / ".env")
 
 
 def require_webhook(env_key: str) -> str:
@@ -27,120 +38,125 @@ def require_webhook(env_key: str) -> str:
     return value
 
 
-# ── Paths & assets ────────────────────────────────────────────────────────────
+def _load_yaml(name: str) -> dict[str, Any]:
+    path = CONFIG_DIR / name
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing config file: {path}")
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"Config file must contain a mapping: {path}")
+    return data
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-ASSETS_DIR = REPO_ROOT / "assets"
-LOGOS_DIR = ASSETS_DIR / "logos"
 
-LOGOS = {
-    "ds": LOGOS_DIR / "DS.png",
-    "ote": LOGOS_DIR / "OTE.png",
-    "osec": LOGOS_DIR / "OSEC.png",
-    "grs": LOGOS_DIR / "GRS.png",
-    "esd": LOGOS_DIR / "ESD.png",
-}
+@lru_cache(maxsize=1)
+def _branding() -> dict[str, Any]:
+    return _load_yaml("branding.yaml")
 
-# ── Embed colors ──────────────────────────────────────────────────────────────
 
-COLOR_DS = 0x1E3F78
-COLOR_OSEC = 0x1E3F78
-COLOR_OTE = 0x1E3F78
-COLOR_GRS = 0xFFD700
-COLOR_ESD = 0x9B111E
+@lru_cache(maxsize=1)
+def _organization() -> dict[str, Any]:
+    return _load_yaml("organization.yaml")
 
-# ── Bot usernames ─────────────────────────────────────────────────────────────
 
-BOT_DS = "CIA Directorate of Support Bot"
-BOT_OSEC = "CIA | Office of Security"
-BOT_OTE = "CIA | Office of Training & Education"
-BOT_OTE_ALT = "CIA | Office of Training & Education Bot"
-BOT_GRS = "CIA | Global Response Staff"
-BOT_ESD = "CIA | Executive Security Detail"
+@lru_cache(maxsize=1)
+def _personnel() -> dict[str, Any]:
+    return _load_yaml("personnel.yaml")
 
-# ── Community links ───────────────────────────────────────────────────────────
 
-URL_ROBLOX_GROUP_DS = "https://www.roblox.com/share/g/945806945"
-URL_ROBLOX_GROUP_OSEC = (
-    "https://www.roblox.com/communities/288542436/CIA-Office-of-Security#!/about"
-)
-URL_ROBLOX_GROUP_GRS = "https://www.roblox.com/share/g/450710337"
-URL_ROBLOX_GROUP_OTE = "https://www.roblox.com/share/g/1003614105"
-URL_DISCORD_INVITE = "https://discord.gg/3S3vDK8nJY"
+@lru_cache(maxsize=1)
+def _links() -> dict[str, Any]:
+    return _load_yaml("links.yaml")
 
-# ── Organizational reference (bulletin) ───────────────────────────────────────
 
-DS_MOTTO = "WE GO AS ONE"
-DS_CLASSIFICATION = "PUBLIC AFFAIRS"
+def _parse_color(value: str | int) -> int:
+    if isinstance(value, int):
+        return value
+    text = str(value).strip()
+    if text.lower().startswith("0x"):
+        return int(text, 16)
+    if text.startswith("#"):
+        return int(text[1:], 16)
+    return int(text)
 
-DS_ABOUT = (
-    "The **Directorate of Support (DS)** is the Agency's backbone — responsible for "
-    "internal security, physical protection, and the readiness of every officer who serves. "
-    "While other directorates operate at the sharp end of the mission, DS ensures the people, "
-    "facilities, and operatives behind them remain protected and properly prepared.\n\n"
-    "The Directorate is organized into subordinate offices, each safeguarding a distinct pillar "
-    "of Agency operations: securing the institution from within, and forging the officers who "
-    "carry the mission forward."
-)
 
-OSEC_MOTTO = "PROTECT · DETECT · RESPOND"
+def url(path: str) -> str:
+    """
+    Look up a URL (or other string value) from config/links.yaml.
 
-OSEC_ABOUT = (
-    "The **Office of Security (OSEC)** is the Agency's internal law-enforcement and protective "
-    "arm. Its officers serve as the Agency's guards and security force — safeguarding facilities, "
-    "screening access, and enforcing internal security protocol across every CIA site.\n\n"
-    "Two specialized sub-units operate beneath OSEC, handling escalated and high-priority "
-    "protective taskings."
-)
+    Example: url(\"osec.information.handbook\")
+    """
+    node: Any = _links()
+    for part in path.split("."):
+        if not isinstance(node, dict) or part not in node:
+            raise KeyError(f"Unknown links config path: {path}")
+        node = node[part]
+    if not isinstance(node, str) or not node.strip():
+        raise ValueError(f"links.{path} must be a non-empty string")
+    return node.strip()
 
-GRS_ABOUT = (
-    "The Agency's operational-focused security element — rapid deployment, high-threat site "
-    "security, and direct-action support for field operations worldwide."
-)
 
-ESD_ABOUT = (
-    "A dedicated close-protection unit responsible for the personal security of High Value "
-    "Targets (HVTs), senior leadership, and VIPs during travel and operations."
-)
+def _get_org(*parts: str) -> Any:
+    node: Any = _organization()
+    for part in parts:
+        node = node[part]
+    return node
 
-OTE_MOTTO = "SCIENTIA EST LUX LUCIS"
 
-OTE_ABOUT = (
-    "The **Office of Training & Education (OTE)** runs the Agency's **Officer Training Program** "
-    "— recruiting, instructing, and certifying every new officer before they are cleared for "
-    "active duty. OTE oversees tradecraft instruction, academy curriculum, and continuing "
-    "professional development."
-)
+# ── Branding ──────────────────────────────────────────────────────────────────
 
-OTE_PILLARS = (
-    (
-        "Recruitment & Selection",
-        "Screening and onboarding new applicants into the Agency's officer pipeline, ensuring "
-        "every candidate meets the standard before training begins.",
-    ),
-    (
-        "Tradecraft Instruction",
-        "Core academy curriculum — fieldcraft, security protocol, and operational discipline "
-        "taught to every officer prior to active deployment.",
-    ),
-    (
-        "Continuing Development",
-        "Ongoing professional education and re-certification keeping active officers current "
-        "with Agency doctrine and standards.",
-    ),
-)
+_b = _branding()
+_colors = _b["colors"]
+_bots = _b["bots"]
+_logo_files = _b["logos"]
 
-DS_OFFICES = (
-    "Office of Training & Education (OTE)",
-    "Office of Security (OSEC)",
-)
+COLOR_DS = _parse_color(_colors["ds"])
+COLOR_OSEC = _parse_color(_colors["osec"])
+COLOR_OTE = _parse_color(_colors["ote"])
+COLOR_GRS = _parse_color(_colors["grs"])
+COLOR_ESD = _parse_color(_colors["esd"])
 
-OSEC_SUB_UNITS = (
-    "Global Response Staff (GRS)",
-    "Executive Security Detail (ESD)",
+BOT_DS = _bots["ds"]
+BOT_OSEC = _bots["osec"]
+BOT_OTE = _bots["ote"]
+BOT_OTE_ALT = _bots["ote_alt"]
+BOT_GRS = _bots["grs"]
+BOT_ESD = _bots["esd"]
+
+LOGOS = {key: LOGOS_DIR / filename for key, filename in _logo_files.items()}
+
+URL_ROBLOX_GROUP_DS = url("community.roblox_group_ds")
+URL_ROBLOX_GROUP_OSEC = url("community.roblox_group_osec")
+URL_ROBLOX_GROUP_GRS = url("community.roblox_group_grs")
+URL_ROBLOX_GROUP_OTE = url("community.roblox_group_ote")
+URL_DISCORD_INVITE = url("community.discord_invite")
+
+# ── Organization copy ─────────────────────────────────────────────────────────
+
+DS_MOTTO = _get_org("ds", "motto")
+DS_CLASSIFICATION = _get_org("ds", "classification")
+DS_ABOUT = _get_org("ds", "about")
+DS_OFFICES = tuple(_get_org("ds", "offices"))
+
+OSEC_MOTTO = _get_org("osec", "motto")
+OSEC_ABOUT = _get_org("osec", "about")
+OSEC_SUB_UNITS = tuple(_get_org("osec", "sub_units"))
+
+OTE_MOTTO = _get_org("ote", "motto")
+OTE_ABOUT = _get_org("ote", "about")
+OTE_PILLARS = tuple(
+    (item["title"], item["description"]) for item in _get_org("ote", "pillars")
 )
 
-# ── Personnel data ────────────────────────────────────────────────────────────
+GRS_ABOUT = _get_org("grs", "about")
+ESD_ABOUT = _get_org("esd", "about")
+
+_copy = _get_org("copy")
+CHAIN_OF_COMMAND_INTRO = _copy["chain_of_command_intro"]
+DISCLAIMER_TEXT = _copy["disclaimer"]
+DISCLAIMER_LINKS_TEXT = _copy["disclaimer_links"]
+DISCLAIMER_CLASSIFIED_TEXT = _copy["disclaimer_classified"]
+
+# ── Personnel ─────────────────────────────────────────────────────────────────
 
 
 @dataclass(frozen=True, slots=True)
@@ -166,100 +182,28 @@ class Rank:
         return f"**[{self.abbrev}] {self.title}**"
 
 
-AGENCY_EXECUTIVE = (
-    Role("DIR", "Director of the Central Intelligence Agency", "YepaInvictus"),
-    Role("DDIR", "Deputy Director of the Central Intelligence Agency", "laks_l"),
-    Role("EDIR", "Executive Director of the Central Intelligence Agency", "ashlyn"),
-    Role("CoS", "Chief of Staff", "Kaoetern1ty"),
-    Role("IG", "Inspector General", "VACANT"),
-)
+def _roles(key: str) -> tuple[Role, ...]:
+    return tuple(
+        Role(item["abbrev"], item["title"], item["holder"]) for item in _personnel()[key]
+    )
 
-DS_LEADERSHIP = (
-    Role("CDSD", "Component Director, Directorate of Support", "ClassifiedDark24"),
-    Role("DCDSD", "Deputy Component Director, Directorate of Support", "docshamxo"),
-)
 
-OTE_HIGH_COMMAND = (
-    Role("DTE", "Director of Training and Education", "Shaikhuu"),
-    Role("DDTE", "Deputy Director of Training and Education", "Railorbsj"),
-    Role("ADTE", "Assistant Director of Training and Education", "AndyShotSecond"),
-    Role("D", "Dean", "miqila0shu"),
-)
+def _ranks(key: str) -> tuple[Rank, ...]:
+    return tuple(Rank(item["abbrev"], item["title"]) for item in _personnel()[key])
 
-OTE_STAFF_RANKS = (
-    Rank("SP", "Senior Professor"),
-    Rank("P", "Professor"),
-    Rank("AP", "Associate Professor"),
-)
 
-OSEC_HIGH_COMMAND = (
-    Role("DS", "Director of Security", "Dustykingeric"),
-    Role("DDS", "Deputy Director of Security", "liveurlite"),
-    Role("ADS", "Assistant Director of Security", "Rattler_289"),
-    Role("Supt", "Superintendent", "Foxxy_Fan"),
-)
-
-OSEC_MAIN_CHIEF_MARSHALS = (
-    Role("CM", "Chief Marshal", "Jamalclop"),
-    Role("CM", "Chief Marshal", "Killjoy_74k"),
-    Role("CM", "Chief Marshal", "Idk_Manti"),
-    Role("CM", "Chief Marshal", "QueenIrealsub"),
-)
-
-GRS_COMMAND = (
-    Role("CM", "Chief Marshal", "kkthegoaty2_0"),
-    Role("DCM", "Deputy Chief Marshal", "MrPallen"),
-)
-
-ESD_COMMAND = (
-    Role("CM", "Chief Marshal", "xBlq_h"),
-    Role("DCM", "Deputy Chief Marshal", "Ghostfac32009"),
-)
-
-OSEC_MIDDLE_COMMAND = (
-    Rank("CM", "Chief Marshal"),
-    Rank("DCM", "Deputy Chief Marshal"),
-    Rank("SI", "Security Inspector"),
-    Rank("SC", "Security Captain"),
-    Rank("SCL", "Security Chief Lieutenant"),
-)
-
-OSEC_LOW_COMMAND = (
-    Rank("SL", "Security Lieutenant"),
-    Rank("SCO", "Security Conduct Officer"),
-    Rank("SS", "Security Supervisor"),
-    Rank("TSA", "Tactical Security Agent"),
-    Rank("SSA", "Senior Security Agent"),
-    Rank("SA", "Security Agent"),
-    Rank("JSA", "Junior Security Agent"),
-    Rank("SP1/SP2", "Security Program Candidates"),
-)
-
+AGENCY_EXECUTIVE = _roles("agency_executive")
+DS_LEADERSHIP = _roles("ds_leadership")
+OTE_HIGH_COMMAND = _roles("ote_high_command")
+OTE_STAFF_RANKS = _ranks("ote_staff_ranks")
+OSEC_HIGH_COMMAND = _roles("osec_high_command")
+OSEC_MAIN_CHIEF_MARSHALS = _roles("osec_main_chief_marshals")
+GRS_COMMAND = _roles("grs_command")
+ESD_COMMAND = _roles("esd_command")
+OSEC_MIDDLE_COMMAND = _ranks("osec_middle_command")
+OSEC_LOW_COMMAND = _ranks("osec_low_command")
+GRS_ESD_LOW_COMMAND = _ranks("grs_esd_low_command")
 GRS_ESD_MIDDLE_COMMAND = OSEC_MIDDLE_COMMAND[2:]  # SI through SCL
-
-GRS_ESD_LOW_COMMAND = (
-    Rank("SL", "Security Lieutenant"),
-    Rank("SCO", "Security Conduct Officer"),
-    Rank("SS", "Security Supervisor"),
-    Rank("TSA", "Tactical Security Agent"),
-)
-
-CHAIN_OF_COMMAND_INTRO = (
-    "The Chain of Command is the structured hierarchy used to maintain order, "
-    "accountability, and clear communication. All instructions, concerns, and "
-    "requests should flow through your immediate supervisor before moving upward "
-    "through leadership.\n\n"
-    "Do not bypass ranks by directing issues to senior leadership when a "
-    "lower-ranking supervisor is available and appropriate. Always consult the "
-    "next rank above you rather than escalating to the highest authority."
-)
-
-DISCLAIMER_TEXT = "All text here is marked as **UNCLASSIFIED**."
-DISCLAIMER_LINKS_TEXT = "All text and links listed here are marked as **UNCLASSIFIED**."
-DISCLAIMER_CLASSIFIED_TEXT = (
-    "Classification markings apply to linked documents as indicated above. "
-    "All channel text is marked **UNCLASSIFIED** unless otherwise stated."
-)
 
 # ── Formatting helpers ────────────────────────────────────────────────────────
 
@@ -276,12 +220,14 @@ def bullets(*items: str) -> str:
     return "\n".join(f"**{item}**" for item in items)
 
 
-def link(label: str, url: str) -> str:
-    return f"[{label}]({url})"
+def link(label: str, url_value: str) -> str:
+    return f"[{label}]({url_value})"
 
 
-def link_field(name: str, label: str, url: str, note: str | None = None) -> tuple[str, str]:
-    value = link(label, url)
+def link_field(
+    name: str, label: str, url_value: str, note: str | None = None
+) -> tuple[str, str]:
+    value = link(label, url_value)
     if note:
         value += f"\n*{note}*"
     return (name, value)

@@ -18,14 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_PROGRAM_OVERVIEW")
 
-PROGRAM_OVERVIEW_URL = (
-    "https://docs.google.com/document/d/1UCAJHZYt0rABO0bTRUWcm5euThNKd8otEkAFsfMeJ-c/edit?usp=sharing"
-)
-GRADUATION_CEREMONY_PROCEDURES_URL = (
-    "https://docs.google.com/document/d/1NR61wNgfyEnPiDQ7jZB8NwS8CUCFq7nt1aDN2y6uwKA/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
@@ -57,13 +49,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Program Overview",
                     "CIA | Officer Training Program Overview",
-                    PROGRAM_OVERVIEW_URL,
+                    c.url('ote.program_overview.program_overview'),
                     "Organization, eligibility, chain of command, phases, and scheduling.",
                 ),
                 c.link_field(
                     "Graduation",
                     "CIA | Graduation Ceremony Procedures",
-                    GRADUATION_CEREMONY_PROCEDURES_URL,
+                    c.url('ote.program_overview.graduation_ceremony_procedures'),
                     "Planning and conducting official OTE graduation ceremonies.",
                 ),
             ),

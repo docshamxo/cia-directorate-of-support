@@ -18,20 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_GRS_STAFF_DOCUMENTS")
 
-URL_BREACH_TRAINING_GUIDE = (
-    "https://docs.google.com/document/d/1BopFMmd_0GC2q7k1gLssRJ_RJh6BMAFA3kObdlj407w/edit?usp=sharing"
-)
-URL_BREACHING_CERTIFICATE = (
-    "https://docs.google.com/document/d/10VyRbeIE2IMP1qFt6wIZpzN50Iegwpzh0n3dnU_8--c/edit?usp=sharing"
-)
-URL_HANDBOOK = (
-    "https://docs.google.com/document/d/1vCBNGn-Vv07FAqVUYle5AFGMy-5yXQJkRDGpYYhBsIU/edit?usp=sharing"
-)
-URL_TRYOUT_GUIDE = (
-    "https://docs.google.com/document/d/1e199RDQlZ2sxU-qgAGB_jBM0ksPb-DVkNmXlburxNA0/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.embed(
@@ -56,19 +42,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Handbook",
                     "CIA GRS | Handbook",
-                    URL_HANDBOOK,
+                    c.url('grs.staff_documents.handbook'),
                     "Primary reference for GRS policy and standards.",
                 ),
                 c.link_field(
                     "Breach Training",
                     "CIA GRS | Breach Training Guide",
-                    URL_BREACH_TRAINING_GUIDE,
+                    c.url('grs.staff_documents.breach_training_guide'),
                     "Official breach training procedures and instruction.",
                 ),
                 c.link_field(
                     "Tryouts",
                     "CIA GRS | Tryout Guide",
-                    URL_TRYOUT_GUIDE,
+                    c.url('grs.staff_documents.tryout_guide'),
                     "Candidate tryout standards and evaluation guidance.",
                 ),
             ),
@@ -81,7 +67,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Breaching Certification",
                     "CIA GRS | Breaching Certificate",
-                    URL_BREACHING_CERTIFICATE,
+                    c.url('grs.staff_documents.breaching_certificate'),
                     "Qualification standards for breaching certification.",
                 ),
             ),

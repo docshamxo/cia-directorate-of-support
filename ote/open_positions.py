@@ -18,14 +18,6 @@ from common import cia_common as c
 
 WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_OPEN_POSITIONS")
 
-APPLICATION_URL = (
-    "https://docs.google.com/forms/d/e/1FAIpQLSefGwpK9766JHaXw46lqIsbr9VuoVERO90G6LEBE4cdRS4J7g/viewform?usp=header"
-)
-APPLICATION_TRACKER_URL = (
-    "https://docs.google.com/spreadsheets/d/1iSOWAM9-Z8WBkdhleuRhbfYa78XC9rMQG7fD3uv6J9c/edit?usp=sharing"
-)
-
-
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.embed(
@@ -90,7 +82,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Application",
                     "CIA | OTE Professor Application",
-                    APPLICATION_URL,
+                    c.url('ote.open_positions.application'),
                 ),
                 c.link_field(
                     "Roblox Group",
@@ -100,7 +92,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Application Tracker",
                     "CIA OTE | Application Tracker",
-                    APPLICATION_TRACKER_URL,
+                    c.url('ote.open_positions.application_tracker'),
                     "Public tracker for submitted OTE applications and status updates.",
                 ),
             ),

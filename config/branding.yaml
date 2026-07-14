@@ -1,0 +1,19 @@
+colors:
+  ds: '0x1E3F78'
+  osec: '0x1E3F78'
+  ote: '0x1E3F78'
+  grs: '0xFFD700'
+  esd: '0x9B111E'
+logos:
+  ds: DS.png
+  ote: OTE.png
+  osec: OSEC.png
+  grs: GRS.png
+  esd: ESD.png
+bots:
+  ds: CIA Directorate of Support Bot
+  osec: CIA | Office of Security
+  ote: CIA | Office of Training & Education
+  ote_alt: CIA | Office of Training & Education Bot
+  grs: CIA | Global Response Staff
+  esd: CIA | Executive Security Detail
