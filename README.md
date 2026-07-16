@@ -17,6 +17,7 @@ Modified:
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+  - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
 === END FILE HEADER ===
 -->
 
@@ -364,7 +365,7 @@ python run_all.py --delay 1.5        # seconds between scripts
 python run_all.py --no-skip-empty    # error on empty webhook env vars
 ```
 
-Live runs create **new** Discord messages each time (they do not edit prior posts).
+Live runs **clear the last recorded webhook message(s)** for each channel (IDs stored locally in gitignored `.webhook_messages.json`), then post the new embed(s). Webhooks cannot delete full channel history — only previously recorded posts from this webhook. See [SECURITY.md](SECURITY.md).
 
 ### Preview one channel without posting
 

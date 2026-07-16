@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
+#   - 2026-07-15 | docshamxo | Pass webhook state key for prior-message cleanup.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts."""
@@ -94,6 +95,7 @@ def run_announcer(
         embeds,
         username=username,
         files=resolved_files,
+        state_key=webhook_key,
     )
 
 

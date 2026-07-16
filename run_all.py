@@ -9,6 +9,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Note prior-message cleanup on live announcer runs.
 # === END FILE HEADER ===
 
 """
@@ -100,8 +101,9 @@ def run_all(argv: list[str] | None = None) -> int:
     mode = "dry-run" if args.dry_run else "live"
     print(f"Running {len(SCRIPTS)} announcer scripts from {REPO_ROOT} ({mode})\n")
     print(
-        "Note: live runs create new Discord messages each time "
-        "(they do not edit or replace prior posts).\n"
+        "Note: live runs delete previously recorded webhook message(s) for each "
+        "channel (see .webhook_messages.json), then post the new embed(s).\n"
+        "Messages posted before this cleanup feature (or not recorded) are left alone.\n"
     )
 
     succeeded: list[str] = []

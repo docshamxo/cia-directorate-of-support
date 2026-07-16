@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Ignore local webhook message ID state file.
 # === END FILE HEADER ===
 
 # Secrets
@@ -18,6 +19,8 @@
 !.env.example
 webhooks.local.*
 *.local.json
+.webhook_messages.json
+.webhook_messages.json.tmp
 
 # Python
 __pycache__/

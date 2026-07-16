@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Delete prior webhook messages via local message ID state.
 # === END FILE HEADER ===
 
 """
@@ -26,6 +27,7 @@ Editable data lives in config/*.yaml - not in this file:
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import re
@@ -46,6 +48,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = REPO_ROOT / "config"
 ASSETS_DIR = REPO_ROOT / "assets"
 LOGOS_DIR = ASSETS_DIR / "logos"
+# Local-only message IDs for purge-before-repost (never commit; no webhook URLs stored).
+WEBHOOK_MESSAGES_PATH = REPO_ROOT / ".webhook_messages.json"
 
 load_dotenv(REPO_ROOT / ".env")
 
@@ -468,13 +472,134 @@ def _retry_after_seconds(exc: HTTPException, attempt: int) -> float:
     return min(2**attempt, 30)
 
 
+def _load_webhook_message_state() -> dict[str, list[int]]:
+    """Load local webhook message ID state (message IDs only; never URLs)."""
+    path = WEBHOOK_MESSAGES_PATH
+    if not path.is_file():
+        return {}
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        logger.warning("Could not read %s (%s); starting with empty state", path.name, exc)
+        return {}
+    if not isinstance(raw, dict):
+        logger.warning("%s is not a JSON object; starting with empty state", path.name)
+        return {}
+
+    state: dict[str, list[int]] = {}
+    for key, value in raw.items():
+        if not isinstance(key, str):
+            continue
+        if isinstance(value, list):
+            ids: list[int] = []
+            for item in value:
+                try:
+                    ids.append(int(item))
+                except (TypeError, ValueError):
+                    continue
+            state[key] = ids
+        elif isinstance(value, (int, str)):
+            try:
+                state[key] = [int(value)]
+            except (TypeError, ValueError):
+                continue
+    return state
+
+
+def _save_webhook_message_state(state: dict[str, list[int]]) -> None:
+    """Persist message IDs atomically. Does not store webhook URLs or tokens."""
+    path = WEBHOOK_MESSAGES_PATH
+    payload = {key: [int(mid) for mid in ids] for key, ids in sorted(state.items()) if ids}
+    text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+    tmp_path.write_text(text, encoding="utf-8")
+    tmp_path.replace(path)
+
+
+def _delete_prior_webhook_messages(webhook: Any, *, state_key: str) -> None:
+    """Best-effort delete of previously posted messages for this webhook key."""
+    state = _load_webhook_message_state()
+    prior_ids = list(state.get(state_key, []))
+    if not prior_ids:
+        return
+
+    deleted = 0
+    remaining: list[int] = []
+    for message_id in prior_ids:
+        try:
+            webhook.delete_message(message_id)
+            deleted += 1
+        except HTTPException as exc:
+            status = getattr(exc, "status", None)
+            if status == 404:
+                # Already gone — drop from state.
+                deleted += 1
+                continue
+            if status == 429:
+                delay = _retry_after_seconds(exc, 1)
+                logger.warning(
+                    "Rate-limited deleting prior message %s for %s; sleeping %.1fs",
+                    message_id,
+                    state_key,
+                    delay,
+                )
+                time.sleep(delay)
+                try:
+                    webhook.delete_message(message_id)
+                    deleted += 1
+                    continue
+                except HTTPException as retry_exc:
+                    if getattr(retry_exc, "status", None) == 404:
+                        deleted += 1
+                        continue
+                    logger.warning(
+                        "Could not delete prior message %s for %s (HTTP %s)",
+                        message_id,
+                        state_key,
+                        getattr(retry_exc, "status", None),
+                    )
+                    remaining.append(message_id)
+                    continue
+            logger.warning(
+                "Could not delete prior message %s for %s (HTTP %s)",
+                message_id,
+                state_key,
+                status,
+            )
+            remaining.append(message_id)
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            logger.warning(
+                "Network error deleting prior message %s for %s: %s",
+                message_id,
+                state_key,
+                exc,
+            )
+            remaining.append(message_id)
+
+    if remaining:
+        state[state_key] = remaining
+    else:
+        state.pop(state_key, None)
+    _save_webhook_message_state(state)
+    if deleted:
+        print(f"Cleared {deleted} prior webhook message(s) for {state_key}")
+
+
 def send_webhook(
     webhook_url: str,
     embeds: list[discord.Embed],
     *,
     username: str,
     files: list[discord.File] | None = None,
-) -> None:
+    state_key: str | None = None,
+) -> list[int]:
+    """Send embeds via Discord webhook.
+
+    When ``state_key`` is set, deletes any previously stored message IDs for that
+    key (best-effort; ignores 404), then posts with ``wait=True`` and saves the
+    new message ID(s) to ``.webhook_messages.json``. Webhooks cannot purge full
+    channel history — only messages this webhook previously posted and recorded.
+    """
     from discord import SyncWebhook
 
     validate_webhook_url(webhook_url)
@@ -485,13 +610,28 @@ def send_webhook(
     session = _session_with_timeout()
     webhook = SyncWebhook.from_url(webhook_url, session=session)
 
+    if state_key:
+        _delete_prior_webhook_messages(webhook, state_key=state_key)
+
     last_error: Exception | None = None
     for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
         try:
-            webhook.send(embeds=embeds, username=username, files=files or [])
+            message = webhook.send(
+                embeds=embeds,
+                username=username,
+                files=files or [],
+                wait=True,
+            )
+            message_ids: list[int] = []
+            if message is not None:
+                message_ids = [int(message.id)]
+            if state_key and message_ids:
+                state = _load_webhook_message_state()
+                state[state_key] = message_ids
+                _save_webhook_message_state(state)
             logger.info("Webhook send succeeded (%s) as %s", masked, username)
             print("Sent successfully!")
-            return
+            return message_ids
         except HTTPException as exc:
             last_error = exc
             status = getattr(exc, "status", None)
