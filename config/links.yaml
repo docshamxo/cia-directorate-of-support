@@ -7,6 +7,7 @@
 #   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
+#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 # === END FILE HEADER ===
 
 community:
@@ -27,7 +28,7 @@ osec:
     code_of_agency_conduct: https://docs.google.com/document/d/1McFfJx3IItYHdEdUYdrMT5fiI2spyRu03cif_CyXIZk/edit?usp=sharing
     civilian_access: https://docs.google.com/document/d/1M37oQhF5HF5AUHV4qNMgb2GdhFbv1WxbmRYWsgI5MHo/edit?usp=sharing
   staff_documents:
-    google_drive: https://drive.google.com/drive/folders/1LogIJ8er2ZjD2K39lPtoutdXKDoY2TY5?usp=sharing
+    google_drive: https://drive.google.com/drive/folders/1LogIJ8er2ZjD2K39lPtoutdXKDoY2TY5?usp=drive_link
     tryout_guide: https://docs.google.com/document/d/1Fc7WK5voKnZ3hKlJQ_2O7ZDQFtht4xOHssqhJcmun30/edit?usp=sharing
     phase_i: https://docs.google.com/document/d/1cGKf1xudnZ85K5oS9_esmXGPhWfGd-R3INE8SAWgcgM/edit?usp=sharing
     phase_ii: https://docs.google.com/document/d/14T05B4HiCdDact6nfTGu2AUk5DnFQYPsfyIe-Dwpb2U/edit?usp=sharing
@@ -52,7 +53,7 @@ ote:
     staff_handbook: https://docs.google.com/document/d/1Nhi3xnirH192rIdbMCrGGH5pnhLywQ9EhWxPCoRbY9s/edit?usp=sharing
     staff_database: https://docs.google.com/spreadsheets/d/17Yw1oby46r9pGJXzWSs2cPh3DRaj-ktUQ728GDi09x0/edit?usp=sharing
     tryout_document: https://docs.google.com/document/d/1tNns_L-M1i3SBl7SUwx_Zk1U2Jf8iOU1zRL8zJUnbQQ/edit?usp=drivesdk
-    google_drive: https://drive.google.com/drive/folders/11g2H9zeEwFbyO2a6dkxpmSGN0qGR4Oe1?usp=sharing
+    google_drive: https://drive.google.com/drive/folders/11g2H9zeEwFbyO2a6dkxpmSGN0qGR4Oe1?usp=drive_link
     general_info_coc: https://docs.google.com/document/d/1gZO3E9X_dbNIjJJQc5wsKgryyH6uTryfjQHLSKbq4EA/edit?usp=sharing
     standard_training_guide: https://docs.google.com/document/d/19M5hFnP5jTy8MlOYUcZ7DqmxAEQN-HDT_thV8TpnaB8/edit?usp=sharing
     weapons_st_guide: https://docs.google.com/document/d/17v8Z-koVCxP2cTopvU8QYJaTaXbBB7RujmPd7tk-Luk/edit?usp=sharing
@@ -67,12 +68,16 @@ ote:
     program_overview: https://docs.google.com/document/d/1UCAJHZYt0rABO0bTRUWcm5euThNKd8otEkAFsfMeJ-c/edit?usp=sharing
 grs:
   staff_documents:
+    google_drive: https://drive.google.com/drive/folders/1ilHsr3tbCFt4oxENGS9Y-SUuZDZGeEZN?usp=drive_link
     breach_training_guide: https://docs.google.com/document/d/1BopFMmd_0GC2q7k1gLssRJ_RJh6BMAFA3kObdlj407w/edit?usp=sharing
     breaching_certificate: https://docs.google.com/document/d/10VyRbeIE2IMP1qFt6wIZpzN50Iegwpzh0n3dnU_8--c/edit?usp=sharing
     handbook: https://docs.google.com/document/d/1vCBNGn-Vv07FAqVUYle5AFGMy-5yXQJkRDGpYYhBsIU/edit?usp=sharing
     tryout_guide: https://docs.google.com/document/d/1e199RDQlZ2sxU-qgAGB_jBM0ksPb-DVkNmXlburxNA0/edit?usp=sharing
   information:
     handbook: https://docs.google.com/document/d/1vCBNGn-Vv07FAqVUYle5AFGMy-5yXQJkRDGpYYhBsIU/edit?usp=sharing
+esd:
+  staff_documents:
+    google_drive: https://drive.google.com/drive/folders/1yErNeiXRL-ES2fwsFl_td26lsv3Co24x?usp=drive_link
 
 # === FILE FOOTER ===
 # End of file: config/links.yaml

@@ -15,6 +15,7 @@ Modified:
   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
+  - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 === END FILE HEADER ===
 -->
 
@@ -337,6 +338,7 @@ python grs/information.py
 python grs/staff_documents.py
 python esd/coc.py
 python esd/information.py
+python esd/staff_documents.py
 ```
 
 ### Run every channel
@@ -345,7 +347,7 @@ python esd/information.py
 python run_all.py
 ```
 
-That runs all 17 announcers in the order shown in the list above.
+That runs all 18 announcers in the order shown in the list above.
 
 ### Check the repo after you edit files
 
@@ -421,7 +423,7 @@ Directorate of Support (DS)
 | [`osec/`](osec/) | 4 | [README](osec/README.md) |
 | [`ote/`](ote/) | 5 | [README](ote/README.md) |
 | [`grs/`](grs/) | 3 | [README](grs/README.md) |
-| [`esd/`](esd/) | 2 | [README](esd/README.md) |
+| [`esd/`](esd/) | 3 | [README](esd/README.md) |
 
 ---
 
@@ -446,6 +448,7 @@ Directorate of Support (DS)
 | 15 | `python grs/staff_documents.py` | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
 | 16 | `python esd/coc.py` | `WEBHOOK_ESD_COC` |
 | 17 | `python esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
+| 18 | `python esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
 
 ---
 
