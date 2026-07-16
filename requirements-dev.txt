@@ -5,10 +5,11 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
+#   - 2026-07-15 | docshamxo | Bump ruff to 0.15.21 for CI lint compatibility.
 # === END FILE HEADER ===
 
 -r requirements.txt
-ruff==0.12.2
+ruff==0.15.21
 
 # === FILE FOOTER ===
 # End of file: requirements-dev.txt
