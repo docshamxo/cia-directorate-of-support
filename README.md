@@ -16,6 +16,7 @@ Modified:
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+  - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 === END FILE HEADER ===
 -->
 
@@ -175,7 +176,7 @@ Windows PowerShell alternative:
 dir
 ```
 
-You should see files like `README.md`, `setup.py`, `run_all.py`, `requirements.txt`, and folders like `ds`, `osec`, `ote`, `grs`, `esd`, `common`, `assets`, `tools`.
+You should see files like `README.md`, `bootstrap.py`, `run_all.py`, `requirements.txt`, and folders like `ds`, `osec`, `ote`, `grs`, `esd`, `common`, `assets`, `tools`.
 
 ---
 
@@ -200,20 +201,25 @@ python3 -m pip install --upgrade pip
 Windows:
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev]"
 ```
 
 macOS / Linux:
 
 ```bash
-python3 -m pip install -r requirements.txt
+python3 -m pip install --upgrade pip
+python3 -m pip install -e ".[dev]"
 ```
 
-This installs:
+This installs the local `common` package plus:
 
 - `discord.py`
 - `python-dotenv`
 - `PyYAML`
+- `ruff` (dev extra)
+
+Alternatively you can install runtime pins only with `pip install -r requirements.txt` and set `PYTHONPATH` to the repo root when running scripts.
 
 ---
 
@@ -288,7 +294,7 @@ Windows:
 ```bash
 git clone https://github.com/docshamxo/cia-directorate-of-support.git
 cd cia-directorate-of-support
-python setup.py
+python bootstrap.py
 ```
 
 macOS / Linux:
@@ -296,13 +302,13 @@ macOS / Linux:
 ```bash
 git clone https://github.com/docshamxo/cia-directorate-of-support.git
 cd cia-directorate-of-support
-python3 setup.py
+python3 bootstrap.py
 ```
 
-`setup.py` will:
+`bootstrap.py` will:
 
 1. Copy `.env.example` to `.env` if `.env` does not exist
-2. Run `python -m pip install -r requirements.txt`
+2. Run `python -m pip install -e ".[dev]"`
 
 You must still complete **Step 8** (paste webhook URLs into `.env`) yourself.
 
@@ -349,6 +355,23 @@ python run_all.py
 
 That runs all 18 announcers in the order shown in the list above.
 
+Useful flags:
+
+```bash
+python run_all.py --dry-run          # preview embeds; do not post
+python run_all.py --fail-fast        # stop on first failure
+python run_all.py --delay 1.5        # seconds between scripts
+python run_all.py --no-skip-empty    # error on empty webhook env vars
+```
+
+Live runs create **new** Discord messages each time (they do not edit prior posts).
+
+### Preview one channel without posting
+
+```bash
+python ds/chain_of_command.py --dry-run
+```
+
 ### Check the repo after you edit files
 
 ```bash
@@ -366,6 +389,7 @@ python tools/validate_repo.py
 |-------------------------|--------------|
 | Names and ranks | [`config/personnel.yaml`](config/personnel.yaml) |
 | Mottos, about text, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
+| Server regulations prose | [`config/regulations.yaml`](config/regulations.yaml) |
 | Colors, bot names, logo filenames | [`config/branding.yaml`](config/branding.yaml) |
 | Document / form / Roblox / Discord links | [`config/links.yaml`](config/links.yaml) |
 | One Discord channel's embed layout | The matching script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
@@ -373,7 +397,7 @@ python tools/validate_repo.py
 | A logo image | Same filename in [`assets/logos/`](assets/logos/) |
 | Order of `run_all.py` | [`run_all.py`](run_all.py) |
 
-Most day-to-day updates are YAML edits under [`config/`](config/). See [config/README.md](config/README.md).
+Most day-to-day updates are YAML edits under [`config/`](config/). See [config/README.md](config/README.md) for the YAML guide and the **Discord Embed Style Guide** (hero pattern, link grammar, closer stack, Discord limits).
 
 ### Save and check your changes
 
@@ -385,11 +409,13 @@ python tools/validate_repo.py
 
 ```bash
 git status
-git add .
+git add path/to/changed-file.py
 git status
 git commit -m "Describe your change here"
 git push
 ```
+
+Prefer explicit paths over `git add .` so `.env` cannot be staged by mistake.
 
 Full contributor steps: [CONTRIBUTING.md](CONTRIBUTING.md)
 
@@ -398,13 +424,13 @@ Full contributor steps: [CONTRIBUTING.md](CONTRIBUTING.md)
 ## Folders
 
 ```text
-config/   Editable YAML (names, links, branding, org text)
+config/   Editable YAML (names, links, branding, org text, regulations)
 ds/       Directorate of Support
 osec/     Office of Security
 ote/      Office of Training & Education
 grs/      Global Response Staff
 esd/      Executive Security Detail
-common/   Loads config + Discord helpers
+common/   Loads config + Discord helpers + announcer runner
 assets/   Logos and diagrams
 tools/    Validation helpers
 ```

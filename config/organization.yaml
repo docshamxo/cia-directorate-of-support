@@ -8,6 +8,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 # === END FILE HEADER ===
 
 ds:
@@ -68,6 +69,31 @@ copy:
   disclaimer_links: All text and links listed here are marked as **UNCLASSIFIED**.
   disclaimer_classified: Classification markings apply to linked documents as indicated above. All channel
     text is marked **UNCLASSIFIED** unless otherwise stated.
+  important_notice: 'All {unit} personnel and candidates must follow Agency regulations and the
+    **{chain}** chain of command.
+
+
+    Unauthorized direct contact with command teams is **not permitted** for Agency personnel.'
+  staff_handling_notice: 'All documents listed in this channel are intended for **authorized {unit}
+    personnel only**.
+
+
+    Unauthorized disclosure, redistribution, or leaking of any restricted material may result in a
+    **BLACKLIST** from the **{authority}**.
+
+
+    Handle all staff documents responsibly. Do not share materials outside authorized channels or
+    personnel.'
+  staff_handling_notice_secret: 'All documents listed in this channel are classified up to the
+    **SECRET** level unless otherwise marked.
+
+
+    Unauthorized disclosure, redistribution, or leaking of any restricted material will result in a
+    **BLACKLIST** from the **{authority}**.
+
+
+    Handle all staff documents responsibly. Do not share materials outside authorized channels or
+    personnel.'
 
 # === FILE FOOTER ===
 # End of file: config/organization.yaml

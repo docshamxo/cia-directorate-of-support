@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 # === END FILE HEADER ===
 
 """
@@ -20,18 +21,25 @@ Editable data lives in config/*.yaml - not in this file:
   - config/organization.yaml  mottos, about text, offices, disclaimers
   - config/personnel.yaml     chain-of-command names and ranks
   - config/links.yaml         document / form / channel URLs
+  - config/regulations.yaml   server regulations prose
 """
 
 from __future__ import annotations
 
+import logging
 import os
+import re
+import time
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import discord
+import requests
 import yaml
+from discord.errors import HTTPException
 from dotenv import load_dotenv
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +49,15 @@ LOGOS_DIR = ASSETS_DIR / "logos"
 
 load_dotenv(REPO_ROOT / ".env")
 
+logger = logging.getLogger("cia.common")
+
+WEBHOOK_URL_RE = re.compile(
+    r"^https://(?:canary\.|ptb\.)?(?:discord|discordapp)\.com/api/webhooks/\d+/[\w-]+/?$",
+    re.IGNORECASE,
+)
+DEFAULT_HTTP_TIMEOUT = 30.0
+MAX_SEND_ATTEMPTS = 5
+
 
 def require_webhook(env_key: str) -> str:
     """Load a Discord webhook URL from the environment / .env file."""
@@ -49,7 +66,30 @@ def require_webhook(env_key: str) -> str:
         raise RuntimeError(
             f"Missing {env_key}. Copy .env.example to .env and set your webhook URLs."
         )
+    validate_webhook_url(value)
     return value
+
+
+def validate_webhook_url(webhook_url: str) -> None:
+    """Reject non-Discord webhook URLs without echoing the secret token."""
+    if not WEBHOOK_URL_RE.match(webhook_url.strip()):
+        raise ValueError(
+            "Invalid Discord webhook URL shape "
+            "(expected https://discord.com/api/webhooks/<id>/<token>)"
+        )
+
+
+def mask_webhook_url(webhook_url: str) -> str:
+    """Return a log-safe webhook URL with the token redacted."""
+    try:
+        parsed = urlparse(webhook_url)
+        parts = [part for part in parsed.path.split("/") if part]
+        if len(parts) >= 3 and parts[0] == "api" and parts[1] == "webhooks":
+            webhook_id = parts[2]
+            return f"{parsed.scheme}://{parsed.netloc}/api/webhooks/{webhook_id}/***"
+    except Exception:
+        pass
+    return "https://discord.com/api/webhooks/***"
 
 
 def _load_yaml(name: str) -> dict[str, Any]:
@@ -80,6 +120,11 @@ def _personnel() -> dict[str, Any]:
 @lru_cache(maxsize=1)
 def _links() -> dict[str, Any]:
     return _load_yaml("links.yaml")
+
+
+@lru_cache(maxsize=1)
+def _regulations() -> dict[str, Any]:
+    return _load_yaml("regulations.yaml")
 
 
 def _parse_color(value: str | int) -> int:
@@ -132,7 +177,6 @@ COLOR_ESD = _parse_color(_colors["esd"])
 BOT_DS = _bots["ds"]
 BOT_OSEC = _bots["osec"]
 BOT_OTE = _bots["ote"]
-BOT_OTE_ALT = _bots["ote_alt"]
 BOT_GRS = _bots["grs"]
 BOT_ESD = _bots["esd"]
 
@@ -157,9 +201,7 @@ OSEC_SUB_UNITS = tuple(_get_org("osec", "sub_units"))
 
 OTE_MOTTO = _get_org("ote", "motto")
 OTE_ABOUT = _get_org("ote", "about")
-OTE_PILLARS = tuple(
-    (item["title"], item["description"]) for item in _get_org("ote", "pillars")
-)
+OTE_PILLARS = tuple((item["title"], item["description"]) for item in _get_org("ote", "pillars"))
 
 GRS_ABOUT = _get_org("grs", "about")
 ESD_ABOUT = _get_org("esd", "about")
@@ -169,6 +211,9 @@ CHAIN_OF_COMMAND_INTRO = _copy["chain_of_command_intro"]
 DISCLAIMER_TEXT = _copy["disclaimer"]
 DISCLAIMER_LINKS_TEXT = _copy["disclaimer_links"]
 DISCLAIMER_CLASSIFIED_TEXT = _copy["disclaimer_classified"]
+IMPORTANT_NOTICE_TEMPLATE = _copy["important_notice"]
+STAFF_HANDLING_NOTICE = _copy["staff_handling_notice"]
+STAFF_HANDLING_NOTICE_SECRET = _copy["staff_handling_notice_secret"]
 
 # ── Personnel ─────────────────────────────────────────────────────────────────
 
@@ -197,9 +242,7 @@ class Rank:
 
 
 def _roles(key: str) -> tuple[Role, ...]:
-    return tuple(
-        Role(item["abbrev"], item["title"], item["holder"]) for item in _personnel()[key]
-    )
+    return tuple(Role(item["abbrev"], item["title"], item["holder"]) for item in _personnel()[key])
 
 
 def _ranks(key: str) -> tuple[Rank, ...]:
@@ -217,7 +260,7 @@ ESD_COMMAND = _roles("esd_command")
 OSEC_MIDDLE_COMMAND = _ranks("osec_middle_command")
 OSEC_LOW_COMMAND = _ranks("osec_low_command")
 GRS_ESD_LOW_COMMAND = _ranks("grs_esd_low_command")
-GRS_ESD_MIDDLE_COMMAND = OSEC_MIDDLE_COMMAND[2:]  # SI through SCL
+GRS_ESD_MIDDLE_COMMAND = _ranks("grs_esd_middle_command")
 
 # ── Formatting helpers ────────────────────────────────────────────────────────
 
@@ -238,9 +281,7 @@ def link(label: str, url_value: str) -> str:
     return f"[{label}]({url_value})"
 
 
-def link_field(
-    name: str, label: str, url_value: str, note: str | None = None
-) -> tuple[str, str]:
+def link_field(name: str, label: str, url_value: str, note: str | None = None) -> tuple[str, str]:
     value = link(label, url_value)
     if note:
         value += f"\n*{note}*"
@@ -248,7 +289,24 @@ def link_field(
 
 
 def pillar_field(title: str, description: str) -> tuple[str, str]:
-    return (title, f"**{title}**\n{description}")
+    return (title, description)
+
+
+def agency_eyebrow(unit: str) -> str:
+    """Standard italic hero eyebrow: Central Intelligence Agency · {Unit}."""
+    return f"*Central Intelligence Agency · {unit}*"
+
+
+def motto_line(motto: str, *, classification: str | None = None) -> str:
+    """Italic motto line, optionally with classification."""
+    if classification:
+        return f"*{motto} · Classification: {classification}*"
+    return f"*{motto}*"
+
+
+def pending_group_field(name: str, label: str) -> tuple[str, str]:
+    """Community link placeholder when a Roblox group is not yet available."""
+    return (name, f"*{label} — coming soon.*")
 
 
 # ── Embed helpers ─────────────────────────────────────────────────────────────
@@ -280,14 +338,36 @@ def embed(
     return result
 
 
-def disclaimer_embed(*, classified: bool = False, links: bool = False) -> discord.Embed:
+def hero_embed(
+    *,
+    title: str,
+    unit: str,
+    supporting: str,
+    color: int = COLOR_DS,
+    logo: Path | None = None,
+) -> discord.Embed:
+    """ALL CAPS hero title + italic CIA · Unit eyebrow + short supporting sentence."""
+    return embed(
+        title=title,
+        description=f"{agency_eyebrow(unit)}\n\n{supporting}",
+        color=color,
+        logo=logo,
+    )
+
+
+def disclaimer_embed(
+    *,
+    classified: bool = False,
+    links: bool = False,
+    color: int = COLOR_DS,
+) -> discord.Embed:
     if classified:
         text = DISCLAIMER_CLASSIFIED_TEXT
     elif links:
         text = DISCLAIMER_LINKS_TEXT
     else:
         text = DISCLAIMER_TEXT
-    return embed(title="Disclaimer", description=text)
+    return embed(title="Disclaimer", description=text, color=color)
 
 
 def chain_intro_embed(
@@ -295,12 +375,13 @@ def chain_intro_embed(
     unit: str,
     color: int = COLOR_DS,
     context: str | None = None,
+    logo: Path | None = None,
 ) -> discord.Embed:
-    description = f"*Central Intelligence Agency · {unit}*\n\n"
+    description = f"{agency_eyebrow(unit)}\n\n"
     if context:
         description += f"{context}\n\n"
     description += CHAIN_OF_COMMAND_INTRO
-    return embed(title="CHAIN OF COMMAND", description=description, color=color)
+    return embed(title="CHAIN OF COMMAND", description=description, color=color, logo=logo)
 
 
 def important_notice_embed(
@@ -310,16 +391,81 @@ def important_notice_embed(
     parent_units: tuple[str, ...] = (),
 ) -> discord.Embed:
     chain = "**, **".join(parent_units + (unit,))
+    description = IMPORTANT_NOTICE_TEMPLATE.format(unit=unit, chain=chain)
     return embed(
         title="Important Notice",
-        description=(
-            f"All {unit} personnel and candidates must follow Agency regulations and the "
-            f"**{chain}** chain of command.\n\n"
-            "Unauthorized direct contact with command teams is **not permitted** "
-            "for Agency personnel."
-        ),
+        description=description,
         color=color,
     )
+
+
+def classification_handling_embed(
+    *,
+    unit: str,
+    authority: str = "CIA Directorate of Support",
+    color: int = COLOR_DS,
+    secret: bool = False,
+) -> discord.Embed:
+    template = STAFF_HANDLING_NOTICE_SECRET if secret else STAFF_HANDLING_NOTICE
+    return embed(
+        title="Classification & Handling Notice",
+        description=template.format(unit=unit, authority=authority),
+        color=color,
+    )
+
+
+def server_regulations_embeds() -> list[discord.Embed]:
+    """Build DS server regulations embeds from config/regulations.yaml."""
+    data = _regulations()
+    intro = str(data["intro"]).format(
+        eyebrow=agency_eyebrow("Directorate of Support"),
+        motto=DS_MOTTO,
+        classification=DS_CLASSIFICATION,
+    )
+    embeds = [
+        embed(
+            title=str(data.get("title", "SERVER REGULATIONS")),
+            description=intro,
+            logo=LOGOS["ds"],
+        )
+    ]
+    for section in data.get("sections", []):
+        title = section.get("title")
+        embeds.append(
+            embed(
+                title=str(title) if title else None,
+                description=str(section["body"]),
+            )
+        )
+    embeds.append(disclaimer_embed(color=COLOR_DS))
+    return embeds
+
+
+def _session_with_timeout(timeout: float = DEFAULT_HTTP_TIMEOUT) -> requests.Session:
+    session = requests.Session()
+    original_request = session.request
+
+    def request_with_timeout(method: str, url: str, **kwargs: Any) -> requests.Response:
+        kwargs.setdefault("timeout", timeout)
+        return original_request(method, url, **kwargs)
+
+    session.request = request_with_timeout  # type: ignore[method-assign]
+    return session
+
+
+def _retry_after_seconds(exc: HTTPException, attempt: int) -> float:
+    retry_after = getattr(exc, "retry_after", None)
+    if isinstance(retry_after, int | float) and retry_after > 0:
+        return float(retry_after)
+    response = getattr(exc, "response", None)
+    if response is not None:
+        header = response.headers.get("Retry-After")
+        if header:
+            try:
+                return float(header)
+            except ValueError:
+                pass
+    return min(2**attempt, 30)
 
 
 def send_webhook(
@@ -331,9 +477,67 @@ def send_webhook(
 ) -> None:
     from discord import SyncWebhook
 
-    webhook = SyncWebhook.from_url(webhook_url)
-    webhook.send(embeds=embeds, username=username, files=files or [])
-    print("Sent successfully!")
+    validate_webhook_url(webhook_url)
+    if len(embeds) > 10:
+        raise ValueError(f"Discord allows at most 10 embeds per message; got {len(embeds)}")
+
+    masked = mask_webhook_url(webhook_url)
+    session = _session_with_timeout()
+    webhook = SyncWebhook.from_url(webhook_url, session=session)
+
+    last_error: Exception | None = None
+    for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
+        try:
+            webhook.send(embeds=embeds, username=username, files=files or [])
+            logger.info("Webhook send succeeded (%s) as %s", masked, username)
+            print("Sent successfully!")
+            return
+        except HTTPException as exc:
+            last_error = exc
+            status = getattr(exc, "status", None)
+            if status == 429 and attempt < MAX_SEND_ATTEMPTS:
+                delay = _retry_after_seconds(exc, attempt)
+                logger.warning(
+                    "Discord rate-limited webhook %s (attempt %s/%s); sleeping %.1fs",
+                    masked,
+                    attempt,
+                    MAX_SEND_ATTEMPTS,
+                    delay,
+                )
+                time.sleep(delay)
+                continue
+            if isinstance(status, int) and status >= 500 and attempt < MAX_SEND_ATTEMPTS:
+                delay = min(2**attempt, 30)
+                logger.warning(
+                    "Discord server error %s for webhook %s (attempt %s/%s); sleeping %.1fs",
+                    status,
+                    masked,
+                    attempt,
+                    MAX_SEND_ATTEMPTS,
+                    delay,
+                )
+                time.sleep(delay)
+                continue
+            raise RuntimeError(
+                f"Discord webhook send failed (HTTP {status}) for {masked}"
+            ) from None
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            last_error = exc
+            if attempt < MAX_SEND_ATTEMPTS:
+                delay = min(2**attempt, 30)
+                logger.warning(
+                    "Network error sending webhook %s (attempt %s/%s); sleeping %.1fs",
+                    masked,
+                    attempt,
+                    MAX_SEND_ATTEMPTS,
+                    delay,
+                )
+                time.sleep(delay)
+                continue
+            raise RuntimeError(f"Discord webhook send failed for {masked}: network error") from None
+
+    raise RuntimeError(f"Discord webhook send failed for {masked}") from last_error
+
 
 # === FILE FOOTER ===
 # End of file: common/cia_common.py

@@ -9,6 +9,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align hero supporting line, link grammar, unit-color closer.
 # === END FILE HEADER ===
 
 """
@@ -21,42 +23,39 @@ to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_OPEN_POSITIONS")
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="OPEN POSITIONS",
-            description=(
-                "*Central Intelligence Agency · Office of Training & Education*\n\n"
-                f"*{c.OTE_MOTTO}*\n\n"
-                f"{c.OTE_ABOUT}\n\n"
-                "The Office of Training & Education is currently accepting applications for "
-                "**Associate Professor** and above. As a sub-division under the "
-                "**Directorate of Support**, personnel from **all Agency divisions** may "
-                "apply, with the exception of members holding **SIS-6+** in their respective "
-                "division.\n\n"
-                "Review all eligibility requirements and important information below before "
-                "submitting your application."
+            unit="Office of Training & Education",
+            supporting=(
+                "OTE is accepting applications for Associate Professor and above. "
+                "Review eligibility and important information before submitting."
             ),
+            color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
             title="Available Positions",
-            description="The following staff positions are open for application:",
+            description=(
+                f"{c.motto_line(c.OTE_MOTTO)}\n\n"
+                "As a sub-division under the **Directorate of Support**, personnel from "
+                "**all Agency divisions** may apply, with the exception of members holding "
+                "**SIS-6+** in their respective division.\n\n"
+                "The following staff positions are open for application:"
+            ),
+            color=c.COLOR_OTE,
             fields=(("Staff Ranks", c.ranks_text(*c.OTE_STAFF_RANKS)),),
         ),
         c.embed(
             title="Eligibility",
             description="Applicants must meet the following rank and training requirements:",
+            color=c.COLOR_OTE,
             fields=(
                 (
                     "Graduated Officers",
@@ -85,17 +84,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "→ Use proper grammar, spelling, and professionalism throughout your application.\n"
                 "→ All applicants must follow Agency regulations and the OTE chain of command."
             ),
+            color=c.COLOR_OTE,
         ),
         c.embed(
             title="How to Apply",
             description=(
                 "Before submitting, ensure you have **requested to join the OTE Roblox group**."
             ),
+            color=c.COLOR_OTE,
             fields=(
                 c.link_field(
                     "Application",
-                    "CIA | OTE Professor Application",
-                    c.url('ote.open_positions.application'),
+                    "CIA OTE | Professor Application",
+                    c.url("ote.open_positions.application"),
                 ),
                 c.link_field(
                     "Roblox Group",
@@ -105,21 +106,22 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Application Tracker",
                     "CIA OTE | Application Tracker",
-                    c.url('ote.open_positions.application_tracker'),
-                    "Public tracker for submitted OTE applications and status updates.",
+                    c.url("ote.open_positions.application_tracker"),
+                    "UNCLASSIFIED.",
                 ),
             ),
         ),
-        c.disclaimer_embed(links=True),
+        c.disclaimer_embed(links=True, color=c.COLOR_OTE),
     ]
 
 
 def send_open_positions() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
-        username=c.BOT_OTE_ALT,
+    run_announcer(
+        webhook_key="WEBHOOK_OTE_OPEN_POSITIONS",
+        username=c.BOT_OTE,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["ote"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

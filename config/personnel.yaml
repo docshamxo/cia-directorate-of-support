@@ -8,6 +8,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 # === END FILE HEADER ===
 
 agency_executive:
@@ -121,6 +122,13 @@ osec_low_command:
   title: Junior Security Agent
 - abbrev: SP1/SP2
   title: Security Program Candidates
+grs_esd_middle_command:
+- abbrev: SI
+  title: Security Inspector
+- abbrev: SC
+  title: Security Captain
+- abbrev: SCL
+  title: Security Chief Lieutenant
 grs_esd_low_command:
 - abbrev: SL
   title: Security Lieutenant

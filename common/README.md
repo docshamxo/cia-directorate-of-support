@@ -13,6 +13,8 @@ Modified:
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+  - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+  - 2026-07-15 | docshamxo | Document embed style helpers (hero, motto, closers).
 === END FILE HEADER ===
 -->
 
@@ -21,6 +23,9 @@ Modified:
 [← Back to main README](../README.md)
 
 [`cia_common.py`](cia_common.py) loads YAML from [`../config/`](../config/) and provides Discord helpers.
+[`announcer.py`](announcer.py) provides `run_announcer` and shared CoC layouts.
+
+Full embed contract: [Discord Embed Style Guide](../config/README.md#discord-embed-style-guide).
 
 ## Do not hardcode here
 
@@ -29,9 +34,36 @@ Put editable values in config instead:
 | Data | Config file |
 |------|-------------|
 | Colors, bots, logo filenames | [`../config/branding.yaml`](../config/branding.yaml) |
-| Mottos / about text | [`../config/organization.yaml`](../config/organization.yaml) |
+| Mottos / about text / handling notices | [`../config/organization.yaml`](../config/organization.yaml) |
 | Chain of command | [`../config/personnel.yaml`](../config/personnel.yaml) |
 | Links | [`../config/links.yaml`](../config/links.yaml) |
+| Server regulations | [`../config/regulations.yaml`](../config/regulations.yaml) |
+
+## Embed helpers
+
+```python
+from common import cia_common as c
+
+# Hero: ALL CAPS title + italic CIA · Unit eyebrow + supporting sentence
+c.hero_embed(
+    title="INFORMATION",
+    unit="Office of Security",
+    supporting="Short supporting sentence.",
+    color=c.COLOR_OSEC,
+    logo=c.LOGOS["osec"],
+)
+
+c.agency_eyebrow("Office of Security")          # *Central Intelligence Agency · …*
+c.motto_line(c.OSEC_MOTTO)                      # *PROTECT · DETECT · RESPOND*
+c.link_field("Handbook", "CIA OSEC | Handbook", url, "UNCLASSIFIED.")
+c.pending_group_field("ESD", "CIA | Executive Security Detail")
+
+c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
+c.important_notice_embed(unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",))
+c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required
+```
+
+Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer (always last).
 
 ## Useful helpers
 

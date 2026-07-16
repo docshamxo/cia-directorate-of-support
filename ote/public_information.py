@@ -9,6 +9,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align public-info template, hero, and link grammar.
 # === END FILE HEADER ===
 
 """
@@ -21,57 +23,59 @@ to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_PUBLIC_INFORMATION")
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
     return [
-        c.embed(
-            description=(
-                "**Office of Training & Education Overview**\n\n"
-                f"*{c.OTE_MOTTO}*\n\n"
-                f"{c.OTE_ABOUT}"
+        c.hero_embed(
+            title="PUBLIC INFORMATION",
+            unit="Office of Training & Education",
+            supporting=(
+                "Unclassified overview of OTE, the Officer Training Program, and community links."
             ),
+            color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
-            title="Program Pillars",
-            description="The Officer Training Program is organized around three core pillars.",
+            title="About the Office",
+            description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
+            color=c.COLOR_OTE,
             fields=ote_pillars,
         ),
         c.embed(
-            title="Program Overview",
-            description=(
-                "How OTE is organized, who may apply or participate, how the chain of command "
-                "works, what each phase covers, and how scheduling and key dates are handled. "
-                "Read this first when you join or when policy or structure changes.\n\n"
-                f"{c.link('CIA | Officer Training Program Overview', c.url('ote.public_information.program_overview'))}"
+            title="Community Links",
+            description="Official documents and Roblox group for OTE.",
+            color=c.COLOR_OTE,
+            fields=(
+                c.link_field(
+                    "Program Overview",
+                    "CIA OTE | Program Overview",
+                    c.url("ote.public_information.program_overview"),
+                    "UNCLASSIFIED.",
+                ),
+                c.link_field(
+                    "Office of Training & Education",
+                    "CIA | Office of Training & Education",
+                    c.URL_ROBLOX_GROUP_OTE,
+                ),
             ),
         ),
-        c.embed(
-            title="CIA OTE Roblox Group",
-            description=c.link("Join the CIA OTE Roblox Group", c.URL_ROBLOX_GROUP_OTE),
-        ),
-        c.embed(description="**Stay informed. Stay prepared.**"),
-        c.disclaimer_embed(),
+        c.disclaimer_embed(links=True, color=c.COLOR_OTE),
     ]
 
 
 def send_ote_public_information() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_OTE_PUBLIC_INFORMATION",
         username=c.BOT_OTE,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["ote"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

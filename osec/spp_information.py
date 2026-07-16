@@ -9,6 +9,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align hero, link grammar, and unit-color closers.
 # === END FILE HEADER ===
 
 """
@@ -21,27 +23,21 @@ Security Phase Program candidates to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_SPP_INFORMATION")
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="SECURITY PHASE PROGRAM",
-            description=(
-                "*Central Intelligence Agency · Office of Security*\n\n"
-                f"*{c.OSEC_MOTTO}*\n\n"
-                "Welcome to the **Security Phase Program (SPP)**. This channel provides "
-                "orientation, training requirements, and required reading for newly "
-                "accepted candidates entering the Office of Security."
+            unit="Office of Security",
+            supporting=(
+                "Orientation, training requirements, and required reading for newly "
+                "accepted Security Phase Program candidates."
             ),
+            color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
         ),
         c.embed(
@@ -51,6 +47,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "tryout or application process and have been **accepted** into the "
                 "**CIA Office of Security**."
             ),
+            color=c.COLOR_OSEC,
             fields=(
                 (
                     "Next Steps",
@@ -71,6 +68,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "Candidates must complete each phase in order before promotion to "
                 "**Junior Security Agent**."
             ),
+            color=c.COLOR_OSEC,
             fields=(
                 (
                     "Phase I",
@@ -99,29 +97,30 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "Review each document in full before training and promotion to "
                 "**Junior Security Agent**. Observe all classification markings."
             ),
+            color=c.COLOR_OSEC,
             fields=(
                 c.link_field(
                     "Orientation",
                     "CIA OSEC | Security Phase Candidate Orientation Guide",
-                    c.url('osec.spp_information.orientation_guide'),
+                    c.url("osec.spp_information.orientation_guide"),
                     "CONFIDENTIAL. Authorized candidates only.",
                 ),
                 c.link_field(
                     "Handbook",
-                    "CIA Office of Security Handbook",
-                    c.url('osec.spp_information.official_handbook'),
-                    "CONTROLLED UNCLASSIFIED INFORMATION (CUI). Authorized personnel only.",
+                    "CIA OSEC | Handbook",
+                    c.url("osec.spp_information.official_handbook"),
+                    "CONTROLLED UNCLASSIFIED INFORMATION (CUI). Authorized OSEC staff only.",
                 ),
                 c.link_field(
                     "Conduct",
-                    "Code of Agency Conduct",
-                    c.url('osec.spp_information.code_of_agency_conduct'),
+                    "CIA OSEC | Code of Agency Conduct",
+                    c.url("osec.spp_information.code_of_agency_conduct"),
                     "UNCLASSIFIED.",
                 ),
                 c.link_field(
                     "Civilian Access",
-                    "CIA | Civilian Access",
-                    c.url('osec.spp_information.civilian_access'),
+                    "CIA OSEC | Civilian Access",
+                    c.url("osec.spp_information.civilian_access"),
                     "UNCLASSIFIED.",
                 ),
             ),
@@ -130,7 +129,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Classification & Handling Notice",
             description=(
                 "The **Security Phase Candidate Orientation Guide** is classified "
-                "**CONFIDENTIAL**. The **CIA Office of Security Handbook** is marked "
+                "**CONFIDENTIAL**. The **CIA OSEC | Handbook** is marked "
                 "**CONTROLLED UNCLASSIFIED INFORMATION (CUI)**.\n\n"
                 "The **Code of Agency Conduct** and **Civilian Access** documents are "
                 "**UNCLASSIFIED**.\n\n"
@@ -139,17 +138,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "Handle all documents responsibly and do not share them outside authorized "
                 "channels or personnel."
             ),
+            color=c.COLOR_OSEC,
         ),
-        c.disclaimer_embed(classified=True),
+        c.disclaimer_embed(classified=True, color=c.COLOR_OSEC),
     ]
 
 
 def send_osec_spp_information() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_OSEC_SPP_INFORMATION",
         username=c.BOT_OSEC,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["osec"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

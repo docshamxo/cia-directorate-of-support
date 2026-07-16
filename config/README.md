@@ -9,6 +9,7 @@ Modified:
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+  - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 === END FILE HEADER ===
 -->
 
@@ -24,6 +25,45 @@ Editable data for the announcers. Change these files instead of hardcoding value
 | [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers |
 | [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks |
 | [`links.yaml`](links.yaml) | Document, form, Roblox, and Discord URLs |
+| [`regulations.yaml`](regulations.yaml) | Server regulations prose |
+
+## Discord Embed Style Guide
+
+Discord supports markdown emphasis only — no custom fonts. Typography means `**bold**`, `*italic*`, title casing, and embed chrome (color bar, thumbnail).
+
+### Design contract
+
+| Element | Rule |
+|---------|------|
+| **Hero** | ALL CAPS `title=` + italic eyebrow `*Central Intelligence Agency · {Unit}*` + one short supporting sentence |
+| **Body section titles** | Title Case |
+| **Links** | `[CIA {UNIT} \| {Document}](url)` with optional italic note; community groups: `CIA \| {Group}` |
+| **Closers (order)** | optional Classification & Handling Notice → optional Important Notice → Disclaimer (always last, unit color) |
+| **Logo** | Thumbnail on the **first** branded embed; attach matching logo file(s) |
+
+### Closing-stack vocabulary
+
+| Title | Use for |
+|-------|---------|
+| **Important Notice** | Chain of command / conduct only |
+| **Classification & Handling Notice** | Restricted document hubs |
+| **Important Information** | Application rules only |
+| **Disclaimer** | Always last; pass `color=` for the unit; use `links=True` when the message has URLs, `classified=True` for restricted doc hubs |
+
+### Channel templates
+
+- **Public info:** hero → about → community links → links disclaimer
+- **Internal info:** hero → about → reference docs → Classification & Handling Notice → classified disclaimer
+- **Staff documents:** hero → Central Repository → topic sections (Title Case, no numbers) → Classification & Handling Notice → classified disclaimer
+
+### Discord limits
+
+- ≤ **10 embeds** per webhook message
+- Field name ≤ 256 characters; field value ≤ 1024 characters
+- Embed description ≤ 4096 characters; embed title ≤ 256 characters
+- Total message content across embeds is subject to Discord’s overall payload limits
+
+Use this checklist when editing announcers or YAML copy.
 
 ## Examples
 

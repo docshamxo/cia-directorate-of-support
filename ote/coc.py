@@ -8,6 +8,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Attach OTE logo and unit-color disclaimer.
 # === END FILE HEADER ===
 
 """
@@ -19,15 +21,9 @@ Sends the Office of Training & Education chain of command to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
-
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_COC")
+from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
@@ -35,8 +31,9 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.chain_intro_embed(
             unit="Office of Training & Education",
             color=c.COLOR_OTE,
+            logo=c.LOGOS["ote"],
             context=(
-                f"*{c.OTE_MOTTO}*\n\n"
+                f"{c.motto_line(c.OTE_MOTTO)}\n\n"
                 "The Office of Training & Education sits under the **Directorate of Support**. "
                 "OTE leadership reports through the DS chain to Agency leadership."
             ),
@@ -64,12 +61,18 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OTE,
             parent_units=("Directorate of Support",),
         ),
-        c.disclaimer_embed(),
+        c.disclaimer_embed(color=c.COLOR_OTE),
     ]
 
 
 def send_chain_of_command() -> None:
-    c.send_webhook(WEBHOOK_URL, _build_embeds(), username=c.BOT_OTE_ALT)
+    run_announcer(
+        webhook_key="WEBHOOK_OTE_COC",
+        username=c.BOT_OTE,
+        build_embeds=_build_embeds,
+        files=[c.logo_file(c.LOGOS["ote"])],
+        dry_run="--dry-run" in sys.argv,
+    )
 
 
 if __name__ == "__main__":

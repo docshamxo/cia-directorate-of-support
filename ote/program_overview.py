@@ -9,6 +9,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align link grammar, hero supporting line, unit-color closer.
 # === END FILE HEADER ===
 
 """
@@ -21,35 +23,29 @@ official community links to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_PROGRAM_OVERVIEW")
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
     return [
-        c.embed(
+        c.hero_embed(
             title="OFFICER TRAINING PROGRAM",
-            description=(
-                "*Central Intelligence Agency · Office of Training & Education*\n\n"
-                f"*{c.OTE_MOTTO}*\n\n"
-                f"{c.OTE_ABOUT}\n\n"
-                "Official reference hub for the **Officer Training Program**. "
-                "Review these materials when you join, when policy or structure changes, "
-                "or before hosting training, phases, or graduation ceremonies."
+            unit="Office of Training & Education",
+            supporting=(
+                "Official reference hub for the Officer Training Program — organization, "
+                "phases, graduation, and community links."
             ),
+            color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
             title="Program Pillars",
-            description="The Officer Training Program is organized around three core pillars.",
+            description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
+            color=c.COLOR_OTE,
             fields=ote_pillars,
         ),
         c.embed(
@@ -58,24 +54,26 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "Authorized guides and procedures for OTE personnel, instructors, "
                 "and program leadership."
             ),
+            color=c.COLOR_OTE,
             fields=(
                 c.link_field(
                     "Program Overview",
-                    "CIA | Officer Training Program Overview",
-                    c.url('ote.program_overview.program_overview'),
-                    "Organization, eligibility, chain of command, phases, and scheduling.",
+                    "CIA OTE | Program Overview",
+                    c.url("ote.program_overview.program_overview"),
+                    "UNCLASSIFIED.",
                 ),
                 c.link_field(
                     "Graduation",
-                    "CIA | Graduation Ceremony Procedures",
-                    c.url('ote.program_overview.graduation_ceremony_procedures'),
-                    "Planning and conducting official OTE graduation ceremonies.",
+                    "CIA OTE | Graduation Ceremony Procedures",
+                    c.url("ote.program_overview.graduation_ceremony_procedures"),
+                    "UNCLASSIFIED.",
                 ),
             ),
         ),
         c.embed(
             title="Community Links",
             description="Official Roblox groups for the Directorate of Support and OTE.",
+            color=c.COLOR_OTE,
             fields=(
                 c.link_field(
                     "Directorate of Support",
@@ -89,17 +87,17 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
             ),
         ),
-        c.embed(description="**Stay informed. Stay prepared.**"),
-        c.disclaimer_embed(links=True),
+        c.disclaimer_embed(links=True, color=c.COLOR_OTE),
     ]
 
 
 def send_officer_training_program_overview() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_OTE_PROGRAM_OVERVIEW",
         username=c.BOT_OTE,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["ote"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

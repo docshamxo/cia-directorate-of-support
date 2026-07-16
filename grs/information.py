@@ -9,57 +9,45 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align internal info template and closing vocabulary.
 # === END FILE HEADER ===
 
 """
 CIA GRS information announcer.
 
-Posts the Global Response Staff overview and community links
+Posts the Global Response Staff overview and reference documentation
 to a Discord webhook.
 """
 
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_GRS_INFORMATION")
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="INFORMATION",
-            description=(
-                "*Central Intelligence Agency · Global Response Staff*\n\n"
-                "Welcome to the official Global Response Staff (GRS) information hub. "
-                "This channel provides an unclassified overview of GRS, its mission, "
-                "and official community resources."
+            unit="Global Response Staff",
+            supporting=(
+                "Official reference hub for Global Response Staff mission overview and "
+                "authorized documentation."
             ),
             color=c.COLOR_GRS,
+            logo=c.LOGOS["grs"],
         ),
         c.embed(
-            title="Global Response Staff",
+            title="About GRS",
             description=(
                 "The Global Response Staff is a sub-unit of the **Office of Security**, "
                 "operating under the **Directorate of Support**.\n\n"
                 f"{c.GRS_ABOUT}"
             ),
             color=c.COLOR_GRS,
-            logo=c.LOGOS["grs"],
-            fields=(
-                (
-                    "Organization",
-                    "GRS reports through the **Office of Security** and **Directorate of Support** "
-                    "chain of command. Personnel are expected to follow Agency regulations and "
-                    "maintain professionalism at all times.",
-                ),
-            ),
         ),
         c.embed(
             title="Reference Documents",
@@ -69,48 +57,27 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Handbook",
                     "CIA GRS | Handbook",
-                    c.url('\1'),
-                    "Primary reference for GRS policy and standards.",
+                    c.url("grs.information.handbook"),
+                    "Authorized GRS staff only.",
                 ),
             ),
         ),
-        c.embed(
-            title="Community Links",
-            description="Official Roblox groups for GRS and its parent organizations.",
-            color=c.COLOR_GRS,
-            fields=(
-                c.link_field(
-                    "Global Response Staff",
-                    "CIA | Global Response Staff",
-                    c.URL_ROBLOX_GROUP_GRS,
-                ),
-                c.link_field(
-                    "Office of Security",
-                    "CIA Office of Security",
-                    c.URL_ROBLOX_GROUP_OSEC,
-                ),
-                c.link_field(
-                    "Directorate of Support",
-                    "CIA | Directorate of Support",
-                    c.URL_ROBLOX_GROUP_DS,
-                ),
-            ),
-        ),
-        c.important_notice_embed(
+        c.classification_handling_embed(
             unit="GRS",
+            authority="CIA Directorate of Support",
             color=c.COLOR_GRS,
-            parent_units=("Directorate of Support", "Office of Security"),
         ),
-        c.disclaimer_embed(links=True),
+        c.disclaimer_embed(classified=True, color=c.COLOR_GRS),
     ]
 
 
 def send_grs_information() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_GRS_INFORMATION",
         username=c.BOT_GRS,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["grs"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

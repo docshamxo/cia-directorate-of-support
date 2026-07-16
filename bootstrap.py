@@ -1,21 +1,17 @@
 # === FILE HEADER ===
-# Title: Setup
-# Path: setup.py
+# Title: Bootstrap
+# Path: bootstrap.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Simplify setup and contributor docs.
-#   - 2026-07-14 | docshamxo | Document every install, setup, and run command explicitly.
-#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
-#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
-#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-14 | docshamxo | Initial creation
 # === END FILE HEADER ===
 
 """
 One-command setup for new contributors.
 
 Usage (from the repository root):
-    python setup.py
+    python bootstrap.py
 """
 
 from __future__ import annotations
@@ -28,11 +24,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 ENV_PATH = ROOT / ".env"
 ENV_EXAMPLE = ROOT / ".env.example"
-REQUIREMENTS = ROOT / "requirements.txt"
 
 
 def main() -> None:
-    print("CIA Directorate of Support — setup\n")
+    print("CIA Directorate of Support — bootstrap\n")
 
     if not ENV_EXAMPLE.is_file():
         raise SystemExit("Missing .env.example. Are you in the repository root?")
@@ -43,9 +38,13 @@ def main() -> None:
         shutil.copy(ENV_EXAMPLE, ENV_PATH)
         print("1) Created .env from .env.example")
 
-    print("2) Installing Python packages...")
+    print("2) Installing package (editable) and dependencies...")
     subprocess.check_call(
-        [sys.executable, "-m", "pip", "install", "-r", str(REQUIREMENTS)],
+        [sys.executable, "-m", "pip", "install", "--upgrade", "pip"],
+        cwd=ROOT,
+    )
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", "-e", ".[dev]"],
         cwd=ROOT,
     )
 
@@ -55,8 +54,8 @@ def main() -> None:
         "  1. Open .env in a text editor\n"
         "  2. Paste each Discord webhook URL after the matching WEBHOOK_...=\n"
         "  3. Save .env\n"
-        "  4. Run one channel:  python ds/chain_of_command.py\n"
-        "  5. Or run all:       python run_all.py\n"
+        "  4. Preview one channel:  python ds/chain_of_command.py --dry-run\n"
+        "  5. Or run all (live):    python run_all.py\n"
         "\n"
         "Full step-by-step guide (Git + Python install included): README.md\n"
     )
@@ -66,6 +65,6 @@ if __name__ == "__main__":
     main()
 
 # === FILE FOOTER ===
-# End of file: setup.py
+# End of file: bootstrap.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

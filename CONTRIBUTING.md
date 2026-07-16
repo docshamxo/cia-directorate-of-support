@@ -11,12 +11,13 @@ Modified:
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+  - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 === END FILE HEADER ===
 -->
 
 # Contributing
 
-Follow the full install steps in [README.md](README.md) first (`git`, Python, clone, packages, `.env`).
+Follow the full install steps in [README.md](README.md) first (`git`, Python, clone, `python bootstrap.py`, `.env`).
 
 ## Everyday edits
 
@@ -26,6 +27,7 @@ Prefer editing YAML under [`config/`](config/) instead of hardcoding values in P
 |-------------------------|---------------|
 | Names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
 | Mottos, about text, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
+| Server regulations prose | [`config/regulations.yaml`](config/regulations.yaml) |
 | Colors, bot usernames, logo filenames | [`config/branding.yaml`](config/branding.yaml) |
 | Document / form / community links | [`config/links.yaml`](config/links.yaml) |
 | One channel's Discord embed layout | The script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
@@ -39,6 +41,19 @@ In announcer scripts, load links with:
 c.url('osec.information.handbook')
 ```
 
+Post (or dry-run) through the shared runner:
+
+```python
+from common.announcer import run_announcer
+
+run_announcer(
+    webhook_key="WEBHOOK_OSEC_INFORMATION",
+    username=c.BOT_OSEC,
+    build_embeds=_build_embeds,
+    dry_run="--dry-run" in sys.argv,
+)
+```
+
 ## After you change code or config
 
 From the repository root:
@@ -47,6 +62,7 @@ From the repository root:
 cd cia-directorate-of-support
 python tools/sync_file_banners.py
 python tools/validate_repo.py
+python run_all.py --dry-run --delay 0
 ```
 
 macOS / Linux if needed:
@@ -54,6 +70,7 @@ macOS / Linux if needed:
 ```bash
 python3 tools/sync_file_banners.py
 python3 tools/validate_repo.py
+python3 run_all.py --dry-run --delay 0
 ```
 
 `sync_file_banners.py` refreshes each file's header (title, path, created date, created by, modification log) and footer from Git history. Created by / maintained by is **docshamxo**.
@@ -62,11 +79,13 @@ python3 tools/validate_repo.py
 
 ```bash
 git status
-git add .
+git add path/to/changed-file.py
 git status
 git commit -m "Describe your change here"
 git push
 ```
+
+Prefer explicit paths over `git add .` so secrets in `.env` cannot be staged accidentally.
 
 If this is your first push from a new clone of your fork:
 
@@ -83,12 +102,7 @@ Do every step:
 1. Copy an existing script in the correct office folder.
 2. Rename it.
 3. Edit the embeds in that new script.
-4. Change the webhook line to a new key, for example:
-
-```python
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_NEW_CHANNEL")
-```
-
+4. Point `run_announcer(..., webhook_key=...)` at a new key, for example `WEBHOOK_OSEC_NEW_CHANNEL`.
 5. Add any document URLs to [`config/links.yaml`](config/links.yaml) and read them with `c.url('...')`.
 6. Add the webhook key to [`.env.example`](.env.example):
 
@@ -97,20 +111,21 @@ WEBHOOK_OSEC_NEW_CHANNEL=
 ```
 
 7. Add the same key to your local `.env` and paste the webhook URL.
-8. Add the script to [`run_all.py`](run_all.py).
+8. Add the script to [`run_all.py`](run_all.py) (path, label, webhook key).
 9. Update that office README.
 10. Update the announcer list in [README.md](README.md).
 11. Run:
 
 ```bash
 python tools/validate_repo.py
+python run_all.py --dry-run --delay 0
 ```
 
-12. Commit and push:
+12. Commit and push with explicit paths:
 
 ```bash
 git status
-git add .
+git add osec/new_channel.py run_all.py .env.example README.md
 git commit -m "Add new announcer script"
 git push
 ```

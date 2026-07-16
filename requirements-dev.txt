@@ -1,0 +1,16 @@
+# === FILE HEADER ===
+# Title: Requirements Dev
+# Path: requirements-dev.txt
+# Created: 2026-07-14
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-14 | docshamxo | Initial creation
+# === END FILE HEADER ===
+
+-r requirements.txt
+ruff==0.12.2
+
+# === FILE FOOTER ===
+# End of file: requirements-dev.txt
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

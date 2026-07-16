@@ -4,7 +4,8 @@
 # Created: 2026-07-15
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-15 | docshamxo | Add ESD staff documents announcer with Google Drive link.
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
 # === END FILE HEADER ===
 
 """
@@ -17,29 +18,19 @@ resources to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
-
-WEBHOOK_URL = c.require_webhook("WEBHOOK_ESD_STAFF_DOCUMENTS")
+from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="STAFF DOCUMENTS",
-            description=(
-                "*Central Intelligence Agency · Executive Security Detail*\n\n"
-                f"{c.ESD_ABOUT}\n\n"
-                "This channel serves as the official repository for authorized ESD "
-                "staff documentation. The Executive Security Detail is a sub-unit of the "
-                "**Office of Security** under the **Directorate of Support**.\n\n"
-                "Access is **strictly limited** to authorized personnel. Review, use, "
-                "and handle all materials responsibly."
+            unit="Executive Security Detail",
+            supporting=(
+                "Official repository for authorized ESD staff documentation. "
+                "Access is strictly limited to authorized personnel."
             ),
             color=c.COLOR_ESD,
             logo=c.LOGOS["esd"],
@@ -52,33 +43,27 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Google Drive",
                     "CIA ESD | Google Drive",
-                    c.url('esd.staff_documents.google_drive'),
+                    c.url("esd.staff_documents.google_drive"),
                     "Authorized ESD staff only.",
                 ),
             ),
         ),
-        c.embed(
-            title="Classification & Handling Notice",
-            description=(
-                "All documents listed in this channel are intended for **authorized ESD "
-                "personnel only**.\n\n"
-                "Unauthorized disclosure, redistribution, or leaking of any restricted "
-                "material may result in a **BLACKLIST** from the **CIA Directorate of Support**.\n\n"
-                "Handle all staff documents responsibly. Do not share materials outside "
-                "authorized channels or personnel."
-            ),
+        c.classification_handling_embed(
+            unit="ESD",
+            authority="CIA Directorate of Support",
             color=c.COLOR_ESD,
         ),
-        c.disclaimer_embed(classified=True),
+        c.disclaimer_embed(classified=True, color=c.COLOR_ESD),
     ]
 
 
 def send_esd_staff_documents() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_ESD_STAFF_DOCUMENTS",
         username=c.BOT_ESD,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["esd"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

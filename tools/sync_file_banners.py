@@ -7,6 +7,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 # === END FILE HEADER ===
 
 """
@@ -108,6 +109,7 @@ def title_for(path: Path) -> str:
         else:
             words.append(word.capitalize())
     return " ".join(words)
+
 
 def style_for(path: Path) -> str:
     suffix = path.suffix.lower()
@@ -222,7 +224,11 @@ def strip_existing(text: str, style: str) -> str:
             flags=re.S,
         )
         text = re.sub(
-            r"\s*<!--\s*" + re.escape(FOOTER_START) + r".*?" + re.escape(FOOTER_END) + r"\s*-->\s*$",
+            r"\s*<!--\s*"
+            + re.escape(FOOTER_START)
+            + r".*?"
+            + re.escape(FOOTER_END)
+            + r"\s*-->\s*$",
             "\n",
             text,
             count=1,
@@ -232,7 +238,9 @@ def strip_existing(text: str, style: str) -> str:
 
     # Hash comments
     text = re.sub(
-        r"(?:^|\n)(?:#.*" + re.escape(HEADER_START) + r".*\n)(?:#.*\n)*?(?:#.*"
+        r"(?:^|\n)(?:#.*"
+        + re.escape(HEADER_START)
+        + r".*\n)(?:#.*\n)*?(?:#.*"
         + re.escape(HEADER_END)
         + r".*\n+)",
         "",
@@ -241,7 +249,9 @@ def strip_existing(text: str, style: str) -> str:
         flags=re.M,
     )
     text = re.sub(
-        r"\n?(?:#.*" + re.escape(FOOTER_START) + r".*\n)(?:#.*\n)*?(?:#.*"
+        r"\n?(?:#.*"
+        + re.escape(FOOTER_START)
+        + r".*\n)(?:#.*\n)*?(?:#.*"
         + re.escape(FOOTER_END)
         + r".*\n*)\s*$",
         "\n",

@@ -8,6 +8,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Align public-info template and link grammar.
 # === END FILE HEADER ===
 
 """
@@ -20,59 +22,43 @@ to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
-
-WEBHOOK_URL = c.require_webhook("WEBHOOK_ESD_INFORMATION")
+from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="INFORMATION",
-            description=(
-                "*Central Intelligence Agency · Executive Security Detail*\n\n"
-                "Welcome to the official Executive Security Detail (ESD) information hub. "
-                "This channel provides an unclassified overview of ESD, its mission, "
-                "and official community resources."
+            unit="Executive Security Detail",
+            supporting=(
+                "Unclassified overview of ESD, its mission, and official community resources."
             ),
             color=c.COLOR_ESD,
+            logo=c.LOGOS["esd"],
         ),
         c.embed(
-            title="Executive Security Detail",
+            title="About ESD",
             description=(
                 "The Executive Security Detail is a sub-unit of the **Office of Security**, "
                 "operating under the **Directorate of Support**.\n\n"
                 f"{c.ESD_ABOUT}"
             ),
             color=c.COLOR_ESD,
-            logo=c.LOGOS["esd"],
-            fields=(
-                (
-                    "Organization",
-                    "ESD reports through the **Office of Security** and **Directorate of Support** "
-                    "chain of command. Personnel are expected to follow Agency regulations and "
-                    "maintain the highest standards of professionalism and discretion.",
-                ),
-            ),
         ),
         c.embed(
             title="Community Links",
             description="Official Roblox groups for ESD and its parent organizations.",
             color=c.COLOR_ESD,
             fields=(
-                (
+                c.pending_group_field(
                     "Executive Security Detail",
-                    "*CIA Executive Security Detail Roblox group — coming soon.*",
+                    "CIA | Executive Security Detail",
                 ),
                 c.link_field(
                     "Office of Security",
-                    "CIA Office of Security",
+                    "CIA | Office of Security",
                     c.URL_ROBLOX_GROUP_OSEC,
                 ),
                 c.link_field(
@@ -82,21 +68,17 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
             ),
         ),
-        c.important_notice_embed(
-            unit="ESD",
-            color=c.COLOR_ESD,
-            parent_units=("Directorate of Support", "Office of Security"),
-        ),
-        c.disclaimer_embed(links=True),
+        c.disclaimer_embed(links=True, color=c.COLOR_ESD),
     ]
 
 
 def send_esd_information() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_ESD_INFORMATION",
         username=c.BOT_ESD,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["esd"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

@@ -9,7 +9,9 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
-#   - 2026-07-15 | docshamxo | Reorganize OTE staff documents channel; update tryout guide. (#11)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Update OTE tryout guide and reorganize staff documents. (#12)
+#   - 2026-07-15 | docshamxo | Title Case sections without numbers; shared handling copy.
 # === END FILE HEADER ===
 
 """
@@ -22,36 +24,27 @@ and personnel records to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
-
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OTE_STAFF_DOCUMENTS")
+from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="STAFF DOCUMENTS",
-            description=(
-                "*Central Intelligence Agency · Office of Training & Education*\n\n"
-                f"*{c.OTE_MOTTO}*\n\n"
-                "Official repository for authorized OTE staff documentation.\n"
-                "Use the sections below in order: **Drive hub → policy → "
-                "tryouts & ceremonies → training → records**.\n\n"
-                "Access is **strictly limited** to authorized personnel."
+            unit="Office of Training & Education",
+            supporting=(
+                "Official repository for authorized OTE staff documentation. "
+                "Access is strictly limited to authorized personnel."
             ),
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
-            title="1 · Drive Hub",
+            title="Central Repository",
             description=(
-                "Start here. The shared Drive holds applications, forms, guides, "
+                "Primary Google Drive folder for applications, forms, guides, "
                 "and supporting files referenced throughout this channel."
             ),
             color=c.COLOR_OTE,
@@ -60,31 +53,31 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA OTE | Google Drive",
                     c.url("ote.staff_documents.google_drive"),
-                    "Primary folder for all OTE staff files.",
+                    "Authorized OTE staff only.",
                 ),
             ),
         ),
         c.embed(
-            title="2 · Policy & Handbook",
+            title="Policy & Handbook",
             description="Core references for structure, expectations, and chain of command.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
                     "Staff Handbook",
-                    "CIA OTE | Officer Training Program Staff Handbook",
+                    "CIA OTE | Staff Handbook",
                     c.url("ote.staff_documents.staff_handbook"),
-                    "Program structure, phases, and staff standards.",
+                    "Authorized OTE staff only.",
                 ),
                 c.link_field(
                     "General Information",
                     "CIA OTE | General Information & Chain of Command",
                     c.url("ote.staff_documents.general_info_coc"),
-                    "Organization overview and reporting structure.",
+                    "Authorized OTE staff only.",
                 ),
             ),
         ),
         c.embed(
-            title="3 · Tryouts & Ceremonies",
+            title="Tryouts & Ceremonies",
             description="Candidate screening and official ceremony procedures.",
             color=c.COLOR_OTE,
             fields=(
@@ -92,18 +85,18 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Tryout Guide",
                     "CIA OTE | Tryout Guide",
                     c.url("ote.staff_documents.tryout_guide"),
-                    "Hosting standards, phases, and evaluation guidance.",
+                    "Authorized OTE staff only.",
                 ),
                 c.link_field(
                     "Graduation",
-                    "CIA | Graduation Ceremony Procedures",
+                    "CIA OTE | Graduation Ceremony Procedures",
                     c.url("ote.staff_documents.graduation_ceremony_procedures"),
-                    "Planning and conducting official OTE graduations.",
+                    "Authorized OTE staff only.",
                 ),
             ),
         ),
         c.embed(
-            title="4 · Training Materials",
+            title="Training Materials",
             description="Standard instruction guides used for OTE training delivery.",
             color=c.COLOR_OTE,
             fields=(
@@ -111,18 +104,18 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Standard Training",
                     "CIA OTE | Standard Training Guide",
                     c.url("ote.staff_documents.standard_training_guide"),
-                    "General ST curriculum and hosting reference.",
+                    "Authorized OTE staff only.",
                 ),
                 c.link_field(
                     "Weapons ST",
                     "CIA OTE | Weapons ST Guide",
                     c.url("ote.staff_documents.weapons_st_guide"),
-                    "Weapons standard training curriculum and reference.",
+                    "Authorized OTE staff only.",
                 ),
             ),
         ),
         c.embed(
-            title="5 · Personnel Records",
+            title="Personnel Records",
             description="Live tracking for staff assignments and program records.",
             color=c.COLOR_OTE,
             fields=(
@@ -130,33 +123,26 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Staff Database",
                     "CIA OTE | ORBAT",
                     c.url("ote.staff_documents.staff_database"),
-                    "Official staff records, assignments, and tracking.",
+                    "Authorized OTE staff only.",
                 ),
             ),
         ),
-        c.embed(
-            title="Classification & Handling Notice",
-            description=(
-                "All documents listed in this channel are intended for **authorized OTE "
-                "personnel only**.\n\n"
-                "Unauthorized disclosure, redistribution, or leaking of any restricted "
-                "material may result in disciplinary action under the "
-                "**CIA Directorate of Support**.\n\n"
-                "Questions may be forwarded to **OTE HICOM**. Do not share materials "
-                "outside authorized channels or personnel."
-            ),
+        c.classification_handling_embed(
+            unit="OTE",
+            authority="CIA Directorate of Support",
             color=c.COLOR_OTE,
         ),
-        c.disclaimer_embed(classified=True),
+        c.disclaimer_embed(classified=True, color=c.COLOR_OTE),
     ]
 
 
 def send_ote_staff_documents() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_OTE_STAFF_DOCUMENTS",
         username=c.BOT_OTE,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["ote"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

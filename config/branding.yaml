@@ -8,6 +8,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 # === END FILE HEADER ===
 
 colors:
@@ -26,7 +27,6 @@ bots:
   ds: CIA Directorate of Support Bot
   osec: CIA | Office of Security
   ote: CIA | Office of Training & Education
-  ote_alt: CIA | Office of Training & Education Bot
   grs: CIA | Global Response Staff
   esd: CIA | Executive Security Detail
 

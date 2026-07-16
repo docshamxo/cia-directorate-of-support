@@ -9,6 +9,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
 # === END FILE HEADER ===
 
 """
@@ -21,28 +23,19 @@ certification resources to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_GRS_STAFF_DOCUMENTS")
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
+        c.hero_embed(
             title="STAFF DOCUMENTS",
-            description=(
-                "*Central Intelligence Agency · Global Response Staff*\n\n"
-                f"{c.GRS_ABOUT}\n\n"
-                "This channel serves as the official repository for authorized GRS "
-                "staff documentation. The Global Response Staff is a sub-unit of the "
-                "**Office of Security** under the **Directorate of Support**.\n\n"
-                "Access is **strictly limited** to authorized personnel. Review, use, "
-                "and handle all materials responsibly."
+            unit="Global Response Staff",
+            supporting=(
+                "Official repository for authorized GRS staff documentation. "
+                "Access is strictly limited to authorized personnel."
             ),
             color=c.COLOR_GRS,
             logo=c.LOGOS["grs"],
@@ -55,7 +48,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Google Drive",
                     "CIA GRS | Google Drive",
-                    c.url('grs.staff_documents.google_drive'),
+                    c.url("grs.staff_documents.google_drive"),
                     "Authorized GRS staff only.",
                 ),
             ),
@@ -68,20 +61,20 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Handbook",
                     "CIA GRS | Handbook",
-                    c.url('grs.staff_documents.handbook'),
-                    "Primary reference for GRS policy and standards.",
+                    c.url("grs.staff_documents.handbook"),
+                    "Authorized GRS staff only.",
                 ),
                 c.link_field(
                     "Breach Training",
                     "CIA GRS | Breach Training Guide",
-                    c.url('grs.staff_documents.breach_training_guide'),
-                    "Official breach training procedures and instruction.",
+                    c.url("grs.staff_documents.breach_training_guide"),
+                    "Authorized GRS staff only.",
                 ),
                 c.link_field(
                     "Tryouts",
                     "CIA GRS | Tryout Guide",
-                    c.url('grs.staff_documents.tryout_guide'),
-                    "Candidate tryout standards and evaluation guidance.",
+                    c.url("grs.staff_documents.tryout_guide"),
+                    "Authorized GRS staff only.",
                 ),
             ),
         ),
@@ -93,33 +86,27 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Breaching Certification",
                     "CIA GRS | Breaching Certificate",
-                    c.url('grs.staff_documents.breaching_certificate'),
-                    "Qualification standards for breaching certification.",
+                    c.url("grs.staff_documents.breaching_certificate"),
+                    "Authorized GRS staff only.",
                 ),
             ),
         ),
-        c.embed(
-            title="Classification & Handling Notice",
-            description=(
-                "All documents listed in this channel are intended for **authorized GRS "
-                "personnel only**.\n\n"
-                "Unauthorized disclosure, redistribution, or leaking of any restricted "
-                "material may result in a **BLACKLIST** from the **CIA Directorate of Support**.\n\n"
-                "Handle all staff documents responsibly. Do not share materials outside "
-                "authorized channels or personnel."
-            ),
+        c.classification_handling_embed(
+            unit="GRS",
+            authority="CIA Directorate of Support",
             color=c.COLOR_GRS,
         ),
-        c.disclaimer_embed(classified=True),
+        c.disclaimer_embed(classified=True, color=c.COLOR_GRS),
     ]
 
 
 def send_grs_staff_documents() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_GRS_STAFF_DOCUMENTS",
         username=c.BOT_GRS,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["grs"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

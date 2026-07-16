@@ -9,6 +9,9 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Standardize hero, link grammar, and links disclaimer.
+#   - 2026-07-15 | docshamxo | Tighten open-positions embed density.
 # === END FILE HEADER ===
 
 """
@@ -20,51 +23,44 @@ Sends LOWCOM and MIDCOM application announcements to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
+from common.announcer import run_announcer
 
-WEBHOOK_URL = c.require_webhook("WEBHOOK_OSEC_OPEN_POSITIONS")
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.embed(
-            description=(
-                "**Open Positions**\n"
-                "**Central Intelligence Agency | Office of Security**\n\n"
-                f"*{c.OSEC_MOTTO}*\n\n"
-                f"{c.OSEC_ABOUT}\n\n"
-                "Applications for **LOWCOM** and **MIDCOM** positions are linked below. "
+        c.hero_embed(
+            title="OPEN POSITIONS",
+            unit="Office of Security",
+            supporting=(
+                "Applications for LOWCOM and MIDCOM positions are linked below. "
                 "Read all requirements before submitting."
             ),
+            color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
         ),
         c.embed(
-            title="LOWCOM Application",
+            title="Applications",
             description=(
-                "LOWCOM members operate within the Office, assisting with **base operations** "
-                "and maintaining standards across all ranks.\n\n"
-                f"{c.link('CIA | Office of Security LOWCOM Application', c.url('osec.open_positions.lowcom_application'))}"
-            ),
-        ),
-        c.embed(
-            title="MIDCOM Application",
-            description=(
-                "MIDCOM members lead within the Office, assisting with **base operations, tryouts, "
-                "phases, and events**. They help bring in new recruits, host events, manage LOWCOM "
-                "personnel, and support a wide range of operational duties.\n\n"
-                f"{c.link('CIA | Office of Security MIDCOM Application', c.url('osec.open_positions.midcom_application'))}"
-            ),
-        ),
-        c.embed(
-            title="Application Schedule",
-            description=(
-                "Positions tend to open every **Sunday**, following the weekly quota reset.\n\n"
+                f"{c.motto_line(c.OSEC_MOTTO)}\n\n"
+                "Positions tend to open every **Sunday**, following the weekly quota reset.\n"
                 f"*Last updated: {c.url('osec.open_positions.last_updated')}*"
+            ),
+            color=c.COLOR_OSEC,
+            fields=(
+                c.link_field(
+                    "LOWCOM",
+                    "CIA OSEC | LOWCOM Application",
+                    c.url("osec.open_positions.lowcom_application"),
+                    "Assists with base operations and standards across ranks.",
+                ),
+                c.link_field(
+                    "MIDCOM",
+                    "CIA OSEC | MIDCOM Application",
+                    c.url("osec.open_positions.midcom_application"),
+                    "Leads tryouts, phases, events, and LOWCOM supervision.",
+                ),
             ),
         ),
         c.embed(
@@ -72,22 +68,16 @@ def _build_embeds() -> list[c.discord.Embed]:
             description=(
                 "→ The use of **AI**, trolling, sharing answers, requesting answers, or asking for "
                 "application results will result in an **automatic failure**.\n"
-                "→ Be patient after submitting your application. **Do not contact staff** asking for "
-                "updates, results, or status regarding your submission. This will result in an "
-                "**immediate failure**.\n"
-                "→ Proper grammar and professionalism are required at all times. Every question must "
-                "be answered in **at least two complete sentences**. Failure to meet this requirement "
-                "will result in a failed application.\n"
-                "→ After receiving a **passing** application result, you must wait a **full week** "
-                "before reapplying for a higher position."
-            ),
-        ),
-        c.embed(
-            title="Application Contact",
-            description=(
-                "Questions or concerns regarding these applications should be directed **only** to:\n"
+                "→ Be patient after submitting. **Do not contact staff** for updates, results, or "
+                "status — that is an **immediate failure**.\n"
+                "→ Proper grammar and professionalism are required. Every question must be answered "
+                "in **at least two complete sentences**.\n"
+                "→ After a **passing** result, wait a **full week** before reapplying for a higher "
+                "position.\n"
+                "→ Application questions may be directed **only** to:\n"
                 f"{c.roles_text(*c.OSEC_HIGH_COMMAND[:3])}"
             ),
+            color=c.COLOR_OSEC,
         ),
         c.embed(
             title="Application Results",
@@ -96,17 +86,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                 f"You will be pinged in [#application-results]({c.url('osec.open_positions.application_results_channel')}) "
                 "when your application has been graded."
             ),
+            color=c.COLOR_OSEC,
         ),
-        c.disclaimer_embed(),
+        c.disclaimer_embed(links=True, color=c.COLOR_OSEC),
     ]
 
 
 def send_open_positions() -> None:
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_OSEC_OPEN_POSITIONS",
         username=c.BOT_OSEC,
+        build_embeds=_build_embeds,
         files=[c.logo_file(c.LOGOS["osec"])],
+        dry_run="--dry-run" in sys.argv,
     )
 
 

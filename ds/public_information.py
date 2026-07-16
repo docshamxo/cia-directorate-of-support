@@ -8,6 +8,8 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Standardize eyebrow, link grammar, and public-info template.
 # === END FILE HEADER ===
 
 """
@@ -20,34 +22,28 @@ to a Discord webhook.
 from __future__ import annotations
 
 import sys
-from pathlib import Path
-
-_ROOT = Path(__file__).resolve().parents[1]
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 from common import cia_common as c
-
-WEBHOOK_URL = c.require_webhook("WEBHOOK_DS_PUBLIC_INFORMATION")
+from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
     return [
-        c.embed(
+        c.hero_embed(
             title="PUBLIC INFORMATION",
-            description=(
-                "*YFPA's CIA · Organizational Bulletin*\n\n"
-                f"**DIRECTORATE OF SUPPORT**\n"
-                f"*{c.DS_MOTTO} · Classification: {c.DS_CLASSIFICATION}*\n\n"
+            unit="Directorate of Support",
+            supporting=(
                 "Unclassified overview of the Directorate of Support and its subordinate offices."
             ),
+            logo=c.LOGOS["ds"],
         ),
         c.embed(
             title="About the Directorate",
-            description=c.DS_ABOUT,
-            logo=c.LOGOS["ds"],
+            description=(
+                f"{c.motto_line(c.DS_MOTTO, classification=c.DS_CLASSIFICATION)}\n\n{c.DS_ABOUT}"
+            ),
             fields=(
                 ("Leadership", c.roles_text(*c.DS_LEADERSHIP)),
                 ("Offices", c.bullets(*c.DS_OFFICES)),
@@ -55,10 +51,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Office of Security",
-            description=(
-                f"*{c.OSEC_MOTTO}*\n\n"
-                f"{c.OSEC_ABOUT}"
-            ),
+            description=(f"{c.motto_line(c.OSEC_MOTTO)}\n\n{c.OSEC_ABOUT}"),
             logo=c.LOGOS["osec"],
             fields=(
                 ("Global Response Staff (GRS)", c.GRS_ABOUT),
@@ -67,10 +60,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Office of Training & Education",
-            description=(
-                f"*{c.OTE_MOTTO}*\n\n"
-                f"{c.OTE_ABOUT}"
-            ),
+            description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
             logo=c.LOGOS["ote"],
             fields=ote_pillars,
         ),
@@ -83,50 +73,50 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Directorate of Support",
-                    "CIA Directorate of Support",
+                    "CIA | Directorate of Support",
                     c.URL_ROBLOX_GROUP_DS,
                 ),
                 c.link_field(
                     "Office of Security",
-                    "CIA Office of Security",
+                    "CIA | Office of Security",
                     c.URL_ROBLOX_GROUP_OSEC,
                 ),
                 c.link_field(
                     "Global Response Staff",
-                    "CIA Global Response Staff",
+                    "CIA | Global Response Staff",
                     c.URL_ROBLOX_GROUP_GRS,
                 ),
-                (
+                c.pending_group_field(
                     "Executive Security Detail",
-                    "*CIA Executive Security Detail Roblox group — coming soon.*",
+                    "CIA | Executive Security Detail",
                 ),
                 c.link_field(
                     "Office of Training & Education",
-                    "CIA Office of Training & Education",
+                    "CIA | Office of Training & Education",
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
                 c.link_field(
                     "Discord",
-                    "Permanent Discord Invite",
+                    "CIA | Discord Invite",
                     c.URL_DISCORD_INVITE,
                 ),
             ),
         ),
-        c.disclaimer_embed(links=True),
+        c.disclaimer_embed(links=True, color=c.COLOR_DS),
     ]
 
 
 def send_public_information() -> None:
-    logo_files = [
-        c.logo_file(c.LOGOS["ds"]),
-        c.logo_file(c.LOGOS["osec"]),
-        c.logo_file(c.LOGOS["ote"]),
-    ]
-    c.send_webhook(
-        WEBHOOK_URL,
-        _build_embeds(),
+    run_announcer(
+        webhook_key="WEBHOOK_DS_PUBLIC_INFORMATION",
         username=c.BOT_DS,
-        files=logo_files,
+        build_embeds=_build_embeds,
+        files=lambda: [
+            c.logo_file(c.LOGOS["ds"]),
+            c.logo_file(c.LOGOS["osec"]),
+            c.logo_file(c.LOGOS["ote"]),
+        ],
+        dry_run="--dry-run" in sys.argv,
     )
 
 
