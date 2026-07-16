@@ -8,6 +8,7 @@
 #   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
+#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 # === END FILE HEADER ===
 
 """
@@ -45,6 +46,19 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
             color=c.COLOR_GRS,
             logo=c.LOGOS["grs"],
+        ),
+        c.embed(
+            title="Central Repository",
+            description="Primary folder for all GRS staff files, guides, and forms.",
+            color=c.COLOR_GRS,
+            fields=(
+                c.link_field(
+                    "Google Drive",
+                    "CIA GRS | Google Drive",
+                    c.url('grs.staff_documents.google_drive'),
+                    "Authorized GRS staff only.",
+                ),
+            ),
         ),
         c.embed(
             title="Training & Operational Guides",

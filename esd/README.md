@@ -12,6 +12,7 @@ Modified:
   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
+  - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 === END FILE HEADER ===
 -->
 
@@ -52,6 +53,7 @@ From the repository root (`cd cia-directorate-of-support`):
 ```bash
 python esd/coc.py
 python esd/information.py
+python esd/staff_documents.py
 ```
 
 ## Scripts
@@ -60,6 +62,7 @@ python esd/information.py
 |--------|---------------|------------|
 | [`coc.py`](coc.py) | ESD chain of command | `WEBHOOK_ESD_COC` |
 | [`information.py`](information.py) | ESD information | `WEBHOOK_ESD_INFORMATION` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
 
 ## Edit
 

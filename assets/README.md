@@ -9,6 +9,7 @@ Modified:
   - 2026-07-14 | docshamxo | Polish repository presentation and align documentation.
   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
+  - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 === END FILE HEADER ===
 -->
 
