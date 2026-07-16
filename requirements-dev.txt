@@ -8,7 +8,7 @@
 # === END FILE HEADER ===
 
 -r requirements.txt
-ruff==0.12.2
+ruff==0.15.21
 
 # === FILE FOOTER ===
 # End of file: requirements-dev.txt
