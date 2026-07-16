@@ -8,6 +8,7 @@
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
+#   - 2026-07-15 | docshamxo | Update OTE tryout guide URL and rename key for consistency. (#11)
 # === END FILE HEADER ===
 
 community:
@@ -50,14 +51,14 @@ osec:
     last_updated: June 20th, 2026
 ote:
   staff_documents:
-    staff_handbook: https://docs.google.com/document/d/1Nhi3xnirH192rIdbMCrGGH5pnhLywQ9EhWxPCoRbY9s/edit?usp=sharing
-    staff_database: https://docs.google.com/spreadsheets/d/17Yw1oby46r9pGJXzWSs2cPh3DRaj-ktUQ728GDi09x0/edit?usp=sharing
-    tryout_document: https://docs.google.com/document/d/1tNns_L-M1i3SBl7SUwx_Zk1U2Jf8iOU1zRL8zJUnbQQ/edit?usp=drivesdk
     google_drive: https://drive.google.com/drive/folders/11g2H9zeEwFbyO2a6dkxpmSGN0qGR4Oe1?usp=drive_link
+    staff_handbook: https://docs.google.com/document/d/1Nhi3xnirH192rIdbMCrGGH5pnhLywQ9EhWxPCoRbY9s/edit?usp=sharing
     general_info_coc: https://docs.google.com/document/d/1gZO3E9X_dbNIjJJQc5wsKgryyH6uTryfjQHLSKbq4EA/edit?usp=sharing
+    tryout_guide: https://docs.google.com/document/d/1ayKXDB1cYA1MspMcLSKskllQIVDfPy8bPsXSsxAo0EI/edit?usp=drive_link
+    graduation_ceremony_procedures: https://docs.google.com/document/d/1NR61wNgfyEnPiDQ7jZB8NwS8CUCFq7nt1aDN2y6uwKA/edit?usp=sharing
     standard_training_guide: https://docs.google.com/document/d/19M5hFnP5jTy8MlOYUcZ7DqmxAEQN-HDT_thV8TpnaB8/edit?usp=sharing
     weapons_st_guide: https://docs.google.com/document/d/17v8Z-koVCxP2cTopvU8QYJaTaXbBB7RujmPd7tk-Luk/edit?usp=sharing
-    graduation_ceremony_procedures: https://docs.google.com/document/d/1NR61wNgfyEnPiDQ7jZB8NwS8CUCFq7nt1aDN2y6uwKA/edit?usp=sharing
+    staff_database: https://docs.google.com/spreadsheets/d/17Yw1oby46r9pGJXzWSs2cPh3DRaj-ktUQ728GDi09x0/edit?usp=sharing
   open_positions:
     application: https://docs.google.com/forms/d/e/1FAIpQLSefGwpK9766JHaXw46lqIsbr9VuoVERO90G6LEBE4cdRS4J7g/viewform?usp=header
     application_tracker: https://docs.google.com/spreadsheets/d/1iSOWAM9-Z8WBkdhleuRhbfYa78XC9rMQG7fD3uv6J9c/edit?usp=sharing
