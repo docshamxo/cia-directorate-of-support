@@ -13,7 +13,7 @@
 # === END FILE HEADER ===
 
 discord.py==2.6.4
-python-dotenv==1.1.0
+python-dotenv==1.2.2
 PyYAML==6.0.3
 
 # === FILE FOOTER ===
