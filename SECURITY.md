@@ -12,6 +12,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document local webhook message ID state and cleanup limits.
+  - 2026-07-15 | docshamxo | Document CodeQL code scanning via GitHub Actions.
 === END FILE HEADER ===
 -->
 
@@ -34,6 +35,11 @@ Webhook URLs can post into Discord channels. Keep them private.
 3. Update the matching `WEBHOOK_...=` line in your local `.env`
 4. Confirm `.env` is not staged: `git status`
 5. Re-run only the affected announcer (or `python run_all.py`)
+
+## Code scanning
+
+- GitHub **code scanning** runs via Advanced Setup: the CodeQL workflow at `.github/workflows/codeql.yml` analyzes Python on pushes and pull requests to `main`, plus a weekly schedule
+- Results appear under the repository **Security** tab (Code scanning alerts)
 
 ## Operational notes
 

@@ -1,0 +1,59 @@
+# === FILE HEADER ===
+# Title: CodeQL
+# Path: .github/workflows/codeql.yml
+# Created: 2026-07-15
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-15 | docshamxo | Add CodeQL code scanning workflow for Python.
+# === END FILE HEADER ===
+
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly Monday 05:17 UTC (offset cron to avoid peak load).
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
+
+# === FILE FOOTER ===
+# End of file: .github/workflows/codeql.yml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===
