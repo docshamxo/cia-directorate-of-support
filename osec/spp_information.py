@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align hero, link grammar, and unit-color closers.
 #   - 2026-07-17 | docshamxo | Community markings CANDIDATE/STAFF/PUBLIC.
+#   - 2026-07-17 | docshamxo | Accessible field names and marking notes.
 # === END FILE HEADER ===
 
 """
@@ -110,19 +111,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Handbook",
                     "CIA OSEC | Handbook",
                     c.url("osec.spp_information.official_handbook"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Conduct",
+                    "Code of Agency Conduct",
                     "CIA OSEC | Code of Agency Conduct",
                     c.url("osec.spp_information.code_of_agency_conduct"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Civilian Access",
                     "CIA OSEC | Civilian Access",
                     c.url("osec.spp_information.civilian_access"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
             ),
         ),

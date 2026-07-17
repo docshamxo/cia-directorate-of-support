@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align hero supporting line, link grammar, unit-color closer.
+#   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
 # === END FILE HEADER ===
 
 """
@@ -107,7 +108,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Application Tracker",
                     "CIA OTE | Application Tracker",
                     c.url("ote.open_positions.application_tracker"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
             ),
         ),

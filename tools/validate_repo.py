@@ -13,6 +13,7 @@
 #   - 2026-07-17 | docshamxo | Manifest catalog; optional banners; env community URLs.
 #   - 2026-07-17 | docshamxo | Secret-split, logo bare-name, mentions regression guards.
 #   - 2026-07-17 | docshamxo | Validate Inter Studios property_notice is present in config.
+#   - 2026-07-17 | docshamxo | Require accessibility helpers and docs.
 # === END FILE HEADER ===
 
 """
@@ -437,6 +438,14 @@ def validate_style_guide() -> None:
     common_text = COMMON.read_text(encoding="utf-8")
     if "def hero_embed" not in common_text or "def agency_eyebrow" not in common_text:
         issues.append("common/cia_common.py: missing hero_embed / agency_eyebrow helpers")
+    if "def marking_note" not in common_text or "def command_band_label" not in common_text:
+        issues.append(
+            "common/cia_common.py: missing accessibility helpers (marking_note / command_band_label)"
+        )
+    if "def validate_embed_accessibility" not in common_text:
+        issues.append("common/cia_common.py: missing validate_embed_accessibility")
+    if not (ROOT / "docs" / "ACCESSIBILITY.md").is_file():
+        issues.append("docs/ACCESSIBILITY.md: missing accessibility guidance for channel content")
     if "BOT_OTE_ALT" in common_text:
         issues.append("common/cia_common.py: remove BOT_OTE_ALT")
     if "allowed_mentions" not in common_text:

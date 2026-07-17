@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align internal info template and link grammar.
 #   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF.
+#   - 2026-07-17 | docshamxo | Clearer field names and text marking notes for accessibility.
 # === END FILE HEADER ===
 
 """
@@ -55,28 +56,28 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OSEC,
             fields=(
                 c.link_field(
-                    "ORBAT",
-                    "CIA OSEC | ORBAT",
+                    "Order of Battle (ORBAT)",
+                    "CIA OSEC | Order of Battle (ORBAT)",
                     c.url("osec.information.orbat"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Handbook",
                     "CIA OSEC | Handbook",
                     c.url("osec.information.handbook"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Conduct",
+                    "Code of Agency Conduct",
                     "CIA OSEC | Code of Agency Conduct",
                     c.url("osec.information.code_of_agency_conduct"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Civilian Access",
                     "CIA OSEC | Civilian Access",
                     c.url("osec.information.civilian_access"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
             ),
         ),
@@ -86,7 +87,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "The **CIA OSEC | Handbook** is marked **STAFF**. Unauthorized disclosure, "
                 "redistribution, or leaking of this document will result in a **BLACKLIST** "
                 "from the **CIA Office of Security**.\n\n"
-                "The **ORBAT**, **Code of Agency Conduct**, and **Civilian Access** documents "
+                "The **Order of Battle (ORBAT)**, **Code of Agency Conduct**, and **Civilian Access** documents "
                 "are **PUBLIC** and may be referenced in accordance with community policy.\n\n"
                 "Handle all materials responsibly. Do not share restricted documents outside "
                 "authorized channels or personnel."

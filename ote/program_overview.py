@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align link grammar, hero supporting line, unit-color closer.
+#   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
 # === END FILE HEADER ===
 
 """
@@ -60,13 +61,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Program Overview",
                     "CIA OTE | Program Overview",
                     c.url("ote.program_overview.program_overview"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Graduation",
                     "CIA OTE | Graduation Ceremony Procedures",
                     c.url("ote.program_overview.graduation_ceremony_procedures"),
-                    "PUBLIC.",
+                    c.marking_note("PUBLIC"),
                 ),
             ),
         ),

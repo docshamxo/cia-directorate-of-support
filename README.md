@@ -23,6 +23,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
   - 2026-07-17 | docshamxo | Require bot token for live; allow-skip, bot purge, diagnose tool.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
+  - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
 === END FILE HEADER ===
 -->
 
@@ -78,7 +79,7 @@ python run_all.py --dry-run --delay 0
 python run_all.py
 ```
 
-Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
+Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
 
 ---
 

@@ -18,6 +18,7 @@ Modified:
   - 2026-07-17 | docshamxo | Tighten tradecraft rules and cross-link OPS runbooks.
   - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, bot channel cleanup.
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
+  - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
@@ -99,11 +100,15 @@ Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).
 
 ## Repository protection (maintainers)
 
+Full checklist: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md). CODEOWNERS UI steps: [docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md).
+
 In GitHub **Settings** (not always API-configurable):
 
 1. Enable **Push protection** (Code security -> Push protection)
-2. Prefer rulesets / branch protection on `main` (PR required; consider `enforce_admins`)
+2. Prefer rulesets / branch protection on `main` (PR required; required check **Validate repository**; consider `enforce_admins`)
 3. **Require review from Code Owners** — follow [docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md) (the CODEOWNERS file alone does not block merges)
+4. Install local hooks once: `pip install -e ".[dev]" && pre-commit install` (gitleaks + ruff via [`.pre-commit-config.yaml`](.pre-commit-config.yaml))
+
 
 ## Supply chain
 
@@ -112,6 +117,7 @@ In GitHub **Settings** (not always API-configurable):
 - Dependabot opens weekly PRs for `pip` and `github-actions`; review diff + CI before merge
 - Prefer `pip install -e ".[dev]"` from the locked pins in this repo over ad-hoc upgrades on ops hosts
 - CI runs `pip-audit` on `requirements.txt` / `requirements-dev.txt`
+- CI enforces a **70%** statement coverage floor on `common/` (`pytest-cov`)
 
 ## Code scanning
 

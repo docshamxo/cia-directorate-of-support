@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
+#   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 # === END FILE HEADER ===
 
 """
@@ -44,7 +45,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA ESD | Google Drive",
                     c.url("esd.staff_documents.google_drive"),
-                    "STAFF. Authorized ESD staff only.",
+                    c.marking_note("STAFF", "Authorized ESD staff only."),
                 ),
             ),
         ),

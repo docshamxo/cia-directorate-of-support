@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Unify staff-docs template, link grammar, unit-color closers.
 #   - 2026-07-17 | docshamxo | Prefer Drive root + fewer TTP titles; STAFF markings.
+#   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 # === END FILE HEADER ===
 
 """
@@ -54,7 +55,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA OSEC | Google Drive",
                     c.url("osec.staff_documents.google_drive"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
             ),
         ),
@@ -67,22 +68,22 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OSEC,
             fields=(
                 c.link_field(
-                    "Tryout",
+                    "Tryout Guide",
                     "CIA OSEC | Tryout Guide",
                     c.url("osec.staff_documents.tryout_guide"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Phase I",
+                    "Phase I — Foundation",
                     "CIA OSEC | Phase I Guide",
                     c.url("osec.staff_documents.phase_i"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Phase II",
+                    "Phase II — Intermediate",
                     "CIA OSEC | Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
-                    "STAFF. Authorized OSEC staff only.",
+                    c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
             ),
         ),
