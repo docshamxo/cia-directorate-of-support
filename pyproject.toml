@@ -8,6 +8,7 @@
 #   - 2026-07-15 | docshamxo | Bump python-dotenv and ruff; pin requests.
 #   - 2026-07-17 | docshamxo | Bump package version to 1.1.0 (release engineering).
 #   - 2026-07-17 | docshamxo | Add pytest testpaths / quiet defaults for CI.
+#   - 2026-07-17 | docshamxo | Bump pytest for PYSEC-2026-1845.
 #   - 2026-07-17 | docshamxo | Add pytest-cov, pre-commit, and coverage fail-under floor.
 # === END FILE HEADER ===
 
@@ -31,7 +32,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "ruff==0.15.21",
-  "pytest==8.4.1",
+  "pytest==9.0.3",
   "pytest-cov==6.2.1",
   "pre-commit==4.2.0",
 ]

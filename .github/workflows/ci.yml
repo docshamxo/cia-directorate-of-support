@@ -11,7 +11,8 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Harden runners: pip cache paths, gitleaks pin+checksum, checkout depth.
-#   - 2026-07-17 | docshamxo | Pin Actions SHAs, Python matrix, coverage floor, split secrets job.
+#   - 2026-07-17 | docshamxo | Pin Actions by SHA; add pip-audit supply-chain check.
+#   - 2026-07-17 | docshamxo | Python matrix, coverage floor, split secrets, Validate repository gate.
 # === END FILE HEADER ===
 
 name: CI
@@ -46,16 +47,14 @@ jobs:
 
     steps:
       - name: Check out repository
-        # actions/checkout@v6.0.3
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           # Full history for banner/git-aware checks (secrets job handles gitleaks).
           fetch-depth: 0
           persist-credentials: false
 
       - name: Set up Python
-        # actions/setup-python@v6.3.0
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -68,6 +67,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+          pip install pip-audit==2.9.0
           python -c "import discord, dotenv, yaml, requests; print('runtime imports ok')"
           ruff --version
 
@@ -95,14 +95,19 @@ jobs:
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
           CIA_DRY_RUN: "1"
 
+      - name: Dependency vulnerability audit (pip-audit)
+        if: matrix.python-version == '3.12'
+        run: |
+          pip-audit --strict --progress-spinner off -r requirements.txt
+          pip-audit --strict --progress-spinner off -r requirements-dev.txt
+
   secrets:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
-        # actions/checkout@v6.0.3
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -117,6 +122,15 @@ jobs:
           tar -xzf "$ARCHIVE" gitleaks
           ./gitleaks version
           ./gitleaks detect --source . --verbose --redact
+
+  # Exact name required by branch protection (Settings → Branches → required checks).
+  repository:
+    name: Validate repository
+    needs: [validate, secrets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: All CI legs passed
+        run: echo "Matrix validate + gitleaks secrets jobs succeeded."
 
 # === FILE FOOTER ===
 # End of file: .github/workflows/ci.yml

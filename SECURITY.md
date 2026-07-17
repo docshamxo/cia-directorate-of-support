@@ -16,6 +16,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for ✅.
   - 2026-07-17 | docshamxo | Affiliation, rotation playbooks, staff overlay, push protection notes.
   - 2026-07-17 | docshamxo | Tighten tradecraft rules and cross-link OPS runbooks.
+  - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
 === END FILE HEADER ===
 -->
@@ -26,7 +27,19 @@ Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them 
 
 **Affiliation:** Unofficial Roblox community tooling — **not** affiliated with the United States Government or the Central Intelligence Agency. Markings `PUBLIC` / `STAFF` / `CANDIDATE` are roleplay vocabulary only.
 
-## Compartmentation rules
+## Secret split (compartmentation)
+
+Keep credential classes separated — do not collapse them into one file or one Discord client path:
+
+| Class | Where it lives | Who can use it | Notes |
+|-------|----------------|----------------|-------|
+| Channel webhooks (`WEBHOOK_*`) | Local `.env` only | Webhook HTTP client | Channel-scoped post/delete; **never** pass `bot_token` into `SyncWebhook.from_url` |
+| Bot token (`DISCORD_BOT_TOKEN`) | Local `.env` only | Separate bot HTTP client for ✅ | Reactions only; see least privilege below |
+| Community URLs (invite / channel link) | Local `.env` | Announcer embeds | Not committed in `config/links.yaml` |
+| Staff Drive / TTP URLs | `config/links.staff.local.yaml` (gitignored) | Staff announcers | Public YAML keeps `STAFF_LOCAL_REQUIRED` placeholders |
+| Message ID state | `.webhook_messages.json` (gitignored) | Local purge tracking | Snowflakes only — no URLs or tokens |
+
+`python tools/validate_repo.py` fails if Discord webhook URLs or bot-token-shaped strings appear in tracked config/docs, or if `.env.example` secret values are non-empty.
 
 | Keep local only | Why |
 |-----------------|-----|
@@ -39,6 +52,14 @@ Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them 
 - Prefer `git add path/to/file` over `git add .`
 - Do **not** put new public staff share links in `config/links.yaml` — use the local overlay
 - Public YAML may show `STAFF_LOCAL_REQUIRED` placeholders only
+
+## Least privilege
+
+- **Webhooks:** one webhook per target channel; regenerate per channel if leaked — do not reuse one webhook across unrelated channels
+- **Bot:** invite with **only** **Add Reactions** + **Read Message History**. Do **not** grant Administrator, Manage Messages, Manage Webhooks, or Mentions-related elevated perms
+- **CI:** workflows default to `permissions: contents: read` (CodeQL adds `security-events: write` only for uploading analysis)
+- **Mentions:** live webhook sends use `AllowedMentions.none()` so embeds cannot ping `@everyone` / roles / users
+- **Logos:** `confined_logo_path` / `logo_file` only open bare filenames under `assets/logos/` (path traversal rejected)
 
 ## If a webhook leaks
 
@@ -73,19 +94,27 @@ Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).
 
 ## Repository protection (maintainers)
 
-GitHub org/repo settings cannot always be changed via API. Full checklist: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md).
+Full checklist: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md). CODEOWNERS UI steps: [docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md).
 
-In GitHub **Settings**:
+In GitHub **Settings** (not always API-configurable):
 
 1. Enable **Push protection** (Code security → Push protection)
-2. Apply a **Ruleset** / branch protection on `main`: require PRs, Code Owner review, and required status checks (`Validate (Python 3.10|3.11|3.12)`, `Secret scan (gitleaks)`, CodeQL `Analyze`). Prefer **Do not allow bypassing the above settings** (`enforce_admins`) when policy allows
-3. Keep [`.github/CODEOWNERS`](.github/CODEOWNERS) reviewed on PRs that touch `common/`, `config/`, or `.github/`
+2. Prefer rulesets / branch protection on `main` (PR required; required check **Validate repository**; consider `enforce_admins`)
+3. **Require review from Code Owners** — the CODEOWNERS file alone does not block merges
 4. Install local hooks once: `pip install -e ".[dev]" && pre-commit install` (gitleaks + ruff via [`.pre-commit-config.yaml`](.pre-commit-config.yaml))
+
+## Supply chain
+
+- Runtime deps are **exact pins** in `requirements.txt` / `pyproject.toml`
+- CI pins GitHub Actions by **commit SHA** (version tag in a trailing comment) and verifies the gitleaks release **SHA-256** before extract
+- Dependabot opens weekly PRs for `pip` and `github-actions`; review diff + CI before merge
+- Prefer `pip install -e ".[dev]"` from the locked pins in this repo over ad-hoc upgrades on ops hosts
+- CI runs `pip-audit` on `requirements.txt` / `requirements-dev.txt`
+- CI enforces a **70%** statement coverage floor on `common/` (`pytest-cov`)
 
 ## Code scanning
 
-- CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs to `main` plus a weekly schedule (Actions pinned to commit SHAs). Alerts appear under the repository **Security** tab.
-- CI also runs a checksum-pinned **gitleaks** binary (not `gitleaks-action`)
+CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs to `main` plus a weekly schedule. Alerts appear under the repository **Security** tab. CI also runs gitleaks (pinned binary + checksum) on full history.
 
 ## Operational notes
 

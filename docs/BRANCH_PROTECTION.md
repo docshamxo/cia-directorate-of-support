@@ -25,7 +25,7 @@ Create a **ruleset** (Settings → Rules → Rulesets) targeting `main`, or clas
 | Dismiss stale reviews | On | Re-review after new commits |
 | Require review from Code Owners | On | Enforces [`.github/CODEOWNERS`](../.github/CODEOWNERS) |
 | Require status checks to pass | On | Block red CI |
-| Required checks | `Validate (Python 3.10)`, `Validate (Python 3.11)`, `Validate (Python 3.12)`, `Secret scan (gitleaks)`, `Analyze` (CodeQL) | Match workflow job names after first green run on `main` |
+| Required checks | **`Validate repository`** (aggregate gate), optionally also matrix/gitleaks/CodeQL | Branch protection currently requires the exact name `Validate repository` |
 | Require branches to be up to date | On (if merge queue unused) | Avoid stale merges |
 | Require conversation resolution | On | Clear review threads |
 | Block force pushes | On | Preserve history |

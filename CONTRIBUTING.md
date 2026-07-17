@@ -16,6 +16,7 @@ Modified:
   - 2026-07-17 | docshamxo | Clarify contributor path; cross-link OPS reaction/purge docs.
   - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
   - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
+  - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
 === END FILE HEADER ===
 -->
 
@@ -31,6 +32,8 @@ Unofficial Roblox community project — not affiliated with the US Government or
 - Staff Drive / TTP URLs → local overlay only (not public `config/links.yaml`)
 - Discord invites / channel URLs → `.env` (`DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`)
 - Keep affiliation / fiction disclaimer text in closers
+- Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](SECURITY.md)
+- Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
 - Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation: [SECURITY.md](SECURITY.md)
 
 ## Everyday edits
