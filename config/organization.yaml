@@ -9,11 +9,12 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF/CANDIDATE; affiliation banner; soften GRS/ESD.
 # === END FILE HEADER ===
 
 ds:
   motto: WE GO AS ONE
-  classification: PUBLIC AFFAIRS
+  classification: PUBLIC
   about: 'The **Directorate of Support (DS)** is the Agency''s backbone — responsible for internal security,
     physical protection, and the readiness of every officer who serves. While other directorates operate
     at the sharp end of the mission, DS ensures the people, facilities, and operatives behind them remain
@@ -52,11 +53,11 @@ ote:
     description: Ongoing professional education and re-certification keeping active officers current with
       Agency doctrine and standards.
 grs:
-  about: The Agency's operational-focused security element — rapid deployment, high-threat site security,
-    and direct-action support for field operations worldwide.
+  about: The Agency's rapid-response security element — high-threat site security, contingency support,
+    and protective reinforcement for field operations worldwide.
 esd:
-  about: A dedicated close-protection unit responsible for the personal security of High Value Targets
-    (HVTs), senior leadership, and VIPs during travel and operations.
+  about: A dedicated close-protection unit responsible for the personal security of senior leadership
+    and designated principals during travel and operations.
 copy:
   chain_of_command_intro: 'The Chain of Command is the structured hierarchy used to maintain order, accountability,
     and clear communication. All instructions, concerns, and requests should flow through your immediate
@@ -65,17 +66,32 @@ copy:
 
     Do not bypass ranks by directing issues to senior leadership when a lower-ranking supervisor is available
     and appropriate. Always consult the next rank above you rather than escalating to the highest authority.'
-  disclaimer: All text here is marked as **UNCLASSIFIED**.
-  disclaimer_links: All text and links listed here are marked as **UNCLASSIFIED**.
-  disclaimer_classified: Classification markings apply to linked documents as indicated above. All channel
-    text is marked **UNCLASSIFIED** unless otherwise stated.
+  affiliation_notice: 'This is an **unofficial Roblox community**. It is **not affiliated with**, endorsed
+    by, or connected to the United States Government or the Central Intelligence Agency. Community
+    markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.'
+  disclaimer: 'All text here is marked **PUBLIC**.
+
+
+    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
+    roleplay vocabulary only.'
+  disclaimer_links: 'All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
+
+
+    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
+    roleplay vocabulary only.'
+  disclaimer_staff: 'Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked
+    staff materials are **STAFF** unless otherwise noted.
+
+
+    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
+    roleplay vocabulary only.'
   important_notice: 'All {unit} personnel and candidates must follow Agency regulations and the
     **{chain}** chain of command.
 
 
     Unauthorized direct contact with command teams is **not permitted** for Agency personnel.'
   staff_handling_notice: 'All documents listed in this channel are intended for **authorized {unit}
-    personnel only**.
+    personnel only** (community marking: **STAFF**).
 
 
     Unauthorized disclosure, redistribution, or leaking of any restricted material may result in a
@@ -84,8 +100,8 @@ copy:
 
     Handle all staff documents responsibly. Do not share materials outside authorized channels or
     personnel.'
-  staff_handling_notice_secret: 'All documents listed in this channel are classified up to the
-    **SECRET** level unless otherwise marked.
+  staff_handling_notice_restricted: 'All documents listed in this channel are marked **STAFF** unless
+    otherwise noted.
 
 
     Unauthorized disclosure, redistribution, or leaking of any restricted material will result in a

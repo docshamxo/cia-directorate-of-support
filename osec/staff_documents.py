@@ -11,13 +11,14 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Unify staff-docs template, link grammar, unit-color closers.
+#   - 2026-07-17 | docshamxo | Prefer Drive root + fewer TTP titles; STAFF markings.
 # === END FILE HEADER ===
 
 """
 CIA OSEC staff documents announcer.
 
-Posts official Office of Security staff guides, training material, event
-documentation, and certification resources to a Discord webhook.
+Posts the Office of Security staff Drive index and core phase guides.
+Detailed TTP / event / certification packs live in the Drive folder (need-to-know).
 """
 
 from __future__ import annotations
@@ -44,7 +45,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Central Repository",
             description=(
                 "Primary Google Drive folder containing OSEC handbooks, phase guides, "
-                "event documentation, certifications, ORBAT files, and internal forms."
+                "event documentation, certifications, ORBAT files, and internal forms. "
+                "Use the Drive index as the source of truth for TTP titles not listed here."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -52,15 +54,15 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA OSEC | Google Drive",
                     c.url("osec.staff_documents.google_drive"),
-                    "Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
             ),
         ),
         c.embed(
             title="Phase & Candidate Guides",
             description=(
-                "Official documentation for Security Phase tryouts, candidate progression, "
-                "and phase training requirements."
+                "Core documentation for Security Phase tryouts and candidate progression. "
+                "Additional training, event, and certification guides are in Drive."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -68,115 +70,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Tryout",
                     "CIA OSEC | Tryout Guide",
                     c.url("osec.staff_documents.tryout_guide"),
-                    "Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
                 c.link_field(
                     "Phase I",
                     "CIA OSEC | Phase I Guide",
                     c.url("osec.staff_documents.phase_i"),
-                    "Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
                 c.link_field(
                     "Phase II",
                     "CIA OSEC | Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
-                    "Authorized OSEC staff only.",
-                ),
-            ),
-        ),
-        c.embed(
-            title="Standard Training Program",
-            description=(
-                "Official documentation for the Office of Security Standard Training "
-                "system and instructor reference material."
-            ),
-            color=c.COLOR_OSEC,
-            fields=(
-                c.link_field(
-                    "Training Revamp",
-                    "CIA OSEC | Standard Training Revamp",
-                    c.url("osec.staff_documents.standard_training_revamp"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "General Standard Training",
-                    "CIA OSEC | General Standard Training Guide",
-                    c.url("osec.staff_documents.general_standard_training_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Weapons Standard Training",
-                    "CIA OSEC | Weapons Standard Training Guide",
-                    c.url("osec.staff_documents.weapons_standard_training_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-            ),
-        ),
-        c.embed(
-            title="Event Guides",
-            description=(
-                "Official guides for planning, hosting, and supervising Office of "
-                "Security events and operational exercises."
-            ),
-            color=c.COLOR_OSEC,
-            fields=(
-                c.link_field(
-                    "Event Guide",
-                    "CIA OSEC | Event Guide",
-                    c.url("osec.staff_documents.event_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Base Patrol",
-                    "CIA OSEC | Base Patrol Event Guide",
-                    c.url("osec.staff_documents.base_patrol_event_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Gate Patrol",
-                    "CIA OSEC | Gate Patrol Event Guide",
-                    c.url("osec.staff_documents.gate_patrol_event_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Killhouse",
-                    "CIA OSEC | Killhouse Event Guide",
-                    c.url("osec.staff_documents.killhouse_event_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Combat Training",
-                    "CIA OSEC | Combat Training Guide",
-                    c.url("osec.staff_documents.combat_training_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-            ),
-        ),
-        c.embed(
-            title="Certification Guides",
-            description=(
-                "Official guides for Office of Security staff certifications and "
-                "qualification standards."
-            ),
-            color=c.COLOR_OSEC,
-            fields=(
-                c.link_field(
-                    "Communications & Conduct",
-                    "CIA OSEC | Communications & Conduct Certification Guide",
-                    c.url("osec.staff_documents.communications_conduct_certification_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Gate",
-                    "CIA OSEC | Gate Certification Guide",
-                    c.url("osec.staff_documents.gate_certification_guide"),
-                    "Authorized OSEC staff only.",
-                ),
-                c.link_field(
-                    "Handcuff",
-                    "CIA OSEC | Handcuff Certification Guide",
-                    c.url("osec.staff_documents.handcuff_certification_guide"),
-                    "Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
             ),
         ),
@@ -184,9 +90,9 @@ def _build_embeds() -> list[c.discord.Embed]:
             unit="Office of Security",
             authority="CIA Office of Security",
             color=c.COLOR_OSEC,
-            secret=True,
+            restricted=True,
         ),
-        c.disclaimer_embed(classified=True, color=c.COLOR_OSEC),
+        c.disclaimer_embed(staff=True, color=c.COLOR_OSEC),
     ]
 
 

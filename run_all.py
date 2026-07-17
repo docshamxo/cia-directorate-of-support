@@ -11,6 +11,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Note prior-message cleanup on live announcer runs.
 #   - 2026-07-17 | docshamxo | Note purge-all recorded IDs and ✅ reactions on live runs.
+#   - 2026-07-17 | docshamxo | Use common.manifest; add --only filter.
 # === END FILE HEADER ===
 
 """
@@ -21,6 +22,8 @@ Usage (from the repository root):
     python run_all.py --dry-run
     python run_all.py --fail-fast
     python run_all.py --delay 1.5
+    python run_all.py --only ds,osec
+    python run_all.py --only WEBHOOK_GRS_COC,esd/coc.py
 """
 
 from __future__ import annotations
@@ -35,28 +38,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-REPO_ROOT = Path(__file__).resolve().parent
+from common.manifest import ANNOUNCERS
 
-SCRIPTS: tuple[tuple[str, str, str], ...] = (
-    ("ds/chain_of_command.py", "DS Chain of Command", "WEBHOOK_DS_CHAIN_OF_COMMAND"),
-    ("ds/public_information.py", "DS Public Information", "WEBHOOK_DS_PUBLIC_INFORMATION"),
-    ("ds/server_regulations.py", "Server Regulations", "WEBHOOK_DS_SERVER_REGULATIONS"),
-    ("osec/information.py", "OSEC Information", "WEBHOOK_OSEC_INFORMATION"),
-    ("osec/staff_documents.py", "OSEC Staff Documents", "WEBHOOK_OSEC_STAFF_DOCUMENTS"),
-    ("osec/spp_information.py", "OSEC Security Phase Program", "WEBHOOK_OSEC_SPP_INFORMATION"),
-    ("osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
-    ("ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
-    ("ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
-    ("ote/program_overview.py", "OTE Program Overview", "WEBHOOK_OTE_PROGRAM_OVERVIEW"),
-    ("ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),
-    ("ote/open_positions.py", "OTE Open Positions", "WEBHOOK_OTE_OPEN_POSITIONS"),
-    ("grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
-    ("grs/information.py", "GRS Information", "WEBHOOK_GRS_INFORMATION"),
-    ("grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
-    ("esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
-    ("esd/information.py", "ESD Information", "WEBHOOK_ESD_INFORMATION"),
-    ("esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
-)
+REPO_ROOT = Path(__file__).resolve().parent
+SCRIPTS = ANNOUNCERS
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -82,13 +67,51 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Fail when a webhook env var is empty instead of skipping.",
     )
+    parser.add_argument(
+        "--only",
+        default="",
+        help=(
+            "Comma-separated filter: office folder (ds), script path (grs/coc.py), "
+            "label substring, or WEBHOOK_* key."
+        ),
+    )
     return parser.parse_args(argv)
+
+
+def _matches_only(relative: str, label: str, webhook_key: str, only: str) -> bool:
+    token = only.strip().lower()
+    if not token:
+        return True
+    rel = relative.lower().replace("\\", "/")
+    return (
+        token == webhook_key.lower()
+        or token == rel
+        or token in label.lower()
+        or rel.startswith(token.rstrip("/") + "/")
+        or rel.split("/", 1)[0] == token
+    )
+
+
+def _selected_scripts(only_arg: str) -> list[tuple[str, str, str]]:
+    raw = [part.strip() for part in only_arg.split(",") if part.strip()]
+    if not raw:
+        return list(SCRIPTS)
+    selected: list[tuple[str, str, str]] = []
+    for entry in SCRIPTS:
+        relative, label, webhook_key = entry
+        if any(_matches_only(relative, label, webhook_key, token) for token in raw):
+            selected.append(entry)
+    if not selected:
+        raise SystemExit(f"No announcers matched --only {only_arg!r}")
+    return selected
 
 
 def run_all(argv: list[str] | None = None) -> int:
     args = _parse_args(argv)
     load_dotenv(REPO_ROOT / ".env")
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+
+    scripts = _selected_scripts(args.only)
 
     env = os.environ.copy()
     pythonpath = str(REPO_ROOT)
@@ -98,13 +121,19 @@ def run_all(argv: list[str] | None = None) -> int:
         env["CIA_DRY_RUN"] = "1"
     if not args.no_skip_empty:
         env["CIA_SKIP_EMPTY_WEBHOOKS"] = "1"
+    # CI-safe placeholders when invite/results URLs are unset (dry-run still builds).
+    env.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
+    env.setdefault(
+        "DISCORD_OSEC_APPLICATION_RESULTS_URL",
+        "https://example.invalid/application-results",
+    )
 
     mode = "dry-run" if args.dry_run else "live"
-    print(f"Running {len(SCRIPTS)} announcer scripts from {REPO_ROOT} ({mode})\n")
+    print(f"Running {len(scripts)} announcer script(s) from {REPO_ROOT} ({mode})\n")
     print(
-        "Note: live runs delete every previously recorded webhook message for each "
-        "channel (see .webhook_messages.json), post the new embed(s), and add ✅ "
-        "when DISCORD_BOT_TOKEN is set.\n"
+        "Note: live runs post first, then delete previously recorded webhook messages "
+        "for each channel (see .webhook_messages.json), and add a checkmark reaction when "
+        "DISCORD_BOT_TOKEN is set.\n"
         "Messages posted before cleanup / outside local state are left alone.\n"
     )
 
@@ -112,7 +141,7 @@ def run_all(argv: list[str] | None = None) -> int:
     skipped: list[str] = []
     failed: list[tuple[str, str]] = []
 
-    for index, (relative, label, webhook_key) in enumerate(SCRIPTS):
+    for index, (relative, label, webhook_key) in enumerate(scripts):
         path = REPO_ROOT / relative
         if not path.exists():
             failed.append((label, f"Missing script: {path}"))
@@ -140,7 +169,7 @@ def run_all(argv: list[str] | None = None) -> int:
             if args.fail_fast:
                 break
 
-        if args.delay > 0 and index < len(SCRIPTS) - 1:
+        if args.delay > 0 and index < len(scripts) - 1:
             time.sleep(args.delay)
         print()
 

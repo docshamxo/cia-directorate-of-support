@@ -1,0 +1,18 @@
+# === FILE HEADER ===
+# Title: CODEOWNERS
+# Path: .github/CODEOWNERS
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Require review on common/config/.github changes.
+# === END FILE HEADER ===
+
+# Default owner for sensitive paths (enable "Require review from Code Owners" in branch protection).
+/common/ @docshamxo
+/config/ @docshamxo
+/.github/ @docshamxo
+
+# === FILE FOOTER ===
+# End of file: .github/CODEOWNERS
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

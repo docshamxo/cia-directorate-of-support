@@ -11,6 +11,7 @@ Modified:
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+  - 2026-07-17 | docshamxo | Sensitivity review checklist and marking vocabulary.
 === END FILE HEADER ===
 -->
 
@@ -18,11 +19,19 @@ Modified:
 
 <!-- What changed and why -->
 
+## Sensitivity review
+
+- [ ] No new public staff Drive/share links (use `config/links.staff.local.yaml`)
+- [ ] No Discord invite / channel snowflakes committed (use `.env`)
+- [ ] Markings use community vocabulary only: **PUBLIC** / **STAFF** / **CANDIDATE** (no USG SECRET/CUI/etc.)
+- [ ] Affiliation / fiction disclaimer preserved where closers changed
+
 ## Checklist
 
 - [ ] Ran `python tools/validate_repo.py`
-- [ ] Updated READMEs / `.env.example` if scripts or webhook keys changed
-- [ ] No `.env` secrets in this PR
+- [ ] Ran `python run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
+- [ ] Updated READMEs / `.env.example` / `common/manifest.py` if scripts or webhook keys changed
+- [ ] No `.env` / `links.staff.local.yaml` / `.webhook_messages.json` secrets in this PR
 
 <!--
 === FILE FOOTER ===

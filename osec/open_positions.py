@@ -83,7 +83,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Application Results",
             description=(
                 "**Do not ask for results, updates, or status.** Doing so is an instant fail.\n\n"
-                f"You will be pinged in [#application-results]({c.url('osec.open_positions.application_results_channel')}) "
+                f"You will be pinged in [#application-results]({c.osec_application_results_url()}) "
                 "when your application has been graded."
             ),
             color=c.COLOR_OSEC,

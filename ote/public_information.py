@@ -36,7 +36,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="PUBLIC INFORMATION",
             unit="Office of Training & Education",
             supporting=(
-                "Unclassified overview of OTE, the Officer Training Program, and community links."
+                "PUBLIC overview of OTE, the Officer Training Program, and community links."
             ),
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
@@ -56,7 +56,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Program Overview",
                     "CIA OTE | Program Overview",
                     c.url("ote.public_information.program_overview"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
                 c.link_field(
                     "Office of Training & Education",

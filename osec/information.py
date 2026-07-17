@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align internal info template and link grammar.
+#   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF.
 # === END FILE HEADER ===
 
 """
@@ -49,7 +50,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Reference Documents",
             description=(
                 "Agency-wide and Office of Security reference material. Review each document "
-                "in full and comply with its classification level."
+                "in full and observe its community marking."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -57,42 +58,42 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "ORBAT",
                     "CIA OSEC | ORBAT",
                     c.url("osec.information.orbat"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
                 c.link_field(
                     "Handbook",
                     "CIA OSEC | Handbook",
                     c.url("osec.information.handbook"),
-                    "CONTROLLED UNCLASSIFIED INFORMATION (CUI). Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
                 c.link_field(
                     "Conduct",
                     "CIA OSEC | Code of Agency Conduct",
                     c.url("osec.information.code_of_agency_conduct"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
                 c.link_field(
                     "Civilian Access",
                     "CIA OSEC | Civilian Access",
                     c.url("osec.information.civilian_access"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
             ),
         ),
         c.embed(
             title="Classification & Handling Notice",
             description=(
-                "The **CIA OSEC | Handbook** is marked **CONTROLLED UNCLASSIFIED "
-                "INFORMATION (CUI)**. Unauthorized disclosure, redistribution, or leaking of "
-                "this document will result in a **BLACKLIST** from the **CIA Office of Security**.\n\n"
+                "The **CIA OSEC | Handbook** is marked **STAFF**. Unauthorized disclosure, "
+                "redistribution, or leaking of this document will result in a **BLACKLIST** "
+                "from the **CIA Office of Security**.\n\n"
                 "The **ORBAT**, **Code of Agency Conduct**, and **Civilian Access** documents "
-                "are **UNCLASSIFIED** and may be referenced in accordance with Agency policy.\n\n"
+                "are **PUBLIC** and may be referenced in accordance with community policy.\n\n"
                 "Handle all materials responsibly. Do not share restricted documents outside "
                 "authorized channels or personnel."
             ),
             color=c.COLOR_OSEC,
         ),
-        c.disclaimer_embed(classified=True, color=c.COLOR_OSEC),
+        c.disclaimer_embed(staff=True, color=c.COLOR_OSEC),
     ]
 
 
