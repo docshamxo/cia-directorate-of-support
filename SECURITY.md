@@ -113,21 +113,14 @@ Keep credential classes separated — do not collapse them into one file or one 
 
 ## Message ID retention / disposal
 
-<<<<<<< HEAD
-- `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs or tokens)
-- Delete or prune the file when rotating webhooks, rebuilding a channel, or disposing a workstation
-- Live sends **post first**, record new IDs immediately, then delete previously recorded IDs — a failed send should not empty the channel
-- When two `WEBHOOK_*` keys share one Discord webhook URL, purge clears **all sibling** recorded IDs
-- Webhooks cannot purge full channel history; unrecorded/manual/`Downloads\DS` posts must be deleted in Discord or via optional `--bot-channel-purge` (bot needs **Manage Messages**)
-- Diagnose: `python tools/diagnose_webhook_state.py`
-=======
 - `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs, tokens, usernames, or embed text)
 - **Retention:** keep only while you need purge-before-repost for the same channels; it is **not** an audit log
 - **Disposal:** delete the file (or prune keys) when rotating webhooks, rebuilding a channel, decommissioning an ops host, or leaving the project
-- Live sends **post first**, then delete previously recorded IDs — a failed send should not empty the channel
-- Webhooks cannot purge full channel history; unrecorded / manual posts must be deleted in Discord
+- Live sends **post first**, record new IDs immediately, then delete previously recorded IDs — a failed send should not empty the channel
+- When two `WEBHOOK_*` keys share one Discord webhook URL, purge clears **all sibling** recorded IDs
+- Webhooks cannot purge full channel history; unrecorded/manual/`Downloads\DS` posts must be deleted in Discord or via optional `--bot-channel-purge` (bot needs **Manage Messages**)
 - Do not back up `.webhook_messages.json` into shared drives or commit history
->>>>>>> c8776df (Harden privacy: env applicant links, roster overlays, retention docs.)
+- Diagnose: `python tools/diagnose_webhook_state.py`
 
 Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).
 
