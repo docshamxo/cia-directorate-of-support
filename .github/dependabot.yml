@@ -9,6 +9,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Group updates; keep Actions SHA pins reviewable.
 # === END FILE HEADER ===
 
 version: 2
@@ -21,6 +22,18 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+    groups:
+      pip-runtime:
+        patterns:
+          - "discord.py"
+          - "python-dotenv"
+          - "PyYAML"
+          - "requests"
+      pip-dev:
+        patterns:
+          - "ruff"
+          - "pytest"
+          - "pip-audit"
 
   - package-ecosystem: github-actions
     directory: /
@@ -30,6 +43,11 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+    # Prefer reviewing SHA-pinned Action bumps as a single PR when possible.
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
 # === FILE FOOTER ===
 # End of file: .github/dependabot.yml
