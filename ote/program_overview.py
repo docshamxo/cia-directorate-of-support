@@ -59,13 +59,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Program Overview",
-                    "CIA OTE | Program Overview",
+                    "DS Community | OTE Program Overview",
                     c.url("ote.program_overview.program_overview"),
                     c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Graduation",
-                    "CIA OTE | Graduation Ceremony Procedures",
+                    "DS Community | OTE Graduation Ceremony Procedures",
                     c.url("ote.program_overview.graduation_ceremony_procedures"),
                     c.marking_note("PUBLIC"),
                 ),
@@ -78,12 +78,12 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Directorate of Support",
-                    "CIA | Directorate of Support",
+                    c.community_link_label("Directorate of Support"),
                     c.URL_ROBLOX_GROUP_DS,
                 ),
                 c.link_field(
                     "Office of Training & Education",
-                    "CIA | Office of Training & Education",
+                    c.community_link_label("OTE"),
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
             ),

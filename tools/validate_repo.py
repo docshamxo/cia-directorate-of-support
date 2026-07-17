@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Secret-split, logo bare-name, mentions regression guards.
 #   - 2026-07-17 | docshamxo | Validate Inter Studios property_notice is present in config.
 #   - 2026-07-17 | docshamxo | Require accessibility helpers and docs.
+#   - 2026-07-17 | docshamxo | Brand/legal checks: LICENSE, bot names, affiliation, eyebrow.
 # === END FILE HEADER ===
 
 """
@@ -29,6 +30,7 @@ Checks:
   - logo filenames in branding.yaml are bare names; mentions/logo helpers present
   - Python sources compile
   - optional file banners when CIA_REQUIRE_BANNERS=1
+  - brand/legal: LICENSE, community bot names, affiliation copy, RP eyebrow
 
 Run from repository root:
     python tools/validate_repo.py
@@ -76,7 +78,13 @@ REQUIRED_CONFIG = (
 HEADER_MARKER = "=== FILE HEADER ==="
 FOOTER_MARKER = "=== FILE FOOTER ==="
 SKIP_BANNER_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
+SKIP_BANNER_NAMES = {"LICENSE"}
 ANNOUNCER_DIRS = ("ds", "osec", "ote", "grs", "esd")
+BOT_COMMUNITY_MARKER_RE = re.compile(r"Community|\(RP\)", re.IGNORECASE)
+OFFICIAL_LOOKING_BOT_RE = re.compile(r"^CIA\s*\|")
+BARE_CIA_EYEBROW_RE = re.compile(
+    r"\*Central Intelligence Agency\s*·",
+)
 
 # Discord webhook URL in tracked tree = secret split regression.
 WEBHOOK_URL_LEAK_RE = re.compile(
@@ -343,7 +351,63 @@ def validate_config() -> None:
         fail("disclaimer copy should use community PUBLIC marking")
     if "Inter Studios" not in c.PROPERTY_NOTICE:
         fail("property_notice should name Inter Studios")
+    if "not affiliated" not in c.AFFILIATION_NOTICE.lower():
+        fail("affiliation_notice must state non-affiliation")
+    if "not affiliated" not in c.DISCLAIMER_TEXT.lower():
+        fail("disclaimer must state non-affiliation")
+    eyebrow = c.agency_eyebrow("Office of Security")
+    if "community" not in eyebrow.lower() and "rp" not in eyebrow.lower():
+        fail("agency_eyebrow must frame units as community/RP (not bare USG banner)")
+    if BARE_CIA_EYEBROW_RE.search(eyebrow):
+        fail("agency_eyebrow must not use a bare Central Intelligence Agency banner")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
+
+
+def validate_brand_legal() -> None:
+    """LICENSE, bot naming, and documentation non-affiliation banners."""
+    license_path = ROOT / "LICENSE"
+    brand_path = ROOT / "BRAND.md"
+    if not license_path.is_file():
+        fail("LICENSE is required (MIT + brand use / trademark notice)")
+    license_text = license_path.read_text(encoding="utf-8")
+    for needle in ("not affiliated", "Brand Use", "trademark", "roleplay"):
+        if needle.lower() not in license_text.lower():
+            fail(f"LICENSE must include brand-use language mentioning '{needle}'")
+    if not brand_path.is_file():
+        fail("BRAND.md is required (bot naming / non-affiliation guidance)")
+    brand_text = brand_path.read_text(encoding="utf-8")
+    if "Community" not in brand_text or "(RP)" not in brand_text:
+        fail("BRAND.md must document Community / (RP) bot naming markers")
+
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    if "not affiliated" not in readme.lower():
+        fail("README.md must include a non-affiliation banner")
+
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from common import cia_common as c
+
+    for key, name in {
+        "ds": c.BOT_DS,
+        "osec": c.BOT_OSEC,
+        "ote": c.BOT_OTE,
+        "grs": c.BOT_GRS,
+        "esd": c.BOT_ESD,
+    }.items():
+        if not BOT_COMMUNITY_MARKER_RE.search(name):
+            fail(
+                f"config/branding.yaml bots.{key}={name!r} must include "
+                "'Community' or '(RP)' (see BRAND.md)"
+            )
+        if OFFICIAL_LOOKING_BOT_RE.match(name.strip()):
+            fail(
+                f"config/branding.yaml bots.{key}={name!r} looks like an official "
+                "CIA | … account; use a community/RP display name"
+            )
+        if len(name) > 80:
+            fail(f"config/branding.yaml bots.{key} exceeds Discord's 80-char username limit")
+
+    print("Brand/legal: LICENSE, BRAND.md, affiliation banners, bot names ok")
 
 
 def validate_banners() -> None:
@@ -363,6 +427,8 @@ def validate_banners() -> None:
         rel = raw.decode("utf-8")
         path = ROOT / rel
         if not path.is_file() or path.suffix.lower() in SKIP_BANNER_SUFFIXES:
+            continue
+        if path.name in SKIP_BANNER_NAMES:
             continue
         if any(part in {".git", ".venv", "venv", "__pycache__"} for part in path.parts):
             continue
@@ -455,6 +521,12 @@ def validate_style_guide() -> None:
     if "ote_alt" in branding:
         issues.append("config/branding.yaml: remove ote_alt (use single OTE bot name)")
 
+    common_eyebrow = COMMON.read_text(encoding="utf-8")
+    if 'f"*Central Intelligence Agency · {unit}*"' in common_eyebrow:
+        issues.append(
+            "common/cia_common.py: agency_eyebrow must not use bare CIA USG banner text"
+        )
+
     if issues:
         fail("Style-guide heuristics failed:\n  - " + "\n  - ".join(issues))
     print("Style guide: announcer heuristics passed")
@@ -483,6 +555,7 @@ def main() -> None:
     validate_mentions_and_logo_guards()
     validate_config()
     validate_url_keys()
+    validate_brand_legal()
     validate_banners()
     validate_style_guide()
     validate_ast_parse()

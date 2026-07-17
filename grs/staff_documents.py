@@ -52,13 +52,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Google Drive",
-                    "CIA GRS | Google Drive",
+                    "DS Community | GRS Google Drive",
                     c.url("grs.staff_documents.google_drive"),
                     c.marking_note("STAFF", "Authorized GRS staff only."),
                 ),
                 c.link_field(
                     "Handbook",
-                    "CIA GRS | Handbook",
+                    "DS Community | GRS Handbook",
                     c.url("grs.staff_documents.handbook"),
                     c.marking_note("STAFF", "Authorized GRS staff only."),
                 ),

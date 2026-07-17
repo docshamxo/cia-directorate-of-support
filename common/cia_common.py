@@ -19,6 +19,7 @@
 #   - 2026-07-17 | docshamxo | Weave Inter Studios property notice into disclaimer closers and footers.
 #   - 2026-07-17 | docshamxo | Accessibility helpers: markings, command bands, emoji-only guard.
 #   - 2026-07-17 | docshamxo | Public webhook-state helpers for empty-channel / IR recovery.
+#   - 2026-07-17 | docshamxo | Soften hero eyebrow; community link labels; stronger disclaimer title.
 # === END FILE HEADER ===
 
 """
@@ -324,7 +325,10 @@ _copy = _get_org("copy")
 CHAIN_OF_COMMAND_INTRO = _copy["chain_of_command_intro"]
 AFFILIATION_NOTICE = _copy.get(
     "affiliation_notice",
-    "This is an unofficial Roblox community — not affiliated with the US Government or CIA.",
+    (
+        "**Unofficial community roleplay.** Not affiliated with the United States Government "
+        "or the Central Intelligence Agency."
+    ),
 )
 PROPERTY_NOTICE = str(
     _copy.get(
@@ -492,8 +496,13 @@ def validate_embed_accessibility(embeds: Sequence[discord.Embed]) -> None:
 
 
 def agency_eyebrow(unit: str) -> str:
-    """Standard italic hero eyebrow: Central Intelligence Agency · {Unit}."""
-    return f"*Central Intelligence Agency · {unit}*"
+    """Italic hero eyebrow: community RP framing + unit (not an official USG banner)."""
+    return f"*Unofficial community RP · {unit}*"
+
+
+def community_link_label(name: str) -> str:
+    """Discord link text that stays RP-clear without looking like an official agency hyperlink."""
+    return f"DS Community | {name}"
 
 
 def motto_line(motto: str, *, classification: str | None = None) -> str:
@@ -564,7 +573,7 @@ def hero_embed(
     color: int = COLOR_DS,
     logo: Path | None = None,
 ) -> discord.Embed:
-    """ALL CAPS hero title + italic CIA · Unit eyebrow + short supporting sentence."""
+    """ALL CAPS hero title + italic community-RP eyebrow + short supporting sentence."""
     return embed(
         title=title,
         description=f"{agency_eyebrow(unit)}\n\n{supporting}",
@@ -586,9 +595,11 @@ def disclaimer_embed(
         text = DISCLAIMER_LINKS_TEXT
     else:
         text = DISCLAIMER_TEXT
+    if "not affiliated" not in text.lower():
+        text = f"{AFFILIATION_NOTICE}\n\n{text}"
     if PROPERTY_NOTICE and PROPERTY_NOTICE not in text:
         text = f"{text.rstrip()}\n\n**{PROPERTY_NOTICE}**"
-    return embed(title="Disclaimer", description=text, color=color)
+    return embed(title="Disclaimer · Unofficial Community", description=text, color=color)
 
 
 def chain_intro_embed(

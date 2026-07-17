@@ -14,6 +14,7 @@
 #   - 2026-07-15 | docshamxo | Title Case sections without numbers; shared handling copy.
 #   - 2026-07-17 | docshamxo | Replace single Staff Handbook with Phase I/II/III documents.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
+#   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 # === END FILE HEADER ===
 
 """
@@ -53,7 +54,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Google Drive",
-                    "CIA OTE | Google Drive",
+                    "DS Community | OTE Google Drive",
                     c.url("ote.staff_documents.google_drive"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
@@ -66,19 +67,19 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Phase I",
-                    "CIA OTE | OTP Staff Handbook Phase I",
+                    "DS Community | OTE OTP Staff Handbook Phase I",
                     c.url("ote.staff_documents.phase_i"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Phase II",
-                    "CIA OTE | OTP Staff Handbook Phase II",
+                    "DS Community | OTE OTP Staff Handbook Phase II",
                     c.url("ote.staff_documents.phase_ii"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Phase III",
-                    "CIA OTE | OTP Staff Handbook Phase III",
+                    "DS Community | OTE OTP Staff Handbook Phase III",
                     c.url("ote.staff_documents.phase_iii"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
@@ -91,7 +92,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "General Information",
-                    "CIA OTE | General Information & Chain of Command",
+                    "DS Community | OTE General Information & Chain of Command",
                     c.url("ote.staff_documents.general_info_coc"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
@@ -104,13 +105,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Tryout Guide",
-                    "CIA OTE | Tryout Guide",
+                    "DS Community | OTE Tryout Guide",
                     c.url("ote.staff_documents.tryout_guide"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Graduation",
-                    "CIA OTE | Graduation Ceremony Procedures",
+                    "DS Community | OTE Graduation Ceremony Procedures",
                     c.url("ote.staff_documents.graduation_ceremony_procedures"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
@@ -123,13 +124,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Standard Training",
-                    "CIA OTE | Standard Training Guide",
+                    "DS Community | OTE Standard Training Guide",
                     c.url("ote.staff_documents.standard_training_guide"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Weapons Standard Training",
-                    "CIA OTE | Weapons Standard Training Guide",
+                    "DS Community | OTE Weapons Standard Training Guide",
                     c.url("ote.staff_documents.weapons_st_guide"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
@@ -142,7 +143,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Staff Database (ORBAT)",
-                    "CIA OTE | Staff Database (ORBAT)",
+                    "DS Community | OTE Staff Database (ORBAT)",
                     c.url("ote.staff_documents.staff_database"),
                     c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),

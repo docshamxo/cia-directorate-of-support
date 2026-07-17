@@ -23,6 +23,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
   - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
+  - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
 === END FILE HEADER ===
 -->
 
@@ -35,7 +36,7 @@ Modified:
 <p align="center">
   Discord announcer scripts for DS, OSEC, OTE, GRS, and ESD.<br>
   <em>WE GO AS ONE</em><br>
-  <small>Unofficial Roblox community — not affiliated with the US Government or CIA.</small>
+  <small><strong>Unofficial Roblox community roleplay</strong> — not affiliated with, endorsed by, or connected to the United States Government or the Central Intelligence Agency. See <a href="LICENSE">LICENSE</a> and <a href="BRAND.md">BRAND.md</a>.</small>
 </p>
 
 <blockquote align="center">
@@ -172,6 +173,8 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 | [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
 | [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
+| [BRAND.md](BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
+| [LICENSE](LICENSE) | MIT + brand use / trademark notice |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
 | [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 | [config/README.md](config/README.md) | YAML + Discord embed style |

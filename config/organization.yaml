@@ -11,6 +11,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF/CANDIDATE; affiliation banner; soften GRS/ESD.
 #   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice to affiliation/disclaimer copy.
+#   - 2026-07-17 | docshamxo | Strengthen non-affiliation banners for brand/legal compliance.
 # === END FILE HEADER ===
 
 ds:
@@ -67,35 +68,47 @@ copy:
 
     Do not bypass ranks by directing issues to senior leadership when a lower-ranking supervisor is available
     and appropriate. Always consult the next rank above you rather than escalating to the highest authority.'
-  affiliation_notice: 'This is an **unofficial Roblox community**. It is **not affiliated with**, endorsed
-    by, or connected to the United States Government or the Central Intelligence Agency. Community
-    markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.
+  affiliation_notice: '**Unofficial community roleplay.** This project is **not affiliated with**,
+    endorsed by, sponsored by, or connected to the United States Government or the Central Intelligence
+    Agency. Nothing here is an official government communication. Community markings (**PUBLIC** /
+    **STAFF** / **CANDIDATE**) are roleplay vocabulary only — not USG classification.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
-  disclaimer: 'All text here is marked **PUBLIC**.
+  disclaimer: '**Unofficial community roleplay — not USG/CIA.**
 
 
-    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
+    All text here is marked **PUBLIC**.
+
+
+    This Discord content is fiction for an unofficial Roblox community. It is **not affiliated with**
+    the United States Government or the Central Intelligence Agency. Markings are roleplay vocabulary
+    only.
+
+
+    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
+  disclaimer_links: '**Unofficial community roleplay — not USG/CIA.**
+
+
+    All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
+
+
+    Links point to community / Roblox resources for this unofficial group. This project is **not
+    affiliated with** the United States Government or the Central Intelligence Agency. Markings are
     roleplay vocabulary only.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_links: 'All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
+  disclaimer_staff: '**Unofficial community roleplay — not USG/CIA.**
 
 
-    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
-    roleplay vocabulary only.
+    Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked staff
+    materials are **STAFF** unless otherwise noted.
 
 
-    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_staff: 'Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked
-    staff materials are **STAFF** unless otherwise noted.
-
-
-    This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
-    roleplay vocabulary only.
+    Staff markings are community access rules for this Roblox roleplay — **not** United States
+    Government classification. This project is **not affiliated with** the US Government or CIA.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'

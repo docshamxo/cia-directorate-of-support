@@ -54,16 +54,16 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.pending_group_field(
                     "Executive Security Detail",
-                    "CIA | Executive Security Detail",
+                    c.community_link_label("ESD"),
                 ),
                 c.link_field(
                     "Office of Security",
-                    "CIA | Office of Security",
+                    c.community_link_label("OSEC"),
                     c.URL_ROBLOX_GROUP_OSEC,
                 ),
                 c.link_field(
                     "Directorate of Support",
-                    "CIA | Directorate of Support",
+                    c.community_link_label("Directorate of Support"),
                     c.URL_ROBLOX_GROUP_DS,
                 ),
             ),
