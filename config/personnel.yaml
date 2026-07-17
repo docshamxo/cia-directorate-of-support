@@ -11,7 +11,12 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Swap OTE DDTE and ADTE (AndyShotSecond / Railorbsj).
 #   - 2026-07-17 | docshamxo | Add SSA to GRS/ESD LOWCOM (match OSEC ladder).
+#   - 2026-07-17 | docshamxo | Privacy: redact multi-holder CM roster; local holders overlay.
 # === END FILE HEADER ===
+
+# Named holders for multi-person rosters (e.g. Main Element CMs) belong in
+# gitignored config/personnel.holders.local.yaml — see personnel.holders.example.yaml.
+# Keep committed holders to high-command / small command teams only.
 
 agency_executive:
 - abbrev: DIR
@@ -72,16 +77,16 @@ osec_high_command:
 osec_main_chief_marshals:
 - abbrev: CM
   title: Chief Marshal
-  holder: Jamalclop
+  holder: VACANT
 - abbrev: CM
   title: Chief Marshal
-  holder: Killjoy_74k
+  holder: VACANT
 - abbrev: CM
   title: Chief Marshal
-  holder: Idk_Manti
+  holder: VACANT
 - abbrev: CM
   title: Chief Marshal
-  holder: QueenIrealsub
+  holder: VACANT
 grs_command:
 - abbrev: CM
   title: Chief Marshal

@@ -331,6 +331,9 @@ def validate_config() -> None:
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",
     )
+    os.environ.setdefault("OSEC_LOWCOM_APPLICATION_URL", "https://example.invalid/osec-lowcom-app")
+    os.environ.setdefault("OSEC_MIDCOM_APPLICATION_URL", "https://example.invalid/osec-midcom-app")
+    os.environ.setdefault("OTE_APPLICATION_URL", "https://example.invalid/ote-application")
 
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
@@ -343,6 +346,8 @@ def validate_config() -> None:
         c.GRS_ESD_MIDDLE_COMMAND,
         c.discord_invite_url(),
         c.osec_application_results_url(),
+        c.osec_lowcom_application_url(),
+        c.ote_application_url(),
         c.server_regulations_embeds(),
     )
     if len(c.GRS_ESD_MIDDLE_COMMAND) < 1:

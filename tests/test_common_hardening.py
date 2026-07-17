@@ -100,6 +100,17 @@ def test_is_staff_placeholder() -> None:
     assert not c.is_staff_placeholder("https://docs.google.com/document/d/abc")
 
 
+def test_applicant_urls_come_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("OSEC_LOWCOM_APPLICATION_URL", "https://forms.example/lowcom")
+    monkeypatch.setenv("OSEC_MIDCOM_APPLICATION_URL", "https://forms.example/midcom")
+    monkeypatch.setenv("OTE_APPLICATION_URL", "https://forms.example/ote")
+    monkeypatch.setenv("OTE_APPLICATION_TRACKER_URL", "https://sheets.example/tracker")
+    assert c.osec_lowcom_application_url() == "https://forms.example/lowcom"
+    assert c.osec_midcom_application_url() == "https://forms.example/midcom"
+    assert c.ote_application_url() == "https://forms.example/ote"
+    assert c.ote_application_tracker_url(required=True) == "https://sheets.example/tracker"
+
+
 def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
     webhook_state: Path,
     empty_bot_token: None,

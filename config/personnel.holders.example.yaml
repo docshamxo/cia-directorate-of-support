@@ -1,0 +1,32 @@
+# === FILE HEADER ===
+# Title: Personnel Holders Example
+# Path: config/personnel.holders.example.yaml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Local holders overlay for multi-person rosters (privacy).
+# === END FILE HEADER ===
+
+# Copy to config/personnel.holders.local.yaml and set real Roblox usernames.
+# personnel.holders.local.yaml is gitignored — never commit named mid-tier rosters.
+#
+# Keys listed here replace the matching lists in config/personnel.yaml at load time.
+
+osec_main_chief_marshals:
+- abbrev: CM
+  title: Chief Marshal
+  holder: REPLACE_ME
+- abbrev: CM
+  title: Chief Marshal
+  holder: REPLACE_ME
+- abbrev: CM
+  title: Chief Marshal
+  holder: REPLACE_ME
+- abbrev: CM
+  title: Chief Marshal
+  holder: REPLACE_ME
+
+# === FILE FOOTER ===
+# End of file: config/personnel.holders.example.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

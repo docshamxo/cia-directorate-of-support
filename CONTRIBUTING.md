@@ -33,27 +33,31 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 
 ## Sensitivity
 
-- Never commit `.env`, `config/links.staff.local.yaml`, or `.webhook_messages.json`
-- Staff Drive / TTP URLs → local overlay only (not public `config/links.yaml`)
-- Discord invites / channel URLs → `.env` (`DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`)
+- Never commit `.env`, `config/links.staff.local.yaml`, `config/personnel.holders.local.yaml`, or `.webhook_messages.json`
+- Staff Drive / ORBAT / TTP URLs → local overlay only (not public `config/links.yaml`)
+- Do not commit multi-person mid-tier rosters — use `personnel.holders.local.yaml`
+- Discord invites, channel snowflakes, and applicant form/tracker URLs → `.env`
+- Never post `OTE_APPLICATION_TRACKER_URL` into public Discord embeds
 - Keep affiliation / fiction disclaimer text in closers
 - Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](SECURITY.md)
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
 - Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](config/organization.yaml); see [NOTICE](NOTICE))
 - Keep webhook bot names community-marked (`Community` or `(RP)`); do not restore bare `CIA | …` usernames
-- Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation: [SECURITY.md](SECURITY.md)
+- Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation / privacy: [SECURITY.md](SECURITY.md)
 ## Everyday edits
 
 Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).
 
 | Change | Where |
 |--------|-------|
-| Names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| High-command names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| Mid-tier named rosters | `config/personnel.holders.local.yaml` (from [`personnel.holders.example.yaml`](config/personnel.holders.example.yaml)) |
 | Mottos, about, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
 | Regulations prose | [`config/regulations.yaml`](config/regulations.yaml) |
 | Colors, bot usernames, logos | [`config/branding.yaml`](config/branding.yaml) |
 | Public links | [`config/links.yaml`](config/links.yaml) |
-| Staff Drive / TTP URLs | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
+| Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
+| Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
 | Embed layout | Script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
 | Webhook target | Local `.env` (never commit) |
 | Logo files | [`assets/logos/`](assets/logos/) — keep filenames |
