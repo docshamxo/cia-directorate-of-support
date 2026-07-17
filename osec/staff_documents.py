@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Prefer Drive root + fewer TTP titles; STAFF markings.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
+#   - 2026-07-17 | docshamxo | Replace mojibake em dashes with ASCII in phase titles.
 # === END FILE HEADER ===
 
 """
@@ -72,13 +73,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.marking_note("STAFF"),
                 ),
                 c.link_field(
-                    "Phase I ΓÇö Foundation",
+                    "Phase I - Foundation",
                     "DS Community | OSEC Phase I Guide",
                     c.url("osec.staff_documents.phase_i"),
                     c.marking_note("STAFF"),
                 ),
                 c.link_field(
-                    "Phase II ΓÇö Intermediate",
+                    "Phase II - Intermediate",
                     "DS Community | OSEC Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
                     c.marking_note("STAFF"),

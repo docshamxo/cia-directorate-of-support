@@ -8,19 +8,16 @@
 #   - 2026-07-15 | docshamxo | Title Case section headers for Discord embed redesign.
 #   - 2026-07-17 | docshamxo | Soften welcome banner for non-affiliation clarity.
 #   - 2026-07-17 | docshamxo | Product/content UX: shorter intro, less section overlap.
+#   - 2026-07-17 | docshamxo | Keep affiliation bold on one line; ASCII separators.
 # === END FILE HEADER ===
 
 title: SERVER REGULATIONS
 intro: |
   {eyebrow}
 
-  *{motto} · Marking: {classification}*
+  *{motto} - Marking: {classification}*
 
-  Welcome to the unofficial Roblox community Directorate of Support
-  Office of Security Communications Server (roleplay). This is **not affiliated
-  with** the US Government or CIA. Maintain professionalism, discipline, and
-  operational integrity at all times. Failure to comply may result in administrative
-  action, removal, or further discipline.
+  Welcome to the unofficial Roblox community Directorate of Support Office of Security Communications Server (roleplay). This is **not affiliated with** the US Government or CIA. Maintain professionalism, discipline, and operational integrity at all times. Failure to comply may result in administrative action, removal, or further discipline.
 sections:
   - title: Professional Conduct & Community Standards
     body: |
