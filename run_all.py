@@ -217,7 +217,6 @@ def _print_catalog(scripts: list[tuple[str, str, str]]) -> None:
         print(f"    {label}  [{webhook_key}]")
 
 
-
 def _warn_duplicate_webhooks(env: dict[str, str]) -> None:
     duplicates = c.find_duplicate_webhook_keys(env)
     if not duplicates:
