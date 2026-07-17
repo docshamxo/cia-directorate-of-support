@@ -20,6 +20,7 @@ Modified:
   - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
+  - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
 === END FILE HEADER ===
 -->
 
@@ -67,7 +68,7 @@ python run_all.py --dry-run --delay 0
 python run_all.py
 ```
 
-Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`), then add ✅ when the bot token is set. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting.
+Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`), then add ✅ when the bot token is set. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
 ---
 
@@ -80,7 +81,7 @@ python ds/chain_of_command.py
 python ds/chain_of_command.py --dry-run
 ```
 
-`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--require-reaction`.
+`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--require-reaction`.
 
 ---
 
@@ -161,6 +162,9 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 | Doc | Use when |
 |-----|----------|
 | **[OPS.md](OPS.md)** | Live runs, ✅ reactions, purge / state recovery |
+| [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
+| [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
+| [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
 | [config/README.md](config/README.md) | YAML + Discord embed style |

@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Note prior-message cleanup on live announcer runs.
 #   - 2026-07-17 | docshamxo | Note purge-all recorded IDs and ✅ reactions on live runs.
 #   - 2026-07-17 | docshamxo | Use common.manifest; add --only filter.
+#   - 2026-07-17 | docshamxo | Add --stage / --list for safer staged office rollout.
 # === END FILE HEADER ===
 
 """
@@ -24,6 +25,10 @@ Usage (from the repository root):
     python run_all.py --delay 1.5
     python run_all.py --only ds,osec
     python run_all.py --only WEBHOOK_GRS_COC,esd/coc.py
+    python run_all.py --stage 1
+    python run_all.py --stage osec --dry-run
+    python run_all.py --list
+    python run_all.py --list-stages
 """
 
 from __future__ import annotations
@@ -38,7 +43,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from common.manifest import ANNOUNCERS
+from common.manifest import ANNOUNCERS, ROLLOUT_STAGES, announcers_for_office, resolve_rollout_stage
+from common.rollout import selected_scripts
 
 REPO_ROOT = Path(__file__).resolve().parent
 SCRIPTS = ANNOUNCERS
@@ -72,38 +78,54 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="",
         help=(
             "Comma-separated filter: office folder (ds), script path (grs/coc.py), "
-            "label substring, or WEBHOOK_* key."
+            "basename/stem (coc), label substring, or WEBHOOK_* key."
         ),
+    )
+    parser.add_argument(
+        "--stage",
+        default="",
+        help=(
+            "Run one staged office only (safer live rollout). "
+            "Accepts stage number (1-5) or office (ds, osec, ote, grs, esd). "
+            "See --list-stages. Prefer advancing stages one at a time after Discord verify."
+        ),
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="Print announcer catalog (respects --only / --stage) and exit.",
+    )
+    parser.add_argument(
+        "--list-stages",
+        action="store_true",
+        help="Print recommended staged office rollout order and exit.",
     )
     return parser.parse_args(argv)
 
 
-def _matches_only(relative: str, label: str, webhook_key: str, only: str) -> bool:
-    token = only.strip().lower()
-    if not token:
-        return True
-    rel = relative.lower().replace("\\", "/")
-    return (
-        token == webhook_key.lower()
-        or token == rel
-        or token in label.lower()
-        or rel.startswith(token.rstrip("/") + "/")
-        or rel.split("/", 1)[0] == token
-    )
+def _selected_scripts(only_arg: str, stage_arg: str) -> list[tuple[str, str, str]]:
+    try:
+        return selected_scripts(only_arg=only_arg, stage_arg=stage_arg, catalog=SCRIPTS)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
 
-def _selected_scripts(only_arg: str) -> list[tuple[str, str, str]]:
-    raw = [part.strip() for part in only_arg.split(",") if part.strip()]
-    if not raw:
-        return list(SCRIPTS)
-    selected: list[tuple[str, str, str]] = []
-    for entry in SCRIPTS:
-        relative, label, webhook_key = entry
-        if any(_matches_only(relative, label, webhook_key, token) for token in raw):
-            selected.append(entry)
-    if not selected:
-        raise SystemExit(f"No announcers matched --only {only_arg!r}")
-    return selected
+def _print_stages() -> None:
+    print("Recommended staged office rollout (one stage per live pass):\n")
+    for stage_id, title, office in ROLLOUT_STAGES:
+        count = len(announcers_for_office(office))
+        print(f"  Stage {stage_id}: {title} ({office}/) - {count} announcer(s)")
+        print(f"    python run_all.py --stage {stage_id}")
+        print(f"    python run_all.py --stage {office} --dry-run")
+    print("\nAfter each live stage, verify Discord channels before advancing.")
+    print("Full checklist: docs/RELEASE_CHECKLIST.md")
+
+
+def _print_catalog(scripts: list[tuple[str, str, str]]) -> None:
+    print(f"{len(scripts)} announcer(s):\n")
+    for relative, label, webhook_key in scripts:
+        print(f"  {relative}")
+        print(f"    {label}  [{webhook_key}]")
 
 
 def run_all(argv: list[str] | None = None) -> int:
@@ -111,7 +133,18 @@ def run_all(argv: list[str] | None = None) -> int:
     load_dotenv(REPO_ROOT / ".env")
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
-    scripts = _selected_scripts(args.only)
+    if args.list_stages:
+        _print_stages()
+        return 0
+
+    scripts = _selected_scripts(args.only, args.stage)
+
+    if args.list:
+        if args.stage.strip():
+            stage_id, title, office = resolve_rollout_stage(args.stage)
+            print(f"Stage {stage_id}: {title} ({office}/)\n")
+        _print_catalog(scripts)
+        return 0
 
     env = os.environ.copy()
     pythonpath = str(REPO_ROOT)
@@ -121,7 +154,6 @@ def run_all(argv: list[str] | None = None) -> int:
         env["CIA_DRY_RUN"] = "1"
     if not args.no_skip_empty:
         env["CIA_SKIP_EMPTY_WEBHOOKS"] = "1"
-    # CI-safe placeholders when invite/results URLs are unset (dry-run still builds).
     env.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
     env.setdefault(
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
@@ -129,13 +161,24 @@ def run_all(argv: list[str] | None = None) -> int:
     )
 
     mode = "dry-run" if args.dry_run else "live"
-    print(f"Running {len(scripts)} announcer script(s) from {REPO_ROOT} ({mode})\n")
+    scope = f"{len(scripts)} announcer script(s)"
+    if args.stage.strip():
+        stage_id, title, office = resolve_rollout_stage(args.stage)
+        scope = f"stage {stage_id} ({title} / {office}/) - {len(scripts)} script(s)"
+    print(f"Running {scope} from {REPO_ROOT} ({mode})\n")
     print(
         "Note: live runs post first, then delete previously recorded webhook messages "
         "for each channel (see .webhook_messages.json), and add a checkmark reaction when "
         "DISCORD_BOT_TOKEN is set.\n"
         "Messages posted before cleanup / outside local state are left alone.\n"
     )
+    if not args.stage.strip() and not args.only.strip() and not args.dry_run:
+        print(
+            "Tip: for safer live rollout, prefer one office at a time:\n"
+            "  python run_all.py --list-stages\n"
+            "  python run_all.py --stage 1\n"
+            "See docs/RELEASE_CHECKLIST.md\n"
+        )
 
     succeeded: list[str] = []
     skipped: list[str] = []
@@ -151,7 +194,7 @@ def run_all(argv: list[str] | None = None) -> int:
 
         webhook_value = env.get(webhook_key, "").strip()
         if not args.dry_run and not webhook_value and not args.no_skip_empty:
-            print(f"skip {label} ({relative}) — empty {webhook_key}")
+            print(f"skip {label} ({relative}) - empty {webhook_key}")
             skipped.append(label)
             continue
 
@@ -188,6 +231,9 @@ def run_all(argv: list[str] | None = None) -> int:
         return 1
 
     print("All runnable scripts completed successfully.")
+    if args.stage.strip() and not args.dry_run:
+        stage_id, title, _office = resolve_rollout_stage(args.stage)
+        print(f"Stage {stage_id} ({title}) complete - verify Discord, then advance.")
     return 0
 
 

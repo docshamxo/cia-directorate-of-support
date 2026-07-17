@@ -24,6 +24,8 @@ Modified:
 
 [`cia_common.py`](cia_common.py) loads YAML from [`../config/`](../config/) and provides Discord helpers.
 [`announcer.py`](announcer.py) provides `run_announcer` and shared CoC layouts.
+[`manifest.py`](manifest.py) is the announcer catalog and staged office order.
+[`rollout.py`](rollout.py) implements `--only` / `--stage` selection for `run_all.py`.
 
 Full embed contract: [Discord Embed Style Guide](../config/README.md#discord-embed-style-guide).
 

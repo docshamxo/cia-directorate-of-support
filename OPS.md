@@ -7,6 +7,7 @@ Created by: docshamxo
 Modified:
   - 2026-07-17 | docshamxo | Announcer ops runbook (webhooks, state, recovery, bot perms).
   - 2026-07-17 | docshamxo | Expand reaction and purge troubleshooting runbooks.
+  - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
 === END FILE HEADER ===
 -->
 
@@ -15,6 +16,10 @@ Modified:
 Operator checklist for live Discord announcer runs. Prefer dry-run before every live send.
 
 **Doctrine:** webhooks post; the bot only reacts; local state tracks what *this* suite can purge. Do not expect full-channel wipe capability.
+
+For versioned releases and staged office rollout, also use
+[docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) and
+[docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md).
 
 ## Prerequisites
 
@@ -158,11 +163,18 @@ If a channel looks wrong (empty, duplicates, stale embeds):
 
 ---
 
-## Filtered / staggered runs
+## Filtered / staged office runs
+
+Prefer **one office stage per live pass** after hardening or large config changes:
 
 ```bash
+python run_all.py --list-stages
+python run_all.py --stage 1 --dry-run --delay 0
+python run_all.py --stage 1
+python run_all.py --stage osec
 python run_all.py --only ds
 python run_all.py --only WEBHOOK_GRS_COC,esd
+python run_all.py --stage grs --only coc
 python run_all.py --delay 2.0
 python run_all.py --fail-fast
 ```

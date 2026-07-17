@@ -15,6 +15,7 @@ Modified:
   - 2026-07-17 | docshamxo | Sensitivity rules, marking vocabulary, optional banners, manifest.
   - 2026-07-17 | docshamxo | Clarify contributor path; cross-link OPS reaction/purge docs.
   - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
+  - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
 === END FILE HEADER ===
 -->
 
@@ -85,6 +86,9 @@ pip install -e ".[dev]"
 pre-commit install
 pre-commit run --all-files
 ```
+
+For live production refreshes, follow [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md)
+(staged `--stage` rollout). Record user-facing changes in [CHANGELOG.md](CHANGELOG.md).
 
 Use `python3` / `python3 -m pytest` on macOS/Linux if needed.
 
