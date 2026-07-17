@@ -107,7 +107,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Application Tracker",
                     "CIA OTE | Application Tracker",
                     c.url("ote.open_positions.application_tracker"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
             ),
         ),

@@ -30,7 +30,8 @@ Modified:
 
 <p align="center">
   Discord announcer scripts for DS, OSEC, OTE, GRS, and ESD.<br>
-  <em>WE GO AS ONE</em>
+  <em>WE GO AS ONE</em><br>
+  <small>Unofficial Roblox community — not affiliated with the US Government or CIA.</small>
 </p>
 
 <p align="center">
@@ -368,9 +369,10 @@ python run_all.py --dry-run          # preview embeds; do not post
 python run_all.py --fail-fast        # stop on first failure
 python run_all.py --delay 1.5        # seconds between scripts
 python run_all.py --no-skip-empty    # error on empty webhook env vars
+python run_all.py --only ds,osec     # filter by office, path, label, or WEBHOOK_* key
 ```
 
-Live runs **delete every recorded prior webhook message** for that channel (all IDs in gitignored `.webhook_messages.json`), post the new embed(s), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md).
+Live runs **post first**, then delete previously recorded webhook messages for that channel (IDs in gitignored `.webhook_messages.json`), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md) and [OPS.md](OPS.md).
 
 ### Preview one channel without posting
 
@@ -401,7 +403,8 @@ python tools/validate_repo.py
 | One Discord channel's embed layout | The matching script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
 | Which Discord channel a script posts to | That script's key inside `.env` |
 | A logo image | Same filename in [`assets/logos/`](assets/logos/) |
-| Order of `run_all.py` | [`run_all.py`](run_all.py) |
+| Order of `run_all.py` | [`common/manifest.py`](common/manifest.py) |
+| Staff Drive URLs | `config/links.staff.local.yaml` (gitignored; see example) |
 
 Most day-to-day updates are YAML edits under [`config/`](config/). See [config/README.md](config/README.md) for the YAML guide and the **Discord Embed Style Guide** (hero pattern, link grammar, closer stack, Discord limits).
 
@@ -490,7 +493,8 @@ Directorate of Support (DS)
 |-----|----------------|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Editing, validating, and pushing changes |
 | [config/README.md](config/README.md) | YAML config guide |
-| [SECURITY.md](SECURITY.md) | Keeping webhooks private |
+| [SECURITY.md](SECURITY.md) | Keeping webhooks private; rotation playbooks |
+| [OPS.md](OPS.md) | Live runbook (rotate webhook, reset state, recovery) |
 | [common/README.md](common/README.md) | Shared library / config loader |
 | [tools/README.md](tools/README.md) | Validation tool |
 | [`.env.example`](.env.example) | Webhook key template |

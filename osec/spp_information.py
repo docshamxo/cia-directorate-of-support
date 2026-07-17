@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align hero, link grammar, and unit-color closers.
+#   - 2026-07-17 | docshamxo | Community markings CANDIDATE/STAFF/PUBLIC.
 # === END FILE HEADER ===
 
 """
@@ -95,7 +96,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Required Reading",
             description=(
                 "Review each document in full before training and promotion to "
-                "**Junior Security Agent**. Observe all classification markings."
+                "**Junior Security Agent**. Observe all community markings."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -103,36 +104,35 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Orientation",
                     "CIA OSEC | Security Phase Candidate Orientation Guide",
                     c.url("osec.spp_information.orientation_guide"),
-                    "CONFIDENTIAL. Authorized candidates only.",
+                    "CANDIDATE. Authorized candidates only.",
                 ),
                 c.link_field(
                     "Handbook",
                     "CIA OSEC | Handbook",
                     c.url("osec.spp_information.official_handbook"),
-                    "CONTROLLED UNCLASSIFIED INFORMATION (CUI). Authorized OSEC staff only.",
+                    "STAFF. Authorized OSEC staff only.",
                 ),
                 c.link_field(
                     "Conduct",
                     "CIA OSEC | Code of Agency Conduct",
                     c.url("osec.spp_information.code_of_agency_conduct"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
                 c.link_field(
                     "Civilian Access",
                     "CIA OSEC | Civilian Access",
                     c.url("osec.spp_information.civilian_access"),
-                    "UNCLASSIFIED.",
+                    "PUBLIC.",
                 ),
             ),
         ),
         c.embed(
             title="Classification & Handling Notice",
             description=(
-                "The **Security Phase Candidate Orientation Guide** is classified "
-                "**CONFIDENTIAL**. The **CIA OSEC | Handbook** is marked "
-                "**CONTROLLED UNCLASSIFIED INFORMATION (CUI)**.\n\n"
+                "The **Security Phase Candidate Orientation Guide** is marked **CANDIDATE**. "
+                "The **CIA OSEC | Handbook** is marked **STAFF**.\n\n"
                 "The **Code of Agency Conduct** and **Civilian Access** documents are "
-                "**UNCLASSIFIED**.\n\n"
+                "**PUBLIC**.\n\n"
                 "Unauthorized disclosure, redistribution, or leaking of restricted materials "
                 "will result in a **BLACKLIST** from the **CIA Office of Security**. "
                 "Handle all documents responsibly and do not share them outside authorized "
@@ -140,7 +140,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
             color=c.COLOR_OSEC,
         ),
-        c.disclaimer_embed(classified=True, color=c.COLOR_OSEC),
+        c.disclaimer_embed(staff=True, color=c.COLOR_OSEC),
     ]
 
 

@@ -44,7 +44,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA ESD | Google Drive",
                     c.url("esd.staff_documents.google_drive"),
-                    "Authorized ESD staff only.",
+                    "STAFF. Authorized ESD staff only.",
                 ),
             ),
         ),
@@ -53,7 +53,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             authority="CIA Directorate of Support",
             color=c.COLOR_ESD,
         ),
-        c.disclaimer_embed(classified=True, color=c.COLOR_ESD),
+        c.disclaimer_embed(staff=True, color=c.COLOR_ESD),
     ]
 
 

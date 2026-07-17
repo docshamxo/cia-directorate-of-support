@@ -35,7 +35,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="PUBLIC INFORMATION",
             unit="Directorate of Support",
             supporting=(
-                "Unclassified overview of the Directorate of Support and its subordinate offices."
+                "PUBLIC overview of the Directorate of Support and its subordinate offices."
             ),
             logo=c.LOGOS["ds"],
         ),
@@ -98,7 +98,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 c.link_field(
                     "Discord",
                     "CIA | Discord Invite",
-                    c.URL_DISCORD_INVITE,
+                    c.discord_invite_url(),
                 ),
             ),
         ),

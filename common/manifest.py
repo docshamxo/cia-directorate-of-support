@@ -1,0 +1,53 @@
+# === FILE HEADER ===
+# Title: Manifest
+# Path: common/manifest.py
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Single announcer catalog for run_all and validate_repo.
+# === END FILE HEADER ===
+
+"""Announcer catalog — single source of truth for run_all and validate_repo."""
+
+from __future__ import annotations
+
+# (relative script path, human label, WEBHOOK_* env key)
+ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
+    ("ds/chain_of_command.py", "DS Chain of Command", "WEBHOOK_DS_CHAIN_OF_COMMAND"),
+    ("ds/public_information.py", "DS Public Information", "WEBHOOK_DS_PUBLIC_INFORMATION"),
+    ("ds/server_regulations.py", "Server Regulations", "WEBHOOK_DS_SERVER_REGULATIONS"),
+    ("osec/information.py", "OSEC Information", "WEBHOOK_OSEC_INFORMATION"),
+    ("osec/staff_documents.py", "OSEC Staff Documents", "WEBHOOK_OSEC_STAFF_DOCUMENTS"),
+    ("osec/spp_information.py", "OSEC Security Phase Program", "WEBHOOK_OSEC_SPP_INFORMATION"),
+    ("osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
+    ("ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
+    ("ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
+    ("ote/program_overview.py", "OTE Program Overview", "WEBHOOK_OTE_PROGRAM_OVERVIEW"),
+    ("ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),
+    ("ote/open_positions.py", "OTE Open Positions", "WEBHOOK_OTE_OPEN_POSITIONS"),
+    ("grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
+    ("grs/information.py", "GRS Information", "WEBHOOK_GRS_INFORMATION"),
+    ("grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
+    ("esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
+    ("esd/information.py", "ESD Information", "WEBHOOK_ESD_INFORMATION"),
+    ("esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
+)
+
+# Webhook keys whose embeds may reference STAFF_LOCAL_REQUIRED placeholders.
+# Live sends warn/fail closed when unresolved; dry-run still builds embeds.
+STAFF_WEBHOOK_KEYS: frozenset[str] = frozenset(
+    {
+        "WEBHOOK_OSEC_INFORMATION",
+        "WEBHOOK_OSEC_STAFF_DOCUMENTS",
+        "WEBHOOK_OSEC_SPP_INFORMATION",
+        "WEBHOOK_OTE_STAFF_DOCUMENTS",
+        "WEBHOOK_GRS_INFORMATION",
+        "WEBHOOK_GRS_STAFF_DOCUMENTS",
+        "WEBHOOK_ESD_STAFF_DOCUMENTS",
+    }
+)
+
+# === FILE FOOTER ===
+# End of file: common/manifest.py
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

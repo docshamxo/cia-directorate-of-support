@@ -24,7 +24,7 @@ Editable data for the announcers. Change these files instead of hardcoding value
 | [`branding.yaml`](branding.yaml) | Colors, bot usernames, logo filenames |
 | [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers |
 | [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks |
-| [`links.yaml`](links.yaml) | Document, form, Roblox, and Discord URLs |
+| [`links.yaml`](links.yaml) | Public document, form, and Roblox URLs (staff Drive via local overlay) |
 | [`regulations.yaml`](regulations.yaml) | Server regulations prose |
 
 ## Discord Embed Style Guide
@@ -48,7 +48,9 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Important Notice** | Chain of command / conduct only |
 | **Classification & Handling Notice** | Restricted document hubs |
 | **Important Information** | Application rules only |
-| **Disclaimer** | Always last; pass `color=` for the unit; use `links=True` when the message has URLs, `classified=True` for restricted doc hubs |
+| **Disclaimer** | Always last; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
+
+Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification).
 
 ### Channel templates
 

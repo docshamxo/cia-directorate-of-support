@@ -58,7 +58,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Handbook",
                     "CIA GRS | Handbook",
                     c.url("grs.information.handbook"),
-                    "Authorized GRS staff only.",
+                    "Authorized GRS staff only. Marking: STAFF.",
                 ),
             ),
         ),
@@ -67,7 +67,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             authority="CIA Directorate of Support",
             color=c.COLOR_GRS,
         ),
-        c.disclaimer_embed(classified=True, color=c.COLOR_GRS),
+        c.disclaimer_embed(staff=True, color=c.COLOR_GRS),
     ]
 
 

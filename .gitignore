@@ -21,6 +21,8 @@ webhooks.local.*
 *.local.json
 .webhook_messages.json
 .webhook_messages.json.tmp
+config/links.staff.local.yaml
+config/*.staff.local.yaml
 
 # Python
 __pycache__/

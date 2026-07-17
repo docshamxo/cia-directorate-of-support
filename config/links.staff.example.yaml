@@ -1,0 +1,50 @@
+# === FILE HEADER ===
+# Title: Links Staff Example
+# Path: config/links.staff.example.yaml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Example staff-link overlay (copy to links.staff.local.yaml).
+# === END FILE HEADER ===
+
+# Copy this file to config/links.staff.local.yaml and replace placeholders with real
+# staff Drive / document URLs. links.staff.local.yaml is gitignored — never commit it.
+#
+# Deep-merged over config/links.yaml at load time.
+
+osec:
+  information:
+    handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+  spp_information:
+    official_handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+  staff_documents:
+    google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
+    tryout_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    phase_i: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    phase_ii: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+ote:
+  staff_documents:
+    google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
+    phase_i: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    phase_ii: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    phase_iii: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    general_info_coc: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    tryout_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    graduation_ceremony_procedures: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    standard_training_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    weapons_st_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    staff_database: https://docs.google.com/spreadsheets/d/REPLACE_ME/edit?usp=sharing
+grs:
+  staff_documents:
+    google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
+    handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+  information:
+    handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+esd:
+  staff_documents:
+    google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
+
+# === FILE FOOTER ===
+# End of file: config/links.staff.example.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

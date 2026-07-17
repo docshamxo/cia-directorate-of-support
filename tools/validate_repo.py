@@ -10,18 +10,20 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Manifest catalog; optional banners; env community URLs.
 # === END FILE HEADER ===
 
 """
 Validate repository consistency for the CIA DS announcer suite.
 
 Checks:
-  - run_all.py catalog paths exist
+  - common.manifest catalog paths exist
   - every require_webhook(...) / webhook_key= is declared in .env.example
   - every WEBHOOK_* key in .env.example is used by a script
   - every c.url(...) key exists in config/links.yaml
   - required logo assets exist
   - Python sources compile
+  - optional file banners when CIA_REQUIRE_BANNERS=1
 
 Run from repository root:
     python tools/validate_repo.py
@@ -31,6 +33,7 @@ from __future__ import annotations
 
 import ast
 import compileall
+import os
 import re
 import subprocess
 import sys
@@ -38,16 +41,15 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-RUN_ALL = ROOT / "run_all.py"
 ENV_EXAMPLE = ROOT / ".env.example"
 COMMON = ROOT / "common" / "cia_common.py"
 LINKS_YAML = ROOT / "config" / "links.yaml"
+MANIFEST = ROOT / "common" / "manifest.py"
 
 WEBHOOK_RE = re.compile(
     r'(?:require_webhook|webhook_key)\s*(?:\(|\=)\s*["\'](WEBHOOK_[A-Z0-9_]+)["\']'
 )
 ENV_KEY_RE = re.compile(r"^(WEBHOOK_[A-Z0-9_]+)=", re.MULTILINE)
-CATALOG_RE = re.compile(r'\(\s*"([^"]+\.py)"\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)')
 URL_CALL_RE = re.compile(r"""c\.url\(\s*['"]([^'"]+)['"]\s*\)""")
 
 REQUIRED_LOGOS = {
@@ -77,18 +79,24 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
+def env_flag(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def catalog_entries() -> list[tuple[str, str, str]]:
-    text = RUN_ALL.read_text(encoding="utf-8")
-    entries = CATALOG_RE.findall(text)
-    if len(entries) < 1:
-        fail("No announcer catalog entries found in run_all.py")
-    return entries
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from common.manifest import ANNOUNCERS
+
+    if len(ANNOUNCERS) < 1:
+        fail("No announcer catalog entries found in common/manifest.py")
+    return list(ANNOUNCERS)
 
 
 def webhook_keys_in_code() -> set[str]:
     keys: set[str] = set()
     for path in ROOT.rglob("*.py"):
-        if any(part in {".venv", "venv", ".git", "__pycache__"} for part in path.parts):
+        if any(part in {".venv", "venv", ".git", "__pycache__", "tests"} for part in path.parts):
             continue
         text = path.read_text(encoding="utf-8")
         keys.update(WEBHOOK_RE.findall(text))
@@ -102,13 +110,15 @@ def webhook_keys_in_env_example() -> set[str]:
 
 def validate_catalog() -> int:
     entries = catalog_entries()
-    print(f"Catalog entries: {len(entries)}")
+    print(f"Catalog entries: {len(entries)} (from common/manifest.py)")
     for relative, label, webhook_key in entries:
         path = ROOT / relative
         if not path.is_file():
             fail(f"Catalog path missing for {label}: {relative}")
         if not webhook_key.startswith("WEBHOOK_"):
             fail(f"Catalog webhook key invalid for {label}: {webhook_key}")
+    if not MANIFEST.is_file():
+        fail("Missing common/manifest.py")
     return len(entries)
 
 
@@ -160,7 +170,6 @@ def url_keys_in_code() -> set[str]:
         for path in (ROOT / folder).rglob("*.py"):
             text = path.read_text(encoding="utf-8")
             keys.update(URL_CALL_RE.findall(text))
-    # Also scan common helpers that call url() at import time via dotted paths in source.
     common_text = COMMON.read_text(encoding="utf-8")
     keys.update(re.findall(r"""url\(\s*['"]([^'"]+)['"]\s*\)""", common_text))
     return keys
@@ -193,6 +202,12 @@ def validate_config() -> None:
     except ImportError as exc:
         fail(f"PyYAML is required: {exc}")
 
+    os.environ.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
+    os.environ.setdefault(
+        "DISCORD_OSEC_APPLICATION_RESULTS_URL",
+        "https://example.invalid/application-results",
+    )
+
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
     from common import cia_common as c
@@ -202,15 +217,21 @@ def validate_config() -> None:
         c.AGENCY_EXECUTIVE,
         c.LOGOS,
         c.GRS_ESD_MIDDLE_COMMAND,
-        c.url("community.discord_invite"),
+        c.discord_invite_url(),
+        c.osec_application_results_url(),
         c.server_regulations_embeds(),
     )
     if len(c.GRS_ESD_MIDDLE_COMMAND) < 1:
         fail("grs_esd_middle_command must contain at least one rank")
+    if "PUBLIC" not in c.DISCLAIMER_TEXT and "PUBLIC" not in c.DISCLAIMER_LINKS_TEXT:
+        fail("disclaimer copy should use community PUBLIC marking")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 
 def validate_banners() -> None:
+    if not env_flag("CIA_REQUIRE_BANNERS"):
+        print("File banners: skipped (set CIA_REQUIRE_BANNERS=1 to enforce)")
+        return
     result = subprocess.run(
         ["git", "ls-files", "-z"],
         cwd=ROOT,
@@ -253,6 +274,9 @@ def validate_compile() -> None:
 
 DISCLAIMER_CALL_RE = re.compile(r"disclaimer_embed\((.*?)\)", re.DOTALL)
 FORBIDDEN_SPELLING_RE = re.compile(r"\b[Yy][Ff][Pp][Aa]\b|YFPA")
+USG_MARKING_RE = re.compile(
+    r"\bUNCLASSIFIED\b|\bCONFIDENTIAL\b|\bSECRET\b|CONTROLLED UNCLASSIFIED|\bCUI\b"
+)
 HERO_TITLE_RE = re.compile(
     r'title\s*=\s*"(PUBLIC INFORMATION|INFORMATION|STAFF DOCUMENTS|OPEN POSITIONS|'
     r'SECURITY PHASE PROGRAM|OFFICER TRAINING PROGRAM|CHAIN OF COMMAND|SERVER REGULATIONS)"'
@@ -272,13 +296,16 @@ def validate_style_guide() -> None:
                 issues.append(f"{rel}: forbidden spelling YFPA/Yfpa (use Yepa if needed)")
             if "BOT_OTE_ALT" in text:
                 issues.append(f"{rel}: use BOT_OTE instead of BOT_OTE_ALT")
+            if USG_MARKING_RE.search(text):
+                issues.append(
+                    f"{rel}: USG-style marking vocabulary found; use PUBLIC/STAFF/CANDIDATE"
+                )
 
             for match in DISCLAIMER_CALL_RE.finditer(text):
                 args = match.group(1)
                 if "color=" not in args:
                     issues.append(f"{rel}: disclaimer_embed(...) must pass color=")
 
-            # Manual hero titles should prefer hero_embed (except CoC shared helper).
             if (
                 HERO_TITLE_RE.search(text)
                 and "hero_embed(" not in text
@@ -295,6 +322,8 @@ def validate_style_guide() -> None:
         issues.append("common/cia_common.py: missing hero_embed / agency_eyebrow helpers")
     if "BOT_OTE_ALT" in common_text:
         issues.append("common/cia_common.py: remove BOT_OTE_ALT")
+    if "allowed_mentions" not in common_text:
+        issues.append("common/cia_common.py: webhook sends must set allowed_mentions=none()")
 
     branding = (ROOT / "config" / "branding.yaml").read_text(encoding="utf-8")
     if "ote_alt" in branding:
