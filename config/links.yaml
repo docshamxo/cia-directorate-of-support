@@ -13,6 +13,7 @@
 #   - 2026-07-17 | docshamxo | Split OTE OTP Staff Handbook into Phase I/II/III docs.
 #   - 2026-07-17 | docshamxo | Redact Discord invite/snowflakes; staff Drive URLs via local overlay.
 #   - 2026-07-17 | docshamxo | Privacy: ORBAT staff-only; applicant forms/tracker via .env.
+#   - 2026-07-17 | docshamxo | Add shared General Standard Training Guide for staff docs.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -25,6 +26,8 @@ community:
   roblox_group_osec: https://www.roblox.com/communities/288542436/CIA-Office-of-Security#!/about
   roblox_group_grs: https://www.roblox.com/share/g/450710337
   roblox_group_ote: https://www.roblox.com/share/g/1003614105
+  # Shared across unit staff-document channels (public sharing link).
+  general_standard_training_guide: https://docs.google.com/document/d/1GV-c5lNL6mcx0Wuf-Jl5D2gT-H7rhgley9dQSMUNs6w/edit?usp=sharing
 osec:
   information:
     handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
