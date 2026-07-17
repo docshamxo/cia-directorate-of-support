@@ -60,9 +60,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Phase Documents",
-            description=(
-                "OTP Staff Handbook split by phase for OTE instruction and progression."
-            ),
+            description=("OTP Staff Handbook split by phase for OTE instruction and progression."),
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
