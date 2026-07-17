@@ -18,6 +18,7 @@
 #   - 2026-07-17 | docshamxo | Safe console print for Windows cp1252 dry-run paths.
 #   - 2026-07-17 | docshamxo | Weave Inter Studios property notice into disclaimer closers and footers.
 #   - 2026-07-17 | docshamxo | Accessibility helpers: markings, command bands, emoji-only guard.
+#   - 2026-07-17 | docshamxo | Public webhook-state helpers for empty-channel / IR recovery.
 # === END FILE HEADER ===
 
 """
@@ -802,6 +803,36 @@ def _save_webhook_message_state(state: dict[str, list[int]]) -> None:
     tmp_path = path.with_suffix(path.suffix + ".tmp")
     tmp_path.write_text(text, encoding="utf-8")
     tmp_path.replace(path)
+
+
+def load_webhook_message_state() -> dict[str, list[int]]:
+    """Public read of local message ID state (locked). Never includes webhook URLs."""
+    with _webhook_state_lock():
+        return _load_webhook_message_state()
+
+
+def clear_webhook_message_state(state_key: str | None = None) -> int:
+    """Clear one key or the entire local message ID file.
+
+    Returns the number of keys removed. Does not call Discord.
+    """
+    with _webhook_state_lock():
+        state = _load_webhook_message_state()
+        if state_key is None:
+            removed = len(state)
+            if WEBHOOK_MESSAGES_PATH.is_file():
+                WEBHOOK_MESSAGES_PATH.unlink()
+                logger.info("Removed webhook message state file (%s key(s))", removed)
+            return removed
+        if state_key not in state:
+            return 0
+        state.pop(state_key, None)
+        if state:
+            _save_webhook_message_state(state)
+        elif WEBHOOK_MESSAGES_PATH.is_file():
+            WEBHOOK_MESSAGES_PATH.unlink()
+        logger.info("Cleared webhook message state for %s", state_key)
+        return 1
 
 
 def _unique_message_ids(ids: list[int]) -> list[int]:

@@ -124,7 +124,7 @@ CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs t
 - ✅ reactions need `DISCORD_BOT_TOKEN`; webhooks cannot react alone
 - `python run_all.py --dry-run` never posts, deletes, or reacts
 - `--require-reaction` / `CIA_REQUIRE_REACTION=1` fails if ✅ cannot be applied
-- Full runbooks: [OPS.md](OPS.md)
+- Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](OPS.md)
 
 <!--
 === FILE FOOTER ===
