@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Put CoC usernames on their own line to avoid Discord wrap glitches.
 #   - 2026-07-17 | docshamxo | Track all prior IDs on purge; auto-react ✅ via bot token.
 #   - 2026-07-17 | docshamxo | Community markings, staff overlay, safer purge, logo confine, mentions off.
+#   - 2026-07-17 | docshamxo | Safe console print for Windows cp1252 dry-run paths.
 # === END FILE HEADER ===
 
 """
@@ -35,6 +36,7 @@ import json
 import logging
 import os
 import re
+import sys
 import time
 from collections.abc import Callable, Sequence
 from contextlib import contextmanager
@@ -84,6 +86,15 @@ EMBED_FIELD_NAME_LIMIT = 256
 EMBED_FIELD_VALUE_LIMIT = 1024
 EMBED_FOOTER_LIMIT = 2048
 EMBEDS_PER_MESSAGE_LIMIT = 10
+
+
+def console_print(message: str) -> None:
+    """Print to stdout without crashing on narrow Windows console encodings."""
+    try:
+        print(message)
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "ascii"
+        print(message.encode(encoding, errors="replace").decode(encoding, errors="replace"))
 
 
 def require_webhook(env_key: str) -> str:
@@ -809,7 +820,7 @@ def _delete_webhook_messages(
 
     remaining = _unique_message_ids(remaining)
     if deleted:
-        print(f"Cleared {deleted} prior webhook message(s) for {state_key}")
+        console_print(f"Cleared {deleted} prior webhook message(s) for {state_key}")
         logger.info("Cleared %s prior webhook message(s) for %s", deleted, state_key)
     return remaining
 
@@ -885,7 +896,7 @@ def _react_to_messages(
         )
         if require_reaction:
             raise RuntimeError(message)
-        print(f"Warning: {message}")
+        console_print(f"Warning: {message}")
         logger.warning("%s", message)
         return
 
@@ -911,10 +922,10 @@ def _react_to_messages(
             reacted += 1
         except RuntimeError as exc:
             logger.warning("%s", exc)
-            print(f"Warning: {exc}")
+            console_print(f"Warning: {exc}")
             errors.append(str(exc))
     if reacted:
-        print(f"Added ✅ to {reacted} webhook message(s)")
+        console_print(f"Added ✅ to {reacted} webhook message(s)")
         logger.info("Added ✅ to %s webhook message(s)", reacted)
     if require_reaction and errors:
         raise RuntimeError("Required ✅ reactions failed: " + "; ".join(errors))
@@ -1009,7 +1020,7 @@ def send_webhook(
 
             _react_to_messages(session, posted_messages, require_reaction=require_reaction)
             logger.info("Webhook send succeeded (%s) as %s", masked, username)
-            print("Sent successfully!")
+            console_print("Sent successfully!")
             return message_ids
         except HTTPException as exc:
             last_error = exc

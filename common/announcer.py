@@ -8,6 +8,7 @@
 #   - 2026-07-15 | docshamxo | Pass webhook state key for prior-message cleanup.
 #   - 2026-07-17 | docshamxo | Document purge-all IDs + ✅ reaction via shared send path.
 #   - 2026-07-17 | docshamxo | Embed preflight, logging, staff fail-closed, slim subunit CoC.
+#   - 2026-07-17 | docshamxo | ASCII-safe staff warning; console_print for Windows dry-run.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -63,12 +64,12 @@ def preview_embeds(
     username: str,
 ) -> None:
     c.validate_embed_limits(embeds)
-    print(f"[dry-run] {webhook_key} as {username} - {len(embeds)} embed(s)")
+    c.console_print(f"[dry-run] {webhook_key} as {username} - {len(embeds)} embed(s)")
     for index, embed in enumerate(embeds, start=1):
         title = embed.title or "(no title)"
         field_count = len(embed.fields)
         desc_len = len(embed.description or "")
-        print(f"  {index}. {title}  fields={field_count}  description_chars={desc_len}")
+        c.console_print(f"  {index}. {title}  fields={field_count}  description_chars={desc_len}")
 
 
 def _warn_or_fail_staff_placeholders(webhook_key: str, embeds: Sequence[discord.Embed]) -> None:
@@ -84,11 +85,11 @@ def _warn_or_fail_staff_placeholders(webhook_key: str, embeds: Sequence[discord.
         return
     message = (
         f"{webhook_key}: staff link placeholders still present. "
-        "Copy config/links.staff.example.yaml → config/links.staff.local.yaml "
+        "Copy config/links.staff.example.yaml -> config/links.staff.local.yaml "
         "and set real URLs before a live staff send."
     )
     if is_dry_run():
-        print(f"Warning: {message}")
+        c.console_print(f"Warning: {message}")
         logger.warning("%s", message)
         return
     raise RuntimeError(message)
@@ -123,7 +124,7 @@ def run_announcer(
     webhook_url = os.environ.get(webhook_key, "").strip()
     if not webhook_url:
         if allow_skip_empty_webhook():
-            print(f"Skipping {webhook_key}: webhook URL not set")
+            c.console_print(f"Skipping {webhook_key}: webhook URL not set")
             logger.info("Skipping %s: webhook URL not set", webhook_key)
             return
         raise RuntimeError(
