@@ -11,13 +11,15 @@
 #   - 2026-07-17 | docshamxo | ASCII-safe staff warning; console_print for Windows dry-run.
 #   - 2026-07-17 | docshamxo | Expand MIDCOM/LOWCOM labels for accessibility.
 #   - 2026-07-17 | docshamxo | Alerting exit codes and structured IR event logs.
+#   - 2026-07-17 | docshamxo | Default require_reaction; allow-skip and bot channel purge flags.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
 
 Live sends go through ``cia_common.send_webhook``, which posts first, then
-deletes previously recorded message IDs, and adds ✅ when
-``DISCORD_BOT_TOKEN`` is configured.
+deletes previously recorded message IDs (including sibling keys that share a
+webhook URL), and requires a checkmark via ``DISCORD_BOT_TOKEN``. Pass
+``--allow-skip-reaction`` or set ``CIA_ALLOW_SKIP_REACTION=1`` to post without.
 """
 
 from __future__ import annotations
@@ -55,6 +57,14 @@ def is_dry_run(*, dry_run: bool | None = None) -> bool:
 
 def allow_skip_empty_webhook() -> bool:
     return env_flag("CIA_SKIP_EMPTY_WEBHOOKS")
+
+
+def allow_skip_reaction() -> bool:
+    return env_flag("CIA_ALLOW_SKIP_REACTION") or _cli_flag("--allow-skip-reaction")
+
+
+def bot_channel_purge_requested() -> bool:
+    return env_flag(c.BOT_CHANNEL_PURGE_ENV) or _cli_flag("--bot-channel-purge")
 
 
 def _cli_flag(name: str) -> bool:
@@ -125,8 +135,9 @@ def run_announcer(
     if not logging.getLogger().handlers:
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
-    require_reaction = env_flag("CIA_REQUIRE_REACTION") or _cli_flag("--require-reaction")
+    require_reaction = not allow_skip_reaction()
     effective_date = env_flag("CIA_EFFECTIVE_DATE") or _cli_flag("--effective-date")
+    bot_channel_purge = True if bot_channel_purge_requested() else None
     started = time.monotonic()
 
     logger.info(
@@ -177,9 +188,10 @@ def run_announcer(
         return reopened
 
     logger.info(
-        "event=send_start webhook_key=%s require_reaction=%s",
+        "event=send_start webhook_key=%s require_reaction=%s bot_channel_purge=%s",
         webhook_key,
         require_reaction,
+        bot_channel_purge,
     )
     try:
         c.send_webhook(
@@ -190,6 +202,7 @@ def run_announcer(
             state_key=webhook_key,
             require_reaction=require_reaction,
             effective_date=False,  # already applied above when requested
+            bot_channel_purge=bot_channel_purge,
         )
     except Exception:
         logger.exception(

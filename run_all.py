@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Use common.manifest; add --only filter.
 #   - 2026-07-17 | docshamxo | Add --stage / --list for safer staged office rollout.
 #   - 2026-07-17 | docshamxo | IR resilience: exit codes, --from, --retry, --report, resume hints.
+#   - 2026-07-17 | docshamxo | Require bot token; allow-skip-reaction; bot channel purge; dup warn.
 # === END FILE HEADER ===
 
 """
@@ -30,6 +31,8 @@ Usage (from the repository root):
     python run_all.py --stage osec --dry-run
     python run_all.py --list
     python run_all.py --list-stages
+    python run_all.py --allow-skip-reaction
+    python run_all.py --bot-channel-purge
     python run_all.py --from osec/staff_documents.py
     python run_all.py --retry 1 --report .run_report.json
 """
@@ -49,6 +52,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from common import cia_common as c
 from common.batch import (
     ScriptResult,
     apply_from_filter,
@@ -165,9 +169,19 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Exit WARNING (1) if any announcer was skipped while others succeeded.",
     )
     parser.add_argument(
+        "--allow-skip-reaction",
+        action="store_true",
+        help="Post without requiring DISCORD_BOT_TOKEN for checkmark reactions.",
+    )
+    parser.add_argument(
+        "--bot-channel-purge",
+        action="store_true",
+        help="After each post, bot deletes other recent webhook messages in the channel.",
+    )
+    parser.add_argument(
         "--require-reaction",
         action="store_true",
-        help="Pass CIA_REQUIRE_REACTION=1 to child announcers (fail closed without ✅).",
+        help="Deprecated no-op: reactions are required by default (see --allow-skip-reaction).",
     )
     return parser.parse_args(argv)
 
@@ -201,6 +215,40 @@ def _print_catalog(scripts: list[tuple[str, str, str]]) -> None:
     for relative, label, webhook_key in scripts:
         print(f"  {relative}")
         print(f"    {label}  [{webhook_key}]")
+
+
+def _warn_duplicate_webhooks(env: dict[str, str]) -> None:
+    duplicates = c.find_duplicate_webhook_keys(env)
+    if not duplicates:
+        return
+    print("Warning: multiple WEBHOOK_* keys share the same Discord webhook URL:")
+    for webhook_id, keys in sorted(duplicates.items()):
+        print(f"  webhook ID {webhook_id}: {', '.join(keys)}")
+    print(
+        "  Sibling keys purge together (see OPS.md). Prefer one webhook per channel when possible.\n"
+    )
+
+
+def _require_bot_token_for_live(*, allow_skip: bool) -> None:
+    if allow_skip:
+        return
+    token = os.environ.get(c.BOT_TOKEN_ENV, "").strip()
+    if token:
+        return
+    print(
+        f"ERROR: {c.BOT_TOKEN_ENV} is not set. Live runs require a bot token for checkmark reactions.\n"
+        "\n"
+        "Setup:\n"
+        "  1. Create a bot at https://discord.com/developers/applications\n"
+        "  2. Invite it with Add Reactions + Read Message History (+ channel access)\n"
+        f"  3. Paste the token into {c.BOT_TOKEN_ENV}= in .env\n"
+        "  4. Re-run: python run_all.py\n"
+        "\n"
+        "To post without reactions (not recommended): python run_all.py --allow-skip-reaction\n"
+        "\n"
+        "Do not invent a bot token.\n"
+    )
+    raise SystemExit(CRITICAL)
 
 
 def _run_one(
@@ -237,8 +285,13 @@ def _run_one(
     print(f"-> {label} ({relative})")
     logger.info("event=batch_start label=%s path=%s", label, relative)
     started = time.monotonic()
+    child_argv = [sys.executable, str(path)]
+    if env.get("CIA_ALLOW_SKIP_REACTION") == "1":
+        child_argv.append("--allow-skip-reaction")
+    if env.get(c.BOT_CHANNEL_PURGE_ENV) == "1":
+        child_argv.append("--bot-channel-purge")
     result = subprocess.run(
-        [sys.executable, str(path)],
+        child_argv,
         cwd=REPO_ROOT,
         env=env,
         check=False,
@@ -306,8 +359,10 @@ def run_all(argv: list[str] | None = None) -> int:
         env["CIA_DRY_RUN"] = "1"
     if not args.no_skip_empty:
         env["CIA_SKIP_EMPTY_WEBHOOKS"] = "1"
-    if args.require_reaction:
-        env["CIA_REQUIRE_REACTION"] = "1"
+    if args.allow_skip_reaction:
+        env["CIA_ALLOW_SKIP_REACTION"] = "1"
+    if args.bot_channel_purge:
+        env[c.BOT_CHANNEL_PURGE_ENV] = "1"
     env.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
     env.setdefault(
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
@@ -322,9 +377,13 @@ def run_all(argv: list[str] | None = None) -> int:
         scope = f"stage {stage_id} ({title} / {office}/) - {len(scripts)} script(s)"
     print(f"Running {scope} from {REPO_ROOT} ({mode})\n")
     print(
+        "Note: use this repository only. Do NOT run legacy flat scripts under "
+        "Downloads\\DS - they post without purge or checkmark reactions.\n"
+    )
+    print(
         "Note: live runs post first, then delete previously recorded webhook messages "
-        "for each channel (see .webhook_messages.json), and add a checkmark reaction when "
-        "DISCORD_BOT_TOKEN is set.\n"
+        "for each channel (see .webhook_messages.json), and require a checkmark reaction "
+        f"via {c.BOT_TOKEN_ENV} unless --allow-skip-reaction is set.\n"
         "Messages posted before cleanup / outside local state are left alone.\n"
     )
     if not args.stage.strip() and not args.only.strip() and not args.dry_run:
@@ -341,6 +400,11 @@ def run_all(argv: list[str] | None = None) -> int:
         args.fail_fast,
         args.retry,
     )
+
+    _warn_duplicate_webhooks(env)
+
+    if not args.dry_run:
+        _require_bot_token_for_live(allow_skip=args.allow_skip_reaction)
 
     results: list[ScriptResult] = []
     for index, (relative, label, webhook_key) in enumerate(scripts):

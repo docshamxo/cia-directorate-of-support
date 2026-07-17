@@ -8,6 +8,7 @@ Modified:
   - 2026-07-17 | docshamxo | Announcer ops runbook (webhooks, state, recovery, bot perms).
   - 2026-07-17 | docshamxo | Expand reaction and purge troubleshooting runbooks.
   - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
+  - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, diagnose tool, bot channel purge.
   - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Mid-batch failure playbook, exit codes, state reset tool.
@@ -26,6 +27,8 @@ For versioned releases and staged office rollout, also use
 [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) and
 [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md).
 
+**Run only this repository** (`cia-directorate-of-support`). Do **not** run the legacy flat scripts under `Downloads\DS` — they post without purge or checkmark reactions and leave orphan messages outside `.webhook_messages.json`.
+
 ## Prerequisites
 
 ```bash
@@ -35,7 +38,7 @@ python bootstrap.py
 Edit `.env` (never commit) — keep classes split (`WEBHOOK_*` ≠ bot token ≠ staff overlay):
 
 - `WEBHOOK_*` — one URL per announcer you will run
-- `DISCORD_BOT_TOKEN` — required for ✅ (see [Reactions](#reactions--discord_bot_token))
+- `DISCORD_BOT_TOKEN` — **required for live** (see [Reactions](#reactions--discord_bot_token))
 - `DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL` — community URLs kept out of public YAML
 
 Optional staff overlay:
@@ -51,6 +54,7 @@ Fill real Drive URLs in the local file, then:
 
 ```bash
 python tools/validate_repo.py
+python tools/diagnose_webhook_state.py
 python run_all.py --dry-run --delay 0
 ```
 
@@ -78,9 +82,9 @@ python run_all.py --dry-run --delay 0 --report .run_report.json
 On a successful live send for a tracked webhook key:
 
 1. **Post** the new message (`wait=True`)
-2. **Purge** previously recorded message IDs for that key (from `.webhook_messages.json`)
+2. **Purge** previously recorded message IDs for that key (and sibling keys sharing the same webhook URL)
 3. **Record** new IDs (+ any IDs that failed to delete)
-4. **React** ✅ via `DISCORD_BOT_TOKEN` when set
+4. **React** checkmark via `DISCORD_BOT_TOKEN` (required unless `--allow-skip-reaction`)
 
 A failed post does **not** delete prior content. Webhooks cannot list or wipe full channel history — only recorded IDs from *this* webhook are removable automatically.
 
@@ -88,50 +92,53 @@ A failed post does **not** delete prior content. Webhooks cannot list or wipe fu
 
 ## Reactions — `DISCORD_BOT_TOKEN`
 
-Webhooks cannot add reactions. ✅ is applied by a separate bot HTTP call after a successful post.
+Webhooks cannot add reactions. The checkmark is applied by a separate bot HTTP call after a successful post.
+
+Live runs **fail closed** when `DISCORD_BOT_TOKEN` is missing (unless you pass `--allow-skip-reaction`).
 
 ### Setup
 
 1. Create an application + bot at https://discord.com/developers/applications
-2. Invite the bot to the target server with **only**:
+2. Invite the bot to the target server with at least:
    - **Add Reactions**
    - **Read Message History**
-   - Do **not** grant Administrator, Manage Messages, Manage Channels, or Manage Webhooks
-3. Paste the token into `.env` (never into a webhook URL field):
+   - Access to every announcer channel (role / category overrides)
+3. Optional for `--bot-channel-purge`: also grant **Manage Messages** (do not grant Administrator or Manage Webhooks)
+4. Paste the token into `.env` (never into a webhook URL field; never invent or commit a token):
 
 ```env
 DISCORD_BOT_TOKEN=your-bot-token-here
 ```
 
-4. Confirm with a single channel:
+5. Confirm with a single channel:
 
 ```bash
 python ds/public_information.py --dry-run
 python ds/public_information.py
 ```
 
-You should see `Added ✅ to N webhook message(s)` (or a clear warning if the token is missing).
+You should see `Added checkmark to N webhook message(s)` (or a clear error if the token is missing).
 
-### Fail closed (optional)
+### Intentionally skip reactions
 
 ```bash
-python ds/public_information.py --require-reaction
-# or
-CIA_REQUIRE_REACTION=1 python run_all.py --only ds
+python run_all.py --allow-skip-reaction
+# or per-script:
+python ds/public_information.py --allow-skip-reaction
 ```
 
-Without `--require-reaction`, missing/failed reactions warn and the send still counts as success.
+Webhooks cannot react by themselves — without a bot token, live runs now exit non-zero by default instead of silently skipping checkmarks.
 
-### Troubleshoot: no ✅ / reaction warnings
+### Troubleshoot: no checkmark / reaction warnings
 
 | Symptom | Check | Fix |
 |---------|-------|-----|
-| `DISCORD_BOT_TOKEN not set — skipped ✅` | `.env` has empty or missing token | Paste token; restart shell if env was cached |
-| `Failed to add ✅ … (HTTP 401/403)` | Token reset / wrong app; bot not in server | Reset token in Developer Portal; re-invite bot |
-| `Failed to add ✅ … (HTTP 403/50001)` | Missing channel perms | Grant **Add Reactions** + **Read Message History** on the channel/category |
-| `Failed to add ✅ … (HTTP 404)` | Message/channel gone or wrong guild | Confirm webhook still targets the channel the bot can see |
+| `DISCORD_BOT_TOKEN not set` on live run | `.env` has empty or missing token | Paste token; restart shell if env was cached |
+| `Failed to add checkmark … (HTTP 401/403)` | Token reset / wrong app; bot not in server | Reset token in Developer Portal; re-invite bot |
+| `Failed to add checkmark … (HTTP 403/50001)` | Missing channel perms | Grant **Add Reactions** + **Read Message History** on the channel/category |
+| `Failed to add checkmark … (HTTP 404)` | Message/channel gone or wrong guild | Confirm webhook still targets the channel the bot can see |
 | Rate-limit warnings then success | Normal under burst | Increase `--delay` on `run_all.py` |
-| Posts OK, never ✅, no warning | Old code or wrong cwd | Run from repo root; pull latest `main` |
+| Posts OK, never checkmark, no warning | Old code or wrong cwd | Run from repo root; pull latest `main` |
 
 **Compartmentation:** treat the bot token like a webhook URL — local `.env` only; never paste into PRs, issues, or chat. If leaked, see [SECURITY.md](SECURITY.md).
 
@@ -139,11 +146,21 @@ Without `--require-reaction`, missing/failed reactions warn and the send still c
 
 ## Purge — local message state
 
-State file: **`.webhook_messages.json`** (gitignored). Maps each `WEBHOOK_*` key → list of Discord message snowflakes. No URLs or tokens are stored.
+State file: **`.webhook_messages.json`** (gitignored). Maps each `WEBHOOK_*` key -> list of Discord message snowflakes. No URLs or tokens are stored.
+
+Diagnose: `python tools/diagnose_webhook_state.py`
+
+### Shared webhook URLs (sibling purge)
+
+If two `WEBHOOK_*` keys paste the **same** Discord webhook URL (example: OTE Public Information + OTE Program Overview), each used to track IDs under a separate key and only purged its own — so the other announcer's posts piled up.
+
+Current behavior: `send_webhook` detects sibling keys that share the same webhook ID and **purges all of their recorded IDs** together. Prefer one webhook per channel when possible.
+
+`run_all.py` and `diagnose_webhook_state.py` warn when duplicates are present.
 
 ### Rotate a webhook
 
-1. Channel → **Integrations** → **Webhooks** → regenerate or create new
+1. Channel -> **Integrations** -> **Webhooks** -> regenerate or create new
 2. Update the matching `WEBHOOK_...=` in `.env`
 3. Clear that key from `.webhook_messages.json` (or delete the whole file)
 4. Dry-run, then live-send once:
@@ -157,8 +174,8 @@ Old messages from the **previous** webhook URL cannot be deleted by the new webh
 
 ### Reset local message state
 
-- Delete `.webhook_messages.json` → forget all tracked posts
-- Or remove one JSON key → reset a single channel
+- Delete `.webhook_messages.json` -> forget all tracked posts
+- Or remove one JSON key -> reset a single channel
 - Next live send **posts without deleting** prior tracked messages (manual cleanup may be needed)
 
 ### Empty-channel / duplicate recovery
@@ -169,6 +186,22 @@ If a channel looks wrong (empty, duplicates, stale embeds):
 2. Reset state for that key (see above)
 3. Re-run the announcer **once** — post-then-purge only removes IDs already in state
 4. Manually delete any leftover / untracked messages in Discord
+
+### Orphan messages (not in state)
+
+Messages from before state tracking, from `Downloads\DS`, or from a **different** webhook in the same channel cannot be deleted by webhook ID state alone.
+
+Options:
+
+1. Manual delete in Discord
+2. Optional bot-assisted cleanup (bot needs **Manage Messages** + **Read Message History**):
+
+```bash
+python run_all.py --only ote --bot-channel-purge
+# or: set CIA_BOT_CHANNEL_PURGE=1
+```
+
+This deletes other recent **webhook-authored** messages in the channel while keeping the newly posted IDs. Human messages are left alone.
 
 ### Troubleshoot: purge
 
@@ -233,9 +266,12 @@ python run_all.py --stage 1
 python run_all.py --stage osec
 python run_all.py --only ds
 python run_all.py --only WEBHOOK_GRS_COC,esd
+python run_all.py --only WEBHOOK_OTE_PUBLIC_INFORMATION,WEBHOOK_OTE_PROGRAM_OVERVIEW
 python run_all.py --stage grs --only coc
 python run_all.py --delay 2.0
 python run_all.py --fail-fast
+python run_all.py --allow-skip-reaction
+python run_all.py --bot-channel-purge
 python run_all.py --from grs/coc.py
 python run_all.py --retry 1 --report .run_report.json
 python run_all.py --strict-skips
@@ -254,6 +290,11 @@ Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_
 | Goal | Command / action |
 |------|------------------|
 | Preview all | `python run_all.py --dry-run --delay 0` |
+| Live all | `python run_all.py` (requires `DISCORD_BOT_TOKEN`) |
+| Diagnose state | `python tools/diagnose_webhook_state.py` |
+| Post without checkmark | `--allow-skip-reaction` or `CIA_ALLOW_SKIP_REACTION=1` |
+| Bot channel cleanup | `--bot-channel-purge` or `CIA_BOT_CHANNEL_PURGE=1` |
+| Forget purge targets | Delete or prune `.webhook_messages.json` |
 | Live all | `python run_all.py` |
 | Require ✅ | `--require-reaction` or `CIA_REQUIRE_REACTION=1` |
 | Forget purge targets | `python tools/reset_webhook_state.py --key WEBHOOK_...` |

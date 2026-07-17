@@ -13,9 +13,10 @@ Modified:
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document local webhook message ID state and cleanup limits.
   - 2026-07-15 | docshamxo | Document CodeQL code scanning via GitHub Actions.
-  - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for ✅.
+  - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for checkmarks.
   - 2026-07-17 | docshamxo | Affiliation, rotation playbooks, staff overlay, push protection notes.
   - 2026-07-17 | docshamxo | Tighten tradecraft rules and cross-link OPS runbooks.
+  - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, bot channel cleanup.
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
@@ -38,7 +39,7 @@ Keep credential classes separated — do not collapse them into one file or one 
 | Class | Where it lives | Who can use it | Notes |
 |-------|----------------|----------------|-------|
 | Channel webhooks (`WEBHOOK_*`) | Local `.env` only | Webhook HTTP client | Channel-scoped post/delete; **never** pass `bot_token` into `SyncWebhook.from_url` |
-| Bot token (`DISCORD_BOT_TOKEN`) | Local `.env` only | Separate bot HTTP client for ✅ | Reactions only; see least privilege below |
+| Bot token (`DISCORD_BOT_TOKEN`) | Local `.env` only | Separate bot HTTP client for checkmarks | Reactions only; see least privilege below |
 | Community URLs (invite / channel link) | Local `.env` | Announcer embeds | Not committed in `config/links.yaml` |
 | Staff Drive / TTP URLs | `config/links.staff.local.yaml` (gitignored) | Staff announcers | Public YAML keeps `STAFF_LOCAL_REQUIRED` placeholders |
 | Message ID state | `.webhook_messages.json` (gitignored) | Local purge tracking | Snowflakes only — no URLs or tokens |
@@ -60,14 +61,14 @@ Keep credential classes separated — do not collapse them into one file or one 
 ## Least privilege
 
 - **Webhooks:** one webhook per target channel; regenerate per channel if leaked — do not reuse one webhook across unrelated channels
-- **Bot:** invite with **only** **Add Reactions** + **Read Message History**. Do **not** grant Administrator, Manage Messages, Manage Webhooks, or Mentions-related elevated perms
+- **Bot:** invite with **Add Reactions** + **Read Message History** (+ channel access). Optional **Manage Messages** only when using `--bot-channel-purge`. Do **not** grant Administrator, Manage Webhooks, or Mentions-related elevated perms
 - **CI:** workflows default to `permissions: contents: read` (CodeQL adds `security-events: write` only for uploading analysis)
 - **Mentions:** live webhook sends use `AllowedMentions.none()` so embeds cannot ping `@everyone` / roles / users
 - **Logos:** `confined_logo_path` / `logo_file` only open bare filenames under `assets/logos/` (path traversal rejected)
 
 ## If a webhook leaks
 
-1. Discord channel → **Integrations** → **Webhooks** → delete or regenerate
+1. Discord channel -> **Integrations** -> **Webhooks** -> delete or regenerate
 2. Update the matching `WEBHOOK_...=` in local `.env`
 3. Confirm `.env` is not staged: `git status`
 4. Clear that key in `.webhook_messages.json` (old webhook cannot delete its prior posts) — see [OPS.md](OPS.md)
@@ -75,10 +76,10 @@ Keep credential classes separated — do not collapse them into one file or one 
 
 ## If a bot token leaks
 
-1. Discord Developer Portal → application → **Bot** → **Reset Token**
+1. Discord Developer Portal -> application -> **Bot** -> **Reset Token**
 2. Update `DISCORD_BOT_TOKEN=` in local `.env`
 3. Confirm bot still has **Add Reactions** + **Read Message History**
-4. Dry-run once, then one live announcer; confirm ✅ (use `--require-reaction` to fail closed)
+4. Dry-run once, then one live announcer; confirm checkmark reactions
 
 ## If a staff Drive link leaks
 
@@ -91,8 +92,10 @@ Keep credential classes separated — do not collapse them into one file or one 
 
 - `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs or tokens)
 - Delete or prune the file when rotating webhooks, rebuilding a channel, or disposing a workstation
-- Live sends **post first**, then delete previously recorded IDs — a failed send should not empty the channel
-- Webhooks cannot purge full channel history; unrecorded / manual posts must be deleted in Discord
+- Live sends **post first**, record new IDs immediately, then delete previously recorded IDs — a failed send should not empty the channel
+- When two `WEBHOOK_*` keys share one Discord webhook URL, purge clears **all sibling** recorded IDs
+- Webhooks cannot purge full channel history; unrecorded/manual/`Downloads\DS` posts must be deleted in Discord or via optional `--bot-channel-purge` (bot needs **Manage Messages**)
+- Diagnose: `python tools/diagnose_webhook_state.py`
 
 Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).
 
@@ -102,10 +105,11 @@ Full checklist: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md). CODEOWNE
 
 In GitHub **Settings** (not always API-configurable):
 
-1. Enable **Push protection** (Code security → Push protection)
+1. Enable **Push protection** (Code security -> Push protection)
 2. Prefer rulesets / branch protection on `main` (PR required; required check **Validate repository**; consider `enforce_admins`)
-3. **Require review from Code Owners** — the CODEOWNERS file alone does not block merges
+3. **Require review from Code Owners** — follow [docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md) (the CODEOWNERS file alone does not block merges)
 4. Install local hooks once: `pip install -e ".[dev]" && pre-commit install` (gitleaks + ruff via [`.pre-commit-config.yaml`](.pre-commit-config.yaml))
+
 
 ## Supply chain
 
@@ -122,8 +126,10 @@ CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs t
 
 ## Operational notes
 
-- ✅ reactions need `DISCORD_BOT_TOKEN`; webhooks cannot react alone
+- After each successful post, the suite **requires** a checkmark via the Discord bot API (`DISCORD_BOT_TOKEN`). Live runs exit non-zero if the token is missing or reactions fail — use `--allow-skip-reaction` / `CIA_ALLOW_SKIP_REACTION=1` only intentionally
+- Bot needs **Add Reactions** + **Read Message History** (+ channel access); optional **Manage Messages** for `--bot-channel-purge`
 - `python run_all.py --dry-run` never posts, deletes, or reacts
+- Full runbooks: [OPS.md](OPS.md)
 - `--require-reaction` / `CIA_REQUIRE_REACTION=1` fails if ✅ cannot be applied
 - Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](OPS.md)
 

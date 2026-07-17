@@ -18,9 +18,10 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
-  - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
+  - 2026-07-17 | docshamxo | Document full recorded-ID purge and checkmark bot reactions.
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
+  - 2026-07-17 | docshamxo | Require bot token for live; allow-skip, bot purge, diagnose tool.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
   - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
   - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
@@ -63,20 +64,24 @@ python bootstrap.py
 Then edit `.env` (never commit it):
 
 1. Paste webhook URLs into every `WEBHOOK_...=` key you will use ([`.env.example`](.env.example) lists them all).
-2. Paste `DISCORD_BOT_TOKEN=` so each successful post gets a ✅ (bot needs **Add Reactions** + **Read Message History**).
+2. Paste `DISCORD_BOT_TOKEN=` — **required for live runs** (bot needs **Add Reactions** + **Read Message History** + channel access).
 3. Optional: `DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`, and staff Drive overlay (`config/links.staff.local.yaml` from the example).
 
-Without `DISCORD_BOT_TOKEN`, announcers still **post and purge**; they only skip ✅. Webhooks cannot react by themselves.
+**Do not invent a bot token.** Live runs exit non-zero without `DISCORD_BOT_TOKEN` unless you pass `--allow-skip-reaction`. Prefer one webhook URL per channel; if two keys share a URL, purge clears both keys' recorded IDs.
 
-Validate, then run:
+**Use this repository only.** Do **not** run legacy flat scripts under `Downloads\DS` — they post without purge or checkmark reactions.
+
+Validate, diagnose, then run:
 
 ```bash
 python tools/validate_repo.py
+python tools/diagnose_webhook_state.py
 python run_all.py --dry-run --delay 0
 python run_all.py
 ```
 
-Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`), then add ✅ when the bot token is set. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
+Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
+
 ---
 
 ## Run one channel
@@ -88,6 +93,7 @@ python ds/chain_of_command.py
 python ds/chain_of_command.py --dry-run
 ```
 
+`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--allow-skip-reaction`, `--bot-channel-purge`.
 `run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](OPS.md).
 
 ---
@@ -109,6 +115,7 @@ python ds/chain_of_command.py --dry-run
 Day-to-day work is YAML under [`config/`](config/). Embed style guide: [config/README.md](config/README.md).
 
 ```bash
+python tools/diagnose_webhook_state.py
 python tools/validate_repo.py
 pytest -q
 ```
@@ -135,7 +142,7 @@ Directorate of Support (DS)
 | [`grs/`](grs/) | 3 | [README](grs/README.md) |
 | [`esd/`](esd/) | 3 | [README](esd/README.md) |
 
-Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` (validators).
+Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` (validators + diagnose).
 
 ---
 
@@ -168,7 +175,7 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 
 | Doc | Use when |
 |-----|----------|
-| **[OPS.md](OPS.md)** | Live runs, ✅ reactions, purge / state recovery |
+| **[OPS.md](OPS.md)** | Live runs, checkmark reactions, purge / state recovery |
 | [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
 | [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
@@ -178,6 +185,7 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
 | [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
+| [tools/README.md](tools/README.md) | Validation and diagnose tools |
 | [`.env.example`](.env.example) | Webhook / token template |
 
 <!--
