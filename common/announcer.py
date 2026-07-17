@@ -6,15 +6,19 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Pass webhook state key for prior-message cleanup.
-#   - 2026-07-17 | docshamxo | Document purge-all IDs + ✅ reaction via shared send path.
+#   - 2026-07-17 | docshamxo | Document purge-all IDs + checkmark reaction via shared send path.
 #   - 2026-07-17 | docshamxo | Embed preflight, logging, staff fail-closed, slim subunit CoC.
+#   - 2026-07-17 | docshamxo | Default require_reaction; allow-skip and bot channel purge flags.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
 
 Live sends go through ``cia_common.send_webhook``, which posts first, then
-deletes previously recorded message IDs, and adds ✅ when
-``DISCORD_BOT_TOKEN`` is configured.
+deletes previously recorded message IDs (including sibling keys that share a
+webhook URL), and adds a checkmark reaction when ``DISCORD_BOT_TOKEN`` is set.
+
+By default live runs **require** a bot token for checkmark reactions. Pass
+``--allow-skip-reaction`` or set ``CIA_ALLOW_SKIP_REACTION=1`` to post without.
 """
 
 from __future__ import annotations
@@ -52,6 +56,14 @@ def allow_skip_empty_webhook() -> bool:
     return env_flag("CIA_SKIP_EMPTY_WEBHOOKS")
 
 
+def allow_skip_reaction() -> bool:
+    return env_flag("CIA_ALLOW_SKIP_REACTION") or _cli_flag("--allow-skip-reaction")
+
+
+def bot_channel_purge_requested() -> bool:
+    return env_flag(c.BOT_CHANNEL_PURGE_ENV) or _cli_flag("--bot-channel-purge")
+
+
 def _cli_flag(name: str) -> bool:
     return name in sys.argv
 
@@ -84,7 +96,7 @@ def _warn_or_fail_staff_placeholders(webhook_key: str, embeds: Sequence[discord.
         return
     message = (
         f"{webhook_key}: staff link placeholders still present. "
-        "Copy config/links.staff.example.yaml → config/links.staff.local.yaml "
+        "Copy config/links.staff.example.yaml -> config/links.staff.local.yaml "
         "and set real URLs before a live staff send."
     )
     if is_dry_run():
@@ -106,8 +118,9 @@ def run_announcer(
     if not logging.getLogger().handlers:
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
-    require_reaction = env_flag("CIA_REQUIRE_REACTION") or _cli_flag("--require-reaction")
+    require_reaction = not allow_skip_reaction()
     effective_date = env_flag("CIA_EFFECTIVE_DATE") or _cli_flag("--effective-date")
+    bot_channel_purge = True if bot_channel_purge_requested() else None
 
     logger.info("Building embeds for %s (%s)", webhook_key, username)
     embeds = build_embeds()
@@ -142,7 +155,12 @@ def run_announcer(
             reopened.append(c.logo_file(c.confined_logo_path(filename)))
         return reopened
 
-    logger.info("Sending %s via webhook (require_reaction=%s)", webhook_key, require_reaction)
+    logger.info(
+        "Sending %s via webhook (require_reaction=%s, bot_channel_purge=%s)",
+        webhook_key,
+        require_reaction,
+        bot_channel_purge,
+    )
     c.send_webhook(
         webhook_url,
         embeds,
@@ -151,6 +169,7 @@ def run_announcer(
         state_key=webhook_key,
         require_reaction=require_reaction,
         effective_date=False,  # already applied above when requested
+        bot_channel_purge=bot_channel_purge,
     )
 
 
@@ -179,7 +198,7 @@ def subunit_coc_embeds(
         c.embed(
             title="Reporting Line",
             description=(
-                f"{unit_abbrev} reports through **Office of Security** → **Directorate of Support**. "
+                f"{unit_abbrev} reports through **Office of Security** -> **Directorate of Support**. "
                 "Consult your immediate supervisor before escalating. "
                 "Parent leadership names are intentionally omitted here (need-to-know)."
             ),

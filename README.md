@@ -18,7 +18,9 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
-  - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
+  - 2026-07-17 | docshamxo | Document full recorded-ID purge and checkmark bot reactions.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
+  - 2026-07-17 | docshamxo | Require bot token for live; allow-skip, bot purge, diagnose tool.
 === END FILE HEADER ===
 -->
 
@@ -33,6 +35,11 @@ Modified:
   <em>WE GO AS ONE</em><br>
   <small>Unofficial Roblox community — not affiliated with the US Government or CIA.</small>
 </p>
+
+<blockquote align="center">
+  <strong>Property of the Central Intelligence Agency (ROBLOX), Inter Studios</strong><br>
+  <small>Proprietary community material — see <a href="NOTICE">NOTICE</a>.</small>
+</blockquote>
 
 <p align="center">
   <a href="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml"><img src="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
@@ -286,7 +293,7 @@ How to get a Discord webhook URL:
 4. Create or copy a webhook URL
 5. Paste it into the matching key in `.env`
 
-Without `DISCORD_BOT_TOKEN`, announcers still purge and post, but skip ✅ reactions (webhooks cannot react by themselves).
+**Do not invent a bot token.** Create one in the Discord Developer Portal and paste it. Live runs **require** `DISCORD_BOT_TOKEN` (Add Reactions + Read Message History + channel access) unless you pass `--allow-skip-reaction`. Prefer one webhook URL per channel; if two keys share a URL, purge clears both keys' recorded IDs. See [OPS.md](OPS.md).
 
 All webhook keys are listed in the [Announcer list](#announcer-list) below and in [`.env.example`](.env.example).
 
@@ -331,6 +338,8 @@ cd cia-directorate-of-support
 
 If `python` does not work on your system, use `python3` instead.
 
+**Use this repository only.** Do **not** run legacy flat scripts under `Downloads\DS` — they post without purge or checkmark reactions and leave orphan messages outside `.webhook_messages.json`.
+
 ### Run one channel
 
 ```bash
@@ -365,14 +374,16 @@ That runs all 18 announcers in the order shown in the list above.
 Useful flags:
 
 ```bash
-python run_all.py --dry-run          # preview embeds; do not post
-python run_all.py --fail-fast        # stop on first failure
-python run_all.py --delay 1.5        # seconds between scripts
-python run_all.py --no-skip-empty    # error on empty webhook env vars
-python run_all.py --only ds,osec     # filter by office, path, label, or WEBHOOK_* key
+python run_all.py --dry-run              # preview embeds; do not post
+python run_all.py --fail-fast            # stop on first failure
+python run_all.py --delay 1.5            # seconds between scripts
+python run_all.py --no-skip-empty        # error on empty webhook env vars
+python run_all.py --only ds,osec         # filter by office, path, label, or WEBHOOK_* key
+python run_all.py --allow-skip-reaction  # post without requiring DISCORD_BOT_TOKEN (not recommended)
+python run_all.py --bot-channel-purge    # bot deletes other recent webhook messages in channel
 ```
 
-Live runs **post first**, then delete previously recorded webhook messages for that channel (IDs in gitignored `.webhook_messages.json`), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md) and [OPS.md](OPS.md).
+Live runs **post first**, then delete previously recorded webhook messages for that channel (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), and **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. Live runs exit non-zero if the token is missing or reactions fail — use `--allow-skip-reaction` only intentionally. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md) and [OPS.md](OPS.md).
 
 ### Preview one channel without posting
 
@@ -383,6 +394,7 @@ python ds/chain_of_command.py --dry-run
 ### Check the repo after you edit files
 
 ```bash
+python tools/diagnose_webhook_state.py
 python tools/sync_file_banners.py
 python tools/validate_repo.py
 ```
@@ -495,8 +507,9 @@ Directorate of Support (DS)
 | [config/README.md](config/README.md) | YAML config guide |
 | [SECURITY.md](SECURITY.md) | Keeping webhooks private; rotation playbooks |
 | [OPS.md](OPS.md) | Live runbook (rotate webhook, reset state, recovery) |
+| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 | [common/README.md](common/README.md) | Shared library / config loader |
-| [tools/README.md](tools/README.md) | Validation tool |
+| [tools/README.md](tools/README.md) | Validation and diagnose tools |
 | [`.env.example`](.env.example) | Webhook key template |
 
 <!--

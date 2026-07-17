@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Unit tests for masking, logos, mentions, purge order, limits.
+#   - 2026-07-17 | docshamxo | Sibling purge and require_reaction missing-token tests.
 # === END FILE HEADER ===
 
 """Unit tests for webhook helpers (mocked; no live Discord)."""
@@ -20,6 +21,8 @@ import discord
 import pytest
 
 from common import cia_common as c
+
+WEBHOOK_URL = "https://discord.com/api/webhooks/1234567890/token"
 
 
 def test_mask_webhook_url_redacts_token() -> None:
@@ -90,10 +93,11 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
     with patch("discord.SyncWebhook.from_url") as from_url:
         from_url.return_value = FakeWebhook()
         ids = c.send_webhook(
-            "https://discord.com/api/webhooks/1234567890/token",
+            WEBHOOK_URL,
             [discord.Embed(title="t", description="d", color=1)],
             username="Test Bot",
             state_key="WEBHOOK_TEST",
+            require_reaction=False,
         )
         kwargs = from_url.call_args.kwargs
         assert kwargs.get("bot_token") in (None, "")
@@ -107,6 +111,86 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
 
     saved = json.loads(state_path.read_text(encoding="utf-8"))
     assert saved["WEBHOOK_TEST"] == [999]
+
+
+def test_send_webhook_purges_sibling_state_keys(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    state_path = tmp_path / ".webhook_messages.json"
+    lock_path = tmp_path / ".webhook_messages.lock"
+    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_PATH", state_path)
+    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_LOCK_PATH", lock_path)
+
+    state_path.write_text(
+        json.dumps(
+            {
+                "WEBHOOK_PRIMARY": [101],
+                "WEBHOOK_SIBLING": [202, 303],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    deleted: list[int] = []
+    posted = MagicMock()
+    posted.id = 404
+    posted.channel_id = 7
+
+    class FakeWebhook:
+        def send(self, **kwargs: Any) -> Any:
+            return posted
+
+        def delete_message(self, message_id: int) -> None:
+            deleted.append(message_id)
+
+    monkeypatch.setattr(c, "_session_with_timeout", MagicMock)
+    monkeypatch.setattr(c, "_bot_token", lambda: "")
+    monkeypatch.setenv("WEBHOOK_PRIMARY", WEBHOOK_URL)
+    monkeypatch.setenv("WEBHOOK_SIBLING", WEBHOOK_URL)
+    monkeypatch.setattr("discord.SyncWebhook.from_url", lambda *a, **k: FakeWebhook())
+
+    c.send_webhook(
+        WEBHOOK_URL,
+        [discord.Embed(title="t", description="d", color=1)],
+        username="Test Bot",
+        state_key="WEBHOOK_PRIMARY",
+        require_reaction=False,
+    )
+
+    assert sorted(deleted) == [101, 202, 303]
+    saved = json.loads(state_path.read_text(encoding="utf-8"))
+    assert saved == {"WEBHOOK_PRIMARY": [404]}
+    assert "WEBHOOK_SIBLING" not in saved
+
+
+def test_send_webhook_requires_bot_token_when_reaction_required(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_PATH", tmp_path / ".webhook_messages.json")
+    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_LOCK_PATH", tmp_path / ".webhook_messages.lock")
+
+    posted = MagicMock()
+    posted.id = 1
+    posted.channel_id = 2
+
+    class FakeWebhook:
+        def send(self, **kwargs: Any) -> Any:
+            return posted
+
+        def delete_message(self, message_id: int) -> None:
+            return None
+
+    monkeypatch.setattr(c, "_session_with_timeout", MagicMock)
+    monkeypatch.setattr(c, "_bot_token", lambda: "")
+    monkeypatch.setattr("discord.SyncWebhook.from_url", lambda *a, **k: FakeWebhook())
+
+    with pytest.raises(RuntimeError, match=c.BOT_TOKEN_ENV):
+        c.send_webhook(
+            WEBHOOK_URL,
+            [discord.Embed(title="t", description="d", color=1)],
+            username="Test Bot",
+            require_reaction=True,
+        )
 
 
 def test_send_webhook_file_factory_called(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -136,10 +220,11 @@ def test_send_webhook_file_factory_called(tmp_path: Path, monkeypatch: pytest.Mo
         return [c.logo_file(c.LOGOS["ds"])]
 
     c.send_webhook(
-        "https://discord.com/api/webhooks/1234567890/token",
+        WEBHOOK_URL,
         [discord.Embed(title="t", description="d", color=1)],
         username="Test Bot",
         files=factory,
+        require_reaction=False,
     )
     assert factory_calls["n"] == 1
 

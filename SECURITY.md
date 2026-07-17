@@ -15,6 +15,7 @@ Modified:
   - 2026-07-15 | docshamxo | Document CodeQL code scanning via GitHub Actions.
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for ✅.
   - 2026-07-17 | docshamxo | Affiliation, rotation playbooks, staff overlay, push protection notes.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
 
@@ -23,6 +24,8 @@ Modified:
 Webhook URLs and bot tokens can post into Discord channels. Keep them private.
 
 **Affiliation:** This repository supports an **unofficial Roblox community**. It is **not affiliated with** the United States Government or the Central Intelligence Agency. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only.
+
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
 ## Rules
 
@@ -63,8 +66,10 @@ Webhook URLs and bot tokens can post into Discord channels. Keep them private.
 
 - `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs or tokens)
 - Delete the file (or prune keys) when rotating webhooks, rebuilding a channel, or disposing local state
-- Live sends **post first**, then delete previously recorded IDs — a failed send should not empty the channel
-- Webhooks cannot purge full channel history; unrecorded/manual posts must be deleted in Discord
+- Live sends **post first**, record new IDs immediately, then delete previously recorded IDs — a failed send should not empty the channel
+- When two `WEBHOOK_*` keys share one Discord webhook URL, purge clears **all sibling** recorded IDs
+- Webhooks cannot purge full channel history; unrecorded/manual/`Downloads\DS` posts must be deleted in Discord or via optional `--bot-channel-purge` (bot needs **Manage Messages**)
+- Diagnose: `python tools/diagnose_webhook_state.py`
 
 ## Repository protection (maintainers)
 
@@ -81,10 +86,10 @@ GitHub org/repo settings cannot always be changed via API. In the repository **S
 
 ## Operational notes
 
-- After each successful post, the suite adds ✅ via the Discord bot API when `DISCORD_BOT_TOKEN` is set (webhooks cannot react on their own)
+- After each successful post, the suite **requires** a checkmark via the Discord bot API (`DISCORD_BOT_TOKEN`). Live runs exit non-zero if the token is missing or reactions fail — use `--allow-skip-reaction` / `CIA_ALLOW_SKIP_REACTION=1` only intentionally
+- Bot needs **Add Reactions** + **Read Message History** (+ channel access); optional **Manage Messages** for `--bot-channel-purge`
 - Use `python run_all.py --dry-run` to preview embeds without posting, deleting, or reacting
-- Pass `--require-reaction` (or `CIA_REQUIRE_REACTION=1`) to fail if ✅ cannot be applied
-- See [OPS.md](OPS.md) for runbook steps (rotate webhook, reset state, empty-channel recovery, bot perms)
+- See [OPS.md](OPS.md) for runbook steps (rotate webhook, shared URLs, reset state, empty-channel recovery, bot perms)
 
 <!--
 === FILE FOOTER ===
