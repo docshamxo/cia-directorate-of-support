@@ -6,9 +6,15 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Pass webhook state key for prior-message cleanup.
+#   - 2026-07-17 | docshamxo | Document purge-all IDs + ✅ reaction via shared send path.
 # === END FILE HEADER ===
 
-"""Shared entry helpers for Discord announcer scripts."""
+"""Shared entry helpers for Discord announcer scripts.
+
+Live sends go through ``cia_common.send_webhook``, which deletes every recorded
+prior message ID for the webhook key, posts with ``wait=True``, and adds ✅ when
+``DISCORD_BOT_TOKEN`` is configured.
+"""
 
 from __future__ import annotations
 

@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
+#   - 2026-07-17 | docshamxo | Mention DISCORD_BOT_TOKEN in post-setup next steps.
 # === END FILE HEADER ===
 
 """
@@ -52,7 +53,7 @@ def main() -> None:
         "\nSetup complete.\n"
         "Next steps (do not skip):\n"
         "  1. Open .env in a text editor\n"
-        "  2. Paste each Discord webhook URL after the matching WEBHOOK_...=\n"
+        "  2. Paste DISCORD_BOT_TOKEN= (for ✅ reactions) and each Discord webhook URL\n"
         "  3. Save .env\n"
         "  4. Preview one channel:  python ds/chain_of_command.py --dry-run\n"
         "  5. Or run all (live):    python run_all.py\n"
