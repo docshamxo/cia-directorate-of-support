@@ -13,7 +13,7 @@
 #   - 2026-07-15 | docshamxo | Bump python-dotenv; pin requests used by announcers.
 # === END FILE HEADER ===
 
-discord.py==2.6.4
+discord.py==2.7.1
 python-dotenv==1.2.2
 PyYAML==6.0.3
 requests==2.34.2
