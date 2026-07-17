@@ -9,6 +9,7 @@
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-07-17 | docshamxo | Add handbook, FPCON, phase, and tryout guides.
+#   - 2026-07-17 | docshamxo | Collapse Phase I/II into single Phase Guide; drop Phase II.
 # === END FILE HEADER ===
 
 """
@@ -79,15 +80,9 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.marking_note("STAFF"),
                 ),
                 c.link_field(
-                    "Phase I - Foundation",
-                    "DS Community | ESD Phase I Guide",
-                    c.url("esd.staff_documents.phase_i"),
-                    c.marking_note("STAFF"),
-                ),
-                c.link_field(
-                    "Phase II - Intermediate",
-                    "DS Community | ESD Phase II Guide",
-                    c.url("esd.staff_documents.phase_ii"),
+                    "Phase Guide",
+                    "DS Community | ESD Phase Guide",
+                    c.url("esd.staff_documents.phase_guide"),
                     c.marking_note("STAFF"),
                 ),
             ),

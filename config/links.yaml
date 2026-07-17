@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Privacy: ORBAT staff-only; applicant forms/tracker via .env.
 #   - 2026-07-17 | docshamxo | Add shared General Standard Training Guide for staff docs.
 #   - 2026-07-17 | docshamxo | Add ESD staff handbook, FPCON, phase, and tryout guides.
+#   - 2026-07-17 | docshamxo | ESD phase_i → phase_guide; remove phase_ii.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -77,8 +78,7 @@ esd:
     handbook: https://docs.google.com/document/d/1AbqEUFnaQ-d5M0tKP3_dtwBat-uaP95bsD6aqmAaFC0/edit?usp=sharing
     fpcon: https://docs.google.com/document/d/1_cGA--_uBtgNZV-YkzKMWxxt6TFI6fkAHLPlOrMQekY/edit?usp=sharing
     tryout_guide: https://docs.google.com/document/d/16PRGm7Of5dCBMznoblfTJJ41pyB_pMzset0YExH9pOo/edit?usp=sharing
-    phase_i: https://docs.google.com/document/d/1_7iAkbY9EyBY8V8RdhLg2dsdIVMWdwd_8g3Tj1Qky2A/edit?usp=sharing
-    phase_ii: https://docs.google.com/document/d/1nUKCPlrafrAtZbIZsNsTEMxWQNrWOuNaieC5cZKcSVk/edit?usp=sharing
+    phase_guide: https://docs.google.com/document/d/1_7iAkbY9EyBY8V8RdhLg2dsdIVMWdwd_8g3Tj1Qky2A/edit?usp=sharing
 
 # === FILE FOOTER ===
 # End of file: config/links.yaml
