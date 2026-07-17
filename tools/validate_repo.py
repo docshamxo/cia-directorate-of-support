@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Manifest catalog; optional banners; env community URLs.
+#   - 2026-07-17 | docshamxo | Secret-split, logo bare-name, mentions regression guards.
 # === END FILE HEADER ===
 
 """
@@ -22,6 +23,8 @@ Checks:
   - every WEBHOOK_* key in .env.example is used by a script
   - every c.url(...) key exists in config/links.yaml
   - required logo assets exist
+  - secret-split: no webhook/bot secrets in tracked config; empty .env.example values
+  - logo filenames in branding.yaml are bare names; mentions/logo helpers present
   - Python sources compile
   - optional file banners when CIA_REQUIRE_BANNERS=1
 
@@ -72,6 +75,29 @@ HEADER_MARKER = "=== FILE HEADER ==="
 FOOTER_MARKER = "=== FILE FOOTER ==="
 SKIP_BANNER_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
 ANNOUNCER_DIRS = ("ds", "osec", "ote", "grs", "esd")
+
+# Discord webhook URL in tracked tree = secret split regression.
+WEBHOOK_URL_LEAK_RE = re.compile(
+    r"https://(?:canary\.|ptb\.)?(?:discord|discordapp)\.com/api/webhooks/\d+/",
+    re.IGNORECASE,
+)
+# Discord bot token shape (rough; catches accidental pastes into YAML/docs).
+BOT_TOKEN_LEAK_RE = re.compile(r"\b[MN][A-Za-z0-9_-]{23,}\.[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{27,}\b")
+BARE_LOGO_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
+SECRET_ENV_VALUE_RE = re.compile(
+    r"^(DISCORD_BOT_TOKEN|DISCORD_INVITE_URL|DISCORD_OSEC_APPLICATION_RESULTS_URL|"
+    r"WEBHOOK_[A-Z0-9_]+)=(.*)$",
+    re.MULTILINE,
+)
+SCAN_SECRET_GLOBS = (
+    "config/*.yaml",
+    "README.md",
+    "SECURITY.md",
+    "OPS.md",
+    "CONTRIBUTING.md",
+    "docs/**/*.md",
+    ".env.example",
+)
 
 
 def fail(message: str) -> None:
@@ -147,7 +173,95 @@ def validate_logos() -> None:
         if not path.is_file():
             fail(f"Missing logo for '{key}': {path.relative_to(ROOT)}")
 
-    print(f"Logos: {len(REQUIRED_LOGOS)} present")
+    branding_path = ROOT / "config" / "branding.yaml"
+    branding_text = branding_path.read_text(encoding="utf-8")
+    # Lightweight parse: logos: block keys → bare filenames only.
+    in_logos = False
+    for line in branding_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("logos:"):
+            in_logos = True
+            continue
+        if in_logos:
+            if not line[:1].isspace() and stripped and not stripped.startswith("#"):
+                break
+            if ":" not in stripped or stripped.startswith("#"):
+                continue
+            _key, _, value = stripped.partition(":")
+            filename = value.strip().strip("'\"")
+            if not filename:
+                continue
+            if not BARE_LOGO_NAME_RE.match(filename) or "/" in filename or "\\" in filename:
+                fail(f"config/branding.yaml logos must be bare filenames, got: {filename!r}")
+
+    print(f"Logos: {len(REQUIRED_LOGOS)} present (bare filenames ok)")
+
+
+def validate_secret_split() -> None:
+    """Fail closed if webhook/bot secrets leak into tracked public files."""
+    issues: list[str] = []
+
+    env_text = ENV_EXAMPLE.read_text(encoding="utf-8")
+    for match in SECRET_ENV_VALUE_RE.finditer(env_text):
+        key, value = match.group(1), match.group(2).strip()
+        if value:
+            issues.append(f".env.example: {key} must be empty (got non-empty value)")
+
+    for pattern in SCAN_SECRET_GLOBS:
+        for path in ROOT.glob(pattern):
+            if not path.is_file():
+                continue
+            # Staff local overlays are gitignored; skip if present on disk.
+            if "staff.local" in path.name:
+                continue
+            text = path.read_text(encoding="utf-8")
+            rel = str(path.relative_to(ROOT)).replace("\\", "/")
+            if WEBHOOK_URL_LEAK_RE.search(text):
+                issues.append(f"{rel}: Discord webhook URL must not appear in tracked files")
+            if BOT_TOKEN_LEAK_RE.search(text):
+                issues.append(
+                    f"{rel}: Discord bot-token-shaped string must not appear in tracked files"
+                )
+
+    if issues:
+        fail("Secret-split checks failed:\n  - " + "\n  - ".join(issues))
+    print("Secret split: tracked files clean; .env.example values empty")
+
+
+def validate_mentions_and_logo_guards() -> None:
+    """Regression guards for AllowedMentions.none() and logo confinement helpers."""
+    common_text = COMMON.read_text(encoding="utf-8")
+    issues: list[str] = []
+
+    if "AllowedMentions.none()" not in common_text:
+        issues.append("common/cia_common.py: missing AllowedMentions.none() on webhook send")
+    if "allowed_mentions=discord.AllowedMentions.none()" not in common_text:
+        issues.append(
+            "common/cia_common.py: webhook.send must pass "
+            "allowed_mentions=discord.AllowedMentions.none()"
+        )
+    if "def confined_logo_path" not in common_text:
+        issues.append("common/cia_common.py: missing confined_logo_path()")
+    if "def logo_file" not in common_text:
+        issues.append("common/cia_common.py: missing logo_file()")
+    if re.search(r"SyncWebhook\.from_url\([^)]*bot_token\s*=", common_text):
+        issues.append(
+            "common/cia_common.py: do not pass bot_token into SyncWebhook.from_url "
+            "(keep reaction auth on the separate bot client)"
+        )
+
+    for folder in ANNOUNCER_DIRS:
+        for path in (ROOT / folder).rglob("*.py"):
+            text = path.read_text(encoding="utf-8")
+            rel = str(path.relative_to(ROOT)).replace("\\", "/")
+            if "discord.File(" in text and "logo_file(" not in text:
+                issues.append(
+                    f"{rel}: attach logos via c.logo_file(...), not raw discord.File(...)"
+                )
+
+    if issues:
+        fail("Mentions/logo regression guards failed:\n  - " + "\n  - ".join(issues))
+    print("Mentions/logo guards: AllowedMentions.none + confined logos ok")
 
 
 def _flatten_link_paths(node: Any, prefix: str = "") -> set[str]:
@@ -353,6 +467,8 @@ def main() -> None:
     validate_catalog()
     validate_webhooks()
     validate_logos()
+    validate_secret_split()
+    validate_mentions_and_logo_guards()
     validate_config()
     validate_url_keys()
     validate_banners()

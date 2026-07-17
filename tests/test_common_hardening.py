@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Unit tests for masking, logos, mentions, purge order, limits.
 #   - 2026-07-17 | docshamxo | Reuse shared webhook_state fixture (avoid flaky repo state).
+#   - 2026-07-17 | docshamxo | Expand logo-path and mentions regression coverage.
 #   - 2026-07-17 | docshamxo | Sibling purge and require_reaction missing-token tests.
 # === END FILE HEADER ===
 
@@ -55,17 +56,36 @@ def test_mask_webhook_url_redacts_token() -> None:
     assert masked.endswith("/***")
 
 
-def test_confined_logo_path_rejects_traversal() -> None:
+@pytest.mark.parametrize(
+    "bad",
+    [
+        "../README.md",
+        "..\\README.md",
+        "/etc/passwd",
+        "C:\\Windows\\System32\\cmd.exe",
+        "subdir/DS.png",
+        "subdir\\DS.png",
+        "~/.ssh/id_rsa",
+        ".",
+        "..",
+        "",
+        "DS.png/../../../etc/passwd",
+    ],
+)
+def test_confined_logo_path_rejects_traversal(bad: str) -> None:
     with pytest.raises(ValueError):
-        c.confined_logo_path("../README.md")
-    with pytest.raises(ValueError):
-        c.confined_logo_path("/etc/passwd")
+        c.confined_logo_path(bad)
+
+
+def test_confined_logo_path_accepts_bare_filename() -> None:
     path = c.confined_logo_path("DS.png")
     assert path.name == "DS.png"
-    assert (
-        c.LOGOS_DIR.resolve() in path.resolve().parents
-        or path.parent.resolve() == c.LOGOS_DIR.resolve()
-    )
+    assert path.parent.resolve() == c.LOGOS_DIR.resolve()
+
+
+def test_logo_file_rejects_escape_via_path_object() -> None:
+    with pytest.raises(ValueError):
+        c.logo_file(Path("../README.md"))
 
 
 def test_validate_embed_limits_detects_oversize_field() -> None:
@@ -97,6 +117,7 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
             events.append("send")
             assert kwargs.get("allowed_mentions") is not None
             mentions = kwargs["allowed_mentions"]
+            assert isinstance(mentions, discord.AllowedMentions)
             assert mentions.everyone is False
             assert mentions.users is False
             assert mentions.roles is False
@@ -115,8 +136,10 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
             state_key="WEBHOOK_TEST",
             require_reaction=False,
         )
+        # Secret split: reaction bot token must not ride the webhook client.
         kwargs = from_url.call_args.kwargs
         assert not kwargs.get("bot_token")
+        assert "bot_token" not in kwargs
 
     assert ids == [999]
     assert events[0] == "send"

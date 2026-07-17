@@ -9,6 +9,7 @@ Modified:
   - 2026-07-17 | docshamxo | Expand reaction and purge troubleshooting runbooks.
   - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
   - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, diagnose tool, bot channel purge.
+  - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
 === END FILE HEADER ===
 -->
 
@@ -30,7 +31,7 @@ For versioned releases and staged office rollout, also use
 python bootstrap.py
 ```
 
-Edit `.env` (never commit):
+Edit `.env` (never commit) — keep classes split (`WEBHOOK_*` ≠ bot token ≠ staff overlay):
 
 - `WEBHOOK_*` — one URL per announcer you will run
 - `DISCORD_BOT_TOKEN` — **required for live** (see [Reactions](#reactions--discord_bot_token))
@@ -81,8 +82,8 @@ Live runs **fail closed** when `DISCORD_BOT_TOKEN` is missing (unless you pass `
    - **Add Reactions**
    - **Read Message History**
    - Access to every announcer channel (role / category overrides)
-3. Optional for `--bot-channel-purge`: also grant **Manage Messages**
-4. Paste the token into `.env` (never invent or commit a token):
+3. Optional for `--bot-channel-purge`: also grant **Manage Messages** (do not grant Administrator or Manage Webhooks)
+4. Paste the token into `.env` (never into a webhook URL field; never invent or commit a token):
 
 ```env
 DISCORD_BOT_TOKEN=your-bot-token-here
