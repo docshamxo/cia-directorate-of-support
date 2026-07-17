@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Swap OTE DDTE and ADTE (AndyShotSecond / Railorbsj).
+#   - 2026-07-17 | docshamxo | Add SSA to GRS/ESD LOWCOM (match OSEC ladder).
 # === END FILE HEADER ===
 
 agency_executive:
@@ -139,6 +140,8 @@ grs_esd_low_command:
   title: Security Supervisor
 - abbrev: TSA
   title: Tactical Security Agent
+- abbrev: SSA
+  title: Senior Security Agent
 
 # === FILE FOOTER ===
 # End of file: config/personnel.yaml
