@@ -9,12 +9,15 @@ Modified:
   - 2026-07-17 | docshamxo | Expand reaction and purge troubleshooting runbooks.
   - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
   - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
+  - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
 
 # Ops runbook
 
 Operator checklist for live Discord announcer runs. Prefer dry-run before every live send.
+
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
 **Doctrine:** webhooks post; the bot only reacts; local state tracks what *this* suite can purge. Do not expect full-channel wipe capability.
 
