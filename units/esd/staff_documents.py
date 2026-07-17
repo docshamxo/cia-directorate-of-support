@@ -8,6 +8,7 @@
 #   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
+#   - 2026-07-17 | docshamxo | Add handbook, FPCON, phase, and tryout guides.
 # === END FILE HEADER ===
 
 """
@@ -43,6 +44,50 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "DS Community | ESD Google Drive",
                     c.url("esd.staff_documents.google_drive"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Handbook & Force Protection",
+            description="Core ESD handbook and force protection condition protocols.",
+            color=c.COLOR_ESD,
+            fields=(
+                c.link_field(
+                    "Official Handbook",
+                    "DS Community | ESD Official Handbook",
+                    c.url("esd.staff_documents.handbook"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "FPCON Protocols",
+                    "DS Community | ESD Force Protection Conditions and Protocols",
+                    c.url("esd.staff_documents.fpcon"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Phase & Tryout Guides",
+            description="Core documentation for ESD tryouts and candidate progression.",
+            color=c.COLOR_ESD,
+            fields=(
+                c.link_field(
+                    "Tryout Guide",
+                    "DS Community | ESD Tryout Guide",
+                    c.url("esd.staff_documents.tryout_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Phase I - Foundation",
+                    "DS Community | ESD Phase I Guide",
+                    c.url("esd.staff_documents.phase_i"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Phase II - Intermediate",
+                    "DS Community | ESD Phase II Guide",
+                    c.url("esd.staff_documents.phase_ii"),
                     c.marking_note("STAFF"),
                 ),
             ),
