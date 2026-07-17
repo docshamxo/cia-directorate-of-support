@@ -9,6 +9,7 @@
 #   - 2026-07-17 | docshamxo | Document purge-all IDs + ✅ reaction via shared send path.
 #   - 2026-07-17 | docshamxo | Embed preflight, logging, staff fail-closed, slim subunit CoC.
 #   - 2026-07-17 | docshamxo | ASCII-safe staff warning; console_print for Windows dry-run.
+#   - 2026-07-17 | docshamxo | Expand MIDCOM/LOWCOM labels for accessibility.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -72,7 +73,12 @@ def preview_embeds(
         c.console_print(f"  {index}. {title}  fields={field_count}  description_chars={desc_len}")
 
 
-def _warn_or_fail_staff_placeholders(webhook_key: str, embeds: Sequence[discord.Embed]) -> None:
+def _warn_or_fail_staff_placeholders(
+    webhook_key: str,
+    embeds: Sequence[discord.Embed],
+    *,
+    dry_run: bool | None = None,
+) -> None:
     if webhook_key not in STAFF_WEBHOOK_KEYS:
         return
     blob = "\n".join(
@@ -88,7 +94,7 @@ def _warn_or_fail_staff_placeholders(webhook_key: str, embeds: Sequence[discord.
         "Copy config/links.staff.example.yaml -> config/links.staff.local.yaml "
         "and set real URLs before a live staff send."
     )
-    if is_dry_run():
+    if is_dry_run(dry_run=dry_run):
         c.console_print(f"Warning: {message}")
         logger.warning("%s", message)
         return
@@ -115,7 +121,7 @@ def run_announcer(
     c.validate_embed_limits(embeds)
     if effective_date:
         c.apply_effective_date_footer(embeds)
-    _warn_or_fail_staff_placeholders(webhook_key, embeds)
+    _warn_or_fail_staff_placeholders(webhook_key, embeds, dry_run=dry_run)
 
     if is_dry_run(dry_run=dry_run):
         preview_embeds(embeds, webhook_key=webhook_key, username=username)
@@ -174,7 +180,7 @@ def subunit_coc_embeds(
                 f"The **{unit_full} ({unit_abbrev})** is a sub-unit of the **Office of Security** "
                 "under the **Directorate of Support**. "
                 f"{unit_abbrev} leadership reports through the OSEC and DS chains to Agency leadership. "
-                "Full parent ORBAT is published in the DS / OSEC chain-of-command channels only."
+                "Full parent Order of Battle (ORBAT) is published in the DS / OSEC chain-of-command channels only."
             ),
         ),
         c.embed(
@@ -195,16 +201,23 @@ def subunit_coc_embeds(
             fields=(("Command Team", c.roles_text(*command_roles)),),
         ),
         c.embed(
-            title=f"{unit_abbrev} MIDCOM",
+            title=f"{unit_abbrev} Middle Command (MIDCOM)",
             description="Mid-level leadership responsible for supervision and operational oversight.",
             color=color,
-            fields=(("MIDCOM Ranks", c.ranks_text(*c.GRS_ESD_MIDDLE_COMMAND)),),
+            fields=(
+                (
+                    c.command_band_label("MIDCOM") + " ranks",
+                    c.ranks_text(*c.GRS_ESD_MIDDLE_COMMAND),
+                ),
+            ),
         ),
         c.embed(
-            title=f"{unit_abbrev} LOWCOM",
+            title=f"{unit_abbrev} Lower Command (LOWCOM)",
             description=f"Field and operational ranks within the {unit_full}.",
             color=color,
-            fields=(("LOWCOM Ranks", c.ranks_text(*c.GRS_ESD_LOW_COMMAND)),),
+            fields=(
+                (c.command_band_label("LOWCOM") + " ranks", c.ranks_text(*c.GRS_ESD_LOW_COMMAND)),
+            ),
         ),
         c.important_notice_embed(
             unit=unit_abbrev,

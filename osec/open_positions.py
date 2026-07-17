@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Standardize hero, link grammar, and links disclaimer.
 #   - 2026-07-15 | docshamxo | Tighten open-positions embed density.
+#   - 2026-07-17 | docshamxo | Accessible LOWCOM/MIDCOM field names and first-use expansions.
 # === END FILE HEADER ===
 
 """
@@ -34,8 +35,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="OPEN POSITIONS",
             unit="Office of Security",
             supporting=(
-                "Applications for LOWCOM and MIDCOM positions are linked below. "
-                "Read all requirements before submitting."
+                "Applications for Lower Command (LOWCOM) and Middle Command (MIDCOM) "
+                "positions are linked below. Read all requirements before submitting."
             ),
             color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
@@ -50,16 +51,16 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OSEC,
             fields=(
                 c.link_field(
-                    "LOWCOM",
-                    "CIA OSEC | LOWCOM Application",
+                    c.command_band_label("LOWCOM"),
+                    "CIA OSEC | Lower Command (LOWCOM) Application",
                     c.url("osec.open_positions.lowcom_application"),
                     "Assists with base operations and standards across ranks.",
                 ),
                 c.link_field(
-                    "MIDCOM",
-                    "CIA OSEC | MIDCOM Application",
+                    c.command_band_label("MIDCOM"),
+                    "CIA OSEC | Middle Command (MIDCOM) Application",
                     c.url("osec.open_positions.midcom_application"),
-                    "Leads tryouts, phases, events, and LOWCOM supervision.",
+                    "Leads tryouts, phases, events, and Lower Command (LOWCOM) supervision.",
                 ),
             ),
         ),

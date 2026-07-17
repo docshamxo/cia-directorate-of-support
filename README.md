@@ -22,6 +22,7 @@ Modified:
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
+  - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
 === END FILE HEADER ===
 -->
 
@@ -74,8 +75,7 @@ python run_all.py --dry-run --delay 0
 python run_all.py
 ```
 
-Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`), then add ✅ when the bot token is set. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
-
+Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`), then add ✅ when the bot token is set. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
 ---
 
 ## Run one channel

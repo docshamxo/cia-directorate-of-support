@@ -10,6 +10,7 @@ Modified:
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+  - 2026-07-17 | docshamxo | Accessibility rules for embeds (color, markings, fields).
 === END FILE HEADER ===
 -->
 
@@ -56,6 +57,18 @@ Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay o
 - **Public info:** hero → about → community links → links disclaimer
 - **Internal info:** hero → about → reference docs → Classification & Handling Notice → classified disclaimer
 - **Staff documents:** hero → Central Repository → topic sections (Title Case, no numbers) → Classification & Handling Notice → classified disclaimer
+
+
+### Accessibility
+
+Full guidance: [Accessible Discord channel content](../docs/ACCESSIBILITY.md).
+
+| Rule | Practice |
+|------|----------|
+| **Color not sole signal** | Name the unit in title/eyebrow/body; sidebar color is decorative |
+| **Markings in text** | `c.marking_note("PUBLIC")` / `c.marking_note("STAFF", "…")` |
+| **No emoji-only critical info** | Field names/titles need words; validated by `validate_embed_accessibility` |
+| **Clear field names** | Expand `LOWCOM`/`MIDCOM`/`ORBAT` on first use (`c.command_band_label`) |
 
 ### Discord limits
 

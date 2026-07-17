@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Update OTE tryout guide and reorganize staff documents. (#12)
 #   - 2026-07-15 | docshamxo | Title Case sections without numbers; shared handling copy.
 #   - 2026-07-17 | docshamxo | Replace single Staff Handbook with Phase I/II/III documents.
+#   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 # === END FILE HEADER ===
 
 """
@@ -54,7 +55,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA OTE | Google Drive",
                     c.url("ote.staff_documents.google_drive"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),
@@ -67,19 +68,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Phase I",
                     "CIA OTE | OTP Staff Handbook Phase I",
                     c.url("ote.staff_documents.phase_i"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Phase II",
                     "CIA OTE | OTP Staff Handbook Phase II",
                     c.url("ote.staff_documents.phase_ii"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Phase III",
                     "CIA OTE | OTP Staff Handbook Phase III",
                     c.url("ote.staff_documents.phase_iii"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),
@@ -92,7 +93,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "General Information",
                     "CIA OTE | General Information & Chain of Command",
                     c.url("ote.staff_documents.general_info_coc"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),
@@ -105,13 +106,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Tryout Guide",
                     "CIA OTE | Tryout Guide",
                     c.url("ote.staff_documents.tryout_guide"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
                     "Graduation",
                     "CIA OTE | Graduation Ceremony Procedures",
                     c.url("ote.staff_documents.graduation_ceremony_procedures"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),
@@ -124,13 +125,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Standard Training",
                     "CIA OTE | Standard Training Guide",
                     c.url("ote.staff_documents.standard_training_guide"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
                 c.link_field(
-                    "Weapons ST",
-                    "CIA OTE | Weapons ST Guide",
+                    "Weapons Standard Training",
+                    "CIA OTE | Weapons Standard Training Guide",
                     c.url("ote.staff_documents.weapons_st_guide"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),
@@ -140,10 +141,10 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
-                    "Staff Database",
-                    "CIA OTE | ORBAT",
+                    "Staff Database (ORBAT)",
+                    "CIA OTE | Staff Database (ORBAT)",
                     c.url("ote.staff_documents.staff_database"),
-                    "STAFF. Authorized OTE staff only.",
+                    c.marking_note("STAFF", "Authorized OTE staff only."),
                 ),
             ),
         ),

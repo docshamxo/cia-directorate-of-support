@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
 #   - 2026-07-17 | docshamxo | Prefer Drive root + handbook; STAFF markings.
+#   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 # === END FILE HEADER ===
 
 """
@@ -53,13 +54,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "CIA GRS | Google Drive",
                     c.url("grs.staff_documents.google_drive"),
-                    "STAFF. Authorized GRS staff only.",
+                    c.marking_note("STAFF", "Authorized GRS staff only."),
                 ),
                 c.link_field(
                     "Handbook",
                     "CIA GRS | Handbook",
                     c.url("grs.staff_documents.handbook"),
-                    "STAFF. Authorized GRS staff only.",
+                    c.marking_note("STAFF", "Authorized GRS staff only."),
                 ),
             ),
         ),
