@@ -5,12 +5,22 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Require review on common/config/.github changes.
+#   - 2026-07-17 | docshamxo | Expand owners for supply-chain and security surfaces.
 # === END FILE HEADER ===
 
-# Default owner for sensitive paths (enable "Require review from Code Owners" in branch protection).
+# Default owner for sensitive paths.
+# Enforcement is OFF until a ruleset requires Code Owners review — see docs/CODEOWNERS_ENFORCEMENT.md.
+
 /common/ @docshamxo
 /config/ @docshamxo
 /.github/ @docshamxo
+/docs/ @docshamxo
+/assets/logos/ @docshamxo
+/SECURITY.md @docshamxo
+/OPS.md @docshamxo
+/requirements.txt @docshamxo
+/requirements-dev.txt @docshamxo
+/pyproject.toml @docshamxo
 
 # === FILE FOOTER ===
 # End of file: .github/CODEOWNERS

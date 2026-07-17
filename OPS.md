@@ -8,6 +8,7 @@ Modified:
   - 2026-07-17 | docshamxo | Announcer ops runbook (webhooks, state, recovery, bot perms).
   - 2026-07-17 | docshamxo | Expand reaction and purge troubleshooting runbooks.
   - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
+  - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
 === END FILE HEADER ===
 -->
 
@@ -27,7 +28,7 @@ For versioned releases and staged office rollout, also use
 python bootstrap.py
 ```
 
-Edit `.env` (never commit):
+Edit `.env` (never commit) — keep classes split (`WEBHOOK_*` ≠ bot token ≠ staff overlay):
 
 - `WEBHOOK_*` — one URL per announcer you will run
 - `DISCORD_BOT_TOKEN` — required for ✅ (see [Reactions](#reactions--discord_bot_token))
@@ -71,10 +72,11 @@ Webhooks cannot add reactions. ✅ is applied by a separate bot HTTP call after 
 ### Setup
 
 1. Create an application + bot at https://discord.com/developers/applications
-2. Invite the bot to the target server with at least:
+2. Invite the bot to the target server with **only**:
    - **Add Reactions**
    - **Read Message History**
-3. Paste the token into `.env`:
+   - Do **not** grant Administrator, Manage Messages, Manage Channels, or Manage Webhooks
+3. Paste the token into `.env` (never into a webhook URL field):
 
 ```env
 DISCORD_BOT_TOKEN=your-bot-token-here
