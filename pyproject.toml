@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Bump python-dotenv and ruff; pin requests.
+#   - 2026-07-17 | docshamxo | Bump package version to 1.1.0 (release engineering).
 # === END FILE HEADER ===
 
 [build-system]
@@ -14,7 +15,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cia-directorate-of-support"
-version = "1.0.0"
+version = "1.1.0"
 description = "Discord announcer scripts for the CIA Directorate of Support"
 readme = "README.md"
 requires-python = ">=3.10"

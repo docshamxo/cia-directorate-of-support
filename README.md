@@ -19,6 +19,7 @@ Modified:
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
+  - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
 === END FILE HEADER ===
 -->
 
@@ -370,9 +371,11 @@ python run_all.py --fail-fast        # stop on first failure
 python run_all.py --delay 1.5        # seconds between scripts
 python run_all.py --no-skip-empty    # error on empty webhook env vars
 python run_all.py --only ds,osec     # filter by office, path, label, or WEBHOOK_* key
+python run_all.py --list-stages      # safer live order: one office per stage
+python run_all.py --stage 1          # live DS only (then verify before stage 2)
 ```
 
-Live runs **post first**, then delete previously recorded webhook messages for that channel (IDs in gitignored `.webhook_messages.json`), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md) and [OPS.md](OPS.md).
+Live runs **post first**, then delete previously recorded webhook messages for that channel (IDs in gitignored `.webhook_messages.json`), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md), [OPS.md](OPS.md), [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md), and [CHANGELOG.md](CHANGELOG.md).
 
 ### Preview one channel without posting
 
@@ -495,6 +498,9 @@ Directorate of Support (DS)
 | [config/README.md](config/README.md) | YAML config guide |
 | [SECURITY.md](SECURITY.md) | Keeping webhooks private; rotation playbooks |
 | [OPS.md](OPS.md) | Live runbook (rotate webhook, reset state, recovery) |
+| [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
+| [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
+| [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
 | [common/README.md](common/README.md) | Shared library / config loader |
 | [tools/README.md](tools/README.md) | Validation tool |
 | [`.env.example`](.env.example) | Webhook key template |
