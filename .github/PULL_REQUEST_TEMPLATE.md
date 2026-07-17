@@ -13,12 +13,20 @@ Modified:
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Sensitivity review checklist and marking vocabulary.
   - 2026-07-17 | docshamxo | Secret-split and supply-chain checklist items.
+  - 2026-07-17 | docshamxo | Clarify summary vs test plan; link docs index.
 === END FILE HEADER ===
 -->
 
 ## Summary
 
-<!-- What changed and why -->
+<!-- What changed and why (1–3 bullets). -->
+
+## Test plan
+
+<!-- How you verified. Operators: link OPS / release checklist if live-run related. -->
+
+- [ ] Ran `python tools/validate_repo.py`
+- [ ] Ran `python run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
 
 ## Sensitivity review
 
@@ -31,11 +39,10 @@ Modified:
 
 ## Checklist
 
-- [ ] Ran `python tools/validate_repo.py`
-- [ ] Ran `python run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
-- [ ] Updated READMEs / `.env.example` / `common/manifest.py` if scripts or webhook keys changed
+- [ ] Updated READMEs / `docs/` / `.env.example` / `common/manifest.py` if scripts or webhook keys changed
 - [ ] No `.env` / `links.staff.local.yaml` / `personnel.holders.local.yaml` / `.webhook_messages.json` secrets in this PR
 - [ ] Dependency / Actions bumps reviewed (pins + CI) if supply-chain files changed
+- [ ] Docs map / [docs/README.md](../docs/README.md) updated if new operator docs were added
 
 <!--
 === FILE FOOTER ===
