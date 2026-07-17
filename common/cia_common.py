@@ -642,10 +642,7 @@ def _add_checkmark_reaction(
     from urllib.parse import quote
 
     emoji = quote(CHECKMARK_REACTION, safe="")
-    url = (
-        f"{DISCORD_API_BASE}/channels/{channel_id}/messages/{message_id}"
-        f"/reactions/{emoji}/@me"
-    )
+    url = f"{DISCORD_API_BASE}/channels/{channel_id}/messages/{message_id}/reactions/{emoji}/@me"
     headers = {"Authorization": f"Bot {bot_token}"}
     last_error: Exception | None = None
     for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
@@ -667,8 +664,7 @@ def _add_checkmark_reaction(
                 time.sleep(delay)
                 continue
             raise RuntimeError(
-                f"Failed to add ✅ reaction to message {message_id} "
-                f"(HTTP {response.status_code})"
+                f"Failed to add ✅ reaction to message {message_id} (HTTP {response.status_code})"
             )
         except (requests.Timeout, requests.ConnectionError) as exc:
             last_error = exc
@@ -686,9 +682,7 @@ def _add_checkmark_reaction(
             raise RuntimeError(
                 f"Failed to add ✅ reaction to message {message_id}: network error"
             ) from exc
-    raise RuntimeError(
-        f"Failed to add ✅ reaction to message {message_id}"
-    ) from last_error
+    raise RuntimeError(f"Failed to add ✅ reaction to message {message_id}") from last_error
 
 
 def _react_to_messages(
