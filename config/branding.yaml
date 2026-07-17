@@ -28,7 +28,7 @@ logos:
   osec: OSEC.png
   grs: GRS.png
   esd: ESD.png
-# Webhook usernames must include Community or (RP). See BRAND.md / LICENSE.
+# Webhook usernames must include Community or (RP). See docs/BRAND.md / LICENSE.
 bots:
   ds: DS Community (RP) · Support
   osec: DS Community (RP) · OSEC

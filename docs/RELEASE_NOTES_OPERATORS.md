@@ -12,7 +12,7 @@ Modified:
 # Operator release notes — 1.1.0
 
 **Audience:** people who run live Discord refreshes.  
-**Version:** `1.1.0` (`pyproject.toml` / `VERSION`)  
+**Version:** `1.1.0` (`pyproject.toml` / `docs/VERSION`)  
 **Hardening PRs merged into main:** [#17](https://github.com/docshamxo/cia-directorate-of-support/pull/17),
 [#18](https://github.com/docshamxo/cia-directorate-of-support/pull/18),
 [#19](https://github.com/docshamxo/cia-directorate-of-support/pull/19)
@@ -45,13 +45,13 @@ successful posts get a ✅. Without a token, posts still send; reactions are ski
 
 ### Filtered and staged runs (PR #18 + release engineering)
 
-Do **not** default to a full live `python run_all.py` after large hardening changes.
+Do **not** default to a full live `python tools/run_all.py` after large hardening changes.
 
 ```bash
-python run_all.py --list-stages
-python run_all.py --stage 1 --dry-run --delay 0
-python run_all.py --stage 1          # DS only
-python run_all.py --only ds,osec     # ad-hoc filter
+python tools/run_all.py --list-stages
+python tools/run_all.py --stage 1 --dry-run --delay 0
+python tools/run_all.py --stage 1          # DS only
+python tools/run_all.py --only ds,osec     # ad-hoc filter
 ```
 
 Full procedure: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Ops details: [OPS.md](OPS.md).

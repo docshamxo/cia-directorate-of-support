@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
 Title: Brand
-Path: BRAND.md
+Path: docs/BRAND.md
 Created: 2026-07-17
 Created by: docshamxo
 Modified:
@@ -13,7 +13,7 @@ Modified:
 
 This repository powers Discord announcers for an **unofficial Roblox community roleplay**. Keep fiction usable; never present the project as an official USG/CIA product.
 
-Legal terms: [LICENSE](LICENSE) (MIT + Brand Use and Trademark Notice).
+Legal terms: [LICENSE](../LICENSE) (MIT + Brand Use and Trademark Notice).
 
 ## Non-affiliation (required)
 
@@ -27,7 +27,7 @@ Required meaning (wording may vary): **unofficial community**, **not affiliated 
 
 ## Bot / webhook display names
 
-Edit [`config/branding.yaml`](config/branding.yaml) `bots:`.
+Edit [`config/branding.yaml`](../config/branding.yaml) `bots:`.
 
 | Rule | Guidance |
 |------|----------|
@@ -63,14 +63,14 @@ Prefer community-framed link text (example: `DS Community | OSEC`) over labels t
 ```bash
 python tools/validate_repo.py
 pytest -q
-python run_all.py --dry-run --delay 0
+python tools/run_all.py --dry-run --delay 0
 ```
 
 Confirm bot names still pass validation (community / RP marker required).
 
 <!--
 === FILE FOOTER ===
-End of file: BRAND.md
+End of file: docs/BRAND.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

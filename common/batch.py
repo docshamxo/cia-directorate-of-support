@@ -56,7 +56,7 @@ def resume_hint(results: list[ScriptResult]) -> str:
     """Suggest --from for the first failed script."""
     for item in results:
         if item.status == "failed":
-            return f"python run_all.py --from {item.relative}"
+            return f"python tools/run_all.py --from {item.relative}"
     return ""
 
 

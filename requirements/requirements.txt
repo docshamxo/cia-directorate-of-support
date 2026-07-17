@@ -1,32 +1,24 @@
 # === FILE HEADER ===
-# Title: Ruff
-# Path: ruff.toml
+# Title: Requirements
+# Path: requirements/requirements.txt
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Add CI, Dependabot, and repository validation tooling.
+#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
+#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
 #   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-15 | docshamxo | Bump python-dotenv; pin requests used by announcers.
 # === END FILE HEADER ===
 
-target-version = "py310"
-line-length = 100
-
-[lint]
-select = [
-  "E",
-  "F",
-  "I",
-  "UP",
-  "B",
-]
-ignore = [
-  "E501",
-]
+discord.py==2.6.4
+python-dotenv==1.2.2
+PyYAML==6.0.3
+requests==2.34.2
 
 # === FILE FOOTER ===
-# End of file: ruff.toml
+# End of file: requirements/requirements.txt
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

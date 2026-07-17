@@ -134,7 +134,7 @@ def main() -> int:
     print("Recovery hints:")
     print("  - Reset one channel: remove its WEBHOOK_* key from .webhook_messages.json")
     print("  - Reset all: delete .webhook_messages.json")
-    print("  - Orphan channel messages: manual delete or run_all.py --bot-channel-purge")
+    print("  - Orphan channel messages: manual delete or tools/run_all.py --bot-channel-purge")
     print("  - Do NOT use legacy Downloads\\DS scripts (no purge / no reactions)")
     print()
     print("See docs/OPS.md for the full runbook.")

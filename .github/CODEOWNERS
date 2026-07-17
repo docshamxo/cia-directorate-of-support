@@ -20,8 +20,7 @@
 /assets/logos/ @docshamxo
 /SECURITY.md @docshamxo
 /docs/OPS.md @docshamxo
-/requirements.txt @docshamxo
-/requirements-dev.txt @docshamxo
+/requirements/ @docshamxo
 /pyproject.toml @docshamxo
 
 # === FILE FOOTER ===

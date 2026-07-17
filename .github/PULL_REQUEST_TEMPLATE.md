@@ -26,7 +26,7 @@ Modified:
 <!-- How you verified. Operators: link OPS / release checklist if live-run related. -->
 
 - [ ] Ran `python tools/validate_repo.py`
-- [ ] Ran `python run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
+- [ ] Ran `python tools/run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
 
 ## Sensitivity review
 

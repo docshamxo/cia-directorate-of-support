@@ -43,7 +43,7 @@ def test_disclaimer_title_and_affiliation() -> None:
 
 def test_license_and_brand_docs_exist() -> None:
     license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
-    brand_text = (ROOT / "BRAND.md").read_text(encoding="utf-8")
+    brand_text = (ROOT / "docs" / "BRAND.md").read_text(encoding="utf-8")
     assert "not affiliated" in license_text.lower()
     assert "Brand Use" in license_text or "brand use" in license_text.lower()
     assert "(RP)" in brand_text

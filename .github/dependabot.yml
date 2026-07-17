@@ -41,6 +41,32 @@ updates:
           - "pip-audit"
           - "pre-commit"
 
+  - package-ecosystem: pip
+    directory: /requirements
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - python
+    commit-message:
+      prefix: "deps(pip)"
+    groups:
+      pip-runtime:
+        patterns:
+          - "discord.py"
+          - "python-dotenv"
+          - "PyYAML"
+          - "requests"
+      pip-dev:
+        patterns:
+          - "ruff"
+          - "pytest"
+          - "pytest-*"
+          - "pip-audit"
+          - "pre-commit"
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

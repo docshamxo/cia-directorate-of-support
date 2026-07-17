@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Run All
-# Path: run_all.py
+# Path: tools/run_all.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -15,26 +15,27 @@
 #   - 2026-07-17 | docshamxo | Add --stage / --list for safer staged office rollout.
 #   - 2026-07-17 | docshamxo | IR resilience: exit codes, --from, --retry, --report, resume hints.
 #   - 2026-07-17 | docshamxo | Require bot token; allow-skip-reaction; bot channel purge; dup warn.
+#   - 2026-07-17 | docshamxo | Move to tools/; resolve repo root from tools/.
 # === END FILE HEADER ===
 
 """
 Run all CIA Directorate of Support Discord announcer scripts.
 
 Usage (from the repository root):
-    python run_all.py
-    python run_all.py --dry-run
-    python run_all.py --fail-fast
-    python run_all.py --delay 1.5
-    python run_all.py --only ds,osec
-    python run_all.py --only WEBHOOK_GRS_COC,units/esd/coc.py
-    python run_all.py --stage 1
-    python run_all.py --stage osec --dry-run
-    python run_all.py --list
-    python run_all.py --list-stages
-    python run_all.py --allow-skip-reaction
-    python run_all.py --bot-channel-purge
-    python run_all.py --from units/osec/staff_documents.py
-    python run_all.py --retry 1 --report .run_report.json
+    python tools/run_all.py
+    python tools/run_all.py --dry-run
+    python tools/run_all.py --fail-fast
+    python tools/run_all.py --delay 1.5
+    python tools/run_all.py --only ds,osec
+    python tools/run_all.py --only WEBHOOK_GRS_COC,units/esd/coc.py
+    python tools/run_all.py --stage 1
+    python tools/run_all.py --stage osec --dry-run
+    python tools/run_all.py --list
+    python tools/run_all.py --list-stages
+    python tools/run_all.py --allow-skip-reaction
+    python tools/run_all.py --bot-channel-purge
+    python tools/run_all.py --from units/osec/staff_documents.py
+    python tools/run_all.py --retry 1 --report .run_report.json
 """
 
 from __future__ import annotations
@@ -71,7 +72,7 @@ from common.exit_codes import (
 from common.manifest import ANNOUNCERS, ROLLOUT_STAGES, announcers_for_office, resolve_rollout_stage
 from common.rollout import selected_scripts
 
-REPO_ROOT = Path(__file__).resolve().parent
+REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ANNOUNCERS
 logger = logging.getLogger("cia.run_all")
 
@@ -204,8 +205,8 @@ def _print_stages() -> None:
     for stage_id, title, office in ROLLOUT_STAGES:
         count = len(announcers_for_office(office))
         print(f"  Stage {stage_id}: {title} ({office}/) - {count} announcer(s)")
-        print(f"    python run_all.py --stage {stage_id}")
-        print(f"    python run_all.py --stage {office} --dry-run")
+        print(f"    python tools/run_all.py --stage {stage_id}")
+        print(f"    python tools/run_all.py --stage {office} --dry-run")
     print("\nAfter each live stage, verify Discord channels before advancing.")
     print("Full checklist: docs/RELEASE_CHECKLIST.md")
 
@@ -242,9 +243,9 @@ def _require_bot_token_for_live(*, allow_skip: bool) -> None:
         "  1. Create a bot at https://discord.com/developers/applications\n"
         "  2. Invite it with Add Reactions + Read Message History (+ channel access)\n"
         f"  3. Paste the token into {c.BOT_TOKEN_ENV}= in .env\n"
-        "  4. Re-run: python run_all.py\n"
+        "  4. Re-run: python tools/run_all.py\n"
         "\n"
-        "To post without reactions (not recommended): python run_all.py --allow-skip-reaction\n"
+        "To post without reactions (not recommended): python tools/run_all.py --allow-skip-reaction\n"
         "\n"
         "Do not invent a bot token.\n"
     )
@@ -392,8 +393,8 @@ def run_all(argv: list[str] | None = None) -> int:
     if not args.stage.strip() and not args.only.strip() and not args.dry_run:
         print(
             "Tip: for safer live rollout, prefer one office at a time:\n"
-            "  python run_all.py --list-stages\n"
-            "  python run_all.py --stage 1\n"
+            "  python tools/run_all.py --list-stages\n"
+            "  python tools/run_all.py --stage 1\n"
             "See docs/RELEASE_CHECKLIST.md\n"
         )
     logger.info(

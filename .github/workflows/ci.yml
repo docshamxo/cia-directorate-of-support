@@ -59,8 +59,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: |
-            requirements.txt
-            requirements-dev.txt
+            requirements/requirements.txt
+            requirements/requirements-dev.txt
             pyproject.toml
 
       - name: Install package and tooling
@@ -89,7 +89,7 @@ jobs:
         run: pytest --cov=common --cov-report=term-missing --cov-fail-under=70
 
       - name: Dry-run all announcers
-        run: python run_all.py --dry-run --delay 0
+        run: python tools/run_all.py --dry-run --delay 0
         env:
           DISCORD_INVITE_URL: https://example.invalid/discord-invite
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
@@ -98,8 +98,8 @@ jobs:
       - name: Dependency vulnerability audit (pip-audit)
         if: matrix.python-version == '3.12'
         run: |
-          pip-audit --strict --progress-spinner off -r requirements.txt
-          pip-audit --strict --progress-spinner off -r requirements-dev.txt
+          pip-audit --strict --progress-spinner off -r requirements/requirements.txt
+          pip-audit --strict --progress-spinner off -r requirements/requirements-dev.txt
 
   secrets:
     name: Secret scan (gitleaks)
