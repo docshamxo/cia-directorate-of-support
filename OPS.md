@@ -10,6 +10,7 @@ Modified:
   - 2026-07-17 | docshamxo | Link staged rollout and release checklist.
   - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
+  - 2026-07-17 | docshamxo | Mid-batch failure playbook, exit codes, state reset tool.
 === END FILE HEADER ===
 -->
 
@@ -51,6 +52,23 @@ Fill real Drive URLs in the local file, then:
 ```bash
 python tools/validate_repo.py
 python run_all.py --dry-run --delay 0
+```
+
+## Alerting exit codes
+
+`run_all.py` uses Nagios-style exit codes so monitors can page correctly:
+
+| Code | Meaning | When |
+|------|---------|------|
+| **0** | OK | All runnable announcers succeeded (skips allowed unless `--strict-skips`) |
+| **1** | WARNING | Nothing runnable (all skipped), or `--strict-skips` with skips |
+| **2** | CRITICAL | One or more hard failures |
+| **3** | UNKNOWN | Unexpected runner/control error |
+
+Per-announcer conventions (direct script invoke): **0** success, **10** intentional skip, **20** config/fail-closed.
+
+```bash
+python run_all.py --dry-run --delay 0 --report .run_report.json
 ```
 
 ---
@@ -166,6 +184,42 @@ If a channel looks wrong (empty, duplicates, stale embeds):
 
 **Limit:** this suite cannot purge full channel history or other bots' messages — only recorded IDs from the active webhook.
 
+```bash
+python tools/reset_webhook_state.py --list
+python tools/reset_webhook_state.py --key WEBHOOK_DS_PUBLIC_INFORMATION
+python tools/reset_webhook_state.py --all --yes
+```
+
+---
+
+## Mid-batch failures
+
+`run_all.py` continues after failures by default (unless `--fail-fast`). Successful channels already have their new posts live; failed ones keep prior content if the send never succeeded.
+
+### Symptoms
+
+- Summary shows `Failed: N` and exit code **2** (CRITICAL)
+- Resume hint: `python run_all.py --from path/to/script.py`
+- Optional JSON report via `--report` lists timings and stderr tails
+
+### Response
+
+1. **Do not wipe all state** — per-channel state is independent
+2. Read the failure reason / stderr tail (or `.run_report.json`)
+3. Fix the cause (webhook URL, staff overlay, rate limit, bot token, embed limits)
+4. Resume or retry:
+
+```bash
+python run_all.py --from osec/staff_documents.py
+python run_all.py --only WEBHOOK_OSEC_STAFF_DOCUMENTS
+python run_all.py --retry 1 --fail-fast
+```
+
+5. If a channel looks empty after a partial purge, clear only that key and re-send once
+6. Dry-run first when unsure: `python run_all.py --dry-run --from ... --delay 0`
+
+Observability: structured `event=` log lines; page on exit **2**, triage on **1**, ignore **0**.
+
 ---
 
 ## Filtered / staged office runs
@@ -182,13 +236,16 @@ python run_all.py --only WEBHOOK_GRS_COC,esd
 python run_all.py --stage grs --only coc
 python run_all.py --delay 2.0
 python run_all.py --fail-fast
+python run_all.py --from grs/coc.py
+python run_all.py --retry 1 --report .run_report.json
+python run_all.py --strict-skips
 ```
 
 ---
 
 ## Staff announcers without local overlay
 
-Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_REQUIRED` / `example.invalid` placeholders. Dry-run warns but continues (CI-safe). Copy the staff example overlay and fill real URLs before live staff posts.
+Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_REQUIRED` / `example.invalid` placeholders (exit **20**). Dry-run warns but continues (CI-safe). Copy the staff example overlay and fill real URLs before live staff posts.
 
 ---
 
@@ -199,7 +256,8 @@ Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_
 | Preview all | `python run_all.py --dry-run --delay 0` |
 | Live all | `python run_all.py` |
 | Require ✅ | `--require-reaction` or `CIA_REQUIRE_REACTION=1` |
-| Forget purge targets | Delete or prune `.webhook_messages.json` |
+| Forget purge targets | `python tools/reset_webhook_state.py --key WEBHOOK_...` |
+| Resume mid-batch | `python run_all.py --from path/to/script.py` |
 | Secrets leaked | [SECURITY.md](SECURITY.md) rotation playbooks |
 
 <!--

@@ -87,7 +87,7 @@ python ds/chain_of_command.py
 python ds/chain_of_command.py --dry-run
 ```
 
-`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--require-reaction`.
+`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](OPS.md).
 
 ---
 

@@ -43,6 +43,18 @@ Footer fields:
 
 Image files (`.png`, etc.) are skipped.
 
+## Reset webhook message state
+
+Empty-channel / mid-batch recovery (edits gitignored `.webhook_messages.json` only):
+
+```bash
+python tools/reset_webhook_state.py --list
+python tools/reset_webhook_state.py --key WEBHOOK_DS_PUBLIC_INFORMATION
+python tools/reset_webhook_state.py --all --yes
+```
+
+See [OPS.md](../OPS.md).
+
 ## Run the validator
 
 ```bash

@@ -10,6 +10,7 @@
 #   - 2026-07-17 | docshamxo | Embed preflight, logging, staff fail-closed, slim subunit CoC.
 #   - 2026-07-17 | docshamxo | ASCII-safe staff warning; console_print for Windows dry-run.
 #   - 2026-07-17 | docshamxo | Expand MIDCOM/LOWCOM labels for accessibility.
+#   - 2026-07-17 | docshamxo | Alerting exit codes and structured IR event logs.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -24,12 +25,14 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import time
 from collections.abc import Callable, Sequence
 from pathlib import Path
 
 import discord
 
 from common import cia_common as c
+from common.exit_codes import ANNOUNCER_CONFIG, ANNOUNCER_SKIPPED
 from common.manifest import STAFF_WEBHOOK_KEYS
 
 EmbedBuilder = Callable[[], list[discord.Embed]]
@@ -98,7 +101,9 @@ def _warn_or_fail_staff_placeholders(
         c.console_print(f"Warning: {message}")
         logger.warning("%s", message)
         return
-    raise RuntimeError(message)
+    print(message, file=sys.stderr)
+    logger.error("event=staff_placeholder_block webhook_key=%s", webhook_key)
+    raise SystemExit(ANNOUNCER_CONFIG)
 
 
 def run_announcer(
@@ -109,14 +114,27 @@ def run_announcer(
     files: Sequence[discord.File] | FileBuilder | None = None,
     dry_run: bool | None = None,
 ) -> None:
-    """Build embeds and either preview or send them to Discord."""
+    """Build embeds and either preview or send them to Discord.
+
+    Exit conventions (when this process is the entry point):
+      0  success / dry-run preview
+      10 intentional skip (empty webhook with CIA_SKIP_EMPTY_WEBHOOKS)
+      20 config / fail-closed (missing webhook, staff placeholders)
+      other non-zero - unexpected send/runtime failure
+    """
     if not logging.getLogger().handlers:
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
     require_reaction = env_flag("CIA_REQUIRE_REACTION") or _cli_flag("--require-reaction")
     effective_date = env_flag("CIA_EFFECTIVE_DATE") or _cli_flag("--effective-date")
+    started = time.monotonic()
 
-    logger.info("Building embeds for %s (%s)", webhook_key, username)
+    logger.info(
+        "event=build_start webhook_key=%s username=%s dry_run=%s",
+        webhook_key,
+        username,
+        is_dry_run(dry_run=dry_run),
+    )
     embeds = build_embeds()
     c.validate_embed_limits(embeds)
     if effective_date:
@@ -125,17 +143,26 @@ def run_announcer(
 
     if is_dry_run(dry_run=dry_run):
         preview_embeds(embeds, webhook_key=webhook_key, username=username)
+        logger.info(
+            "event=dry_run_ok webhook_key=%s embeds=%s duration_ms=%s",
+            webhook_key,
+            len(embeds),
+            int((time.monotonic() - started) * 1000),
+        )
         return
 
     webhook_url = os.environ.get(webhook_key, "").strip()
     if not webhook_url:
         if allow_skip_empty_webhook():
             c.console_print(f"Skipping {webhook_key}: webhook URL not set")
-            logger.info("Skipping %s: webhook URL not set", webhook_key)
-            return
-        raise RuntimeError(
-            f"Missing {webhook_key}. Copy .env.example to .env and set your webhook URLs."
+            logger.info("event=skip_empty webhook_key=%s", webhook_key)
+            raise SystemExit(ANNOUNCER_SKIPPED)
+        logger.error("event=missing_webhook webhook_key=%s", webhook_key)
+        print(
+            f"Missing {webhook_key}. Copy .env.example to .env and set your webhook URLs.",
+            file=sys.stderr,
         )
+        raise SystemExit(ANNOUNCER_CONFIG)
 
     def file_factory() -> list[discord.File]:
         if files is None:
@@ -149,15 +176,33 @@ def run_announcer(
             reopened.append(c.logo_file(c.confined_logo_path(filename)))
         return reopened
 
-    logger.info("Sending %s via webhook (require_reaction=%s)", webhook_key, require_reaction)
-    c.send_webhook(
-        webhook_url,
-        embeds,
-        username=username,
-        files=file_factory,
-        state_key=webhook_key,
-        require_reaction=require_reaction,
-        effective_date=False,  # already applied above when requested
+    logger.info(
+        "event=send_start webhook_key=%s require_reaction=%s",
+        webhook_key,
+        require_reaction,
+    )
+    try:
+        c.send_webhook(
+            webhook_url,
+            embeds,
+            username=username,
+            files=file_factory,
+            state_key=webhook_key,
+            require_reaction=require_reaction,
+            effective_date=False,  # already applied above when requested
+        )
+    except Exception:
+        logger.exception(
+            "event=send_fail webhook_key=%s duration_ms=%s",
+            webhook_key,
+            int((time.monotonic() - started) * 1000),
+        )
+        raise
+    logger.info(
+        "event=send_ok webhook_key=%s embeds=%s duration_ms=%s",
+        webhook_key,
+        len(embeds),
+        int((time.monotonic() - started) * 1000),
     )
 
 

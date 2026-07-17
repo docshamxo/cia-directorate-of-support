@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Dry-run, staff fail-closed, CoC username wrap.
+#   - 2026-07-17 | docshamxo | Expect alerting SystemExit codes from run_announcer.
 # === END FILE HEADER ===
 
 """Regression tests for shared announcer entry helpers."""
@@ -19,6 +20,7 @@ import pytest
 
 from common import announcer as a
 from common import cia_common as c
+from common.exit_codes import ANNOUNCER_CONFIG, ANNOUNCER_SKIPPED
 
 
 def test_role_format_puts_holder_on_own_line() -> None:
@@ -82,13 +84,14 @@ def test_staff_placeholders_fail_closed_on_live_send(
             )
         ]
 
-    with pytest.raises(RuntimeError, match="placeholders"):
+    with pytest.raises(SystemExit) as excinfo:
         a.run_announcer(
             webhook_key="WEBHOOK_OSEC_STAFF_DOCUMENTS",
             username="OSEC",
             build_embeds=build,
             dry_run=False,
         )
+    assert excinfo.value.code == ANNOUNCER_CONFIG
 
 
 def test_staff_placeholders_warn_on_dry_run(
@@ -121,12 +124,14 @@ def test_skip_empty_webhook(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("CIA_SKIP_EMPTY_WEBHOOKS", "1")
     called = MagicMock()
     monkeypatch.setattr(c, "send_webhook", called)
-    a.run_announcer(
-        webhook_key="WEBHOOK_DS_PUBLIC_INFORMATION",
-        username="DS",
-        build_embeds=lambda: [discord.Embed(title="t", description="d", color=1)],
-        dry_run=False,
-    )
+    with pytest.raises(SystemExit) as excinfo:
+        a.run_announcer(
+            webhook_key="WEBHOOK_DS_PUBLIC_INFORMATION",
+            username="DS",
+            build_embeds=lambda: [discord.Embed(title="t", description="d", color=1)],
+            dry_run=False,
+        )
+    assert excinfo.value.code == ANNOUNCER_SKIPPED
     called.assert_not_called()
 
 
@@ -134,13 +139,14 @@ def test_missing_webhook_raises_without_skip(monkeypatch: pytest.MonkeyPatch) ->
     monkeypatch.delenv("CIA_DRY_RUN", raising=False)
     monkeypatch.delenv("WEBHOOK_DS_PUBLIC_INFORMATION", raising=False)
     monkeypatch.delenv("CIA_SKIP_EMPTY_WEBHOOKS", raising=False)
-    with pytest.raises(RuntimeError, match="Missing WEBHOOK_DS_PUBLIC_INFORMATION"):
+    with pytest.raises(SystemExit) as excinfo:
         a.run_announcer(
             webhook_key="WEBHOOK_DS_PUBLIC_INFORMATION",
             username="DS",
             build_embeds=lambda: [discord.Embed(title="t", description="d", color=1)],
             dry_run=False,
         )
+    assert excinfo.value.code == ANNOUNCER_CONFIG
 
 
 def test_run_announcer_passes_state_key_and_file_factory(
