@@ -43,7 +43,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Google Drive",
-                    "CIA ESD | Google Drive",
+                    "DS Community | ESD Google Drive",
                     c.url("esd.staff_documents.google_drive"),
                     c.marking_note("STAFF", "Authorized ESD staff only."),
                 ),

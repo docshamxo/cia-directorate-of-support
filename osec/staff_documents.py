@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Unify staff-docs template, link grammar, unit-color closers.
 #   - 2026-07-17 | docshamxo | Prefer Drive root + fewer TTP titles; STAFF markings.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
+#   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 # === END FILE HEADER ===
 
 """
@@ -53,7 +54,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Google Drive",
-                    "CIA OSEC | Google Drive",
+                    "DS Community | OSEC Google Drive",
                     c.url("osec.staff_documents.google_drive"),
                     c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
@@ -69,19 +70,19 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Tryout Guide",
-                    "CIA OSEC | Tryout Guide",
+                    "DS Community | OSEC Tryout Guide",
                     c.url("osec.staff_documents.tryout_guide"),
                     c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Phase I — Foundation",
-                    "CIA OSEC | Phase I Guide",
+                    "Phase I ΓÇö Foundation",
+                    "DS Community | OSEC Phase I Guide",
                     c.url("osec.staff_documents.phase_i"),
                     c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
-                    "Phase II — Intermediate",
-                    "CIA OSEC | Phase II Guide",
+                    "Phase II ΓÇö Intermediate",
+                    "DS Community | OSEC Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
                     c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),

@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Align hero, link grammar, and unit-color closers.
 #   - 2026-07-17 | docshamxo | Community markings CANDIDATE/STAFF/PUBLIC.
 #   - 2026-07-17 | docshamxo | Accessible field names and marking notes.
+#   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 # === END FILE HEADER ===
 
 """
@@ -103,25 +104,25 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Orientation",
-                    "CIA OSEC | Security Phase Candidate Orientation Guide",
+                    "DS Community | OSEC Security Phase Candidate Orientation Guide",
                     c.url("osec.spp_information.orientation_guide"),
                     "CANDIDATE. Authorized candidates only.",
                 ),
                 c.link_field(
                     "Handbook",
-                    "CIA OSEC | Handbook",
+                    "DS Community | OSEC Handbook",
                     c.url("osec.spp_information.official_handbook"),
                     c.marking_note("STAFF", "Authorized OSEC staff only."),
                 ),
                 c.link_field(
                     "Code of Agency Conduct",
-                    "CIA OSEC | Code of Agency Conduct",
+                    "DS Community | OSEC Code of Agency Conduct",
                     c.url("osec.spp_information.code_of_agency_conduct"),
                     c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Civilian Access",
-                    "CIA OSEC | Civilian Access",
+                    "DS Community | OSEC Civilian Access",
                     c.url("osec.spp_information.civilian_access"),
                     c.marking_note("PUBLIC"),
                 ),
@@ -131,7 +132,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Classification & Handling Notice",
             description=(
                 "The **Security Phase Candidate Orientation Guide** is marked **CANDIDATE**. "
-                "The **CIA OSEC | Handbook** is marked **STAFF**.\n\n"
+                "The **DS Community | OSEC Handbook** is marked **STAFF**.\n\n"
                 "The **Code of Agency Conduct** and **Civilian Access** documents are "
                 "**PUBLIC**.\n\n"
                 "Unauthorized disclosure, redistribution, or leaking of restricted materials "

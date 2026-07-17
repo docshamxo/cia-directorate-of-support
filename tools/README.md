@@ -61,6 +61,12 @@ The tool reports:
 - stale/orphan state keys not in the announcer catalog
 
 Use this after rotating webhooks, debugging duplicate posts, or recovering from an empty channel. See [OPS.md](../OPS.md).
+## Reset webhook message state
+Empty-channel / mid-batch recovery (edits gitignored `.webhook_messages.json` only):
+python tools/reset_webhook_state.py --list
+python tools/reset_webhook_state.py --key WEBHOOK_DS_PUBLIC_INFORMATION
+python tools/reset_webhook_state.py --all --yes
+See [OPS.md](../OPS.md).
 
 ## Run the validator
 

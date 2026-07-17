@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Title Case section headers for Discord embed redesign.
+#   - 2026-07-17 | docshamxo | Soften welcome banner for non-affiliation clarity.
 # === END FILE HEADER ===
 
 title: SERVER REGULATIONS
@@ -14,9 +15,9 @@ intro: |
 
   *{motto} · Marking: {classification}*
 
-  Welcome to the Roblox Central Intelligence Agency Directorate of Support
-  Office of Security Communications Server. This is an unofficial Roblox
-  community — not affiliated with the US Government or CIA. All personnel and visitors are
+  Welcome to the unofficial Roblox community Directorate of Support
+  Office of Security Communications Server (roleplay). This is **not affiliated
+  with** the US Government or CIA. All personnel and visitors are
   expected to maintain professionalism, discipline, and operational integrity
   at all times. Failure to comply with the following regulations may result in
   administrative action, removal from the server, or further disciplinary measures.

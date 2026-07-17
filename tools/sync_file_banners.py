@@ -31,6 +31,7 @@ CREATED_BY = "docshamxo"
 MAINTAINED_BY = "docshamxo"
 
 SKIP_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
+SKIP_NAMES = {"LICENSE"}
 SKIP_DIR_PARTS = {".git", ".venv", "venv", "__pycache__", ".ruff_cache"}
 
 HEADER_START = "=== FILE HEADER ==="
@@ -41,6 +42,8 @@ FOOTER_END = "=== END FILE FOOTER ==="
 
 def is_text_path(path: Path) -> bool:
     if path.suffix.lower() in SKIP_SUFFIXES:
+        return False
+    if path.name in SKIP_NAMES:
         return False
     if any(part in SKIP_DIR_PARTS for part in path.parts):
         return False

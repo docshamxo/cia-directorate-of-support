@@ -48,7 +48,7 @@ Put editable values in config instead:
 ```python
 from common import cia_common as c
 
-# Hero: ALL CAPS title + italic CIA · Unit eyebrow + supporting sentence
+# Hero: ALL CAPS title + italic community-RP eyebrow + supporting sentence
 c.hero_embed(
     title="INFORMATION",
     unit="Office of Security",
@@ -57,18 +57,20 @@ c.hero_embed(
     logo=c.LOGOS["osec"],
 )
 
-c.agency_eyebrow("Office of Security")          # *Central Intelligence Agency · …*
+c.agency_eyebrow("Office of Security")          # *Unofficial community RP · …*
+c.community_link_label("OSEC")                  # DS Community | OSEC
 c.motto_line(c.OSEC_MOTTO)                      # *PROTECT · DETECT · RESPOND*
-c.link_field("Handbook", "CIA OSEC | Handbook", url, c.marking_note("STAFF"))
-c.command_band_label("LOWCOM")                   # Lower Command (LOWCOM)
-c.pending_group_field("ESD", "CIA | Executive Security Detail")
+c.link_field("Handbook", c.community_link_label("OSEC Handbook"), url, "STAFF.")
+c.pending_group_field("ESD", c.community_link_label("ESD"))
 
 c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
 c.important_notice_embed(unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",))
-c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required
+c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required; unofficial-community title
 ```
 
-Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer (always last).
+Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer · Unofficial Community (always last).
+
+Brand / bot naming: [BRAND.md](../BRAND.md).
 
 ## Useful helpers
 

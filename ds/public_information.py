@@ -73,31 +73,31 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Directorate of Support",
-                    "CIA | Directorate of Support",
+                    c.community_link_label("Directorate of Support"),
                     c.URL_ROBLOX_GROUP_DS,
                 ),
                 c.link_field(
                     "Office of Security",
-                    "CIA | Office of Security",
+                    c.community_link_label("OSEC"),
                     c.URL_ROBLOX_GROUP_OSEC,
                 ),
                 c.link_field(
                     "Global Response Staff",
-                    "CIA | Global Response Staff",
+                    c.community_link_label("GRS"),
                     c.URL_ROBLOX_GROUP_GRS,
                 ),
                 c.pending_group_field(
                     "Executive Security Detail",
-                    "CIA | Executive Security Detail",
+                    c.community_link_label("ESD"),
                 ),
                 c.link_field(
                     "Office of Training & Education",
-                    "CIA | Office of Training & Education",
+                    c.community_link_label("OTE"),
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
                 c.link_field(
                     "Discord",
-                    "CIA | Discord Invite",
+                    c.community_link_label("Discord Invite"),
                     c.discord_invite_url(),
                 ),
             ),

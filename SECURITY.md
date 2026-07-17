@@ -20,6 +20,7 @@ Modified:
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
+  - 2026-07-17 | docshamxo | Strengthen affiliation banner; link LICENSE and BRAND.md.
 === END FILE HEADER ===
 -->
 
@@ -27,7 +28,7 @@ Modified:
 
 Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them private.
 
-**Affiliation:** Unofficial Roblox community tooling — **not** affiliated with the United States Government or the Central Intelligence Agency. Markings `PUBLIC` / `STAFF` / `CANDIDATE` are roleplay vocabulary only.
+**Affiliation:** This repository supports an **unofficial Roblox community roleplay**. It is **not affiliated with**, endorsed by, or connected to the United States Government or the Central Intelligence Agency. Nothing here is an official government communication. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only. See [LICENSE](LICENSE) and [BRAND.md](BRAND.md).
 
 **Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
@@ -129,6 +130,8 @@ CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs t
 - Bot needs **Add Reactions** + **Read Message History** (+ channel access); optional **Manage Messages** for `--bot-channel-purge`
 - `python run_all.py --dry-run` never posts, deletes, or reacts
 - Full runbooks: [OPS.md](OPS.md)
+- `--require-reaction` / `CIA_REQUIRE_REACTION=1` fails if ✅ cannot be applied
+- Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](OPS.md)
 
 <!--
 === FILE FOOTER ===
