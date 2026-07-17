@@ -14,6 +14,7 @@ Modified:
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+  - 2026-07-17 | docshamxo | Slim office README; point to OPS for reactions/purge.
 === END FILE HEADER ===
 -->
 
@@ -23,33 +24,9 @@ Modified:
 
 Parent: OSEC
 
-## First-time setup
+Setup once at repo root: [README.md](../README.md). Live ops (✅ / purge): [OPS.md](../OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
 
-Follow **every** step in the root [README.md](../README.md) (Git, Python, clone, packages, `.env`).
-
-Short version after Git and Python are installed:
-
-```bash
-git clone https://github.com/docshamxo/cia-directorate-of-support.git
-cd cia-directorate-of-support
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-copy .env.example .env
-```
-
-macOS / Linux use:
-
-```bash
-python3 -m pip install --upgrade pip
-python3 -m pip install -r requirements.txt
-cp .env.example .env
-```
-
-Then open `.env` and paste the webhook URLs. Never commit `.env`.
-
-## Run these scripts
-
-From the repository root (`cd cia-directorate-of-support`):
+## Run (from repo root)
 
 ```bash
 python grs/coc.py
@@ -57,24 +34,21 @@ python grs/information.py
 python grs/staff_documents.py
 ```
 
+Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
+
 ## Scripts
 
-| Script | What it posts | `.env` key |
-|--------|---------------|------------|
+| Script | Posts | `.env` key |
+|--------|-------|------------|
 | [`coc.py`](coc.py) | GRS chain of command | `WEBHOOK_GRS_COC` |
 | [`information.py`](information.py) | GRS information | `WEBHOOK_GRS_INFORMATION` |
 | [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
 
 ## Edit
 
-- Names / ranks / mottos / links → [`../config/`](../config/) YAML files
-- This channel's embed layout → the script above
-
-Then run:
-
-```bash
-python tools/validate_repo.py
-```
+- Names / ranks / mottos / links → [`../config/`](../config/) YAML
+- Embed layout → the script above
+- Then: `python tools/validate_repo.py`
 
 <!--
 === FILE FOOTER ===
