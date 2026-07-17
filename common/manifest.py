@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Single announcer catalog for run_all and validate_repo.
+#   - 2026-07-17 | docshamxo | Staged office rollout order for safer live sends.
 # === END FILE HEADER ===
 
 """Announcer catalog — single source of truth for run_all and validate_repo."""
@@ -33,6 +34,16 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
     ("esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
 )
 
+# Safer live rollout: one office (stage) at a time. Operators advance explicitly.
+# (stage id, human title, office folder)
+ROLLOUT_STAGES: tuple[tuple[str, str, str], ...] = (
+    ("1", "DS public core", "ds"),
+    ("2", "OSEC", "osec"),
+    ("3", "OTE", "ote"),
+    ("4", "GRS", "grs"),
+    ("5", "ESD", "esd"),
+)
+
 # Webhook keys whose embeds may reference STAFF_LOCAL_REQUIRED placeholders.
 # Live sends warn/fail closed when unresolved; dry-run still builds embeds.
 STAFF_WEBHOOK_KEYS: frozenset[str] = frozenset(
@@ -46,6 +57,25 @@ STAFF_WEBHOOK_KEYS: frozenset[str] = frozenset(
         "WEBHOOK_ESD_STAFF_DOCUMENTS",
     }
 )
+
+
+def resolve_rollout_stage(token: str) -> tuple[str, str, str]:
+    """Resolve ``--stage`` token to ``(id, title, office)``. Raises ValueError if unknown."""
+    raw = token.strip().lower()
+    if not raw:
+        raise ValueError("empty stage token")
+    for stage_id, title, office in ROLLOUT_STAGES:
+        if raw in {stage_id, office, f"{stage_id}-{office}", title.lower()}:
+            return stage_id, title, office
+    known = ", ".join(f"{sid} ({office})" for sid, _title, office in ROLLOUT_STAGES)
+    raise ValueError(f"Unknown rollout stage {token!r}. Expected one of: {known}")
+
+
+def announcers_for_office(office: str) -> list[tuple[str, str, str]]:
+    """Return catalog entries whose path starts with ``office/``."""
+    prefix = office.strip().lower().rstrip("/") + "/"
+    return [entry for entry in ANNOUNCERS if entry[0].replace("\\", "/").lower().startswith(prefix)]
+
 
 # === FILE FOOTER ===
 # End of file: common/manifest.py
