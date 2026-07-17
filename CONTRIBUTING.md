@@ -14,6 +14,7 @@ Modified:
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Sensitivity rules, marking vocabulary, optional banners, manifest.
   - 2026-07-17 | docshamxo | Clarify contributor path; cross-link OPS reaction/purge docs.
+  - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
   - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
   - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
@@ -83,12 +84,24 @@ pytest -q
 python run_all.py --dry-run --delay 0
 ```
 
+`pytest -q` enforces a **70%** statement coverage floor on `common/` (see `pyproject.toml`). Raise coverage with tests rather than lowering the floor.
+
+Optional local secret/lint hooks (same gitleaks rev as CI):
+
+```bash
+pip install -e ".[dev]"
+pre-commit install
+pre-commit run --all-files
+```
+
 For live production refreshes, follow [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md)
 (staged `--stage` rollout). Record user-facing changes in [CHANGELOG.md](CHANGELOG.md).
 
 Use `python3` / `python3 -m pytest` on macOS/Linux if needed.
 
 File header/footer banners are **optional**. Refresh: `python tools/sync_file_banners.py`. Enforce: `CIA_REQUIRE_BANNERS=1 python tools/validate_repo.py`.
+
+Branch protection for maintainers: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md).
 
 ## Commit and push
 

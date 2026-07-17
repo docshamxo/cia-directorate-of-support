@@ -9,6 +9,7 @@
 #   - 2026-07-17 | docshamxo | Bump package version to 1.1.0 (release engineering).
 #   - 2026-07-17 | docshamxo | Add pytest testpaths / quiet defaults for CI.
 #   - 2026-07-17 | docshamxo | Bump pytest for PYSEC-2026-1845.
+#   - 2026-07-17 | docshamxo | Add pytest-cov, pre-commit, and coverage fail-under floor.
 # === END FILE HEADER ===
 
 [build-system]
@@ -32,10 +33,36 @@ dependencies = [
 dev = [
   "ruff==0.15.21",
   "pytest==9.0.3",
+  "pytest-cov==6.2.1",
+  "pre-commit==4.2.0",
 ]
 
 [tool.setuptools.packages.find]
 include = ["common*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+  "-q",
+  "--cov=common",
+  "--cov-report=term-missing",
+  "--cov-fail-under=70",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["common"]
+omit = ["*/tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+]
 
 [tool.ruff]
 target-version = "py310"
@@ -44,13 +71,6 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 ignore = ["E501"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "-q"
-filterwarnings = [
-  "ignore::DeprecationWarning",
-]
 
 # === FILE FOOTER ===
 # End of file: pyproject.toml
