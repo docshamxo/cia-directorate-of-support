@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF.
 #   - 2026-07-17 | docshamxo | Clearer field names and text marking notes for accessibility.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
+#   - 2026-07-17 | docshamxo | Shared marking notes; leaner mixed-marking handling closer.
 # === END FILE HEADER ===
 
 """
@@ -36,10 +37,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="INFORMATION",
             unit="Office of Security",
-            supporting=(
-                "Official reference hub for Office of Security personnel records and "
-                "authorized documentation."
-            ),
+            supporting="Reference hub for OSEC records and authorized documentation.",
             color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
         ),
@@ -51,8 +49,8 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Reference Documents",
             description=(
-                "Agency-wide and Office of Security reference material. Review each document "
-                "in full and observe its community marking."
+                "Agency-wide and Office of Security reference material. Observe each "
+                "document's community marking."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -66,7 +64,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Handbook",
                     "DS Community | OSEC Handbook",
                     c.url("osec.information.handbook"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Code of Agency Conduct",
@@ -85,13 +83,11 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Classification & Handling Notice",
             description=(
-                "The **DS Community | OSEC Handbook** is marked **STAFF**. Unauthorized disclosure, "
-                "redistribution, or leaking of this document will result in a **BLACKLIST** "
-                "from the **CIA Office of Security**.\n\n"
-                "The **Order of Battle (ORBAT)**, **Code of Agency Conduct**, and **Civilian Access** documents "
-                "are **PUBLIC** and may be referenced in accordance with community policy.\n\n"
-                "Handle all materials responsibly. Do not share restricted documents outside "
-                "authorized channels or personnel."
+                "**Handbook** -- **STAFF**. Unauthorized disclosure or redistribution will "
+                "result in a **BLACKLIST** from the **CIA Office of Security**.\n\n"
+                "**Order of Battle (ORBAT)**, **Code of Agency Conduct**, and "
+                "**Civilian Access** -- **PUBLIC**.\n\n"
+                "Do not share restricted documents outside authorized channels or personnel."
             ),
             color=c.COLOR_OSEC,
         ),

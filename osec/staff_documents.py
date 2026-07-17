@@ -36,10 +36,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="STAFF DOCUMENTS",
             unit="Office of Security",
-            supporting=(
-                "Official repository for authorized Office of Security staff documentation. "
-                "Access is strictly limited to authorized personnel."
-            ),
+            supporting="Authorized OSEC staff documentation index. Need-to-know access only.",
             color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
         ),
@@ -56,7 +53,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "DS Community | OSEC Google Drive",
                     c.url("osec.staff_documents.google_drive"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),
@@ -72,19 +69,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Tryout Guide",
                     "DS Community | OSEC Tryout Guide",
                     c.url("osec.staff_documents.tryout_guide"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Phase I ΓÇö Foundation",
                     "DS Community | OSEC Phase I Guide",
                     c.url("osec.staff_documents.phase_i"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Phase II ΓÇö Intermediate",
                     "DS Community | OSEC Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),

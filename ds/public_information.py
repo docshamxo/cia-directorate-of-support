@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Standardize eyebrow, link grammar, and public-info template.
+#   - 2026-07-17 | docshamxo | Tighten public hero supporting line.
 # === END FILE HEADER ===
 
 """
@@ -34,9 +35,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="PUBLIC INFORMATION",
             unit="Directorate of Support",
-            supporting=(
-                "PUBLIC overview of the Directorate of Support and its subordinate offices."
-            ),
+            supporting=("Overview of the Directorate of Support and its subordinate offices."),
             logo=c.LOGOS["ds"],
         ),
         c.embed(

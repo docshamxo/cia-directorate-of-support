@@ -7,6 +7,7 @@
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Title Case section headers for Discord embed redesign.
 #   - 2026-07-17 | docshamxo | Soften welcome banner for non-affiliation clarity.
+#   - 2026-07-17 | docshamxo | Product/content UX: shorter intro, less section overlap.
 # === END FILE HEADER ===
 
 title: SERVER REGULATIONS
@@ -17,47 +18,42 @@ intro: |
 
   Welcome to the unofficial Roblox community Directorate of Support
   Office of Security Communications Server (roleplay). This is **not affiliated
-  with** the US Government or CIA. All personnel and visitors are
-  expected to maintain professionalism, discipline, and operational integrity
-  at all times. Failure to comply with the following regulations may result in
-  administrative action, removal from the server, or further disciplinary measures.
+  with** the US Government or CIA. Maintain professionalism, discipline, and
+  operational integrity at all times. Failure to comply may result in administrative
+  action, removal, or further discipline.
 sections:
   - title: Professional Conduct & Community Standards
     body: |
       **Professional Conduct**
-      All members shall conduct themselves in a respectful and professional manner
-      regardless of rank, position, or affiliation. Disrespectful, disruptive, or
-      hostile behavior is prohibited.
+      Conduct yourself respectfully and professionally regardless of rank or affiliation.
+      Disrespectful, disruptive, or hostile behavior is prohibited.
 
       **Discrimination and Harassment**
-      Harassment, discrimination, hate speech, threats, or targeted abuse based on
-      race, religion, nationality, gender, or any protected characteristic will not
-      be tolerated under any circumstances.
+      Harassment, discrimination, hate speech, threats, or targeted abuse based on race,
+      religion, nationality, gender, or any protected characteristic will not be tolerated.
 
       **Compliance with Discord Policies**
-      All members must comply with Discord's Terms of Service and Community
-      Guidelines at all times. Violations of Discord policy are also considered
-      violations of server regulations.
+      All members must comply with Discord's Terms of Service and Community Guidelines.
+      Discord-policy violations are also server-regulation violations.
 
       **Spam and Unauthorized Promotion**
-      Spamming, flooding channels, mass messaging, excessive pinging, or advertising
-      external communities, products, or services without authorization from Office
-      of Security leadership is prohibited.
+      Spamming, flooding, mass messaging, excessive pinging, or advertising communities,
+      products, services, Roblox groups, or platforms without Office of Security leadership
+      authorization is prohibited.
   - title: Content, Chain of Command & Channels
     body: |
       **Appropriate Content Standards**
-      All communications, media, usernames, and profile content must remain
-      appropriate for a professional operational environment. NSFW, explicit,
-      graphic, or otherwise inappropriate material is strictly prohibited.
+      Communications, media, usernames, and profile content must remain appropriate for a
+      professional operational environment. NSFW, explicit, graphic, or otherwise
+      inappropriate material is prohibited.
 
       **Chain of Command**
-      Personnel are required to respect and follow the established chain of command.
-      Orders and directives issued by authorized supervisory personnel are expected
-      to be followed unless they violate server policy or administration directives.
+      Respect and follow the established chain of command. Follow lawful supervisory
+      directives unless they conflict with server policy or administration.
 
       **Proper Channel Usage**
-      Members must use channels for their designated purpose. Off-topic discussions
-      should remain within approved discussion channels.
+      Use channels for their designated purpose. Keep off-topic discussion in approved
+      discussion channels.
   - title: Disruptive Behavior & Reporting
     body: |
       **Trolling and Disruptive Behavior**
@@ -65,49 +61,39 @@ sections:
       operations or conversations is prohibited.
 
       **Impersonation**
-      Impersonating Office of Security personnel, staff members, leadership, or other
-      community members is strictly forbidden.
+      Impersonating Office of Security personnel, staff, leadership, or other members is
+      forbidden.
 
       **Reporting Procedures**
-      Operational concerns, misconduct, or rule violations should be reported through
-      designated reporting procedures or directly to authorized staff members.
-
-      **Unauthorized Advertising**
-      Advertising other Roblox groups, Discord servers, organizations, websites, or
-      social platforms without prior authorization is prohibited.
+      Report operational concerns, misconduct, or rule violations through designated
+      channels or to authorized staff.
   - title: Staff Directives, Privacy & Sensitive Topics
     body: |
       **Compliance with Staff Directives**
-      Instructions issued by Office of Security staff, moderators, or administrative
-      personnel must be followed. Administrative decisions regarding server operations
-      and moderation are final unless overturned by higher authority.
+      Follow instructions from Office of Security staff, moderators, or administrators.
+      Administrative decisions are final unless overturned by higher authority.
 
       **Privacy and Security**
-      Sharing personal information, leaking confidential material, doxxing, or
-      engaging in activities that compromise operational security or member privacy
-      is strictly prohibited.
+      Sharing personal information, leaking restricted material, doxxing, or compromising
+      member privacy or operational security is prohibited.
 
       **Bot Usage**
-      Bots and automated systems must be used responsibly and only within designated
-      channels and approved purposes.
+      Use bots and automated systems only in designated channels and for approved purposes.
 
       **Political and Controversial Topics**
-      Political debates, extremist content, election discussions, political harassment,
-      or inflammatory discussions regarding governments, political parties, or current
-      geopolitical conflicts are prohibited to maintain operational professionalism.
+      Political debates, extremist content, election discussions, political harassment, or
+      inflammatory geopolitical arguments are prohibited.
   - title: Enforcement
     body: |
       **Enforcement Actions**
-      Violations of server regulations may result in warnings, communication
-      restrictions, suspension, removal from Office of Security operations, or
-      permanent removal from the community depending on severity and frequency of
-      violations.
+      Violations may result in warnings, communication restrictions, suspension, removal
+      from Office of Security operations, or permanent removal from the community,
+      depending on severity and frequency.
 
       ----------
 
-      Failure to understand these regulations does not exempt personnel from
-      enforcement actions. Presence within this server constitutes acknowledgment
-      and acceptance of all established regulations and administrative policies.
+      Failure to understand these regulations does not exempt personnel from enforcement.
+      Presence in this server constitutes acknowledgment of these policies.
 
 # === FILE FOOTER ===
 # End of file: config/regulations.yaml

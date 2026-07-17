@@ -224,30 +224,28 @@ def subunit_coc_embeds(
             context=(
                 f"The **{unit_full} ({unit_abbrev})** is a sub-unit of the **Office of Security** "
                 "under the **Directorate of Support**. "
-                f"{unit_abbrev} leadership reports through the OSEC and DS chains to Agency leadership. "
-                "Full parent Order of Battle (ORBAT) is published in the DS / OSEC chain-of-command channels only."
+                f"{unit_abbrev} reports through OSEC and DS. "
+                "Full parent Order of Battle (ORBAT) is published in DS / OSEC chain-of-command channels only."
             ),
         ),
         c.embed(
             title="Reporting Line",
             description=(
-                f"{unit_abbrev} reports through **Office of Security** → **Directorate of Support**. "
+                f"{unit_abbrev} → **Office of Security** → **Directorate of Support**. "
                 "Consult your immediate supervisor before escalating. "
-                "Parent leadership names are intentionally omitted here (need-to-know)."
+                "Parent leadership names are omitted here (need-to-know)."
             ),
             color=color,
         ),
         c.embed(
             title=f"{unit_abbrev} Command",
-            description=(
-                f"Senior leadership responsible for {unit_abbrev} operations and policy.\n\n{about}"
-            ),
+            description=(f"Senior leadership for {unit_abbrev} operations and policy.\n\n{about}"),
             color=color,
             fields=(("Command Team", c.roles_text(*command_roles)),),
         ),
         c.embed(
-            title=f"{unit_abbrev} Middle Command (MIDCOM)",
-            description="Mid-level leadership responsible for supervision and operational oversight.",
+            title=f"{unit_abbrev} MIDCOM",
+            description="Mid-level supervision and operational oversight.",
             color=color,
             fields=(
                 (
@@ -257,8 +255,8 @@ def subunit_coc_embeds(
             ),
         ),
         c.embed(
-            title=f"{unit_abbrev} Lower Command (LOWCOM)",
-            description=f"Field and operational ranks within the {unit_full}.",
+            title=f"{unit_abbrev} LOWCOM",
+            description=f"Field and operational ranks within {unit_full}.",
             color=color,
             fields=(
                 (c.command_band_label("LOWCOM") + " ranks", c.ranks_text(*c.GRS_ESD_LOW_COMMAND)),

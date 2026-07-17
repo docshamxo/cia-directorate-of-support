@@ -37,8 +37,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="OFFICER TRAINING PROGRAM",
             unit="Office of Training & Education",
             supporting=(
-                "Official reference hub for the Officer Training Program — organization, "
-                "phases, graduation, and community links."
+                "Organization, phases, graduation, and community links for the Officer "
+                "Training Program."
             ),
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
@@ -51,10 +51,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Official Documents",
-            description=(
-                "Authorized guides and procedures for OTE personnel, instructors, "
-                "and program leadership."
-            ),
+            description="Public program guides and graduation procedures.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(

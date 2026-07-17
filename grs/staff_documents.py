@@ -35,10 +35,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="STAFF DOCUMENTS",
             unit="Global Response Staff",
-            supporting=(
-                "Official repository for authorized GRS staff documentation. "
-                "Access is strictly limited to authorized personnel."
-            ),
+            supporting="Authorized GRS staff documentation index. Need-to-know access only.",
             color=c.COLOR_GRS,
             logo=c.LOGOS["grs"],
         ),
@@ -54,13 +51,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "DS Community | GRS Google Drive",
                     c.url("grs.staff_documents.google_drive"),
-                    c.marking_note("STAFF", "Authorized GRS staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Handbook",
                     "DS Community | GRS Handbook",
                     c.url("grs.staff_documents.handbook"),
-                    c.marking_note("STAFF", "Authorized GRS staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),

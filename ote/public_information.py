@@ -36,9 +36,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="PUBLIC INFORMATION",
             unit="Office of Training & Education",
-            supporting=(
-                "PUBLIC overview of OTE, the Officer Training Program, and community links."
-            ),
+            supporting="Overview of OTE, the Officer Training Program, and community links.",
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),

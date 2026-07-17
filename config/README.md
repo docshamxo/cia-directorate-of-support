@@ -10,7 +10,7 @@ Modified:
   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-  - 2026-07-17 | docshamxo | Accessibility rules for embeds (color, markings, fields).
+  - 2026-07-17 | docshamxo | Document shared Marking: PUBLIC/STAFF/CANDIDATE link notes.
 === END FILE HEADER ===
 -->
 
@@ -38,6 +38,7 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Hero** | ALL CAPS `title=` + italic eyebrow `*Unofficial community RP · {Unit}*` + one short supporting sentence |
 | **Body section titles** | Title Case |
 | **Links** | `[CIA {UNIT} \| {Document}](url)` with optional italic note; community groups: `CIA \| {Group}` |
+| **Link notes** | Prefer shared Marking: PUBLIC. / Marking: STAFF. / Marking: CANDIDATE. (c.MARKING_*). Put authorization detail in the Handling Notice, not on every field. |
 | **Closers (order)** | optional Classification & Handling Notice → optional Important Notice → Disclaimer (always last, unit color) |
 | **Logo** | Thumbnail on the **first** branded embed; attach matching logo file(s) |
 
@@ -46,11 +47,13 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | Title | Use for |
 |-------|---------|
 | **Important Notice** | Chain of command / conduct only |
-| **Classification & Handling Notice** | Restricted document hubs |
+| **Classification & Handling Notice** | Restricted document hubs (community marking language -- not USG classification) |
 | **Important Information** | Application rules only |
 | **Disclaimer** | Always last; title `Disclaimer · Unofficial Community`; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
 
 Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). Bot usernames and brand rules: [BRAND.md](../BRAND.md).
+
+**Tone:** Public channels stay welcoming and scannable. Staff / candidate channels stay need-to-know -- short heroes, short link notes, one handling closer.
 
 ### Channel templates
 

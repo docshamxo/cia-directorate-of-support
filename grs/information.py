@@ -34,10 +34,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="INFORMATION",
             unit="Global Response Staff",
-            supporting=(
-                "Official reference hub for Global Response Staff mission overview and "
-                "authorized documentation."
-            ),
+            supporting="Reference hub for GRS mission overview and authorized documentation.",
             color=c.COLOR_GRS,
             logo=c.LOGOS["grs"],
         ),
@@ -52,14 +49,14 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Reference Documents",
-            description="Key GRS reference material for personnel and candidates.",
+            description="Key GRS reference material for authorized personnel.",
             color=c.COLOR_GRS,
             fields=(
                 c.link_field(
                     "Handbook",
                     "DS Community | GRS Handbook",
                     c.url("grs.information.handbook"),
-                    "Authorized GRS staff only. Marking: STAFF.",
+                    c.MARKING_STAFF,
                 ),
             ),
         ),
