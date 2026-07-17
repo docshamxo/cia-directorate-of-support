@@ -12,9 +12,11 @@
 #   - 2026-07-15 | docshamxo | Update OTE tryout guide and reorganize staff documents. (#12)
 #   - 2026-07-17 | docshamxo | Split OTE OTP Staff Handbook into Phase I/II/III docs.
 #   - 2026-07-17 | docshamxo | Redact Discord invite/snowflakes; staff Drive URLs via local overlay.
+#   - 2026-07-17 | docshamxo | Privacy: ORBAT staff-only; applicant forms/tracker via .env.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
+# Applicant form / tracker URLs live in .env (see .env.example) — not here.
 # Staff Drive / TTP URLs: placeholders here; override via config/links.staff.local.yaml
 # (copy from links.staff.example.yaml). Placeholder marker: STAFF_LOCAL_REQUIRED
 
@@ -26,7 +28,7 @@ community:
 osec:
   information:
     handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
-    orbat: https://docs.google.com/spreadsheets/d/12pMdf-XiYeHBCX99zO4cmuek8xQr4SL3lAoQcReowWk/edit?usp=sharing
+    orbat: https://example.invalid/STAFF_LOCAL_REQUIRED
     code_of_agency_conduct: https://docs.google.com/document/d/1McFfJx3IItYHdEdUYdrMT5fiI2spyRu03cif_CyXIZk/edit?usp=sharing
     civilian_access: https://docs.google.com/document/d/1M37oQhF5HF5AUHV4qNMgb2GdhFbv1WxbmRYWsgI5MHo/edit?usp=sharing
   spp_information:
@@ -40,8 +42,6 @@ osec:
     phase_i: https://example.invalid/STAFF_LOCAL_REQUIRED
     phase_ii: https://example.invalid/STAFF_LOCAL_REQUIRED
   open_positions:
-    lowcom_application: https://forms.gle/SWfWLkmvFr7ZnHMV7
-    midcom_application: https://forms.gle/2SZaDfVeUpYDBgAZ6
     last_updated: June 20th, 2026
 ote:
   staff_documents:
@@ -55,9 +55,6 @@ ote:
     standard_training_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     weapons_st_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     staff_database: https://example.invalid/STAFF_LOCAL_REQUIRED
-  open_positions:
-    application: https://docs.google.com/forms/d/e/1FAIpQLSefGwpK9766JHaXw46lqIsbr9VuoVERO90G6LEBE4cdRS4J7g/viewform?usp=header
-    application_tracker: https://docs.google.com/spreadsheets/d/1iSOWAM9-Z8WBkdhleuRhbfYa78XC9rMQG7fD3uv6J9c/edit?usp=sharing
   program_overview:
     program_overview: https://docs.google.com/document/d/1UCAJHZYt0rABO0bTRUWcm5euThNKd8otEkAFsfMeJ-c/edit?usp=sharing
     graduation_ceremony_procedures: https://docs.google.com/document/d/1NR61wNgfyEnPiDQ7jZB8NwS8CUCFq7nt1aDN2y6uwKA/edit?usp=sharing

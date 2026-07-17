@@ -40,6 +40,8 @@ Edit `.env` (never commit) — keep classes split (`WEBHOOK_*` ≠ bot token ≠
 - `WEBHOOK_*` — one URL per announcer you will run
 - `DISCORD_BOT_TOKEN` — **required for live** (see [Reactions](#reactions--discord_bot_token))
 - `DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL` — community URLs kept out of public YAML
+- `OSEC_LOWCOM_APPLICATION_URL`, `OSEC_MIDCOM_APPLICATION_URL`, `OTE_APPLICATION_URL` — applicant intake forms
+- `OTE_APPLICATION_TRACKER_URL` — optional staff/ops tracker (never post publicly)
 
 Optional staff overlay:
 
@@ -48,6 +50,15 @@ Optional staff overlay:
 copy config\links.staff.example.yaml config\links.staff.local.yaml
 # macOS / Linux
 cp config/links.staff.example.yaml config/links.staff.local.yaml
+```
+
+Optional mid-tier roster overlay:
+
+```bash
+# Windows
+copy config\personnel.holders.example.yaml config\personnel.holders.local.yaml
+# macOS / Linux
+cp config/personnel.holders.example.yaml config/personnel.holders.local.yaml
 ```
 
 Fill real Drive URLs in the local file, then:

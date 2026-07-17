@@ -25,6 +25,8 @@ webhooks.local.*
 .run_report.json
 config/links.staff.local.yaml
 config/*.staff.local.yaml
+config/personnel.holders.local.yaml
+config/*.holders.local.yaml
 
 # Python
 __pycache__/
@@ -53,4 +55,4 @@ _maps.json
 # === END FILE FOOTER ===
 
 .coverage
-
+.coverage.*

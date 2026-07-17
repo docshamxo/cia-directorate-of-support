@@ -21,6 +21,7 @@ Modified:
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Strengthen affiliation banner; link LICENSE and BRAND.md.
+  - 2026-07-17 | docshamxo | Privacy / data governance section; applicant env overlays.
 === END FILE HEADER ===
 -->
 
@@ -32,6 +33,25 @@ Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them 
 
 **Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
+## Privacy / data governance
+
+This suite posts community roleplay content to Discord. Treat Roblox usernames, applicant forms, trackers, and ORBAT sheets as sensitive community data.
+
+| Data | Where it lives | Rule |
+|------|----------------|------|
+| Webhooks / bot token | `.env` (gitignored) | Never commit or paste into PRs |
+| Discord invite / channel snowflakes | `.env` | Not in `config/links.yaml` |
+| Applicant intake forms | `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`) | Rotate without writing IDs into git history |
+| Applicant status tracker | `.env` (`OTE_APPLICATION_TRACKER_URL`) | **Staff/ops only** — do not post in public channels |
+| Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` | Placeholders only in public `links.yaml` |
+| Mid-tier named rosters (e.g. multi CM) | `config/personnel.holders.local.yaml` | Committed YAML keeps `VACANT`; fill locally |
+| High-command holders | `config/personnel.yaml` | Minimal public CoC names only — no bulk rosters |
+| Webhook message IDs | `.webhook_messages.json` | Local snowflakes only; dispose on rotation / exit |
+
+**Applicant handling:** Forms collect applicant answers. Prefer env-backed form URLs so operators can rotate links after campaigns. Never commit tracker spreadsheet IDs. The public OTE open-positions announcer links the application form only — not the tracker.
+
+**Roster minimization:** Do not expand `personnel.yaml` with full membership lists. Multi-holder Mid/Main Element slots use the holders overlay. Rank ladders without holders are fine in public YAML.
+
 ## Secret split (compartmentation)
 
 Keep credential classes separated — do not collapse them into one file or one Discord client path:
@@ -41,15 +61,18 @@ Keep credential classes separated — do not collapse them into one file or one 
 | Channel webhooks (`WEBHOOK_*`) | Local `.env` only | Webhook HTTP client | Channel-scoped post/delete; **never** pass `bot_token` into `SyncWebhook.from_url` |
 | Bot token (`DISCORD_BOT_TOKEN`) | Local `.env` only | Separate bot HTTP client for checkmarks | Reactions only; see least privilege below |
 | Community URLs (invite / channel link) | Local `.env` | Announcer embeds | Not committed in `config/links.yaml` |
-| Staff Drive / TTP URLs | `config/links.staff.local.yaml` (gitignored) | Staff announcers | Public YAML keeps `STAFF_LOCAL_REQUIRED` placeholders |
+| Applicant form / tracker URLs | Local `.env` | Open-positions / ops | Not committed in `config/links.yaml`; tracker never posted publicly |
+| Staff Drive / ORBAT / TTP URLs | `config/links.staff.local.yaml` (gitignored) | Staff announcers | Public YAML keeps `STAFF_LOCAL_REQUIRED` placeholders |
+| Mid-tier roster holders | `config/personnel.holders.local.yaml` (gitignored) | CoC embeds | Public YAML uses `VACANT` for multi-CM slots |
 | Message ID state | `.webhook_messages.json` (gitignored) | Local purge tracking | Snowflakes only — no URLs or tokens |
 
 `python tools/validate_repo.py` fails if Discord webhook URLs or bot-token-shaped strings appear in tracked config/docs, or if `.env.example` secret values are non-empty.
 
 | Keep local only | Why |
 |-----------------|-----|
-| `.env` | Webhooks, `DISCORD_BOT_TOKEN`, invite / results URLs |
-| `config/links.staff.local.yaml` | Staff Drive / TTP share links |
+| `.env` | Webhooks, `DISCORD_BOT_TOKEN`, invite / results / applicant form URLs |
+| `config/links.staff.local.yaml` | Staff Drive / ORBAT / TTP share links |
+| `config/personnel.holders.local.yaml` | Mid-tier named rosters |
 | `.webhook_messages.json` | Message snowflakes for purge tracking (no secrets, still operational) |
 
 - Create `.env` via `python bootstrap.py` (copies `.env.example`)
@@ -90,11 +113,13 @@ Keep credential classes separated — do not collapse them into one file or one 
 
 ## Message ID retention / disposal
 
-- `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs or tokens)
-- Delete or prune the file when rotating webhooks, rebuilding a channel, or disposing a workstation
+- `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs, tokens, usernames, or embed text)
+- **Retention:** keep only while you need purge-before-repost for the same channels; it is **not** an audit log
+- **Disposal:** delete the file (or prune keys) when rotating webhooks, rebuilding a channel, decommissioning an ops host, or leaving the project
 - Live sends **post first**, record new IDs immediately, then delete previously recorded IDs — a failed send should not empty the channel
 - When two `WEBHOOK_*` keys share one Discord webhook URL, purge clears **all sibling** recorded IDs
 - Webhooks cannot purge full channel history; unrecorded/manual/`Downloads\DS` posts must be deleted in Discord or via optional `--bot-channel-purge` (bot needs **Manage Messages**)
+- Do not back up `.webhook_messages.json` into shared drives or commit history
 - Diagnose: `python tools/diagnose_webhook_state.py`
 
 Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).

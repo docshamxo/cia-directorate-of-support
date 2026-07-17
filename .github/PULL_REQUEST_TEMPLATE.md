@@ -22,8 +22,9 @@ Modified:
 
 ## Sensitivity review
 
-- [ ] No new public staff Drive/share links (use `config/links.staff.local.yaml`)
-- [ ] No Discord invite / channel snowflakes committed (use `.env`)
+- [ ] No new public staff Drive/share / ORBAT links (use `config/links.staff.local.yaml`)
+- [ ] No Discord invite / channel snowflakes / applicant form or tracker URLs committed (use `.env`)
+- [ ] No multi-person mid-tier rosters committed (use `personnel.holders.local.yaml`)
 - [ ] Markings use community vocabulary only: **PUBLIC** / **STAFF** / **CANDIDATE** (no USG SECRET/CUI/etc.)
 - [ ] Affiliation / fiction disclaimer preserved where closers changed
 - [ ] Secret classes stay split (no bot token on webhook path; no webhook URLs in YAML)
@@ -33,7 +34,7 @@ Modified:
 - [ ] Ran `python tools/validate_repo.py`
 - [ ] Ran `python run_all.py --dry-run --delay 0` (and `pytest` if Python helpers changed)
 - [ ] Updated READMEs / `.env.example` / `common/manifest.py` if scripts or webhook keys changed
-- [ ] No `.env` / `links.staff.local.yaml` / `.webhook_messages.json` secrets in this PR
+- [ ] No `.env` / `links.staff.local.yaml` / `personnel.holders.local.yaml` / `.webhook_messages.json` secrets in this PR
 - [ ] Dependency / Actions bumps reviewed (pins + CI) if supply-chain files changed
 
 <!--

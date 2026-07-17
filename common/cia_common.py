@@ -21,6 +21,7 @@
 #   - 2026-07-17 | docshamxo | Accessibility helpers: markings, command bands, emoji-only guard.
 #   - 2026-07-17 | docshamxo | Public webhook-state helpers for empty-channel / IR recovery.
 #   - 2026-07-17 | docshamxo | Soften hero eyebrow; community link labels; stronger disclaimer title.
+#   - 2026-07-17 | docshamxo | Privacy: applicant env URLs, holders overlay, retention notes.
 # === END FILE HEADER ===
 
 """
@@ -30,6 +31,7 @@ Editable data lives in config/*.yaml - not in this file:
   - config/branding.yaml      colors, bots, logos, community URLs
   - config/organization.yaml  mottos, about text, offices, disclaimers
   - config/personnel.yaml     chain-of-command names and ranks
+  - config/personnel.holders.local.yaml  optional mid-tier roster overlay (gitignored)
   - config/links.yaml         public document / form / channel URLs
   - config/links.staff.local.yaml  optional staff Drive overlay (gitignored)
   - config/regulations.yaml   server regulations prose
@@ -63,6 +65,8 @@ CONFIG_DIR = REPO_ROOT / "config"
 ASSETS_DIR = REPO_ROOT / "assets"
 LOGOS_DIR = ASSETS_DIR / "logos"
 # Local-only message IDs for purge-before-repost (never commit; no webhook URLs stored).
+# Retention: Discord snowflakes only — dispose by deleting this file when rotating
+# webhooks, leaving the project, or clearing channel state. Not a durable audit log.
 WEBHOOK_MESSAGES_PATH = REPO_ROOT / ".webhook_messages.json"
 WEBHOOK_MESSAGES_LOCK_PATH = REPO_ROOT / ".webhook_messages.lock"
 
@@ -82,6 +86,10 @@ CHECKMARK_REACTION = "\u2705"
 BOT_TOKEN_ENV = "DISCORD_BOT_TOKEN"
 DISCORD_INVITE_ENV = "DISCORD_INVITE_URL"
 OSEC_RESULTS_ENV = "DISCORD_OSEC_APPLICATION_RESULTS_URL"
+OSEC_LOWCOM_APP_ENV = "OSEC_LOWCOM_APPLICATION_URL"
+OSEC_MIDCOM_APP_ENV = "OSEC_MIDCOM_APPLICATION_URL"
+OTE_APPLICATION_ENV = "OTE_APPLICATION_URL"
+OTE_APPLICATION_TRACKER_ENV = "OTE_APPLICATION_TRACKER_URL"
 STAFF_PLACEHOLDER_MARKER = "STAFF_LOCAL_REQUIRED"
 
 # Optional: after post, bot deletes other recent webhook messages in the channel
@@ -243,7 +251,17 @@ def _organization() -> dict[str, Any]:
 
 @lru_cache(maxsize=1)
 def _personnel() -> dict[str, Any]:
-    return _load_yaml("personnel.yaml")
+    data = _load_yaml("personnel.yaml")
+    local_path = CONFIG_DIR / "personnel.holders.local.yaml"
+    if local_path.is_file():
+        overlay = yaml.safe_load(local_path.read_text(encoding="utf-8"))
+        if isinstance(overlay, dict):
+            for key, value in overlay.items():
+                data[key] = value
+            logger.debug("Merged personnel holders overlay from %s", local_path.name)
+        else:
+            logger.warning("%s is not a mapping; ignoring", local_path.name)
+    return data
 
 
 @lru_cache(maxsize=1)
@@ -374,6 +392,30 @@ def discord_invite_url() -> str:
 def osec_application_results_url() -> str:
     """OSEC application-results channel URL from env."""
     return env_url(OSEC_RESULTS_ENV, required=True)
+
+
+def osec_lowcom_application_url() -> str:
+    """OSEC LOWCOM Google Form URL from env (applicant intake)."""
+    return env_url(OSEC_LOWCOM_APP_ENV, required=True)
+
+
+def osec_midcom_application_url() -> str:
+    """OSEC MIDCOM Google Form URL from env (applicant intake)."""
+    return env_url(OSEC_MIDCOM_APP_ENV, required=True)
+
+
+def ote_application_url() -> str:
+    """OTE Professor application form URL from env (applicant intake)."""
+    return env_url(OTE_APPLICATION_ENV, required=True)
+
+
+def ote_application_tracker_url(*, required: bool = False) -> str:
+    """OTE applicant tracker spreadsheet URL from env (staff/ops only).
+
+    Do not embed this in public open-positions posts — tracker sheets hold
+    applicant status and other PII-adjacent fields.
+    """
+    return env_url(OTE_APPLICATION_TRACKER_ENV, required=required)
 
 
 # ── Organization copy ─────────────────────────────────────────────────────────

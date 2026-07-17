@@ -58,7 +58,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Order of Battle (ORBAT)",
                     "DS Community | OSEC Order of Battle (ORBAT)",
                     c.url("osec.information.orbat"),
-                    c.marking_note("PUBLIC"),
+                    c.marking_note("STAFF", "Personnel roster — authorized OSEC staff only."),
                 ),
                 c.link_field(
                     "Handbook",
@@ -83,10 +83,10 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Classification & Handling Notice",
             description=(
-                "**Handbook** -- **STAFF**. Unauthorized disclosure or redistribution will "
-                "result in a **BLACKLIST** from the **CIA Office of Security**.\n\n"
-                "**Order of Battle (ORBAT)**, **Code of Agency Conduct**, and "
-                "**Civilian Access** -- **PUBLIC**.\n\n"
+                "**Handbook** and **Order of Battle (ORBAT)** -- **STAFF**. Unauthorized "
+                "disclosure or redistribution will result in a **BLACKLIST** from the "
+                "**CIA Office of Security**.\n\n"
+                "**Code of Agency Conduct** and **Civilian Access** -- **PUBLIC**.\n\n"
                 "Do not share restricted documents outside authorized channels or personnel."
             ),
             color=c.COLOR_OSEC,
