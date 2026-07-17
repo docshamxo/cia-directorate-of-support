@@ -6,11 +6,14 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Bump ruff to 0.15.21 for CI lint compatibility.
+#   - 2026-07-17 | docshamxo | Add pytest-cov and pre-commit for local/CI parity.
 # === END FILE HEADER ===
 
 -r requirements.txt
 ruff==0.15.21
 pytest==8.4.1
+pytest-cov==6.2.1
+pre-commit==4.2.0
 
 # === FILE FOOTER ===
 # End of file: requirements-dev.txt

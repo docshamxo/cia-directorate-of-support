@@ -15,6 +15,8 @@ Modified:
   - 2026-07-15 | docshamxo | Document CodeQL code scanning via GitHub Actions.
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for ✅.
   - 2026-07-17 | docshamxo | Affiliation, rotation playbooks, staff overlay, push protection notes.
+  - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
+  - 2026-07-17 | docshamxo | Privacy / data governance section; applicant env overlays.
 === END FILE HEADER ===
 -->
 
@@ -24,6 +26,25 @@ Webhook URLs and bot tokens can post into Discord channels. Keep them private.
 
 **Affiliation:** This repository supports an **unofficial Roblox community**. It is **not affiliated with** the United States Government or the Central Intelligence Agency. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only.
 
+## Privacy / data governance
+
+This suite posts community roleplay content to Discord. Treat Roblox usernames, applicant forms, trackers, and ORBAT sheets as sensitive community data.
+
+| Data | Where it lives | Rule |
+|------|----------------|------|
+| Webhooks / bot token | `.env` (gitignored) | Never commit or paste into PRs |
+| Discord invite / channel snowflakes | `.env` | Not in `config/links.yaml` |
+| Applicant intake forms | `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`) | Rotate without writing IDs into git history |
+| Applicant status tracker | `.env` (`OTE_APPLICATION_TRACKER_URL`) | **Staff/ops only** — do not post in public channels |
+| Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` | Placeholders only in public `links.yaml` |
+| Mid-tier named rosters (e.g. multi CM) | `config/personnel.holders.local.yaml` | Committed YAML keeps `VACANT`; fill locally |
+| High-command holders | `config/personnel.yaml` | Minimal public CoC names only — no bulk rosters |
+| Webhook message IDs | `.webhook_messages.json` | Local snowflakes only; dispose on rotation / exit |
+
+**Applicant handling:** Forms collect applicant answers. Prefer env-backed form URLs so operators can rotate links after campaigns. Never commit tracker spreadsheet IDs. The public OTE open-positions announcer links the application form only — not the tracker.
+
+**Roster minimization:** Do not expand `personnel.yaml` with full membership lists. Multi-holder Mid/Main Element slots use the holders overlay. Rank ladders without holders are fine in public YAML.
+
 ## Rules
 
 - Store secrets only in your local `.env`
@@ -32,9 +53,10 @@ Webhook URLs and bot tokens can post into Discord channels. Keep them private.
 - Prefer explicit `git add path/to/file` over `git add .` when staging changes
 - `.webhook_messages.json` is local state (message IDs only) — it is gitignored; do not commit it
 - `DISCORD_BOT_TOKEN` is a secret (same rules as webhook URLs) — required for ✅ reactions
-- `DISCORD_INVITE_URL` and `DISCORD_OSEC_APPLICATION_RESULTS_URL` live in `.env` (not in public YAML)
-- Staff Drive / TTP URLs belong in gitignored `config/links.staff.local.yaml` (copy from `config/links.staff.example.yaml`)
-- Do **not** commit new public staff share links; keep them in the local overlay
+- `DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`, and applicant form/tracker URLs live in `.env` (not in public YAML)
+- Staff Drive / TTP / ORBAT URLs belong in gitignored `config/links.staff.local.yaml` (copy from `config/links.staff.example.yaml`)
+- Mid-tier roster holders belong in gitignored `config/personnel.holders.local.yaml` (copy from `config/personnel.holders.example.yaml`)
+- Do **not** commit new public staff share links or applicant tracker IDs; keep them in local overlays / `.env`
 
 ## If a webhook leaks
 
@@ -61,23 +83,29 @@ Webhook URLs and bot tokens can post into Discord channels. Keep them private.
 
 ## Message ID retention / disposal
 
-- `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs or tokens)
-- Delete the file (or prune keys) when rotating webhooks, rebuilding a channel, or disposing local state
+- `.webhook_messages.json` stores **message snowflakes only** (no webhook URLs, tokens, usernames, or embed text)
+- **Retention:** keep only while you need purge-before-repost for the same channels; it is **not** an audit log
+- **Disposal:** delete the file (or prune keys) when rotating webhooks, rebuilding a channel, decommissioning an ops host, or leaving the project
 - Live sends **post first**, then delete previously recorded IDs — a failed send should not empty the channel
 - Webhooks cannot purge full channel history; unrecorded/manual posts must be deleted in Discord
+- Do not back up `.webhook_messages.json` into shared drives or commit history
 
 ## Repository protection (maintainers)
 
-GitHub org/repo settings cannot always be changed via API. In the repository **Settings**:
+GitHub org/repo settings cannot always be changed via API. Full checklist: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md).
+
+In the repository **Settings**:
 
 1. Enable **Push protection** for secret scanning (Settings → Code security → Push protection)
-2. Consider **Rulesets** / branch protection on `main` with **Require a pull request** and, if appropriate, **Do not allow bypassing the above settings** (`enforce_admins`)
+2. Apply a **Ruleset** / branch protection on `main`: require PRs, Code Owner review, and required status checks (`Validate (Python 3.10|3.11|3.12)`, `Secret scan (gitleaks)`, CodeQL `Analyze`). Prefer **Do not allow bypassing the above settings** (`enforce_admins`) when policy allows
 3. Keep [`.github/CODEOWNERS`](.github/CODEOWNERS) reviewed on PRs that touch `common/`, `config/`, or `.github/`
+4. Install local hooks once: `pip install -e ".[dev]" && pre-commit install` (gitleaks + ruff via [`.pre-commit-config.yaml`](.pre-commit-config.yaml))
 
 ## Code scanning
 
-- GitHub **code scanning** runs via Advanced Setup: the CodeQL workflow at `.github/workflows/codeql.yml` analyzes Python on pushes and pull requests to `main`, plus a weekly schedule
+- GitHub **code scanning** runs via Advanced Setup: the CodeQL workflow at `.github/workflows/codeql.yml` analyzes Python on pushes and pull requests to `main`, plus a weekly schedule (Actions pinned to commit SHAs)
 - Results appear under the repository **Security** tab (Code scanning alerts)
+- CI also runs a checksum-pinned **gitleaks** binary (not `gitleaks-action`)
 
 ## Operational notes
 

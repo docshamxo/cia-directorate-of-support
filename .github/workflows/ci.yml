@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Harden runners: pip cache paths, gitleaks pin+checksum, checkout depth.
+#   - 2026-07-17 | docshamxo | Pin Actions SHAs, Python matrix, coverage floor, split secrets job.
 # === END FILE HEADER ===
 
 name: CI
@@ -36,21 +37,27 @@ env:
 
 jobs:
   validate:
-    name: Validate repository
+    name: Validate (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        # actions/checkout@v6.0.3
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
-          # Full history for banner/git-aware checks and thorough secret scanning.
+          # Full history for banner/git-aware checks (secrets job handles gitleaks).
           fetch-depth: 0
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        # actions/setup-python@v6.3.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: |
             requirements.txt
@@ -65,9 +72,11 @@ jobs:
           ruff --version
 
       - name: Lint with Ruff
+        if: matrix.python-version == '3.12'
         run: ruff check .
 
       - name: Format check with Ruff
+        if: matrix.python-version == '3.12'
         run: ruff format --check .
 
       - name: Validate repository consistency
@@ -76,8 +85,8 @@ jobs:
           DISCORD_INVITE_URL: https://example.invalid/discord-invite
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
 
-      - name: Unit tests
-        run: pytest -q
+      - name: Unit tests with coverage floor
+        run: pytest -q --cov=common --cov-report=term-missing --cov-fail-under=40
 
       - name: Dry-run all announcers
         run: python run_all.py --dry-run --delay 0
@@ -85,6 +94,19 @@ jobs:
           DISCORD_INVITE_URL: https://example.invalid/discord-invite
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
           CIA_DRY_RUN: "1"
+
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        # actions/checkout@v6.0.3
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
       - name: Secret scan (gitleaks)
         run: |
           set -euo pipefail

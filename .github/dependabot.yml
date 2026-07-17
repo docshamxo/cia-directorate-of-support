@@ -9,6 +9,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Group updates, commit prefixes, and Actions SHA-aware labels.
 # === END FILE HEADER ===
 
 version: 2
@@ -21,6 +22,22 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+      - python
+    commit-message:
+      prefix: "deps(pip)"
+    groups:
+      python-dev:
+        patterns:
+          - "ruff"
+          - "pytest"
+          - "pytest-*"
+          - "pre-commit"
+      python-runtime:
+        patterns:
+          - "discord.py"
+          - "python-dotenv"
+          - "PyYAML"
+          - "requests"
 
   - package-ecosystem: github-actions
     directory: /
@@ -30,6 +47,13 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+      - github-actions
+    commit-message:
+      prefix: "deps(actions)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
 # === FILE FOOTER ===
 # End of file: .github/dependabot.yml

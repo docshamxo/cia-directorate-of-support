@@ -1,0 +1,30 @@
+# === FILE HEADER ===
+# Title: Pre-commit Config
+# Path: .pre-commit-config.yaml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Add gitleaks and ruff hooks for local secret/lint gates.
+# === END FILE HEADER ===
+
+# Install once: pip install pre-commit && pre-commit install
+# Run all hooks: pre-commit run --all-files
+# CI still runs the checksum-pinned gitleaks binary (see .github/workflows/ci.yml).
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.21
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+# === FILE FOOTER ===
+# End of file: .pre-commit-config.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

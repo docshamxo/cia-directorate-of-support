@@ -13,6 +13,8 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Sensitivity rules, marking vocabulary, optional banners, manifest.
+  - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
+  - 2026-07-17 | docshamxo | Privacy: applicant env URLs, holders overlay, no public trackers.
 === END FILE HEADER ===
 -->
 
@@ -24,9 +26,11 @@ This is an **unofficial Roblox community** project — not affiliated with the U
 
 ## Sensitivity rules
 
-- Never commit `.env`, `config/links.staff.local.yaml`, or `.webhook_messages.json`
-- Do not add new public staff Drive/share links to `config/links.yaml` — put them in the local staff overlay
-- Discord invites and channel snowflakes belong in `.env` (`DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`)
+- Never commit `.env`, `config/links.staff.local.yaml`, `config/personnel.holders.local.yaml`, or `.webhook_messages.json`
+- Do not add new public staff Drive/share links or ORBAT IDs to `config/links.yaml` — put them in the local staff overlay
+- Do not commit multi-person mid-tier rosters — use `personnel.holders.local.yaml`
+- Discord invites, channel snowflakes, and applicant form/tracker URLs belong in `.env`
+- Never post `OTE_APPLICATION_TRACKER_URL` into public Discord embeds
 - Keep affiliation / fiction disclaimer text when editing closers
 
 ## Everyday edits
@@ -35,12 +39,14 @@ Prefer editing YAML under [`config/`](config/) instead of hardcoding values in P
 
 | What you want to change | Where to edit |
 |-------------------------|---------------|
-| Names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| High-command names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
+| Mid-tier named rosters | `config/personnel.holders.local.yaml` (from [`personnel.holders.example.yaml`](config/personnel.holders.example.yaml)) |
 | Mottos, about text, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
 | Server regulations prose | [`config/regulations.yaml`](config/regulations.yaml) |
 | Colors, bot usernames, logo filenames | [`config/branding.yaml`](config/branding.yaml) |
-| Public document / form / community links | [`config/links.yaml`](config/links.yaml) |
-| Staff Drive / TTP URLs | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
+| Public document / community links | [`config/links.yaml`](config/links.yaml) |
+| Staff Drive / ORBAT / TTP URLs | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
+| Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
 | One channel's Discord embed layout | The script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
 | Webhook target channel | Your local `.env` (never commit it) |
 | Logo image files | [`assets/logos/`](assets/logos/) — keep the same filenames |
@@ -76,6 +82,16 @@ pytest -q
 python run_all.py --dry-run --delay 0
 ```
 
+`pytest -q` enforces a **40%** statement coverage floor on `common/` (see `pyproject.toml`). Raise coverage with tests rather than lowering the floor.
+
+Optional local secret/lint hooks (same gitleaks rev as CI):
+
+```bash
+pip install -e ".[dev]"
+pre-commit install
+pre-commit run --all-files
+```
+
 macOS / Linux if needed:
 
 ```bash
@@ -85,6 +101,8 @@ python3 run_all.py --dry-run --delay 0
 ```
 
 File header/footer banners are **optional**. To refresh them: `python tools/sync_file_banners.py`. To enforce in validation: `CIA_REQUIRE_BANNERS=1 python tools/validate_repo.py`.
+
+Branch protection for maintainers: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md).
 
 ## Commit and push
 
