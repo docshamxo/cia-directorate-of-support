@@ -125,7 +125,6 @@ def validate_webhook_url(webhook_url: str) -> None:
         )
 
 
-
 def webhook_application_id(webhook_url: str) -> str:
     """Extract the webhook snowflake ID from a Discord webhook URL."""
     parsed = urlparse(webhook_url.strip())
@@ -881,11 +880,7 @@ def _delete_webhook_messages(
                     )
                     time.sleep(delay)
                     continue
-                if (
-                    isinstance(status, int)
-                    and status >= 500
-                    and attempt < MAX_DELETE_ATTEMPTS
-                ):
+                if isinstance(status, int) and status >= 500 and attempt < MAX_DELETE_ATTEMPTS:
                     delay = min(2**attempt, 30)
                     logger.warning(
                         "Server error deleting prior message %s for %s "
@@ -970,16 +965,11 @@ def _bot_cleanup_channel_webhook_messages(
     Requires Manage Messages and Read Message History. Only webhook messages.
     """
     headers = {"Authorization": f"Bot {bot_token}"}
-    list_url = (
-        f"{DISCORD_API_BASE}/channels/{channel_id}/messages"
-        f"?limit={min(max(limit, 1), 100)}"
-    )
+    list_url = f"{DISCORD_API_BASE}/channels/{channel_id}/messages?limit={min(max(limit, 1), 100)}"
     try:
         response = session.get(list_url, headers=headers)
     except (requests.Timeout, requests.ConnectionError) as exc:
-        logger.warning(
-            "Bot channel cleanup skipped for %s (list failed): %s", state_key, exc
-        )
+        logger.warning("Bot channel cleanup skipped for %s (list failed): %s", state_key, exc)
         return 0
 
     if response.status_code == 403:
@@ -988,9 +978,7 @@ def _bot_cleanup_channel_webhook_messages(
             f"for {state_key} - grant Manage Messages + Read Message History, "
             f"or unset {BOT_CHANNEL_PURGE_ENV}."
         )
-        logger.warning(
-            "Bot channel cleanup forbidden for channel %s (%s)", channel_id, state_key
-        )
+        logger.warning("Bot channel cleanup forbidden for channel %s (%s)", channel_id, state_key)
         return 0
     if response.status_code not in {200, 204}:
         logger.warning(
@@ -1054,10 +1042,7 @@ def _bot_cleanup_channel_webhook_messages(
             break
 
     if deleted:
-        print(
-            f"Bot channel cleanup removed {deleted} extra webhook message(s) "
-            f"for {state_key}"
-        )
+        print(f"Bot channel cleanup removed {deleted} extra webhook message(s) for {state_key}")
         logger.info(
             "Bot channel cleanup removed %s extra webhook message(s) for %s",
             deleted,
@@ -1112,8 +1097,7 @@ def _add_checkmark_reaction(
             if attempt < MAX_SEND_ATTEMPTS:
                 delay = min(2**attempt, 30)
                 logger.warning(
-                    "Network error adding checkmark to message %s (attempt %s/%s); "
-                    "sleeping %.1fs",
+                    "Network error adding checkmark to message %s (attempt %s/%s); sleeping %.1fs",
                     message_id,
                     attempt,
                     MAX_SEND_ATTEMPTS,
@@ -1124,9 +1108,7 @@ def _add_checkmark_reaction(
             raise RuntimeError(
                 f"Failed to add checkmark reaction to message {message_id}: network error"
             ) from exc
-    raise RuntimeError(
-        f"Failed to add checkmark reaction to message {message_id}"
-    ) from last_error
+    raise RuntimeError(f"Failed to add checkmark reaction to message {message_id}") from last_error
 
 
 def _react_to_messages(
@@ -1228,9 +1210,7 @@ def send_webhook(
             state = _load_webhook_message_state()
             prior_ids = collect_prior_message_ids(state, state_keys)
 
-    do_bot_purge = (
-        _bot_channel_purge_enabled() if bot_channel_purge is None else bot_channel_purge
-    )
+    do_bot_purge = _bot_channel_purge_enabled() if bot_channel_purge is None else bot_channel_purge
 
     last_error: Exception | None = None
     for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
