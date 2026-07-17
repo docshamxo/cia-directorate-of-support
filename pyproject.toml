@@ -33,10 +33,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "ruff==0.15.21",
-  "pytest==9.0.3",
-  "pytest-cov==6.2.1",
-  "pre-commit==4.2.0",
+  "ruff==0.15.22",
+  "pytest==9.1.1",
+  "pytest-cov==7.1.0",
+  "pre-commit==4.6.0",
 ]
 
 [tool.setuptools.packages.find]
