@@ -22,6 +22,7 @@ Modified:
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
   - 2026-07-17 | docshamxo | Require bot token for live; allow-skip, bot purge, diagnose tool.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
 === END FILE HEADER ===
 -->
 
@@ -177,6 +178,7 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 | [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
+| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
 | [tools/README.md](tools/README.md) | Validation and diagnose tools |
 | [`.env.example`](.env.example) | Webhook / token template |

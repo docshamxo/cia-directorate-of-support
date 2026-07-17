@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Manifest catalog; optional banners; env community URLs.
 #   - 2026-07-17 | docshamxo | Secret-split, logo bare-name, mentions regression guards.
+#   - 2026-07-17 | docshamxo | Validate Inter Studios property_notice is present in config.
 # === END FILE HEADER ===
 
 """
@@ -339,6 +340,8 @@ def validate_config() -> None:
         fail("grs_esd_middle_command must contain at least one rank")
     if "PUBLIC" not in c.DISCLAIMER_TEXT and "PUBLIC" not in c.DISCLAIMER_LINKS_TEXT:
         fail("disclaimer copy should use community PUBLIC marking")
+    if "Inter Studios" not in c.PROPERTY_NOTICE:
+        fail("property_notice should name Inter Studios")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 

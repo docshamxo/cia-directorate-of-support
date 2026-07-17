@@ -17,6 +17,7 @@
 #   - 2026-07-17 | docshamxo | Community markings, staff overlay, safer purge, logo confine, mentions off.
 #   - 2026-07-17 | docshamxo | Sibling-key purge, louder checkmark failures, bot channel cleanup option.
 #   - 2026-07-17 | docshamxo | Safe console print for Windows cp1252 dry-run paths.
+#   - 2026-07-17 | docshamxo | Weave Inter Studios property notice into disclaimer closers and footers.
 # === END FILE HEADER ===
 
 """
@@ -397,6 +398,12 @@ AFFILIATION_NOTICE = _copy.get(
     "affiliation_notice",
     "This is an unofficial Roblox community — not affiliated with the US Government or CIA.",
 )
+PROPERTY_NOTICE = str(
+    _copy.get(
+        "property_notice",
+        "Property of the Central Intelligence Agency (ROBLOX), Inter Studios",
+    )
+).strip()
 DISCLAIMER_TEXT = _copy["disclaimer"]
 DISCLAIMER_LINKS_TEXT = _copy["disclaimer_links"]
 DISCLAIMER_STAFF_TEXT = _copy.get("disclaimer_staff") or _copy.get(
@@ -528,7 +535,10 @@ def apply_effective_date_footer(
     if not embeds:
         return
     stamp = when or date.today()
-    embeds[-1].set_footer(text=f"Effective {stamp.isoformat()} (community roleplay)")
+    footer = f"Effective {stamp.isoformat()} (community roleplay)"
+    if PROPERTY_NOTICE:
+        footer = f"{footer} · {PROPERTY_NOTICE}"
+    embeds[-1].set_footer(text=footer)
 
 
 def embed(
@@ -579,6 +589,8 @@ def disclaimer_embed(
         text = DISCLAIMER_LINKS_TEXT
     else:
         text = DISCLAIMER_TEXT
+    if PROPERTY_NOTICE and PROPERTY_NOTICE not in text:
+        text = f"{text.rstrip()}\n\n**{PROPERTY_NOTICE}**"
     return embed(title="Disclaimer", description=text, color=color)
 
 

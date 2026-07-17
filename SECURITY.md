@@ -18,6 +18,7 @@ Modified:
   - 2026-07-17 | docshamxo | Tighten tradecraft rules and cross-link OPS runbooks.
   - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, bot channel cleanup.
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
 
