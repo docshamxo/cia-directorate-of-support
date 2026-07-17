@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Regression: post-before-purge, retain IDs, 404/429.
+#   - 2026-07-17 | docshamxo | Pass require_reaction=False when testing purge without bot token.
 # === END FILE HEADER ===
 
 """Regression tests for safer webhook purge (post first, then delete priors)."""
@@ -142,6 +143,7 @@ def test_failed_send_does_not_purge_or_rewrite_state(
                 [discord.Embed(title="t", description="d", color=1)],
                 username="Test Bot",
                 state_key="WEBHOOK_TEST",
+                require_reaction=False,
             )
 
     assert fake.events == ["send"]
@@ -167,6 +169,7 @@ def test_partial_purge_retains_remaining_plus_new_ids(
             [discord.Embed(title="t", description="d", color=1)],
             username="Test Bot",
             state_key="WEBHOOK_TEST",
+            require_reaction=False,
         )
 
     assert ids == [999]
@@ -189,6 +192,7 @@ def test_send_without_state_key_skips_purge(
             WEBHOOK,
             [discord.Embed(title="t", description="d", color=1)],
             username="Test Bot",
+            require_reaction=False,
         )
 
     assert fake.events == ["send"]
