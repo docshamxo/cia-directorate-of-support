@@ -57,7 +57,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Handbook",
-                    "CIA GRS | Handbook",
+                    "DS Community | GRS Handbook",
                     c.url("grs.information.handbook"),
                     "Authorized GRS staff only. Marking: STAFF.",
                 ),

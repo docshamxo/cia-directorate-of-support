@@ -10,6 +10,7 @@
 #   - 2026-07-17 | docshamxo | Add pytest testpaths / quiet defaults for CI.
 #   - 2026-07-17 | docshamxo | Bump pytest for PYSEC-2026-1845.
 #   - 2026-07-17 | docshamxo | Add pytest-cov, pre-commit, and coverage fail-under floor.
+#   - 2026-07-17 | docshamxo | Declare MIT license (see LICENSE brand-use notice).
 # === END FILE HEADER ===
 
 [build-system]
@@ -19,8 +20,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cia-directorate-of-support"
 version = "1.1.0"
-description = "Discord announcer scripts for the CIA Directorate of Support"
+description = "Discord announcer scripts for an unofficial Roblox community DS roleplay"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
   "discord.py==2.6.4",

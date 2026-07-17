@@ -19,6 +19,7 @@ Modified:
   - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Point contributors at accessibility embed rules.
+  - 2026-07-17 | docshamxo | Point contributors at BRAND.md / LICENSE bot-naming rules.
 === END FILE HEADER ===
 -->
 
@@ -26,7 +27,7 @@ Modified:
 
 Install once via the root [README.md](README.md) (`git`, Python 3.10+, clone, `python bootstrap.py`, edit `.env`).
 
-Unofficial Roblox community project — not affiliated with the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only.
+Unofficial Roblox community project — **not affiliated with** the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only. Brand and bot naming: [BRAND.md](BRAND.md) · [LICENSE](LICENSE).
 
 **Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
@@ -39,8 +40,8 @@ Unofficial Roblox community project — not affiliated with the US Government or
 - Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](SECURITY.md)
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
 - Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](config/organization.yaml); see [NOTICE](NOTICE))
+- Keep webhook bot names community-marked (`Community` or `(RP)`); do not restore bare `CIA | …` usernames
 - Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation: [SECURITY.md](SECURITY.md)
-
 ## Everyday edits
 
 Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).

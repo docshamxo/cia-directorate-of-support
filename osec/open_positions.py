@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Standardize hero, link grammar, and links disclaimer.
 #   - 2026-07-15 | docshamxo | Tighten open-positions embed density.
 #   - 2026-07-17 | docshamxo | Accessible LOWCOM/MIDCOM field names and first-use expansions.
+#   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 # === END FILE HEADER ===
 
 """
@@ -52,13 +53,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     c.command_band_label("LOWCOM"),
-                    "CIA OSEC | Lower Command (LOWCOM) Application",
+                    "DS Community | OSEC Lower Command (LOWCOM) Application",
                     c.url("osec.open_positions.lowcom_application"),
                     "Assists with base operations and standards across ranks.",
                 ),
                 c.link_field(
                     c.command_band_label("MIDCOM"),
-                    "CIA OSEC | Middle Command (MIDCOM) Application",
+                    "DS Community | OSEC Middle Command (MIDCOM) Application",
                     c.url("osec.open_positions.midcom_application"),
                     "Leads tryouts, phases, events, and Lower Command (LOWCOM) supervision.",
                 ),
@@ -67,15 +68,15 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Important Information",
             description=(
-                "→ The use of **AI**, trolling, sharing answers, requesting answers, or asking for "
+                "ΓåÆ The use of **AI**, trolling, sharing answers, requesting answers, or asking for "
                 "application results will result in an **automatic failure**.\n"
-                "→ Be patient after submitting. **Do not contact staff** for updates, results, or "
-                "status — that is an **immediate failure**.\n"
-                "→ Proper grammar and professionalism are required. Every question must be answered "
+                "ΓåÆ Be patient after submitting. **Do not contact staff** for updates, results, or "
+                "status ΓÇö that is an **immediate failure**.\n"
+                "ΓåÆ Proper grammar and professionalism are required. Every question must be answered "
                 "in **at least two complete sentences**.\n"
-                "→ After a **passing** result, wait a **full week** before reapplying for a higher "
+                "ΓåÆ After a **passing** result, wait a **full week** before reapplying for a higher "
                 "position.\n"
-                "→ Application questions may be directed **only** to:\n"
+                "ΓåÆ Application questions may be directed **only** to:\n"
                 f"{c.roles_text(*c.OSEC_HIGH_COMMAND[:3])}"
             ),
             color=c.COLOR_OSEC,

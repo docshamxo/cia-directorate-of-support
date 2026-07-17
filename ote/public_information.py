@@ -55,13 +55,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Program Overview",
-                    "CIA OTE | Program Overview",
+                    c.community_link_label("OTE Program Overview"),
                     c.url("ote.public_information.program_overview"),
                     c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Office of Training & Education",
-                    "CIA | Office of Training & Education",
+                    c.community_link_label("OTE"),
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
             ),

@@ -35,7 +35,7 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 
 | Element | Rule |
 |---------|------|
-| **Hero** | ALL CAPS `title=` + italic eyebrow `*Central Intelligence Agency · {Unit}*` + one short supporting sentence |
+| **Hero** | ALL CAPS `title=` + italic eyebrow `*Unofficial community RP · {Unit}*` + one short supporting sentence |
 | **Body section titles** | Title Case |
 | **Links** | `[CIA {UNIT} \| {Document}](url)` with optional italic note; community groups: `CIA \| {Group}` |
 | **Closers (order)** | optional Classification & Handling Notice → optional Important Notice → Disclaimer (always last, unit color) |
@@ -48,9 +48,9 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Important Notice** | Chain of command / conduct only |
 | **Classification & Handling Notice** | Restricted document hubs |
 | **Important Information** | Application rules only |
-| **Disclaimer** | Always last; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
+| **Disclaimer** | Always last; title `Disclaimer · Unofficial Community`; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
 
-Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification).
+Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). Bot usernames and brand rules: [BRAND.md](../BRAND.md).
 
 ### Channel templates
 

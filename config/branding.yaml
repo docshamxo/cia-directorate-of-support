@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Document Inter Studios proprietary property notice constant.
+#   - 2026-07-17 | docshamxo | Community/RP bot display names (anti-impersonation).
 # === END FILE HEADER ===
 
 # Legal / brand line (Discord closers load from organization.yaml copy)
@@ -27,12 +28,13 @@ logos:
   osec: OSEC.png
   grs: GRS.png
   esd: ESD.png
+# Webhook usernames must include Community or (RP). See BRAND.md / LICENSE.
 bots:
-  ds: CIA Directorate of Support Bot
-  osec: CIA | Office of Security
-  ote: CIA | Office of Training & Education
-  grs: CIA | Global Response Staff
-  esd: CIA | Executive Security Detail
+  ds: DS Community (RP) · Support
+  osec: DS Community (RP) · OSEC
+  ote: DS Community (RP) · OTE
+  grs: DS Community (RP) · GRS
+  esd: DS Community (RP) · ESD
 
 # === FILE FOOTER ===
 # End of file: config/branding.yaml

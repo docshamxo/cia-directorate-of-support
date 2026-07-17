@@ -96,17 +96,17 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Application",
-                    "CIA OTE | Professor Application",
+                    c.community_link_label("OTE Professor Application"),
                     c.url("ote.open_positions.application"),
                 ),
                 c.link_field(
                     "Roblox Group",
-                    "CIA | Office of Training & Education",
+                    c.community_link_label("OTE"),
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
                 c.link_field(
                     "Application Tracker",
-                    "CIA OTE | Application Tracker",
+                    c.community_link_label("OTE Application Tracker"),
                     c.url("ote.open_positions.application_tracker"),
                     c.marking_note("PUBLIC"),
                 ),
