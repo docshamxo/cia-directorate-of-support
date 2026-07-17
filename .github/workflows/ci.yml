@@ -86,7 +86,7 @@ jobs:
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
 
       - name: Unit tests with coverage floor
-        run: pytest -q --cov=common --cov-report=term-missing --cov-fail-under=40
+        run: pytest --cov=common --cov-report=term-missing --cov-fail-under=70
 
       - name: Dry-run all announcers
         run: python run_all.py --dry-run --delay 0

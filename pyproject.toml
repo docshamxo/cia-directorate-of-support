@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-14 | docshamxo | Initial creation
 #   - 2026-07-15 | docshamxo | Bump python-dotenv and ruff; pin requests.
+#   - 2026-07-17 | docshamxo | Add pytest testpaths / quiet defaults for CI.
 #   - 2026-07-17 | docshamxo | Add pytest-cov, pre-commit, and coverage fail-under floor.
 # === END FILE HEADER ===
 
@@ -40,9 +41,13 @@ include = ["common*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = [
+  "-q",
   "--cov=common",
   "--cov-report=term-missing",
-  "--cov-fail-under=40",
+  "--cov-fail-under=70",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning",
 ]
 
 [tool.coverage.run]

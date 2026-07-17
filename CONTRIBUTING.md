@@ -76,7 +76,7 @@ pytest -q
 python run_all.py --dry-run --delay 0
 ```
 
-`pytest -q` enforces a **40%** statement coverage floor on `common/` (see `pyproject.toml`). Raise coverage with tests rather than lowering the floor.
+`pytest -q` enforces a **70%** statement coverage floor on `common/` (see `pyproject.toml`). Raise coverage with tests rather than lowering the floor.
 
 Optional local secret/lint hooks (same gitleaks rev as CI):
 
