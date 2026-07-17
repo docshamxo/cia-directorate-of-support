@@ -360,6 +360,13 @@ def validate_config() -> None:
         fail("agency_eyebrow must frame units as community/RP (not bare USG banner)")
     if BARE_CIA_EYEBROW_RE.search(eyebrow):
         fail("agency_eyebrow must not use a bare Central Intelligence Agency banner")
+    if "PUBLIC" not in c.MARKING_PUBLIC or "STAFF" not in c.MARKING_STAFF:
+        fail("marking_public / marking_staff copy should use community markings")
+    public_disc = c.disclaimer_embed(color=c.COLOR_DS).description or ""
+    if "not affiliated" not in public_disc.lower():
+        fail("disclaimer_embed must state non-affiliation")
+    if "Inter Studios" not in public_disc:
+        fail("disclaimer_embed should append property_notice")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 

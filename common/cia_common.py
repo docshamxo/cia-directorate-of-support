@@ -346,6 +346,9 @@ STAFF_HANDLING_NOTICE = _copy["staff_handling_notice"]
 STAFF_HANDLING_NOTICE_RESTRICTED = _copy.get("staff_handling_notice_restricted") or _copy.get(
     "staff_handling_notice_secret", STAFF_HANDLING_NOTICE
 )
+MARKING_PUBLIC = _copy.get("marking_public", "Marking: PUBLIC.")
+MARKING_STAFF = _copy.get("marking_staff", "Marking: STAFF.")
+MARKING_CANDIDATE = _copy.get("marking_candidate", "Marking: CANDIDATE.")
 
 # ── Personnel ─────────────────────────────────────────────────────────────────
 

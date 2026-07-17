@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Community markings CANDIDATE/STAFF/PUBLIC.
 #   - 2026-07-17 | docshamxo | Accessible field names and marking notes.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
+#   - 2026-07-17 | docshamxo | Clearer candidate hierarchy; shared marking notes.
 # === END FILE HEADER ===
 
 """
@@ -37,8 +38,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="SECURITY PHASE PROGRAM",
             unit="Office of Security",
             supporting=(
-                "Orientation, training requirements, and required reading for newly "
-                "accepted Security Phase Program candidates."
+                "Orientation, training requirements, and required reading for accepted "
+                "Security Phase Program candidates."
             ),
             color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
@@ -46,59 +47,55 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Candidate Welcome",
             description=(
-                "Congratulations. You have successfully completed the **Office of Security** "
-                "tryout or application process and have been **accepted** into the "
-                "**CIA Office of Security**."
+                "You have completed the **Office of Security** tryout or application process "
+                "and are **accepted** into the **CIA Office of Security**."
             ),
             color=c.COLOR_OSEC,
             fields=(
                 (
                     "Next Steps",
-                    "Join **all required servers and Roblox groups**, then review every required "
-                    "document listed below before attending training.",
+                    "Join **all required servers and Roblox groups**, then review every "
+                    "required document below before training.",
                 ),
                 (
                     "Training Window",
-                    "You have **14 days** from acceptance to complete the Security Phase Program. "
-                    "Failure to progress within this window may result in removal from candidacy.",
+                    "Complete the Security Phase Program within **14 days** of acceptance. "
+                    "Failure to progress may result in removal from candidacy.",
                 ),
             ),
         ),
         c.embed(
             title="Training Program",
             description=(
-                "The Security Phase Program consists of **two mandatory phases**. "
-                "Candidates must complete each phase in order before promotion to "
+                "Two mandatory phases, completed in order, before promotion to "
                 "**Junior Security Agent**."
             ),
             color=c.COLOR_OSEC,
             fields=(
                 (
                     "Phase I",
-                    "Entirely **classroom-based**. Review all provided material and pass the "
-                    "Phase I quiz to advance to **Security Phase II**.\n\n"
-                    "If you believe an instructor graded your quiz unfairly, contact a "
+                    "**Classroom-based.** Review all material and pass the Phase I quiz to "
+                    "advance." + "\n\n"
+                    "If you believe a quiz was graded unfairly, contact a "
                     "**Deputy Director of Security or above** and file a formal report. "
                     "Do not dispute results through unauthorized channels.",
                 ),
                 (
                     "Phase II",
-                    "**In-game** training covering a gate tour, basic duties instruction, "
-                    "and a final assessment quiz.",
+                    "**In-game** training: gate tour, basic duties, and a final assessment quiz.",
                 ),
                 (
                     "In-Game Conduct",
-                    "While in game, follow all instructions from your assigned superior. "
-                    "Candidates must **not** independently perform **security duties** "
-                    "until authorized to do so.",
+                    "Follow instructions from your assigned superior. Do **not** perform "
+                    "**security duties** independently until authorized.",
                 ),
             ),
         ),
         c.embed(
             title="Required Reading",
             description=(
-                "Review each document in full before training and promotion to "
-                "**Junior Security Agent**. Observe all community markings."
+                "Review each document in full before training and promotion. Observe community "
+                "markings."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -106,13 +103,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Orientation",
                     "DS Community | OSEC Security Phase Candidate Orientation Guide",
                     c.url("osec.spp_information.orientation_guide"),
-                    "CANDIDATE. Authorized candidates only.",
+                    c.marking_note("CANDIDATE"),
                 ),
                 c.link_field(
                     "Handbook",
                     "DS Community | OSEC Handbook",
                     c.url("osec.spp_information.official_handbook"),
-                    c.marking_note("STAFF", "Authorized OSEC staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Code of Agency Conduct",
@@ -131,14 +128,11 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Classification & Handling Notice",
             description=(
-                "The **Security Phase Candidate Orientation Guide** is marked **CANDIDATE**. "
-                "The **DS Community | OSEC Handbook** is marked **STAFF**.\n\n"
-                "The **Code of Agency Conduct** and **Civilian Access** documents are "
-                "**PUBLIC**.\n\n"
-                "Unauthorized disclosure, redistribution, or leaking of restricted materials "
-                "will result in a **BLACKLIST** from the **CIA Office of Security**. "
-                "Handle all documents responsibly and do not share them outside authorized "
-                "channels or personnel."
+                "**Orientation Guide** -- **CANDIDATE**. **Handbook** -- **STAFF**. "
+                "**Code of Agency Conduct** and **Civilian Access** -- **PUBLIC**." + "\n\n"
+                "Unauthorized disclosure or redistribution of restricted materials will "
+                "result in a **BLACKLIST** from the **CIA Office of Security**. "
+                "Do not share outside authorized channels or personnel."
             ),
             color=c.COLOR_OSEC,
         ),

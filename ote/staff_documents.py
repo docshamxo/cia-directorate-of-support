@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Replace single Staff Handbook with Phase I/II/III documents.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
+#   - 2026-07-17 | docshamxo | Consolidate sections; shared Marking: STAFF notes.
 # === END FILE HEADER ===
 
 """
@@ -37,18 +38,15 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="STAFF DOCUMENTS",
             unit="Office of Training & Education",
-            supporting=(
-                "Official repository for authorized OTE staff documentation. "
-                "Access is strictly limited to authorized personnel."
-            ),
+            supporting="Authorized OTE staff documentation index. Need-to-know access only.",
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
             title="Central Repository",
             description=(
-                "Primary Google Drive folder for applications, forms, guides, "
-                "and supporting files referenced throughout this channel."
+                "Primary Drive folder for applications, forms, guides, and supporting files. "
+                "Use Drive as the source of truth for materials not listed below."
             ),
             color=c.COLOR_OTE,
             fields=(
@@ -56,32 +54,38 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "DS Community | OTE Google Drive",
                     c.url("ote.staff_documents.google_drive"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "General Information",
+                    "CIA OTE | General Information & Chain of Command",
+                    c.url("ote.staff_documents.general_info_coc"),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),
         c.embed(
             title="Phase Documents",
-            description=("OTP Staff Handbook split by phase for OTE instruction and progression."),
+            description="OTP Staff Handbook split by phase for instruction and progression.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
                     "Phase I",
                     "DS Community | OTE OTP Staff Handbook Phase I",
                     c.url("ote.staff_documents.phase_i"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Phase II",
                     "DS Community | OTE OTP Staff Handbook Phase II",
                     c.url("ote.staff_documents.phase_ii"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Phase III",
                     "DS Community | OTE OTP Staff Handbook Phase III",
                     c.url("ote.staff_documents.phase_iii"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),
@@ -107,32 +111,25 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Tryout Guide",
                     "DS Community | OTE Tryout Guide",
                     c.url("ote.staff_documents.tryout_guide"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Graduation",
                     "DS Community | OTE Graduation Ceremony Procedures",
                     c.url("ote.staff_documents.graduation_ceremony_procedures"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
-            ),
-        ),
-        c.embed(
-            title="Training Materials",
-            description="Standard instruction guides used for OTE training delivery.",
-            color=c.COLOR_OTE,
-            fields=(
                 c.link_field(
                     "Standard Training",
                     "DS Community | OTE Standard Training Guide",
                     c.url("ote.staff_documents.standard_training_guide"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Weapons Standard Training",
                     "DS Community | OTE Weapons Standard Training Guide",
                     c.url("ote.staff_documents.weapons_st_guide"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),
@@ -145,7 +142,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Staff Database (ORBAT)",
                     "DS Community | OTE Staff Database (ORBAT)",
                     c.url("ote.staff_documents.staff_database"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),

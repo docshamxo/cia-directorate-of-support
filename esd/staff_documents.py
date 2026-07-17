@@ -29,10 +29,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="STAFF DOCUMENTS",
             unit="Executive Security Detail",
-            supporting=(
-                "Official repository for authorized ESD staff documentation. "
-                "Access is strictly limited to authorized personnel."
-            ),
+            supporting="Authorized ESD staff documentation index. Need-to-know access only.",
             color=c.COLOR_ESD,
             logo=c.LOGOS["esd"],
         ),
@@ -45,7 +42,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Drive",
                     "DS Community | ESD Google Drive",
                     c.url("esd.staff_documents.google_drive"),
-                    c.marking_note("STAFF", "Authorized ESD staff only."),
+                    c.marking_note("STAFF"),
                 ),
             ),
         ),

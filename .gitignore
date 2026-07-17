@@ -51,3 +51,6 @@ _maps.json
 # End of file: .gitignore
 # Maintained by: docshamxo
 # === END FILE FOOTER ===
+
+.coverage
+

@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Standardize hero title and unit-color disclaimer.
+#   - 2026-07-17 | docshamxo | Use chain_intro_embed for proper CoC hierarchy.
 # === END FILE HEADER ===
 
 """
@@ -28,10 +29,9 @@ from common.announcer import run_announcer
 
 
 def _build_intro_embed() -> c.discord.Embed:
-    return c.hero_embed(
-        title="CHAIN OF COMMAND",
+    return c.chain_intro_embed(
         unit="Directorate of Support",
-        supporting=c.CHAIN_OF_COMMAND_INTRO,
+        color=c.COLOR_DS,
     )
 
 

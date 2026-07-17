@@ -12,71 +12,65 @@
 #   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF/CANDIDATE; affiliation banner; soften GRS/ESD.
 #   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice to affiliation/disclaimer copy.
 #   - 2026-07-17 | docshamxo | Strengthen non-affiliation banners for brand/legal compliance.
+#   - 2026-07-17 | docshamxo | Product/content UX: tighter about copy, shared marking notes, leaner closers.
 # === END FILE HEADER ===
 
 ds:
   motto: WE GO AS ONE
   classification: PUBLIC
-  about: 'The **Directorate of Support (DS)** is the Agency''s backbone — responsible for internal security,
-    physical protection, and the readiness of every officer who serves. While other directorates operate
-    at the sharp end of the mission, DS ensures the people, facilities, and operatives behind them remain
-    protected and properly prepared.
+  about: 'The **Directorate of Support (DS)** is the Agency''s backbone -- internal security,
+    physical protection, and officer readiness.
 
 
-    The Directorate is organized into subordinate offices, each safeguarding a distinct pillar of Agency
-    operations: securing the institution from within, and forging the officers who carry the mission forward.'
+    Subordinate offices secure the institution from within and train the officers who carry
+    the mission forward.'
   offices:
   - Office of Training & Education (OTE)
   - Office of Security (OSEC)
 osec:
   motto: PROTECT · DETECT · RESPOND
-  about: 'The **Office of Security (OSEC)** is the Agency''s internal law-enforcement and protective arm.
-    Its officers serve as the Agency''s guards and security force — safeguarding facilities, screening
-    access, and enforcing internal security protocol across every CIA site.
+  about: 'The **Office of Security (OSEC)** is the Agency''s internal security force --
+    facility protection, access control, and protocol enforcement across CIA sites.
 
 
-    Two specialized sub-units operate beneath OSEC, handling escalated and high-priority protective taskings.'
+    Two specialized sub-units handle escalated and high-priority protective taskings.'
   sub_units:
   - Global Response Staff (GRS)
   - Executive Security Detail (ESD)
 ote:
   motto: SCIENTIA EST LUX LUCIS
-  about: The **Office of Training & Education (OTE)** runs the Agency's **Officer Training Program** —
-    recruiting, instructing, and certifying every new officer before they are cleared for active duty.
-    OTE oversees tradecraft instruction, academy curriculum, and continuing professional development.
+  about: The **Office of Training & Education (OTE)** runs the Agency's **Officer Training
+    Program** -- recruiting, instructing, and certifying officers before active duty.
   pillars:
   - title: Recruitment & Selection
-    description: Screening and onboarding new applicants into the Agency's officer pipeline, ensuring
-      every candidate meets the standard before training begins.
+    description: Screen and onboard applicants into the officer pipeline before training begins.
   - title: Tradecraft Instruction
-    description: Core academy curriculum — fieldcraft, security protocol, and operational discipline taught
-      to every officer prior to active deployment.
+    description: Core academy curriculum -- fieldcraft, security protocol, and operational
+      discipline prior to deployment.
   - title: Continuing Development
-    description: Ongoing professional education and re-certification keeping active officers current with
-      Agency doctrine and standards.
+    description: Ongoing education and re-certification so active officers stay current with
+      Agency standards.
 grs:
-  about: The Agency's rapid-response security element — high-threat site security, contingency support,
-    and protective reinforcement for field operations worldwide.
+  about: Rapid-response security element -- high-threat site security, contingency support,
+    and protective reinforcement for field operations.
 esd:
-  about: A dedicated close-protection unit responsible for the personal security of senior leadership
-    and designated principals during travel and operations.
+  about: Close-protection unit for senior leadership and designated principals during travel
+    and operations.
 copy:
-  chain_of_command_intro: 'The Chain of Command is the structured hierarchy used to maintain order, accountability,
-    and clear communication. All instructions, concerns, and requests should flow through your immediate
-    supervisor before moving upward through leadership.
+  chain_of_command_intro: 'Use the chain. Raise concerns with your immediate supervisor first.
 
 
-    Do not bypass ranks by directing issues to senior leadership when a lower-ranking supervisor is available
-    and appropriate. Always consult the next rank above you rather than escalating to the highest authority.'
+    Do not bypass an available lower rank to reach senior leadership. Escalate one level
+    at a time.'
   affiliation_notice: '**Unofficial community roleplay.** This project is **not affiliated with**,
     endorsed by, sponsored by, or connected to the United States Government or the Central Intelligence
     Agency. Nothing here is an official government communication. Community markings (**PUBLIC** /
-    **STAFF** / **CANDIDATE**) are roleplay vocabulary only — not USG classification.
+    **STAFF** / **CANDIDATE**) are roleplay vocabulary only -- not USG classification.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
-  disclaimer: '**Unofficial community roleplay — not USG/CIA.**
+  disclaimer: '**Unofficial community roleplay -- not USG/CIA.**
 
 
     All text here is marked **PUBLIC**.
@@ -88,7 +82,7 @@ copy:
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_links: '**Unofficial community roleplay — not USG/CIA.**
+  disclaimer_links: '**Unofficial community roleplay -- not USG/CIA.**
 
 
     All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
@@ -100,43 +94,44 @@ copy:
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_staff: '**Unofficial community roleplay — not USG/CIA.**
+  disclaimer_staff: '**Unofficial community roleplay -- not USG/CIA.**
 
 
     Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked staff
     materials are **STAFF** unless otherwise noted.
 
 
-    Staff markings are community access rules for this Roblox roleplay — **not** United States
+    Staff markings are community access rules for this Roblox roleplay -- **not** United States
     Government classification. This project is **not affiliated with** the US Government or CIA.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  important_notice: 'All {unit} personnel and candidates must follow Agency regulations and the
-    **{chain}** chain of command.
+  important_notice: 'All {unit} personnel and candidates must follow Agency regulations and
+    the **{chain}** chain of command.
 
 
-    Unauthorized direct contact with command teams is **not permitted** for Agency personnel.'
-  staff_handling_notice: 'All documents listed in this channel are intended for **authorized {unit}
-    personnel only** (community marking: **STAFF**).
+    Unauthorized direct contact with command teams is **not permitted**.'
+  staff_handling_notice: 'Documents in this channel are for **authorized {unit} personnel**
+    only (marking: **STAFF**).
 
 
-    Unauthorized disclosure, redistribution, or leaking of any restricted material may result in a
-    **BLACKLIST** from the **{authority}**.
+    Unauthorized disclosure or redistribution may result in a **BLACKLIST** from the
+    **{authority}**.
 
 
-    Handle all staff documents responsibly. Do not share materials outside authorized channels or
-    personnel.'
-  staff_handling_notice_restricted: 'All documents listed in this channel are marked **STAFF** unless
+    Do not share outside authorized channels or personnel.'
+  staff_handling_notice_restricted: 'Documents in this channel are marked **STAFF** unless
     otherwise noted.
 
 
-    Unauthorized disclosure, redistribution, or leaking of any restricted material will result in a
-    **BLACKLIST** from the **{authority}**.
+    Unauthorized disclosure or redistribution will result in a **BLACKLIST** from the
+    **{authority}**.
 
 
-    Handle all staff documents responsibly. Do not share materials outside authorized channels or
-    personnel.'
+    Do not share outside authorized channels or personnel.'
+  marking_public: 'Marking: PUBLIC.'
+  marking_staff: 'Marking: STAFF.'
+  marking_candidate: 'Marking: CANDIDATE.'
 
 # === FILE FOOTER ===
 # End of file: config/organization.yaml
