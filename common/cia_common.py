@@ -434,12 +434,12 @@ COMMAND_BAND_LABELS: dict[str, str] = {
 # Strip common emoji / symbol ranges when checking for a text signal.
 _EMOJI_SYMBOL_RE = re.compile(
     "["
-    "\U0001F300-\U0001FAFF"  # Misc. pictographs, symbols, extended
-    "\U00002700-\U000027BF"  # Dingbats
-    "\U00002600-\U000026FF"  # Misc. symbols
-    "\U0000FE00-\U0000FE0F"  # Variation selectors
-    "\U0000200D"  # ZWJ
-    "\U0000200B-\U0000200F"  # Zero-width / direction marks
+    "\U0001f300-\U0001faff"  # Misc. pictographs, symbols, extended
+    "\U00002700-\U000027bf"  # Dingbats
+    "\U00002600-\U000026ff"  # Misc. symbols
+    "\U0000fe00-\U0000fe0f"  # Variation selectors
+    "\U0000200d"  # ZWJ
+    "\U0000200b-\U0000200f"  # Zero-width / direction marks
     "]+",
     flags=re.UNICODE,
 )
@@ -491,7 +491,6 @@ def validate_embed_accessibility(embeds: Sequence[discord.Embed]) -> None:
 
 
 def agency_eyebrow(unit: str) -> str:
-
     """Standard italic hero eyebrow: Central Intelligence Agency · {Unit}."""
     return f"*Central Intelligence Agency · {unit}*"
 

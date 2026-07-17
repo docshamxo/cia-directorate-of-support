@@ -204,13 +204,20 @@ def subunit_coc_embeds(
             title=f"{unit_abbrev} Middle Command (MIDCOM)",
             description="Mid-level leadership responsible for supervision and operational oversight.",
             color=color,
-            fields=((c.command_band_label("MIDCOM") + " ranks", c.ranks_text(*c.GRS_ESD_MIDDLE_COMMAND)),),
+            fields=(
+                (
+                    c.command_band_label("MIDCOM") + " ranks",
+                    c.ranks_text(*c.GRS_ESD_MIDDLE_COMMAND),
+                ),
+            ),
         ),
         c.embed(
             title=f"{unit_abbrev} Lower Command (LOWCOM)",
             description=f"Field and operational ranks within the {unit_full}.",
             color=color,
-            fields=((c.command_band_label("LOWCOM") + " ranks", c.ranks_text(*c.GRS_ESD_LOW_COMMAND)),),
+            fields=(
+                (c.command_band_label("LOWCOM") + " ranks", c.ranks_text(*c.GRS_ESD_LOW_COMMAND)),
+            ),
         ),
         c.important_notice_embed(
             unit=unit_abbrev,

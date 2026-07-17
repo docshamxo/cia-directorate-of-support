@@ -439,7 +439,9 @@ def validate_style_guide() -> None:
     if "def hero_embed" not in common_text or "def agency_eyebrow" not in common_text:
         issues.append("common/cia_common.py: missing hero_embed / agency_eyebrow helpers")
     if "def marking_note" not in common_text or "def command_band_label" not in common_text:
-        issues.append("common/cia_common.py: missing accessibility helpers (marking_note / command_band_label)")
+        issues.append(
+            "common/cia_common.py: missing accessibility helpers (marking_note / command_band_label)"
+        )
     if "def validate_embed_accessibility" not in common_text:
         issues.append("common/cia_common.py: missing validate_embed_accessibility")
     if not (ROOT / "docs" / "ACCESSIBILITY.md").is_file():
