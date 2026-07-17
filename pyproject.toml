@@ -12,6 +12,7 @@
 #   - 2026-07-17 | docshamxo | Add pytest-cov, pre-commit, and coverage fail-under floor.
 #   - 2026-07-17 | docshamxo | Declare MIT license (see LICENSE brand-use notice).
 #   - 2026-07-17 | docshamxo | Document units/ announcer layout (scripts, not packages).
+#   - 2026-07-17 | Auto | Sync discord.py pin to 2.7.1 with requirements.
 # === END FILE HEADER ===
 
 [build-system]
@@ -26,7 +27,7 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
-  "discord.py==2.6.4",
+  "discord.py==2.7.1",
   "python-dotenv==1.2.2",
   "PyYAML==6.0.3",
   "requests==2.34.2",
