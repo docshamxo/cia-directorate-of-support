@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Update OTE tryout guide and reorganize staff documents. (#12)
+#   - 2026-07-17 | docshamxo | Split OTE OTP Staff Handbook into Phase I/II/III docs.
 # === END FILE HEADER ===
 
 community:
@@ -53,7 +54,9 @@ osec:
 ote:
   staff_documents:
     google_drive: https://drive.google.com/drive/folders/11g2H9zeEwFbyO2a6dkxpmSGN0qGR4Oe1?usp=drive_link
-    staff_handbook: https://docs.google.com/document/d/1Nhi3xnirH192rIdbMCrGGH5pnhLywQ9EhWxPCoRbY9s/edit?usp=sharing
+    phase_i: https://docs.google.com/document/d/1bsFT-CgJ9FZvS3vv1jMifsYq8vV-OWqOd6OBM9FWfAc/edit?usp=sharing
+    phase_ii: https://docs.google.com/document/d/1wXzGN3uFk5Q0GASUwUM7i9WaF64KLLaURuN1GS9rrJM/edit?usp=sharing
+    phase_iii: https://docs.google.com/document/d/1FZT8fmgvKmJzLmwB7it3bsRgZbXPJJmdKRByr32tCao/edit?usp=sharing
     general_info_coc: https://docs.google.com/document/d/1gZO3E9X_dbNIjJJQc5wsKgryyH6uTryfjQHLSKbq4EA/edit?usp=sharing
     tryout_guide: https://docs.google.com/document/d/1ayKXDB1cYA1MspMcLSKskllQIVDfPy8bPsXSsxAo0EI/edit?usp=drive_link
     graduation_ceremony_procedures: https://docs.google.com/document/d/1NR61wNgfyEnPiDQ7jZB8NwS8CUCFq7nt1aDN2y6uwKA/edit?usp=sharing

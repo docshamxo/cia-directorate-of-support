@@ -9,6 +9,7 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Swap OTE DDTE and ADTE (AndyShotSecond / Railorbsj).
 # === END FILE HEADER ===
 
 agency_executive:
@@ -40,10 +41,10 @@ ote_high_command:
   holder: Shaikhuu
 - abbrev: DDTE
   title: Deputy Director of Training and Education
-  holder: Railorbsj
+  holder: AndyShotSecond
 - abbrev: ADTE
   title: Assistant Director of Training and Education
-  holder: AndyShotSecond
+  holder: Railorbsj
 - abbrev: D
   title: Dean
   holder: miqila0shu

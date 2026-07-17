@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Update OTE tryout guide and reorganize staff documents. (#12)
 #   - 2026-07-15 | docshamxo | Title Case sections without numbers; shared handling copy.
+#   - 2026-07-17 | docshamxo | Replace single Staff Handbook with Phase I/II/III documents.
 # === END FILE HEADER ===
 
 """
@@ -58,16 +59,35 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
         c.embed(
-            title="Policy & Handbook",
-            description="Core references for structure, expectations, and chain of command.",
+            title="Phase Documents",
+            description=("OTP Staff Handbook split by phase for OTE instruction and progression."),
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
-                    "Staff Handbook",
-                    "CIA OTE | Staff Handbook",
-                    c.url("ote.staff_documents.staff_handbook"),
+                    "Phase I",
+                    "CIA OTE | OTP Staff Handbook Phase I",
+                    c.url("ote.staff_documents.phase_i"),
                     "Authorized OTE staff only.",
                 ),
+                c.link_field(
+                    "Phase II",
+                    "CIA OTE | OTP Staff Handbook Phase II",
+                    c.url("ote.staff_documents.phase_ii"),
+                    "Authorized OTE staff only.",
+                ),
+                c.link_field(
+                    "Phase III",
+                    "CIA OTE | OTP Staff Handbook Phase III",
+                    c.url("ote.staff_documents.phase_iii"),
+                    "Authorized OTE staff only.",
+                ),
+            ),
+        ),
+        c.embed(
+            title="Policy & Structure",
+            description="Core references for structure, expectations, and chain of command.",
+            color=c.COLOR_OTE,
+            fields=(
                 c.link_field(
                     "General Information",
                     "CIA OTE | General Information & Chain of Command",
