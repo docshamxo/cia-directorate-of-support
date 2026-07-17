@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Unit tests for masking, logos, mentions, purge order, limits.
+#   - 2026-07-17 | docshamxo | Reuse shared webhook_state fixture (avoid flaky repo state).
 # === END FILE HEADER ===
 
 """Unit tests for webhook helpers (mocked; no live Discord)."""
@@ -20,6 +21,28 @@ import discord
 import pytest
 
 from common import cia_common as c
+
+
+def test_console_print_falls_back_on_unicode_encode_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    writes: list[str] = []
+    state = {"n": 0}
+
+    def fake_print(message: str = "", *_a: object, **_k: object) -> None:
+        state["n"] += 1
+        if state["n"] == 1:
+            raise UnicodeEncodeError("cp1252", str(message), 0, 1, "narrow")
+        writes.append(str(message))
+
+    class FakeStdout:
+        encoding = "cp1252"
+
+    monkeypatch.setattr(c.sys, "stdout", FakeStdout())
+    monkeypatch.setattr("builtins.print", fake_print)
+    c.console_print("skipped ✅ reactions")
+    assert writes
+    assert "\u2705" not in writes[0]  # replaced for cp1252
 
 
 def test_mask_webhook_url_redacts_token() -> None:
@@ -55,14 +78,11 @@ def test_is_staff_placeholder() -> None:
 
 
 def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    webhook_state: Path,
+    empty_bot_token: None,
+    fake_webhook_session: Any,
 ) -> None:
-    state_path = tmp_path / ".webhook_messages.json"
-    lock_path = tmp_path / ".webhook_messages.lock"
-    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_PATH", state_path)
-    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_LOCK_PATH", lock_path)
-
-    state_path.write_text(json.dumps({"WEBHOOK_TEST": [111, 222]}), encoding="utf-8")
+    webhook_state.write_text(json.dumps({"WEBHOOK_TEST": [111, 222]}), encoding="utf-8")
 
     events: list[str] = []
     posted = MagicMock()
@@ -83,10 +103,6 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
         def delete_message(self, message_id: int) -> None:
             events.append(f"delete:{message_id}")
 
-    fake_session = MagicMock()
-    monkeypatch.setattr(c, "_session_with_timeout", lambda: fake_session)
-    monkeypatch.setattr(c, "_bot_token", lambda: "")
-
     with patch("discord.SyncWebhook.from_url") as from_url:
         from_url.return_value = FakeWebhook()
         ids = c.send_webhook(
@@ -96,8 +112,7 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
             state_key="WEBHOOK_TEST",
         )
         kwargs = from_url.call_args.kwargs
-        assert kwargs.get("bot_token") in (None, "")
-        assert "bot_token" not in kwargs or kwargs["bot_token"] in (None, "")
+        assert not kwargs.get("bot_token")
 
     assert ids == [999]
     assert events[0] == "send"
@@ -105,14 +120,15 @@ def test_send_webhook_sets_allowed_mentions_none_and_posts_before_delete(
     assert "delete:222" in events
     assert events.index("send") < min(events.index("delete:111"), events.index("delete:222"))
 
-    saved = json.loads(state_path.read_text(encoding="utf-8"))
+    saved = json.loads(webhook_state.read_text(encoding="utf-8"))
     assert saved["WEBHOOK_TEST"] == [999]
 
 
-def test_send_webhook_file_factory_called(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_PATH", tmp_path / ".webhook_messages.json")
-    monkeypatch.setattr(c, "WEBHOOK_MESSAGES_LOCK_PATH", tmp_path / ".webhook_messages.lock")
-
+def test_send_webhook_file_factory_called(
+    webhook_state: Path,
+    empty_bot_token: None,
+    fake_webhook_session: Any,
+) -> None:
     class FakeWebhook:
         def send(self, **kwargs: Any) -> Any:
             files = kwargs.get("files") or []
@@ -125,22 +141,19 @@ def test_send_webhook_file_factory_called(tmp_path: Path, monkeypatch: pytest.Mo
         def delete_message(self, message_id: int) -> None:
             return None
 
-    monkeypatch.setattr(c, "_session_with_timeout", MagicMock)
-    monkeypatch.setattr(c, "_bot_token", lambda: "")
-    monkeypatch.setattr("discord.SyncWebhook.from_url", lambda *a, **k: FakeWebhook())
+    with patch("discord.SyncWebhook.from_url", return_value=FakeWebhook()):
+        factory_calls = {"n": 0}
 
-    factory_calls = {"n": 0}
+        def factory() -> list[discord.File]:
+            factory_calls["n"] += 1
+            return [c.logo_file(c.LOGOS["ds"])]
 
-    def factory() -> list[discord.File]:
-        factory_calls["n"] += 1
-        return [c.logo_file(c.LOGOS["ds"])]
-
-    c.send_webhook(
-        "https://discord.com/api/webhooks/1234567890/token",
-        [discord.Embed(title="t", description="d", color=1)],
-        username="Test Bot",
-        files=factory,
-    )
+        c.send_webhook(
+            "https://discord.com/api/webhooks/1234567890/token",
+            [discord.Embed(title="t", description="d", color=1)],
+            username="Test Bot",
+            files=factory,
+        )
     assert factory_calls["n"] == 1
 
 
