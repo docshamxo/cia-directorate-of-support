@@ -21,6 +21,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
 === END FILE HEADER ===
 -->
 
@@ -35,6 +36,11 @@ Modified:
   <em>WE GO AS ONE</em><br>
   <small>Unofficial Roblox community — not affiliated with the US Government or CIA.</small>
 </p>
+
+<blockquote align="center">
+  <strong>Property of the Central Intelligence Agency (ROBLOX), Inter Studios</strong><br>
+  <small>Proprietary community material — see <a href="NOTICE">NOTICE</a>.</small>
+</blockquote>
 
 <p align="center">
   <a href="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml"><img src="https://github.com/docshamxo/cia-directorate-of-support/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
@@ -167,6 +173,7 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 | [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
+| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
 | [`.env.example`](.env.example) | Webhook / token template |
 

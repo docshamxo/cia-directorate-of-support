@@ -17,6 +17,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
   - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
   - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
+  - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
 
@@ -26,6 +27,8 @@ Install once via the root [README.md](README.md) (`git`, Python 3.10+, clone, `p
 
 Unofficial Roblox community project — not affiliated with the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only.
 
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
+
 ## Sensitivity
 
 - Never commit `.env`, `config/links.staff.local.yaml`, or `.webhook_messages.json`
@@ -34,6 +37,7 @@ Unofficial Roblox community project — not affiliated with the US Government or
 - Keep affiliation / fiction disclaimer text in closers
 - Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](SECURITY.md)
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
+- Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](config/organization.yaml); see [NOTICE](NOTICE))
 - Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation: [SECURITY.md](SECURITY.md)
 
 ## Everyday edits

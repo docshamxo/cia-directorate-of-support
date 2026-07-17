@@ -18,6 +18,7 @@ Modified:
   - 2026-07-17 | docshamxo | Tighten tradecraft rules and cross-link OPS runbooks.
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
+  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
 === END FILE HEADER ===
 -->
 
@@ -26,6 +27,8 @@ Modified:
 Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them private.
 
 **Affiliation:** Unofficial Roblox community tooling — **not** affiliated with the United States Government or the Central Intelligence Agency. Markings `PUBLIC` / `STAFF` / `CANDIDATE` are roleplay vocabulary only.
+
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
 ## Secret split (compartmentation)
 

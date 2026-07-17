@@ -21,9 +21,8 @@ Editable data for the announcers. Change these files instead of hardcoding value
 
 | File | What to edit here |
 |------|-------------------|
-| [`branding.yaml`](branding.yaml) | Colors, bot usernames, logo filenames |
-| [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers |
-| [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks |
+| [`branding.yaml`](branding.yaml) | Colors, bot usernames, logo filenames, property notice |
+| [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers, affiliation / property notices || [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks |
 | [`links.yaml`](links.yaml) | Public document, form, and Roblox URLs (staff Drive via local overlay) |
 | [`regulations.yaml`](regulations.yaml) | Server regulations prose |
 

@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Community markings PUBLIC/STAFF/CANDIDATE; affiliation banner; soften GRS/ESD.
+#   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice to affiliation/disclaimer copy.
 # === END FILE HEADER ===
 
 ds:
@@ -68,23 +69,36 @@ copy:
     and appropriate. Always consult the next rank above you rather than escalating to the highest authority.'
   affiliation_notice: 'This is an **unofficial Roblox community**. It is **not affiliated with**, endorsed
     by, or connected to the United States Government or the Central Intelligence Agency. Community
-    markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.'
+    markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.
+
+
+    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
+  property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
   disclaimer: 'All text here is marked **PUBLIC**.
 
 
     This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
-    roleplay vocabulary only.'
+    roleplay vocabulary only.
+
+
+    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   disclaimer_links: 'All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
 
 
     This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
-    roleplay vocabulary only.'
+    roleplay vocabulary only.
+
+
+    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   disclaimer_staff: 'Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked
     staff materials are **STAFF** unless otherwise noted.
 
 
     This is an unofficial Roblox community — not affiliated with the US Government or CIA. Markings are
-    roleplay vocabulary only.'
+    roleplay vocabulary only.
+
+
+    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   important_notice: 'All {unit} personnel and candidates must follow Agency regulations and the
     **{chain}** chain of command.
 

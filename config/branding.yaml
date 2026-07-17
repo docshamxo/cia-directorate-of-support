@@ -9,7 +9,11 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
+#   - 2026-07-17 | docshamxo | Document Inter Studios proprietary property notice constant.
 # === END FILE HEADER ===
+
+# Legal / brand line (Discord closers load from organization.yaml copy)
+property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
 
 colors:
   ds: '0x1E3F78'
