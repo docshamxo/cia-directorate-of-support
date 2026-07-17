@@ -25,7 +25,11 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
     ("units/ds/server_regulations.py", "Server Regulations", "WEBHOOK_DS_SERVER_REGULATIONS"),
     ("units/osec/information.py", "OSEC Information", "WEBHOOK_OSEC_INFORMATION"),
     ("units/osec/staff_documents.py", "OSEC Staff Documents", "WEBHOOK_OSEC_STAFF_DOCUMENTS"),
-    ("units/osec/spp_information.py", "OSEC Security Phase Program", "WEBHOOK_OSEC_SPP_INFORMATION"),
+    (
+        "units/osec/spp_information.py",
+        "OSEC Security Phase Program",
+        "WEBHOOK_OSEC_SPP_INFORMATION",
+    ),
     ("units/osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
     ("units/ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
     ("units/ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
@@ -82,11 +86,7 @@ def announcers_for_office(office: str) -> list[tuple[str, str, str]]:
     name = office.strip().lower().rstrip("/")
     if name.startswith("units/"):
         name = name[len("units/") :]
-    return [
-        entry
-        for entry in ANNOUNCERS
-        if name in Path(entry[0].replace("\\", "/")).parts
-    ]
+    return [entry for entry in ANNOUNCERS if name in Path(entry[0].replace("\\", "/")).parts]
 
 
 # === FILE FOOTER ===
