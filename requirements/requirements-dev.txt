@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Requirements Dev
-# Path: requirements-dev.txt
+# Path: requirements/requirements-dev.txt
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -18,6 +18,6 @@ pytest-cov==7.1.0
 pre-commit==4.6.0
 
 # === FILE FOOTER ===
-# End of file: requirements-dev.txt
+# End of file: requirements/requirements-dev.txt
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

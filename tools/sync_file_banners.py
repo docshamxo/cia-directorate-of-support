@@ -124,7 +124,6 @@ def style_for(path: Path) -> str:
     if suffix in {".yml", ".yaml", ".toml", ".txt", ".example"} or name in {
         ".gitignore",
         ".editorconfig",
-        "ruff.toml",
         "requirements.txt",
         ".env.example",
     }:

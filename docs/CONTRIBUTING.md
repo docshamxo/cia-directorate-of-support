@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
 Title: Contributing
-Path: CONTRIBUTING.md
+Path: docs/CONTRIBUTING.md
 Created: 2026-07-14
 Created by: docshamxo
 Modified:
@@ -25,9 +25,9 @@ Modified:
 
 # Contributing
 
-Install once via the root [README.md](README.md) (`git`, Python 3.10+, clone, `python bootstrap.py`, edit `.env`).
+Install once via the root [README.md](../README.md) (`git`, Python 3.10+, clone, `python tools/bootstrap.py`, edit `.env`).
 
-Unofficial Roblox community project — **not affiliated with** the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only. Brand and bot naming: [BRAND.md](BRAND.md) · [LICENSE](LICENSE).
+Unofficial Roblox community project — **not affiliated with** the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only. Brand and bot naming: [BRAND.md](BRAND.md) · [LICENSE](../LICENSE).
 
 **Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
@@ -39,29 +39,29 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 - Discord invites, channel snowflakes, and applicant form/tracker URLs → `.env`
 - Never post `OTE_APPLICATION_TRACKER_URL` into public Discord embeds
 - Keep affiliation / fiction disclaimer text in closers
-- Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](SECURITY.md)
-- Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
-- Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](config/organization.yaml); see [NOTICE](NOTICE))
+- Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](../SECURITY.md)
+- Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](CODEOWNERS_ENFORCEMENT.md))
+- Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](../config/organization.yaml); see [NOTICE](NOTICE))
 - Keep webhook bot names community-marked (`Community` or `(RP)`); do not restore bare `CIA | …` usernames
-- Live ops (✅ / purge): [OPS.md](docs/OPS.md) · leak rotation / privacy: [SECURITY.md](SECURITY.md)
+- Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation / privacy: [SECURITY.md](../SECURITY.md)
 ## Everyday edits
 
-Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).
+Prefer YAML under [`config/`](../config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).
 
 | Change | Where |
 |--------|-------|
-| High-command names, ranks | [`config/personnel.yaml`](config/personnel.yaml) |
-| Mid-tier named rosters | `config/personnel.holders.local.yaml` (from [`personnel.holders.example.yaml`](config/personnel.holders.example.yaml)) |
-| Mottos, about, disclaimers | [`config/organization.yaml`](config/organization.yaml) |
-| Regulations prose | [`config/regulations.yaml`](config/regulations.yaml) |
-| Colors, bot usernames, logos | [`config/branding.yaml`](config/branding.yaml) |
-| Public links | [`config/links.yaml`](config/links.yaml) |
-| Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
+| High-command names, ranks | [`config/personnel.yaml`](../config/personnel.yaml) |
+| Mid-tier named rosters | `config/personnel.holders.local.yaml` (from [`personnel.holders.example.yaml`](../config/personnel.holders.example.yaml)) |
+| Mottos, about, disclaimers | [`config/organization.yaml`](../config/organization.yaml) |
+| Regulations prose | [`config/regulations.yaml`](../config/regulations.yaml) |
+| Colors, bot usernames, logos | [`config/branding.yaml`](../config/branding.yaml) |
+| Public links | [`config/links.yaml`](../config/links.yaml) |
+| Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](../config/links.staff.example.yaml)) |
 | Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
 | Embed layout | Script in `units/ds/`, `units/osec/`, `units/ote/`, `units/grs/`, or `units/esd/` |
 | Webhook target | Local `.env` (never commit) |
-| Logo files | [`assets/logos/`](assets/logos/) — keep filenames |
-| Run order / catalog | [`common/manifest.py`](common/manifest.py) |
+| Logo files | [`assets/logos/`](../assets/logos/) — keep filenames |
+| Run order / catalog | [`common/manifest.py`](../common/manifest.py) |
 
 In announcer scripts:
 
@@ -87,7 +87,7 @@ From the repository root:
 ```bash
 python tools/validate_repo.py
 pytest -q
-python run_all.py --dry-run --delay 0
+python tools/run_all.py --dry-run --delay 0
 ```
 
 `pytest -q` enforces a **70%** statement coverage floor on `common/` (see `pyproject.toml`). Raise coverage with tests rather than lowering the floor.
@@ -100,14 +100,14 @@ pre-commit install
 pre-commit run --all-files
 ```
 
-For live production refreshes, follow [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md)
+For live production refreshes, follow [docs/RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md)
 (staged `--stage` rollout). Record user-facing changes in [CHANGELOG.md](CHANGELOG.md).
 
 Use `python3` / `python3 -m pytest` on macOS/Linux if needed.
 
 File header/footer banners are **optional**. Refresh: `python tools/sync_file_banners.py`. Enforce: `CIA_REQUIRE_BANNERS=1 python tools/validate_repo.py`.
 
-Branch protection for maintainers: [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md).
+Branch protection for maintainers: [docs/BRANCH_PROTECTION.md](BRANCH_PROTECTION.md).
 
 ## Commit and push
 
@@ -125,23 +125,23 @@ Prefer explicit paths over `git add .`. First push from a new fork branch: `git 
 
 1. Copy an existing script under `units/<office>/`; rename it.
 2. Edit embeds; point `run_announcer(..., webhook_key=...)` at a new key (e.g. `WEBHOOK_OSEC_NEW_CHANNEL`).
-3. Public URLs → [`config/links.yaml`](config/links.yaml) via `c.url('...')`. Staff URLs → local overlay.
-4. Add the key to [`.env.example`](.env.example) and your local `.env`.
-5. Register the script in [`common/manifest.py`](common/manifest.py).
-6. Update the office README and the announcer list in [README.md](README.md).
+3. Public URLs → [`config/links.yaml`](../config/links.yaml) via `c.url('...')`. Staff URLs → local overlay.
+4. Add the key to [`.env.example`](../.env.example) and your local `.env`.
+5. Register the script in [`common/manifest.py`](../common/manifest.py).
+6. Update the office README and the announcer list in [README.md](../README.md).
 7. Validate:
 
 ```bash
 python tools/validate_repo.py
 pytest -q
-python run_all.py --dry-run --delay 0
+python tools/run_all.py --dry-run --delay 0
 ```
 
 8. Commit with explicit paths (include `.env.example`, never `.env`).
 
 <!--
 === FILE FOOTER ===
-End of file: CONTRIBUTING.md
+End of file: docs/CONTRIBUTING.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

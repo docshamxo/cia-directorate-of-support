@@ -54,7 +54,7 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Important Information** | Application rules only |
 | **Disclaimer** | Always last; title `Disclaimer · Unofficial Community`; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
 
-Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). Bot usernames and brand rules: [BRAND.md](../BRAND.md).
+Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). Bot usernames and brand rules: [BRAND.md](../docs/BRAND.md).
 
 **Tone:** Public channels stay welcoming and scannable. Staff / candidate channels stay need-to-know -- short heroes, short link notes, one handling closer.
 

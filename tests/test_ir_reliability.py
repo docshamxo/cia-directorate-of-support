@@ -77,7 +77,7 @@ def test_resume_hint_points_at_first_failure() -> None:
         ScriptResult("units/osec/b.py", "B", "WB", "failed", reason="boom"),
         ScriptResult("units/ote/c.py", "C", "WC", "skipped"),
     ]
-    assert resume_hint(results) == "python run_all.py --from units/osec/b.py"
+    assert resume_hint(results) == "python tools/run_all.py --from units/osec/b.py"
 
 
 def test_clear_webhook_message_state_one_key(

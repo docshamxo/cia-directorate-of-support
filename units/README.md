@@ -21,12 +21,12 @@ Discord announcer scripts by office. Run from the **repository root** so `common
 | Global Response Staff | [`grs/`](grs/) | [README](grs/README.md) |
 | Executive Security Detail | [`esd/`](esd/) | [README](esd/README.md) |
 
-Catalog / run order: [`common/manifest.py`](../common/manifest.py). Batch runner: [`run_all.py`](../run_all.py). Ops: [`docs/OPS.md`](../docs/OPS.md).
+Catalog / run order: [`common/manifest.py`](../common/manifest.py). Batch runner: [`tools/run_all.py`](../tools/run_all.py). Ops: [`docs/OPS.md`](../docs/OPS.md).
 
 ```bash
 python units/ds/chain_of_command.py --dry-run
-python run_all.py --only ds --dry-run --delay 0
-python run_all.py --stage osec --dry-run --delay 0
+python tools/run_all.py --only ds --dry-run --delay 0
+python tools/run_all.py --stage osec --dry-run --delay 0
 ```
 
 `--only ds` and `--stage osec` still use short office names; script paths in the catalog are `units/<office>/...`.

@@ -27,6 +27,7 @@ Modified:
   - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
   - 2026-07-17 | docshamxo | Point Docs map at docs/README.md index.
   - 2026-07-17 | docshamxo | Point offices at units/; OPS at docs/OPS.md.
+  - 2026-07-17 | docshamxo | Prefer folders at root; point tools/run_all and docs/*.
 === END FILE HEADER ===
 -->
 
@@ -39,12 +40,12 @@ Modified:
 <p align="center">
   Discord announcer scripts for DS, OSEC, OTE, GRS, and ESD.<br>
   <em>WE GO AS ONE</em><br>
-  <small><strong>Unofficial Roblox community roleplay</strong> — not affiliated with, endorsed by, or connected to the United States Government or the Central Intelligence Agency. See <a href="LICENSE">LICENSE</a> and <a href="BRAND.md">BRAND.md</a>.</small>
+  <small><strong>Unofficial Roblox community roleplay</strong> — not affiliated with, endorsed by, or connected to the United States Government or the Central Intelligence Agency. See <a href="LICENSE">LICENSE</a> and <a href="docs/BRAND.md">BRAND.md</a>.</small>
 </p>
 
 <blockquote align="center">
   <strong>Property of the Central Intelligence Agency (ROBLOX), Inter Studios</strong><br>
-  <small>Proprietary community material — see <a href="NOTICE">NOTICE</a>.</small>
+  <small>Proprietary community material — see <a href="docs/NOTICE">NOTICE</a>.</small>
 </blockquote>
 
 <p align="center">
@@ -60,7 +61,7 @@ Need **Git** and **Python 3.10+** (`python` or `python3` / `py` on Windows).
 ```bash
 git clone https://github.com/docshamxo/cia-directorate-of-support.git
 cd cia-directorate-of-support
-python bootstrap.py
+python tools/bootstrap.py
 ```
 
 Then edit `.env` (never commit it):
@@ -78,8 +79,8 @@ Validate, diagnose, then run:
 ```bash
 python tools/validate_repo.py
 python tools/diagnose_webhook_state.py
-python run_all.py --dry-run --delay 0
-python run_all.py
+python tools/run_all.py --dry-run --delay 0
+python tools/run_all.py
 ```
 
 Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](docs/OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
@@ -95,8 +96,8 @@ python units/ds/chain_of_command.py
 python units/ds/chain_of_command.py --dry-run
 ```
 
-`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--allow-skip-reaction`, `--bot-channel-purge`.
-`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](docs/OPS.md).
+`tools/run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--allow-skip-reaction`, `--bot-channel-purge`.
+`tools/run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](docs/OPS.md).
 
 ---
 
@@ -122,7 +123,7 @@ python tools/validate_repo.py
 pytest -q
 ```
 
-Prefer `git add path/to/file` over `git add .` so `.env` cannot be staged. Full flow: [CONTRIBUTING.md](CONTRIBUTING.md).
+Prefer `git add path/to/file` over `git add .` so `.env` cannot be staged. Full flow: [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 ---
 
@@ -183,12 +184,12 @@ Full index: **[docs/README.md](docs/README.md)** (OPS, release, security, access
 | [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
 | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Inclusive Discord embed copy |
-| [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
+| [CHANGELOG.md](docs/CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
-| [BRAND.md](BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
+| [BRAND.md](docs/BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
 | [LICENSE](LICENSE) | MIT + brand use / trademark notice |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
-| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Edits, validation, new announcers |
+| [NOTICE](docs/NOTICE) | Proprietary ownership (Inter Studios) |
 | [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md) | Maintainer `main` protection / rulesets |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
 | [tools/README.md](tools/README.md) | Validation and diagnose tools |

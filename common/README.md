@@ -70,7 +70,7 @@ c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required; unofficia
 
 Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer · Unofficial Community (always last).
 
-Brand / bot naming: [BRAND.md](../BRAND.md).
+Brand / bot naming: [BRAND.md](../docs/BRAND.md).
 
 ## Useful helpers
 

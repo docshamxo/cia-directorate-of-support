@@ -21,16 +21,16 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 | [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md) | Operator notes for the 1.1.0 hardening release |
 | [ACCESSIBILITY.md](ACCESSIBILITY.md) | Inclusive Discord embed copy (screen readers, color) |
-| [CHANGELOG.md](../CHANGELOG.md) | Version history (Keep a Changelog) |
+| [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 
 ## Security & brand
 
 | Doc | Use when |
 |-----|----------|
 | [SECURITY.md](../SECURITY.md) | Secrets, leak rotation, compartmentation |
-| [BRAND.md](../BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
+| [BRAND.md](BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
 | [LICENSE](../LICENSE) | MIT + brand use / trademark notice |
-| [NOTICE](../NOTICE) | Proprietary ownership (Inter Studios) |
+| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
 
 ## Maintainers (GitHub / process)
 
@@ -38,7 +38,7 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 |-----|----------|
 | [BRANCH_PROTECTION.md](BRANCH_PROTECTION.md) | Recommended `main` protection / rulesets |
 | [CODEOWNERS_ENFORCEMENT.md](CODEOWNERS_ENFORCEMENT.md) | Turning on required Code Owners reviews |
-| [CONTRIBUTING.md](../CONTRIBUTING.md) | Edits, validation, new announcers |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
 | [`.github/CODEOWNERS`](../.github/CODEOWNERS) | Sensitive-path owners (enforcement optional) |
 
 ## Config, units & tools

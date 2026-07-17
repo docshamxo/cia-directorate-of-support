@@ -12,20 +12,20 @@ Modified:
 # Release checklist
 
 Use this before and during any live Discord announcer refresh. Prefer staged offices
-over a full `python run_all.py` live blast.
+over a full `python tools/run_all.py` live blast.
 
 ## Pre-flight (every host)
 
 - [ ] `git pull origin main` (or deploy the tagged release)
-- [ ] Confirm package version matches `VERSION` / `pyproject.toml`
-- [ ] `python bootstrap.py` (or refresh venv + `pip install -e ".[dev]"`)
+- [ ] Confirm package version matches `docs/VERSION` / `pyproject.toml`
+- [ ] `python tools/bootstrap.py` (or refresh venv + `pip install -e ".[dev]"`)
 - [ ] `.env` has current `WEBHOOK_*`, `DISCORD_INVITE_URL`, `DISCORD_OSEC_APPLICATION_RESULTS_URL`
 - [ ] Optional: `DISCORD_BOT_TOKEN` set if ✅ reactions are required
 - [ ] Staff overlay present when refreshing staff channels:
   `config/links.staff.example.yaml` → `config/links.staff.local.yaml` (filled, gitignored)
 - [ ] `python tools/validate_repo.py`
 - [ ] `pytest -q`
-- [ ] Full dry-run: `python run_all.py --dry-run --delay 0`
+- [ ] Full dry-run: `python tools/run_all.py --dry-run --delay 0`
 - [ ] Review [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md) for behavior changes since last live send
 
 ## Staged live rollout (required for production refreshes)
@@ -33,11 +33,11 @@ over a full `python run_all.py` live blast.
 Run **one stage per pass**. Verify Discord before advancing.
 
 ```bash
-python run_all.py --list-stages
-python run_all.py --stage 1 --dry-run --delay 0
-python run_all.py --stage 1
+python tools/run_all.py --list-stages
+python tools/run_all.py --stage 1 --dry-run --delay 0
+python tools/run_all.py --stage 1
 # verify DS channels, then:
-python run_all.py --stage 2
+python tools/run_all.py --stage 2
 # … through stage 5 (ESD)
 ```
 
@@ -52,7 +52,7 @@ python run_all.py --stage 2
 Narrow further with `--only` inside a stage if needed:
 
 ```bash
-python run_all.py --stage osec --only WEBHOOK_OSEC_OPEN_POSITIONS
+python tools/run_all.py --stage osec --only WEBHOOK_OSEC_OPEN_POSITIONS
 ```
 
 ## Abort / recovery
@@ -70,9 +70,9 @@ python run_all.py --stage osec --only WEBHOOK_OSEC_OPEN_POSITIONS
 
 ## Version bump (maintainers)
 
-1. Update `version` in `pyproject.toml` and `VERSION`
-2. Move items under `[Unreleased]` in `CHANGELOG.md` into a new `## [X.Y.Z] — YYYY-MM-DD`
-3. Update compare links at the bottom of `CHANGELOG.md`
+1. Update `version` in `pyproject.toml` and `docs/VERSION`
+2. Move items under `[Unreleased]` in `docs/CHANGELOG.md` into a new `## [X.Y.Z] — YYYY-MM-DD`
+3. Update compare links at the bottom of `docs/CHANGELOG.md`
 4. Open PR; merge when CI is green
 5. Optional: `gh release create vX.Y.Z --notes-file …`
 

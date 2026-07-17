@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
 Title: Changelog
-Path: CHANGELOG.md
+Path: docs/CHANGELOG.md
 Created: 2026-07-17
 Created by: docshamxo
 Modified:
@@ -15,13 +15,14 @@ All notable changes to this project are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
-(`MAJOR.MINOR.PATCH` in `pyproject.toml` / `VERSION`).
+(`MAJOR.MINOR.PATCH` in `pyproject.toml` / `docs/VERSION`).
 
 ## [Unreleased]
 
 ### Changed
 
 - Reorganize layout: office announcers under `units/<office>/`; ops runbook at `docs/OPS.md`.
+- Clean root layout: docs/tools/requirements folders; `python tools/run_all.py`.
 
 ### Planned
 
@@ -30,8 +31,8 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ## [1.1.0] — 2026-07-17
 
 Operator-facing release after webhook purge hardening, cross-cutting compartmentation,
-and staged rollout tooling. See [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md)
-and [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
+and staged rollout tooling. See [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md)
+and [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
 
 ### Added
 
@@ -73,7 +74,7 @@ and [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
 <!--
 === FILE FOOTER ===
-End of file: CHANGELOG.md
+End of file: docs/CHANGELOG.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

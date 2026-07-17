@@ -44,7 +44,7 @@ This Software supports an unofficial Roblox community roleplay (RP) project.
 4. Bot display names. Webhook and bot usernames configured for this project
    must include a community or RP marker (for example "Community" or "(RP)")
    and must not use a display name that solely impersonates an official agency
-   account. See BRAND.md.
+   account. See docs/BRAND.md.
 
 5. Community assets. Logos under assets/logos/ are community presentation
    assets for this roleplay Discord. Do not use them to imply government

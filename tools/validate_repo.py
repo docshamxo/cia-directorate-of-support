@@ -104,7 +104,6 @@ SCAN_SECRET_GLOBS = (
     "config/*.yaml",
     "README.md",
     "SECURITY.md",
-    "CONTRIBUTING.md",
     "docs/**/*.md",
     ".env.example",
 )
@@ -378,7 +377,7 @@ def validate_config() -> None:
 def validate_brand_legal() -> None:
     """LICENSE, bot naming, and documentation non-affiliation banners."""
     license_path = ROOT / "LICENSE"
-    brand_path = ROOT / "BRAND.md"
+    brand_path = ROOT / "docs" / "BRAND.md"
     if not license_path.is_file():
         fail("LICENSE is required (MIT + brand use / trademark notice)")
     license_text = license_path.read_text(encoding="utf-8")
@@ -386,10 +385,10 @@ def validate_brand_legal() -> None:
         if needle.lower() not in license_text.lower():
             fail(f"LICENSE must include brand-use language mentioning '{needle}'")
     if not brand_path.is_file():
-        fail("BRAND.md is required (bot naming / non-affiliation guidance)")
+        fail("docs/BRAND.md is required (bot naming / non-affiliation guidance)")
     brand_text = brand_path.read_text(encoding="utf-8")
     if "Community" not in brand_text or "(RP)" not in brand_text:
-        fail("BRAND.md must document Community / (RP) bot naming markers")
+        fail("docs/BRAND.md must document Community / (RP) bot naming markers")
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     if "not affiliated" not in readme.lower():
@@ -409,7 +408,7 @@ def validate_brand_legal() -> None:
         if not BOT_COMMUNITY_MARKER_RE.search(name):
             fail(
                 f"config/branding.yaml bots.{key}={name!r} must include "
-                "'Community' or '(RP)' (see BRAND.md)"
+                "'Community' or '(RP)' (see docs/BRAND.md)"
             )
         if OFFICIAL_LOOKING_BOT_RE.match(name.strip()):
             fail(
@@ -419,7 +418,7 @@ def validate_brand_legal() -> None:
         if len(name) > 80:
             fail(f"config/branding.yaml bots.{key} exceeds Discord's 80-char username limit")
 
-    print("Brand/legal: LICENSE, BRAND.md, affiliation banners, bot names ok")
+    print("Brand/legal: LICENSE, docs/BRAND.md, affiliation banners, bot names ok")
 
 
 def validate_banners() -> None:

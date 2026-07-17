@@ -20,6 +20,15 @@ Modified:
 
 [← Back to main README](../README.md)
 
+## Bootstrap / run all
+
+From the repository root:
+
+```bash
+python tools/bootstrap.py
+python tools/run_all.py --dry-run --delay 0
+```
+
 ## Sync file headers and footers
 
 Every text file must have a header and footer. Refresh them after edits:

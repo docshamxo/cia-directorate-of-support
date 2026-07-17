@@ -20,7 +20,7 @@ Modified:
 
 Operator checklist for live Discord announcer runs. Prefer dry-run before every live send.
 
-**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](../NOTICE).
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
 
 **Doctrine:** webhooks post; the bot only reacts; local state tracks what *this* suite can purge. Do not expect full-channel wipe capability.
 
@@ -33,7 +33,7 @@ For versioned releases and staged office rollout, also use
 ## Prerequisites
 
 ```bash
-python bootstrap.py
+python tools/bootstrap.py
 ```
 
 Edit `.env` (never commit) — keep classes split (`WEBHOOK_*` ≠ bot token ≠ staff overlay):
@@ -67,7 +67,7 @@ Fill real Drive URLs in the local file, then:
 ```bash
 python tools/validate_repo.py
 python tools/diagnose_webhook_state.py
-python run_all.py --dry-run --delay 0
+python tools/run_all.py --dry-run --delay 0
 ```
 
 ## Alerting exit codes
@@ -84,7 +84,7 @@ python run_all.py --dry-run --delay 0
 Per-announcer conventions (direct script invoke): **0** success, **10** intentional skip, **20** config/fail-closed.
 
 ```bash
-python run_all.py --dry-run --delay 0 --report .run_report.json
+python tools/run_all.py --dry-run --delay 0 --report .run_report.json
 ```
 
 ---
@@ -134,7 +134,7 @@ You should see `Added checkmark to N webhook message(s)` (or a clear error if th
 ### Intentionally skip reactions
 
 ```bash
-python run_all.py --allow-skip-reaction
+python tools/run_all.py --allow-skip-reaction
 # or per-script:
 python units/ds/public_information.py --allow-skip-reaction
 ```
@@ -209,7 +209,7 @@ Options:
 2. Optional bot-assisted cleanup (bot needs **Manage Messages** + **Read Message History**):
 
 ```bash
-python run_all.py --only ote --bot-channel-purge
+python tools/run_all.py --only ote --bot-channel-purge
 # or: set CIA_BOT_CHANNEL_PURGE=1
 ```
 
@@ -244,7 +244,7 @@ python tools/reset_webhook_state.py --all --yes
 ### Symptoms
 
 - Summary shows `Failed: N` and exit code **2** (CRITICAL)
-- Resume hint: `python run_all.py --from path/to/script.py`
+- Resume hint: `python tools/run_all.py --from path/to/script.py`
 - Optional JSON report via `--report` lists timings and stderr tails
 
 ### Response
@@ -255,13 +255,13 @@ python tools/reset_webhook_state.py --all --yes
 4. Resume or retry:
 
 ```bash
-python run_all.py --from units/osec/staff_documents.py
-python run_all.py --only WEBHOOK_OSEC_STAFF_DOCUMENTS
-python run_all.py --retry 1 --fail-fast
+python tools/run_all.py --from units/osec/staff_documents.py
+python tools/run_all.py --only WEBHOOK_OSEC_STAFF_DOCUMENTS
+python tools/run_all.py --retry 1 --fail-fast
 ```
 
 5. If a channel looks empty after a partial purge, clear only that key and re-send once
-6. Dry-run first when unsure: `python run_all.py --dry-run --from ... --delay 0`
+6. Dry-run first when unsure: `python tools/run_all.py --dry-run --from ... --delay 0`
 
 Observability: structured `event=` log lines; page on exit **2**, triage on **1**, ignore **0**.
 
@@ -272,21 +272,21 @@ Observability: structured `event=` log lines; page on exit **2**, triage on **1*
 Prefer **one office stage per live pass** after hardening or large config changes:
 
 ```bash
-python run_all.py --list-stages
-python run_all.py --stage 1 --dry-run --delay 0
-python run_all.py --stage 1
-python run_all.py --stage osec
-python run_all.py --only ds
-python run_all.py --only WEBHOOK_GRS_COC,esd
-python run_all.py --only WEBHOOK_OTE_PUBLIC_INFORMATION,WEBHOOK_OTE_PROGRAM_OVERVIEW
-python run_all.py --stage grs --only coc
-python run_all.py --delay 2.0
-python run_all.py --fail-fast
-python run_all.py --allow-skip-reaction
-python run_all.py --bot-channel-purge
-python run_all.py --from units/grs/coc.py
-python run_all.py --retry 1 --report .run_report.json
-python run_all.py --strict-skips
+python tools/run_all.py --list-stages
+python tools/run_all.py --stage 1 --dry-run --delay 0
+python tools/run_all.py --stage 1
+python tools/run_all.py --stage osec
+python tools/run_all.py --only ds
+python tools/run_all.py --only WEBHOOK_GRS_COC,esd
+python tools/run_all.py --only WEBHOOK_OTE_PUBLIC_INFORMATION,WEBHOOK_OTE_PROGRAM_OVERVIEW
+python tools/run_all.py --stage grs --only coc
+python tools/run_all.py --delay 2.0
+python tools/run_all.py --fail-fast
+python tools/run_all.py --allow-skip-reaction
+python tools/run_all.py --bot-channel-purge
+python tools/run_all.py --from units/grs/coc.py
+python tools/run_all.py --retry 1 --report .run_report.json
+python tools/run_all.py --strict-skips
 ```
 
 ---
@@ -301,16 +301,16 @@ Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_
 
 | Goal | Command / action |
 |------|------------------|
-| Preview all | `python run_all.py --dry-run --delay 0` |
-| Live all | `python run_all.py` (requires `DISCORD_BOT_TOKEN`) |
+| Preview all | `python tools/run_all.py --dry-run --delay 0` |
+| Live all | `python tools/run_all.py` (requires `DISCORD_BOT_TOKEN`) |
 | Diagnose state | `python tools/diagnose_webhook_state.py` |
 | Post without checkmark | `--allow-skip-reaction` or `CIA_ALLOW_SKIP_REACTION=1` |
 | Bot channel cleanup | `--bot-channel-purge` or `CIA_BOT_CHANNEL_PURGE=1` |
 | Forget purge targets | Delete or prune `.webhook_messages.json` |
-| Live all | `python run_all.py` |
+| Live all | `python tools/run_all.py` |
 | Require ✅ | `--require-reaction` or `CIA_REQUIRE_REACTION=1` |
 | Forget purge targets | `python tools/reset_webhook_state.py --key WEBHOOK_...` |
-| Resume mid-batch | `python run_all.py --from path/to/script.py` |
+| Resume mid-batch | `python tools/run_all.py --from path/to/script.py` |
 | Secrets leaked | [SECURITY.md](../SECURITY.md) rotation playbooks |
 
 <!--

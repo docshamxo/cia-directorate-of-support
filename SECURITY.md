@@ -29,9 +29,9 @@ Modified:
 
 Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them private.
 
-**Affiliation:** This repository supports an **unofficial Roblox community roleplay**. It is **not affiliated with**, endorsed by, or connected to the United States Government or the Central Intelligence Agency. Nothing here is an official government communication. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only. See [LICENSE](LICENSE) and [BRAND.md](BRAND.md).
+**Affiliation:** This repository supports an **unofficial Roblox community roleplay**. It is **not affiliated with**, endorsed by, or connected to the United States Government or the Central Intelligence Agency. Nothing here is an official government communication. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only. See [LICENSE](LICENSE) and [BRAND.md](docs/BRAND.md).
 
-**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](docs/NOTICE).
 
 ## Privacy / data governance
 
@@ -75,7 +75,7 @@ Keep credential classes separated — do not collapse them into one file or one 
 | `config/personnel.holders.local.yaml` | Mid-tier named rosters |
 | `.webhook_messages.json` | Message snowflakes for purge tracking (no secrets, still operational) |
 
-- Create `.env` via `python bootstrap.py` (copies `.env.example`)
+- Create `.env` via `python tools/bootstrap.py` (copies `.env.example`)
 - Never commit secrets, paste them into PRs, or share them in chat
 - Prefer `git add path/to/file` over `git add .`
 - Do **not** put new public staff share links in `config/links.yaml` — use the local overlay
@@ -138,11 +138,11 @@ In GitHub **Settings** (not always API-configurable):
 
 ## Supply chain
 
-- Runtime deps are **exact pins** in `requirements.txt` / `pyproject.toml`
+- Runtime deps are **exact pins** in `requirements/requirements.txt` / `pyproject.toml`
 - CI pins GitHub Actions by **commit SHA** (version tag in a trailing comment) and verifies the gitleaks release **SHA-256** before extract
 - Dependabot opens weekly PRs for `pip` and `github-actions`; review diff + CI before merge
 - Prefer `pip install -e ".[dev]"` from the locked pins in this repo over ad-hoc upgrades on ops hosts
-- CI runs `pip-audit` on `requirements.txt` / `requirements-dev.txt`
+- CI runs `pip-audit` on `requirements/requirements.txt` / `requirements/requirements-dev.txt`
 - CI enforces a **70%** statement coverage floor on `common/` (`pytest-cov`)
 
 ## Code scanning
@@ -153,7 +153,7 @@ CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs t
 
 - After each successful post, the suite **requires** a checkmark via the Discord bot API (`DISCORD_BOT_TOKEN`). Live runs exit non-zero if the token is missing or reactions fail — use `--allow-skip-reaction` / `CIA_ALLOW_SKIP_REACTION=1` only intentionally
 - Bot needs **Add Reactions** + **Read Message History** (+ channel access); optional **Manage Messages** for `--bot-channel-purge`
-- `python run_all.py --dry-run` never posts, deletes, or reacts
+- `python tools/run_all.py --dry-run` never posts, deletes, or reacts
 - Full runbooks: [OPS.md](docs/OPS.md)
 - `--require-reaction` / `CIA_REQUIRE_REACTION=1` fails if ✅ cannot be applied
 - Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](docs/OPS.md)
