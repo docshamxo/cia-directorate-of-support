@@ -10,6 +10,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Note prior-message cleanup on live announcer runs.
+#   - 2026-07-17 | docshamxo | Note purge-all recorded IDs and ✅ reactions on live runs.
 # === END FILE HEADER ===
 
 """
@@ -101,9 +102,10 @@ def run_all(argv: list[str] | None = None) -> int:
     mode = "dry-run" if args.dry_run else "live"
     print(f"Running {len(SCRIPTS)} announcer scripts from {REPO_ROOT} ({mode})\n")
     print(
-        "Note: live runs delete previously recorded webhook message(s) for each "
-        "channel (see .webhook_messages.json), then post the new embed(s).\n"
-        "Messages posted before this cleanup feature (or not recorded) are left alone.\n"
+        "Note: live runs delete every previously recorded webhook message for each "
+        "channel (see .webhook_messages.json), post the new embed(s), and add ✅ "
+        "when DISCORD_BOT_TOKEN is set.\n"
+        "Messages posted before cleanup / outside local state are left alone.\n"
     )
 
     succeeded: list[str] = []

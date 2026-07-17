@@ -18,6 +18,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document webhook prior-message cleanup via local state.
+  - 2026-07-17 | docshamxo | Document full recorded-ID purge and ✅ bot reactions.
 === END FILE HEADER ===
 -->
 
@@ -265,12 +266,14 @@ ls -la .env
 ### Step 8 — Add Discord webhook URLs
 
 1. Open `.env` in any text editor (Notepad, VS Code, nano, etc.)
-2. For each empty `WEBHOOK_...=` line, paste the Discord webhook URL after the `=`
-3. Save the file
+2. Paste `DISCORD_BOT_TOKEN=` (bot with **Add Reactions** + **Read Message History**) so every post gets ✅
+3. For each empty `WEBHOOK_...=` line, paste the Discord webhook URL after the `=`
+4. Save the file
 
-Example line after editing:
+Example lines after editing:
 
 ```env
+DISCORD_BOT_TOKEN=MTIz.ABC.your-bot-token
 WEBHOOK_DS_CHAIN_OF_COMMAND=https://discord.com/api/webhooks/1234567890/abcdefghijk
 ```
 
@@ -282,7 +285,9 @@ How to get a Discord webhook URL:
 4. Create or copy a webhook URL
 5. Paste it into the matching key in `.env`
 
-All keys are listed in the [Announcer list](#announcer-list) below and in [`.env.example`](.env.example).
+Without `DISCORD_BOT_TOKEN`, announcers still purge and post, but skip ✅ reactions (webhooks cannot react by themselves).
+
+All webhook keys are listed in the [Announcer list](#announcer-list) below and in [`.env.example`](.env.example).
 
 ---
 
@@ -365,7 +370,7 @@ python run_all.py --delay 1.5        # seconds between scripts
 python run_all.py --no-skip-empty    # error on empty webhook env vars
 ```
 
-Live runs **clear the last recorded webhook message(s)** for each channel (IDs stored locally in gitignored `.webhook_messages.json`), then post the new embed(s). Webhooks cannot delete full channel history — only previously recorded posts from this webhook. See [SECURITY.md](SECURITY.md).
+Live runs **delete every recorded prior webhook message** for that channel (all IDs in gitignored `.webhook_messages.json`), post the new embed(s), and add a ✅ reaction when `DISCORD_BOT_TOKEN` is set in `.env`. Webhooks cannot list or wipe full channel history — only previously recorded posts from this webhook are removed automatically. See [SECURITY.md](SECURITY.md).
 
 ### Preview one channel without posting
 

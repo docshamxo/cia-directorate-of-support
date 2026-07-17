@@ -13,6 +13,7 @@ Modified:
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document local webhook message ID state and cleanup limits.
   - 2026-07-15 | docshamxo | Document CodeQL code scanning via GitHub Actions.
+  - 2026-07-17 | docshamxo | Document full recorded-ID purge and DISCORD_BOT_TOKEN for ✅.
 === END FILE HEADER ===
 -->
 
@@ -27,6 +28,7 @@ Webhook URLs can post into Discord channels. Keep them private.
 - Never commit `.env`, paste webhooks into PRs, or share them in chat
 - Prefer explicit `git add path/to/file` over `git add .` when staging changes
 - `.webhook_messages.json` is local state (message IDs only) — it is gitignored; do not commit it
+- `DISCORD_BOT_TOKEN` is a secret (same rules as webhook URLs) — required for ✅ reactions
 
 ## If a webhook leaks
 
@@ -43,10 +45,12 @@ Webhook URLs can post into Discord channels. Keep them private.
 
 ## Operational notes
 
-- Live announcer runs **delete previously recorded webhook message(s)** for that channel (IDs in local `.webhook_messages.json`), then post the new embed(s)
+- Live announcer runs **delete every recorded webhook message ID** for that channel (local `.webhook_messages.json`), then post the new embed(s)
+- IDs that fail to delete are kept in state and retried on the next run (they are not dropped when the new post is recorded)
+- After each successful post, the suite adds ✅ via the Discord bot API when `DISCORD_BOT_TOKEN` is set (webhooks cannot react on their own)
 - Webhooks cannot purge full channel history — only messages this webhook posted and recorded can be removed automatically
 - Older posts from before cleanup was enabled (or never recorded) must be deleted manually in Discord
-- Use `python run_all.py --dry-run` to preview embeds without posting or deleting
+- Use `python run_all.py --dry-run` to preview embeds without posting, deleting, or reacting
 - If `run_all.py` fails mid-batch after a successful post, the next re-run for that channel will clear the recorded message(s) before posting again
 
 <!--

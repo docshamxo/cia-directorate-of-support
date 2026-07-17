@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Delete prior webhook messages via local message ID state.
 #   - 2026-07-17 | docshamxo | Put CoC usernames on their own line to avoid Discord wrap glitches.
+#   - 2026-07-17 | docshamxo | Track all prior IDs on purge; auto-react ✅ via bot token.
 # === END FILE HEADER ===
 
 """
@@ -62,6 +63,10 @@ WEBHOOK_URL_RE = re.compile(
 )
 DEFAULT_HTTP_TIMEOUT = 30.0
 MAX_SEND_ATTEMPTS = 5
+DISCORD_API_BASE = "https://discord.com/api/v10"
+# U+2705 WHITE HEAVY CHECK MARK — applied to every successful webhook post.
+CHECKMARK_REACTION = "\u2705"
+BOT_TOKEN_ENV = "DISCORD_BOT_TOKEN"
 
 
 def require_webhook(env_key: str) -> str:
@@ -519,12 +524,51 @@ def _save_webhook_message_state(state: dict[str, list[int]]) -> None:
     tmp_path.replace(path)
 
 
-def _delete_prior_webhook_messages(webhook: Any, *, state_key: str) -> None:
-    """Best-effort delete of previously posted messages for this webhook key."""
+def _unique_message_ids(ids: list[int]) -> list[int]:
+    """Preserve order while dropping duplicate message IDs."""
+    seen: set[int] = set()
+    ordered: list[int] = []
+    for message_id in ids:
+        if message_id in seen:
+            continue
+        seen.add(message_id)
+        ordered.append(message_id)
+    return ordered
+
+
+def _bot_token() -> str:
+    return os.environ.get(BOT_TOKEN_ENV, "").strip()
+
+
+def _message_channel_id(message: Any) -> int | None:
+    """Extract channel snowflake from a webhook wait=True message object."""
+    channel_id = getattr(message, "channel_id", None)
+    if channel_id is not None:
+        try:
+            return int(channel_id)
+        except (TypeError, ValueError):
+            pass
+    channel = getattr(message, "channel", None)
+    if channel is not None:
+        raw = getattr(channel, "id", channel)
+        try:
+            return int(raw)
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
+def _delete_prior_webhook_messages(webhook: Any, *, state_key: str) -> list[int]:
+    """Best-effort delete of every recorded message ID for this webhook key.
+
+    Returns IDs that could not be deleted (kept for the next run). Discord
+    webhooks cannot list channel history — only locally recorded IDs can be
+    purged.
+    """
     state = _load_webhook_message_state()
-    prior_ids = list(state.get(state_key, []))
+    prior_ids = _unique_message_ids(list(state.get(state_key, [])))
     if not prior_ids:
-        return
+        return []
 
     deleted = 0
     remaining: list[int] = []
@@ -579,6 +623,7 @@ def _delete_prior_webhook_messages(webhook: Any, *, state_key: str) -> None:
             )
             remaining.append(message_id)
 
+    remaining = _unique_message_ids(remaining)
     if remaining:
         state[state_key] = remaining
     else:
@@ -586,6 +631,117 @@ def _delete_prior_webhook_messages(webhook: Any, *, state_key: str) -> None:
     _save_webhook_message_state(state)
     if deleted:
         print(f"Cleared {deleted} prior webhook message(s) for {state_key}")
+    return remaining
+
+
+def _add_checkmark_reaction(
+    session: requests.Session,
+    *,
+    bot_token: str,
+    channel_id: int,
+    message_id: int,
+) -> None:
+    """PUT ✅ reaction as the bot user (webhooks cannot react by themselves)."""
+    from urllib.parse import quote
+
+    emoji = quote(CHECKMARK_REACTION, safe="")
+    url = f"{DISCORD_API_BASE}/channels/{channel_id}/messages/{message_id}/reactions/{emoji}/@me"
+    headers = {"Authorization": f"Bot {bot_token}"}
+    last_error: Exception | None = None
+    for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
+        try:
+            response = session.put(url, headers=headers)
+            if response.status_code in {200, 204}:
+                return
+            if response.status_code == 429 and attempt < MAX_SEND_ATTEMPTS:
+                try:
+                    payload = response.json()
+                    delay = float(payload.get("retry_after", 1))
+                except (ValueError, TypeError, json.JSONDecodeError):
+                    delay = min(2**attempt, 30)
+                logger.warning(
+                    "Rate-limited adding ✅ to message %s; sleeping %.1fs",
+                    message_id,
+                    delay,
+                )
+                time.sleep(delay)
+                continue
+            raise RuntimeError(
+                f"Failed to add ✅ reaction to message {message_id} (HTTP {response.status_code})"
+            )
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            last_error = exc
+            if attempt < MAX_SEND_ATTEMPTS:
+                delay = min(2**attempt, 30)
+                logger.warning(
+                    "Network error adding ✅ to message %s (attempt %s/%s); sleeping %.1fs",
+                    message_id,
+                    attempt,
+                    MAX_SEND_ATTEMPTS,
+                    delay,
+                )
+                time.sleep(delay)
+                continue
+            raise RuntimeError(
+                f"Failed to add ✅ reaction to message {message_id}: network error"
+            ) from exc
+    raise RuntimeError(f"Failed to add ✅ reaction to message {message_id}") from last_error
+
+
+def _react_to_messages(
+    session: requests.Session,
+    messages: list[Any],
+) -> None:
+    """Best-effort ✅ on every message produced by this send cycle."""
+    if not messages:
+        return
+    token = _bot_token()
+    if not token:
+        print(
+            f"Warning: {BOT_TOKEN_ENV} not set — skipped ✅ reactions. "
+            "Add a bot token with Add Reactions + Read Message History in the target server."
+        )
+        return
+
+    reacted = 0
+    for message in messages:
+        message_id = int(message.id)
+        channel_id = _message_channel_id(message)
+        if channel_id is None:
+            logger.warning(
+                "Could not resolve channel_id for message %s; skipped ✅",
+                message_id,
+            )
+            continue
+        try:
+            _add_checkmark_reaction(
+                session,
+                bot_token=token,
+                channel_id=channel_id,
+                message_id=message_id,
+            )
+            reacted += 1
+        except RuntimeError as exc:
+            logger.warning("%s", exc)
+            print(f"Warning: {exc}")
+    if reacted:
+        print(f"Added ✅ to {reacted} webhook message(s)")
+
+
+def _record_webhook_messages(
+    *,
+    state_key: str,
+    remaining_prior_ids: list[int],
+    new_message_ids: list[int],
+) -> None:
+    """Persist undeleted prior IDs plus every ID created this run."""
+    combined = _unique_message_ids([*remaining_prior_ids, *new_message_ids])
+    state = _load_webhook_message_state()
+    if combined:
+        state[state_key] = combined
+    else:
+        state.pop(state_key, None)
+    _save_webhook_message_state(state)
 
 
 def send_webhook(
@@ -598,10 +754,12 @@ def send_webhook(
 ) -> list[int]:
     """Send embeds via Discord webhook.
 
-    When ``state_key`` is set, deletes any previously stored message IDs for that
-    key (best-effort; ignores 404), then posts with ``wait=True`` and saves the
-    new message ID(s) to ``.webhook_messages.json``. Webhooks cannot purge full
-    channel history — only messages this webhook previously posted and recorded.
+    When ``state_key`` is set, deletes every previously stored message ID for
+    that key (best-effort; ignores 404), posts with ``wait=True``, records all
+    new message IDs in ``.webhook_messages.json`` (keeping any IDs that failed
+    to delete), and adds a ✅ reaction to each new message when
+    ``DISCORD_BOT_TOKEN`` is set. Webhooks cannot purge full channel history —
+    only messages this webhook previously posted and recorded.
     """
     from discord import SyncWebhook
 
@@ -611,27 +769,36 @@ def send_webhook(
 
     masked = mask_webhook_url(webhook_url)
     session = _session_with_timeout()
-    webhook = SyncWebhook.from_url(webhook_url, session=session)
+    bot_token = _bot_token() or None
+    webhook = SyncWebhook.from_url(webhook_url, session=session, bot_token=bot_token)
 
+    remaining_prior_ids: list[int] = []
     if state_key:
-        _delete_prior_webhook_messages(webhook, state_key=state_key)
+        remaining_prior_ids = _delete_prior_webhook_messages(webhook, state_key=state_key)
 
     last_error: Exception | None = None
     for attempt in range(1, MAX_SEND_ATTEMPTS + 1):
         try:
+            # One Discord message per call today; collect as a list so multi-send
+            # batches (future chunking) still purge/react every ID.
+            posted_messages: list[Any] = []
             message = webhook.send(
                 embeds=embeds,
                 username=username,
                 files=files or [],
                 wait=True,
             )
-            message_ids: list[int] = []
             if message is not None:
-                message_ids = [int(message.id)]
-            if state_key and message_ids:
-                state = _load_webhook_message_state()
-                state[state_key] = message_ids
-                _save_webhook_message_state(state)
+                posted_messages.append(message)
+
+            message_ids = [int(msg.id) for msg in posted_messages]
+            if state_key:
+                _record_webhook_messages(
+                    state_key=state_key,
+                    remaining_prior_ids=remaining_prior_ids,
+                    new_message_ids=message_ids,
+                )
+            _react_to_messages(session, posted_messages)
             logger.info("Webhook send succeeded (%s) as %s", masked, username)
             print("Sent successfully!")
             return message_ids
