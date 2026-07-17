@@ -16,6 +16,7 @@
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Consolidate sections; shared Marking: STAFF notes.
+#   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 # === END FILE HEADER ===
 
 """
@@ -129,6 +130,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Weapons Standard Training",
                     "DS Community | OTE Weapons Standard Training Guide",
                     c.url("ote.staff_documents.weapons_st_guide"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Training Materials",
+            description="Shared Directorate of Support standard training references.",
+            color=c.COLOR_OTE,
+            fields=(
+                c.link_field(
+                    "General Standard Training",
+                    "DS Community | General Standard Training Guide",
+                    c.url("community.general_standard_training_guide"),
                     c.marking_note("STAFF"),
                 ),
             ),

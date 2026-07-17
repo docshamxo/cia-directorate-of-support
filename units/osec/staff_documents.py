@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Replace mojibake em dashes with ASCII in phase titles.
+#   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 # === END FILE HEADER ===
 
 """
@@ -82,6 +83,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Phase II - Intermediate",
                     "DS Community | OSEC Phase II Guide",
                     c.url("osec.staff_documents.phase_ii"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Training Materials",
+            description="Shared Directorate of Support standard training references.",
+            color=c.COLOR_OSEC,
+            fields=(
+                c.link_field(
+                    "General Standard Training",
+                    "DS Community | General Standard Training Guide",
+                    c.url("community.general_standard_training_guide"),
                     c.marking_note("STAFF"),
                 ),
             ),

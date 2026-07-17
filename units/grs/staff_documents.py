@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Unify staff-docs template and unit-color closers.
 #   - 2026-07-17 | docshamxo | Prefer Drive root + handbook; STAFF markings.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
+#   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 # === END FILE HEADER ===
 
 """
@@ -57,6 +58,19 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Handbook",
                     "DS Community | GRS Handbook",
                     c.url("grs.staff_documents.handbook"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Training Materials",
+            description="Shared Directorate of Support standard training references.",
+            color=c.COLOR_GRS,
+            fields=(
+                c.link_field(
+                    "General Standard Training",
+                    "DS Community | General Standard Training Guide",
+                    c.url("community.general_standard_training_guide"),
                     c.marking_note("STAFF"),
                 ),
             ),
