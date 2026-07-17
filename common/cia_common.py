@@ -17,6 +17,7 @@
 #   - 2026-07-17 | docshamxo | Community markings, staff overlay, safer purge, logo confine, mentions off.
 #   - 2026-07-17 | docshamxo | Safe console print for Windows cp1252 dry-run paths.
 #   - 2026-07-17 | docshamxo | Weave Inter Studios property notice into disclaimer closers and footers.
+#   - 2026-07-17 | docshamxo | Accessibility helpers: markings, command bands, emoji-only guard.
 # === END FILE HEADER ===
 
 """
@@ -420,7 +421,77 @@ def pillar_field(title: str, description: str) -> tuple[str, str]:
     return (title, description)
 
 
+# ── Accessibility / inclusive design ──────────────────────────────────────────
+
+# Discord embed sidebar color is decorative only (not announced by screen readers).
+# Always pair unit color with explicit unit / marking / status text.
+COMMAND_BAND_LABELS: dict[str, str] = {
+    "LOWCOM": "Lower Command (LOWCOM)",
+    "MIDCOM": "Middle Command (MIDCOM)",
+    "HIGHCOM": "High Command (HIGHCOM)",
+}
+
+# Strip common emoji / symbol ranges when checking for a text signal.
+_EMOJI_SYMBOL_RE = re.compile(
+    "["
+    "\U0001F300-\U0001FAFF"  # Misc. pictographs, symbols, extended
+    "\U00002700-\U000027BF"  # Dingbats
+    "\U00002600-\U000026FF"  # Misc. symbols
+    "\U0000FE00-\U0000FE0F"  # Variation selectors
+    "\U0000200D"  # ZWJ
+    "\U0000200B-\U0000200F"  # Zero-width / direction marks
+    "]+",
+    flags=re.UNICODE,
+)
+_TEXT_SIGNAL_RE = re.compile(r"[A-Za-z0-9]")
+
+
+def command_band_label(band: str) -> str:
+    """Expand LOWCOM/MIDCOM/HIGHCOM so abbreviations are not the only signal."""
+    key = band.strip().upper()
+    return COMMAND_BAND_LABELS.get(key, band.strip())
+
+
+def marking_note(marking: str, extra: str | None = None) -> str:
+    """Community marking as readable text (never color-only sensitivity)."""
+    text = f"Marking: {marking.strip().upper()}."
+    if extra:
+        text = f"{text} {extra.strip()}"
+    return text
+
+
+def has_text_signal(value: str) -> bool:
+    """True when value still has letters/digits after removing emoji/symbols."""
+    if not value or not value.strip():
+        return False
+    cleaned = _EMOJI_SYMBOL_RE.sub("", value)
+    return bool(_TEXT_SIGNAL_RE.search(cleaned))
+
+
+def validate_embed_accessibility(embeds: Sequence[discord.Embed]) -> None:
+    """Reject emoji-only titles/field names that hide meaning from screen readers."""
+    issues: list[str] = []
+    for index, item in enumerate(embeds, start=1):
+        title = item.title or ""
+        if title and not has_text_signal(title):
+            issues.append(f"embed {index} title is emoji/symbol-only (no text alternative)")
+        for field_index, field in enumerate(item.fields, start=1):
+            if field.name and not has_text_signal(field.name):
+                issues.append(
+                    f"embed {index} field {field_index} name is emoji/symbol-only "
+                    "(critical info needs words, not emoji alone)"
+                )
+            if field.value and not has_text_signal(field.value):
+                issues.append(
+                    f"embed {index} field {field_index} value is emoji/symbol-only "
+                    "(provide a text alternative)"
+                )
+    if issues:
+        raise ValueError("Discord embed accessibility check failed:\n  - " + "\n  - ".join(issues))
+
+
 def agency_eyebrow(unit: str) -> str:
+
     """Standard italic hero eyebrow: Central Intelligence Agency · {Unit}."""
     return f"*Central Intelligence Agency · {unit}*"
 
@@ -594,7 +665,7 @@ def server_regulations_embeds() -> list[discord.Embed]:
 
 
 def validate_embed_limits(embeds: Sequence[discord.Embed]) -> None:
-    """Raise ValueError if embeds exceed Discord field limits."""
+    """Raise ValueError if embeds exceed Discord field limits or a11y basics."""
     if len(embeds) > EMBEDS_PER_MESSAGE_LIMIT:
         raise ValueError(
             f"Discord allows at most {EMBEDS_PER_MESSAGE_LIMIT} embeds per message; "
@@ -626,6 +697,7 @@ def validate_embed_limits(embeds: Sequence[discord.Embed]) -> None:
                 )
     if issues:
         raise ValueError("Discord embed limit check failed:\n  - " + "\n  - ".join(issues))
+    validate_embed_accessibility(embeds)
 
 
 def _session_with_timeout(timeout: float = DEFAULT_HTTP_TIMEOUT) -> requests.Session:

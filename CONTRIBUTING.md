@@ -17,6 +17,7 @@ Modified:
   - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
   - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
+  - 2026-07-17 | docshamxo | Point contributors at accessibility embed rules.
 === END FILE HEADER ===
 -->
 
@@ -41,7 +42,7 @@ Unofficial Roblox community project — not affiliated with the US Government or
 
 ## Everyday edits
 
-Prefer YAML under [`config/`](config/) over hardcoding in Python.
+Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).
 
 | Change | Where |
 |--------|-------|

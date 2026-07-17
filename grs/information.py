@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align internal info template and closing vocabulary.
+#   - 2026-07-17 | docshamxo | Accessible marking notes.
 # === END FILE HEADER ===
 
 """

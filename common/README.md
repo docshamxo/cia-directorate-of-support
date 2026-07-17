@@ -15,6 +15,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-15 | docshamxo | Document embed style helpers (hero, motto, closers).
+  - 2026-07-17 | docshamxo | Document accessibility helpers.
 === END FILE HEADER ===
 -->
 
@@ -28,6 +29,7 @@ Modified:
 [`rollout.py`](rollout.py) implements `--only` / `--stage` selection for `run_all.py`.
 
 Full embed contract: [Discord Embed Style Guide](../config/README.md#discord-embed-style-guide).
+Accessibility: [docs/ACCESSIBILITY.md](../docs/ACCESSIBILITY.md).
 
 ## Do not hardcode here
 
@@ -57,7 +59,8 @@ c.hero_embed(
 
 c.agency_eyebrow("Office of Security")          # *Central Intelligence Agency · …*
 c.motto_line(c.OSEC_MOTTO)                      # *PROTECT · DETECT · RESPOND*
-c.link_field("Handbook", "CIA OSEC | Handbook", url, "STAFF.")
+c.link_field("Handbook", "CIA OSEC | Handbook", url, c.marking_note("STAFF"))
+c.command_band_label("LOWCOM")                   # Lower Command (LOWCOM)
 c.pending_group_field("ESD", "CIA | Executive Security Detail")
 
 c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
