@@ -12,6 +12,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Delete prior webhook messages via local message ID state.
+#   - 2026-07-17 | docshamxo | Put CoC usernames on their own line to avoid Discord wrap glitches.
 # === END FILE HEADER ===
 
 """
@@ -231,7 +232,9 @@ class Role:
     holder: str
 
     def format(self) -> str:
-        return f"**[{self.abbrev}] {self.title}** - {self.holder}"
+        # Username on its own line so Discord embed wrapping does not split
+        # "Title - username" awkwardly across lines for long role titles.
+        return f"**[{self.abbrev}] {self.title}**\n→ {self.holder}"
 
 
 @dataclass(frozen=True, slots=True)
