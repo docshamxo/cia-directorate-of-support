@@ -58,7 +58,7 @@ python run_all.py --stage osec --only WEBHOOK_OSEC_OPEN_POSITIONS
 ## Abort / recovery
 
 - [ ] On failure: stop advancing stages; fix config; re-dry-run that stage only
-- [ ] Empty-channel recovery: see [OPS.md](../OPS.md) (reset `.webhook_messages.json` key, then re-send)
+- [ ] Empty-channel recovery: see [OPS.md](OPS.md) (reset `.webhook_messages.json` key, then re-send)
 - [ ] Webhook rotate: regenerate in Discord → update `.env` → clear that key in state file
 
 ## Post-release

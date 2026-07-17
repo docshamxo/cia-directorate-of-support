@@ -1,6 +1,6 @@
 # === FILE HEADER ===
-# Title: Server Regulations
-# Path: ds/server_regulations.py
+# Title: COC
+# Path: units/esd/coc.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -9,14 +9,13 @@
 #   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-#   - 2026-07-15 | docshamxo | Attach DS logo on server regulations hero.
+#   - 2026-07-15 | docshamxo | Attach ESD logo on chain-of-command hero.
 # === END FILE HEADER ===
 
 """
-CIA DS server regulations announcer.
+CIA ESD chain of command announcer.
 
-Posts the Directorate of Support communications server regulations
-to a Discord webhook.
+Sends the Executive Security Detail chain of command to a Discord webhook.
 """
 
 from __future__ import annotations
@@ -24,27 +23,34 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import run_announcer, subunit_coc_embeds
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return c.server_regulations_embeds()
+    return subunit_coc_embeds(
+        unit_full="Executive Security Detail",
+        unit_abbrev="ESD",
+        color=c.COLOR_ESD,
+        about=c.ESD_ABOUT,
+        command_roles=c.ESD_COMMAND,
+        logo=c.LOGOS["esd"],
+    )
 
 
-def send_server_regulations() -> None:
+def send_chain_of_command() -> None:
     run_announcer(
-        webhook_key="WEBHOOK_DS_SERVER_REGULATIONS",
-        username=c.BOT_DS,
+        webhook_key="WEBHOOK_ESD_COC",
+        username=c.BOT_ESD,
         build_embeds=_build_embeds,
-        files=[c.logo_file(c.LOGOS["ds"])],
+        files=[c.logo_file(c.LOGOS["esd"])],
         dry_run="--dry-run" in sys.argv,
     )
 
 
 if __name__ == "__main__":
-    send_server_regulations()
+    send_chain_of_command()
 
 # === FILE FOOTER ===
-# End of file: ds/server_regulations.py
+# End of file: units/esd/coc.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

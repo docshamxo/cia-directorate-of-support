@@ -60,13 +60,13 @@ The tool reports:
 - recorded message IDs in `.webhook_messages.json` per announcer
 - stale/orphan state keys not in the announcer catalog
 
-Use this after rotating webhooks, debugging duplicate posts, or recovering from an empty channel. See [OPS.md](../OPS.md).
+Use this after rotating webhooks, debugging duplicate posts, or recovering from an empty channel. See [OPS.md](../docs/OPS.md).
 ## Reset webhook message state
 Empty-channel / mid-batch recovery (edits gitignored `.webhook_messages.json` only):
 python tools/reset_webhook_state.py --list
 python tools/reset_webhook_state.py --key WEBHOOK_DS_PUBLIC_INFORMATION
 python tools/reset_webhook_state.py --all --yes
-See [OPS.md](../OPS.md).
+See [OPS.md](../docs/OPS.md).
 
 ## Run the validator
 
@@ -84,7 +84,7 @@ python3 tools/validate_repo.py
 
 ## What the validator checks
 
-- every script listed in `run_all.py` exists
+- every script listed in `common/manifest.py` exists
 - webhook keys in code match `.env.example`
 - logo files are present
 - config YAML files load

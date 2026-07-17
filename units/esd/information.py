@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Information
-# Path: esd/information.py
+# Path: units/esd/information.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -86,6 +86,6 @@ if __name__ == "__main__":
     send_esd_information()
 
 # === FILE FOOTER ===
-# End of file: esd/information.py
+# End of file: units/esd/information.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

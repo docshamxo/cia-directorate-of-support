@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Shared --only / --stage selection for run_all.
+#   - 2026-07-17 | docshamxo | Match office tokens under units/<office>/.
 # === END FILE HEADER ===
 
 """Shared announcer selection for staged office rollout and --only filters."""
@@ -13,16 +14,21 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from common.manifest import ANNOUNCERS, announcers_for_office, resolve_rollout_stage
+from common.manifest import ANNOUNCERS, OFFICES, announcers_for_office, resolve_rollout_stage
+
+_OFFICE_TOKENS = frozenset(OFFICES)
 
 
 def matches_only(relative: str, label: str, webhook_key: str, only: str) -> bool:
-    token = only.strip().lower()
+    token = only.strip().lower().replace("\\", "/")
     if not token:
         return True
     rel = relative.lower().replace("\\", "/")
     base = Path(rel).name
     stem = Path(rel).stem
+    parts = Path(rel).parts
+    # Accept office short name (ds) or units/ds for --only / --from.
+    office_token = token.removeprefix("units/").rstrip("/")
     return (
         token == webhook_key.lower()
         or token == rel
@@ -30,7 +36,7 @@ def matches_only(relative: str, label: str, webhook_key: str, only: str) -> bool
         or token == stem
         or token in label.lower()
         or rel.startswith(token.rstrip("/") + "/")
-        or rel.split("/", 1)[0] == token
+        or (office_token in _OFFICE_TOKENS and office_token in parts)
     )
 
 

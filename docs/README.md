@@ -17,7 +17,7 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 
 | Doc | Use when |
 |-----|----------|
-| [OPS.md](../OPS.md) | Live runs, checkmark reactions, purge / state recovery |
+| [OPS.md](OPS.md) | Live runs, checkmark reactions, purge / state recovery |
 | [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md) | Operator notes for the 1.1.0 hardening release |
 | [ACCESSIBILITY.md](ACCESSIBILITY.md) | Inclusive Discord embed copy (screen readers, color) |
@@ -41,10 +41,11 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 | [CONTRIBUTING.md](../CONTRIBUTING.md) | Edits, validation, new announcers |
 | [`.github/CODEOWNERS`](../.github/CODEOWNERS) | Sensitive-path owners (enforcement optional) |
 
-## Config & tools
+## Config, units & tools
 
 | Doc | Use when |
 |-----|----------|
+| [units/README.md](../units/README.md) | Office announcer folders (ds / osec / ote / grs / esd) |
 | [config/README.md](../config/README.md) | YAML + Discord embed style |
 | [tools/README.md](../tools/README.md) | Validation and diagnose tools |
 | [`.env.example`](../.env.example) | Webhook / token template |

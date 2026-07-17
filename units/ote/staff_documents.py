@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Staff Documents
-# Path: ote/staff_documents.py
+# Path: units/ote/staff_documents.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -169,6 +169,6 @@ if __name__ == "__main__":
     send_ote_staff_documents()
 
 # === FILE FOOTER ===
-# End of file: ote/staff_documents.py
+# End of file: units/ote/staff_documents.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

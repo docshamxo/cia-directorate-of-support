@@ -54,7 +54,7 @@ python run_all.py --stage 1          # DS only
 python run_all.py --only ds,osec     # ad-hoc filter
 ```
 
-Full procedure: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Ops details: [OPS.md](../OPS.md).
+Full procedure: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Ops details: [OPS.md](OPS.md).
 
 ### Content note (PR #19)
 
@@ -73,7 +73,7 @@ still show the pre-SSA ladder.
 
 - Commit `.env`, `links.staff.local.yaml`, or `.webhook_messages.json`
 - Wipe Discord channels manually expecting `run_all` to rebuild from empty state
-  without resetting the matching state key (see OPS.md)
+  without resetting the matching state key (see docs/OPS.md)
 - Rely on USG-style markings — community vocabulary only: **PUBLIC** / **STAFF** / **CANDIDATE**
 
 <!--

@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Information
-# Path: osec/information.py
+# Path: units/osec/information.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -109,6 +109,6 @@ if __name__ == "__main__":
     send_osec_information()
 
 # === FILE FOOTER ===
-# End of file: osec/information.py
+# End of file: units/osec/information.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

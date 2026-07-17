@@ -1095,7 +1095,7 @@ def _delete_webhook_messages(
         print(
             f"Warning: {len(remaining)} prior message(s) for {state_key} could not be "
             "deleted (wrong webhook, missing Manage Messages, or already gone). "
-            "See OPS.md / tools/diagnose_webhook_state.py."
+            "See docs/OPS.md / tools/diagnose_webhook_state.py."
         )
     return remaining
 

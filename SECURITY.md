@@ -94,7 +94,7 @@ Keep credential classes separated — do not collapse them into one file or one 
 1. Discord channel -> **Integrations** -> **Webhooks** -> delete or regenerate
 2. Update the matching `WEBHOOK_...=` in local `.env`
 3. Confirm `.env` is not staged: `git status`
-4. Clear that key in `.webhook_messages.json` (old webhook cannot delete its prior posts) — see [OPS.md](OPS.md)
+4. Clear that key in `.webhook_messages.json` (old webhook cannot delete its prior posts) — see [OPS.md](docs/OPS.md)
 5. Re-run only the affected announcer
 
 ## If a bot token leaks
@@ -122,7 +122,7 @@ Keep credential classes separated — do not collapse them into one file or one 
 - Do not back up `.webhook_messages.json` into shared drives or commit history
 - Diagnose: `python tools/diagnose_webhook_state.py`
 
-Operator detail: [OPS.md](OPS.md) (purge + reaction troubleshooting).
+Operator detail: [OPS.md](docs/OPS.md) (purge + reaction troubleshooting).
 
 ## Repository protection (maintainers)
 
@@ -154,9 +154,9 @@ CodeQL workflow (`.github/workflows/codeql.yml`) analyzes Python on pushes/PRs t
 - After each successful post, the suite **requires** a checkmark via the Discord bot API (`DISCORD_BOT_TOKEN`). Live runs exit non-zero if the token is missing or reactions fail — use `--allow-skip-reaction` / `CIA_ALLOW_SKIP_REACTION=1` only intentionally
 - Bot needs **Add Reactions** + **Read Message History** (+ channel access); optional **Manage Messages** for `--bot-channel-purge`
 - `python run_all.py --dry-run` never posts, deletes, or reacts
-- Full runbooks: [OPS.md](OPS.md)
+- Full runbooks: [OPS.md](docs/OPS.md)
 - `--require-reaction` / `CIA_REQUIRE_REACTION=1` fails if ✅ cannot be applied
-- Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](OPS.md)
+- Full runbooks (incl. mid-batch failures / exit codes): [OPS.md](docs/OPS.md)
 
 <!--
 === FILE FOOTER ===

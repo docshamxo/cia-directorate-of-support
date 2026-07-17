@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Validate Inter Studios property_notice is present in config.
 #   - 2026-07-17 | docshamxo | Require accessibility helpers and docs.
 #   - 2026-07-17 | docshamxo | Brand/legal checks: LICENSE, bot names, affiliation, eyebrow.
+#   - 2026-07-17 | docshamxo | Announcers under units/; OPS.md under docs/.
 # === END FILE HEADER ===
 
 """
@@ -79,7 +80,7 @@ HEADER_MARKER = "=== FILE HEADER ==="
 FOOTER_MARKER = "=== FILE FOOTER ==="
 SKIP_BANNER_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
 SKIP_BANNER_NAMES = {"LICENSE"}
-ANNOUNCER_DIRS = ("ds", "osec", "ote", "grs", "esd")
+ANNOUNCER_DIRS = ("units/ds", "units/osec", "units/ote", "units/grs", "units/esd")
 BOT_COMMUNITY_MARKER_RE = re.compile(r"Community|\(RP\)", re.IGNORECASE)
 OFFICIAL_LOOKING_BOT_RE = re.compile(r"^CIA\s*\|")
 BARE_CIA_EYEBROW_RE = re.compile(
@@ -103,7 +104,6 @@ SCAN_SECRET_GLOBS = (
     "config/*.yaml",
     "README.md",
     "SECURITY.md",
-    "OPS.md",
     "CONTRIBUTING.md",
     "docs/**/*.md",
     ".env.example",

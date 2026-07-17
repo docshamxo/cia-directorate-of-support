@@ -26,14 +26,14 @@ Usage (from the repository root):
     python run_all.py --fail-fast
     python run_all.py --delay 1.5
     python run_all.py --only ds,osec
-    python run_all.py --only WEBHOOK_GRS_COC,esd/coc.py
+    python run_all.py --only WEBHOOK_GRS_COC,units/esd/coc.py
     python run_all.py --stage 1
     python run_all.py --stage osec --dry-run
     python run_all.py --list
     python run_all.py --list-stages
     python run_all.py --allow-skip-reaction
     python run_all.py --bot-channel-purge
-    python run_all.py --from osec/staff_documents.py
+    python run_all.py --from units/osec/staff_documents.py
     python run_all.py --retry 1 --report .run_report.json
 """
 
@@ -117,7 +117,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--only",
         default="",
         help=(
-            "Comma-separated filter: office folder (ds), script path (grs/coc.py), "
+            "Comma-separated filter: office folder (ds), script path (units/grs/coc.py), "
             "basename/stem (coc), label substring, or WEBHOOK_* key."
         ),
     )
@@ -225,7 +225,7 @@ def _warn_duplicate_webhooks(env: dict[str, str]) -> None:
     for webhook_id, keys in sorted(duplicates.items()):
         print(f"  webhook ID {webhook_id}: {', '.join(keys)}")
     print(
-        "  Sibling keys purge together (see OPS.md). Prefer one webhook per channel when possible.\n"
+        "  Sibling keys purge together (see docs/OPS.md). Prefer one webhook per channel when possible.\n"
     )
 
 
@@ -485,7 +485,7 @@ def run_all(argv: list[str] | None = None) -> int:
             print(f"\nMid-batch resume hint:\n  {resume}")
             if not args.dry_run:
                 print(
-                    "  See OPS.md -> Mid-batch failures. "
+                    "  See docs/OPS.md -> Mid-batch failures. "
                     "State is per-channel; successful posts before the failure are already live."
                 )
 

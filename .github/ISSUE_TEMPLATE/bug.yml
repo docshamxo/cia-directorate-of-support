@@ -16,7 +16,7 @@ body:
     attributes:
       value: |
         Do **not** paste webhook URLs, bot tokens, staff Drive links, or `.env` values.
-        For live-run purge / reaction issues, see [OPS.md](https://github.com/docshamxo/cia-directorate-of-support/blob/main/OPS.md) first.
+        For live-run purge / reaction issues, see [OPS.md](https://github.com/docshamxo/cia-directorate-of-support/blob/main/docs/OPS.md) first.
   - type: textarea
     id: what-happened
     attributes:

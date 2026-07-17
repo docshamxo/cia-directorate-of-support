@@ -55,7 +55,7 @@ After renaming CI jobs, update the required-check list to the exact job names sh
 
 - [SECURITY.md](../SECURITY.md) — secret playbooks and affiliation notes
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — local validate / pytest / dry-run loop
-- [OPS.md](../OPS.md) — live Discord runbook
+- [OPS.md](OPS.md) — live Discord runbook
 
 <!--
 === FILE FOOTER ===

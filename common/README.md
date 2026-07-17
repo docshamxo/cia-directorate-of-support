@@ -88,7 +88,7 @@ c.send_webhook(url, embeds, username=c.BOT_DS)
 ```bash
 cd cia-directorate-of-support
 python tools/validate_repo.py
-python ds/chain_of_command.py
+python units/ds/chain_of_command.py
 ```
 
 <!--

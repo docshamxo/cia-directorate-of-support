@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: COC
-# Path: ote/coc.py
+# Path: units/ote/coc.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -79,6 +79,6 @@ if __name__ == "__main__":
     send_chain_of_command()
 
 # === FILE FOOTER ===
-# End of file: ote/coc.py
+# End of file: units/ote/coc.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

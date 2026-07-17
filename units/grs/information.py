@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Information
-# Path: grs/information.py
+# Path: units/grs/information.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -83,6 +83,6 @@ if __name__ == "__main__":
     send_grs_information()
 
 # === FILE FOOTER ===
-# End of file: grs/information.py
+# End of file: units/grs/information.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

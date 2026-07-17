@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
-Title: DS README
-Path: ds/README.md
+Title: OTE README
+Path: units/ote/README.md
 Created: 2026-07-14
 Created by: docshamxo
 Modified:
@@ -18,41 +18,46 @@ Modified:
 === END FILE HEADER ===
 -->
 
-# Directorate of Support (DS)
+# Office of Training & Education (OTE)
 
 [← Back to main README](../README.md)
 
-Motto: **WE GO AS ONE**
+Motto: **SCIENTIA EST LUX LUCIS**  
+Parent: DS
 
-Setup once at repo root: [README.md](../README.md). Live ops (✅ / purge): [OPS.md](../OPS.md).
+Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [OPS.md](../../docs/OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
 
 ## Run (from repo root)
 
 ```bash
-python ds/chain_of_command.py
-python ds/public_information.py
-python ds/server_regulations.py
+python units/ote/coc.py
+python units/ote/public_information.py
+python units/ote/program_overview.py
+python units/ote/staff_documents.py
+python units/ote/open_positions.py
 ```
 
-Dry-run any script with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
+Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
 
 ## Scripts
 
 | Script | Posts | `.env` key |
 |--------|-------|------------|
-| [`chain_of_command.py`](chain_of_command.py) | DS chain of command | `WEBHOOK_DS_CHAIN_OF_COMMAND` |
-| [`public_information.py`](public_information.py) | Public DS information | `WEBHOOK_DS_PUBLIC_INFORMATION` |
-| [`server_regulations.py`](server_regulations.py) | Server regulations | `WEBHOOK_DS_SERVER_REGULATIONS` |
+| [`coc.py`](coc.py) | OTE chain of command | `WEBHOOK_OTE_COC` |
+| [`public_information.py`](public_information.py) | Public OTE information | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
+| [`program_overview.py`](program_overview.py) | Officer Training Program overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
+| [`open_positions.py`](open_positions.py) | Open positions | `WEBHOOK_OTE_OPEN_POSITIONS` |
 
 ## Edit
 
-- Names / ranks / mottos / links → [`../config/`](../config/) YAML
+- Names / ranks / mottos / links → [`../config/`](../../config/) YAML
 - Embed layout → the script above
 - Then: `python tools/validate_repo.py`
 
 <!--
 === FILE FOOTER ===
-End of file: ds/README.md
+End of file: units/ote/README.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->
