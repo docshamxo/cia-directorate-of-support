@@ -19,9 +19,13 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Changed
+
+- Reorganize layout: office announcers under `units/<office>/`; ops runbook at `docs/OPS.md`.
+
 ### Planned
 
-- Nothing queued.
+- Nothing else queued.
 
 ## [1.1.0] — 2026-07-17
 

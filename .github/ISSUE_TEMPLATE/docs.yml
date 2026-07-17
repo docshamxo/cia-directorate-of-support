@@ -18,7 +18,7 @@ body:
       label: Which doc?
       options:
         - README.md
-        - OPS.md
+        - docs/OPS.md
         - docs/ (index or specific file)
         - SECURITY.md / BRAND.md
         - CONTRIBUTING.md

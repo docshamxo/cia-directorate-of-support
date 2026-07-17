@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Staff Documents
-# Path: esd/staff_documents.py
+# Path: units/esd/staff_documents.py
 # Created: 2026-07-15
 # Created by: docshamxo
 # Modified:
@@ -69,6 +69,6 @@ if __name__ == "__main__":
     send_esd_staff_documents()
 
 # === FILE FOOTER ===
-# End of file: esd/staff_documents.py
+# End of file: units/esd/staff_documents.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

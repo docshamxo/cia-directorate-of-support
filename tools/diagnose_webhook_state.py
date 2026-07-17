@@ -137,7 +137,7 @@ def main() -> int:
     print("  - Orphan channel messages: manual delete or run_all.py --bot-channel-purge")
     print("  - Do NOT use legacy Downloads\\DS scripts (no purge / no reactions)")
     print()
-    print("See OPS.md for the full runbook.")
+    print("See docs/OPS.md for the full runbook.")
     return 0
 
 

@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
-Title: OSEC README
-Path: osec/README.md
+Title: ESD README
+Path: units/esd/README.md
 Created: 2026-07-14
 Created by: docshamxo
 Modified:
@@ -18,22 +18,20 @@ Modified:
 === END FILE HEADER ===
 -->
 
-# Office of Security (OSEC)
+# Executive Security Detail (ESD)
 
 [← Back to main README](../README.md)
 
-Motto: **PROTECT · DETECT · RESPOND**  
-Parent: DS · Sub-units: GRS, ESD
+Parent: OSEC
 
-Setup once at repo root: [README.md](../README.md). Live ops (✅ / purge): [OPS.md](../OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
+Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [OPS.md](../../docs/OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
 
 ## Run (from repo root)
 
 ```bash
-python osec/information.py
-python osec/staff_documents.py
-python osec/spp_information.py
-python osec/open_positions.py
+python units/esd/coc.py
+python units/esd/information.py
+python units/esd/staff_documents.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -42,20 +40,19 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 
 | Script | Posts | `.env` key |
 |--------|-------|------------|
-| [`information.py`](information.py) | OSEC information | `WEBHOOK_OSEC_INFORMATION` |
-| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_OSEC_STAFF_DOCUMENTS` |
-| [`spp_information.py`](spp_information.py) | Security Phase Program | `WEBHOOK_OSEC_SPP_INFORMATION` |
-| [`open_positions.py`](open_positions.py) | Open positions | `WEBHOOK_OSEC_OPEN_POSITIONS` |
+| [`coc.py`](coc.py) | ESD chain of command | `WEBHOOK_ESD_COC` |
+| [`information.py`](information.py) | ESD information | `WEBHOOK_ESD_INFORMATION` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
 
 ## Edit
 
-- Names / ranks / mottos / links → [`../config/`](../config/) YAML
+- Names / ranks / mottos / links → [`../config/`](../../config/) YAML
 - Embed layout → the script above
 - Then: `python tools/validate_repo.py`
 
 <!--
 === FILE FOOTER ===
-End of file: osec/README.md
+End of file: units/esd/README.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

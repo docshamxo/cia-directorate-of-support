@@ -59,25 +59,25 @@ def test_classify_child_exit_announcer_codes() -> None:
 
 def test_apply_from_filter_resumes_inclusive() -> None:
     scripts = [
-        ("ds/a.py", "A", "WEBHOOK_A"),
-        ("osec/b.py", "B", "WEBHOOK_B"),
-        ("ote/c.py", "C", "WEBHOOK_C"),
+        ("units/ds/a.py", "A", "WEBHOOK_A"),
+        ("units/osec/b.py", "B", "WEBHOOK_B"),
+        ("units/ote/c.py", "C", "WEBHOOK_C"),
     ]
-    selected = apply_from_filter(scripts, "osec/b.py")
-    assert [item[0] for item in selected] == ["osec/b.py", "ote/c.py"]
+    selected = apply_from_filter(scripts, "units/osec/b.py")
+    assert [item[0] for item in selected] == ["units/osec/b.py", "units/ote/c.py"]
 
 
 def test_matches_only_webhook_key() -> None:
-    assert matches_only("grs/coc.py", "GRS CoC", "WEBHOOK_GRS_COC", "WEBHOOK_GRS_COC")
+    assert matches_only("units/grs/coc.py", "GRS CoC", "WEBHOOK_GRS_COC", "WEBHOOK_GRS_COC")
 
 
 def test_resume_hint_points_at_first_failure() -> None:
     results = [
-        ScriptResult("ds/a.py", "A", "WA", "succeeded"),
-        ScriptResult("osec/b.py", "B", "WB", "failed", reason="boom"),
-        ScriptResult("ote/c.py", "C", "WC", "skipped"),
+        ScriptResult("units/ds/a.py", "A", "WA", "succeeded"),
+        ScriptResult("units/osec/b.py", "B", "WB", "failed", reason="boom"),
+        ScriptResult("units/ote/c.py", "C", "WC", "skipped"),
     ]
-    assert resume_hint(results) == "python run_all.py --from osec/b.py"
+    assert resume_hint(results) == "python run_all.py --from units/osec/b.py"
 
 
 def test_clear_webhook_message_state_one_key(

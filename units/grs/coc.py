@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: COC
-# Path: grs/coc.py
+# Path: units/grs/coc.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -51,6 +51,6 @@ if __name__ == "__main__":
     send_chain_of_command()
 
 # === FILE FOOTER ===
-# End of file: grs/coc.py
+# End of file: units/grs/coc.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Public Information
-# Path: ds/public_information.py
+# Path: units/ds/public_information.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -123,6 +123,6 @@ if __name__ == "__main__":
     send_public_information()
 
 # === FILE FOOTER ===
-# End of file: ds/public_information.py
+# End of file: units/ds/public_information.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

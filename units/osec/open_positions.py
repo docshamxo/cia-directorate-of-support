@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Open Positions
-# Path: osec/open_positions.py
+# Path: units/osec/open_positions.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -109,6 +109,6 @@ if __name__ == "__main__":
     send_open_positions()
 
 # === FILE FOOTER ===
-# End of file: osec/open_positions.py
+# End of file: units/osec/open_positions.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

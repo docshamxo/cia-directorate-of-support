@@ -43,7 +43,7 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](docs/CODEOWNERS_ENFORCEMENT.md))
 - Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](config/organization.yaml); see [NOTICE](NOTICE))
 - Keep webhook bot names community-marked (`Community` or `(RP)`); do not restore bare `CIA | …` usernames
-- Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation / privacy: [SECURITY.md](SECURITY.md)
+- Live ops (✅ / purge): [OPS.md](docs/OPS.md) · leak rotation / privacy: [SECURITY.md](SECURITY.md)
 ## Everyday edits
 
 Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing Discord embeds, follow [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) (text alternatives to color, clear field names, no emoji-only critical info).
@@ -58,7 +58,7 @@ Prefer YAML under [`config/`](config/) over hardcoding in Python. When changing 
 | Public links | [`config/links.yaml`](config/links.yaml) |
 | Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](config/links.staff.example.yaml)) |
 | Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
-| Embed layout | Script in `ds/`, `osec/`, `ote/`, `grs/`, or `esd/` |
+| Embed layout | Script in `units/ds/`, `units/osec/`, `units/ote/`, `units/grs/`, or `units/esd/` |
 | Webhook target | Local `.env` (never commit) |
 | Logo files | [`assets/logos/`](assets/logos/) — keep filenames |
 | Run order / catalog | [`common/manifest.py`](common/manifest.py) |
@@ -123,7 +123,7 @@ Prefer explicit paths over `git add .`. First push from a new fork branch: `git 
 
 ## Adding a new announcer
 
-1. Copy an existing script in the correct office folder; rename it.
+1. Copy an existing script under `units/<office>/`; rename it.
 2. Edit embeds; point `run_announcer(..., webhook_key=...)` at a new key (e.g. `WEBHOOK_OSEC_NEW_CHANNEL`).
 3. Public URLs → [`config/links.yaml`](config/links.yaml) via `c.url('...')`. Staff URLs → local overlay.
 4. Add the key to [`.env.example`](.env.example) and your local `.env`.

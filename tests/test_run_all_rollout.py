@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Unit tests for --only / --stage selection.
+#   - 2026-07-17 | docshamxo | Expect units/<office>/ catalog paths.
 # === END FILE HEADER ===
 
 """Unit tests for staged rollout and --only filtering."""
@@ -31,19 +32,25 @@ def test_resolve_rollout_stage_rejects_unknown() -> None:
 def test_announcers_for_office_ds() -> None:
     ds = announcers_for_office("ds")
     assert len(ds) == 3
-    assert all(path.startswith("ds/") for path, _label, _key in ds)
+    assert all(path.startswith("units/ds/") for path, _label, _key in ds)
 
 
 def test_selected_scripts_stage_intersects_only() -> None:
     selected = selected_scripts(only_arg="coc", stage_arg="grs")
     assert len(selected) == 1
-    assert selected[0][0] == "grs/coc.py"
+    assert selected[0][0] == "units/grs/coc.py"
 
 
 def test_selected_scripts_only_office() -> None:
     selected = selected_scripts(only_arg="esd", stage_arg="")
     assert len(selected) == 3
-    assert all(path.startswith("esd/") for path, _label, _key in selected)
+    assert all(path.startswith("units/esd/") for path, _label, _key in selected)
+
+
+def test_selected_scripts_only_units_office_path() -> None:
+    selected = selected_scripts(only_arg="units/ote", stage_arg="")
+    assert len(selected) == 5
+    assert all(path.startswith("units/ote/") for path, _label, _key in selected)
 
 
 def test_selected_scripts_unknown_only_raises() -> None:

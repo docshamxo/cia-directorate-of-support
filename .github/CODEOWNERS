@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Require review on common/config/.github changes.
 #   - 2026-07-17 | docshamxo | Expand owners for supply-chain and security surfaces.
+#   - 2026-07-17 | docshamxo | Cover units/ and docs/OPS.md after repo reorg.
 # === END FILE HEADER ===
 
 # Default owner for sensitive paths.
@@ -13,11 +14,12 @@
 
 /common/ @docshamxo
 /config/ @docshamxo
+/units/ @docshamxo
 /.github/ @docshamxo
 /docs/ @docshamxo
 /assets/logos/ @docshamxo
 /SECURITY.md @docshamxo
-/OPS.md @docshamxo
+/docs/OPS.md @docshamxo
 /requirements.txt @docshamxo
 /requirements-dev.txt @docshamxo
 /pyproject.toml @docshamxo

@@ -6,32 +6,42 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Single announcer catalog for run_all and validate_repo.
 #   - 2026-07-17 | docshamxo | Staged office rollout order for safer live sends.
+#   - 2026-07-17 | docshamxo | Announcer scripts live under units/<office>/.
 # === END FILE HEADER ===
 
 """Announcer catalog — single source of truth for run_all and validate_repo."""
 
 from __future__ import annotations
 
+from pathlib import Path
+
+# Office folder names (discoverable under units/).
+OFFICES: tuple[str, ...] = ("ds", "osec", "ote", "grs", "esd")
+
 # (relative script path, human label, WEBHOOK_* env key)
 ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
-    ("ds/chain_of_command.py", "DS Chain of Command", "WEBHOOK_DS_CHAIN_OF_COMMAND"),
-    ("ds/public_information.py", "DS Public Information", "WEBHOOK_DS_PUBLIC_INFORMATION"),
-    ("ds/server_regulations.py", "Server Regulations", "WEBHOOK_DS_SERVER_REGULATIONS"),
-    ("osec/information.py", "OSEC Information", "WEBHOOK_OSEC_INFORMATION"),
-    ("osec/staff_documents.py", "OSEC Staff Documents", "WEBHOOK_OSEC_STAFF_DOCUMENTS"),
-    ("osec/spp_information.py", "OSEC Security Phase Program", "WEBHOOK_OSEC_SPP_INFORMATION"),
-    ("osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
-    ("ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
-    ("ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
-    ("ote/program_overview.py", "OTE Program Overview", "WEBHOOK_OTE_PROGRAM_OVERVIEW"),
-    ("ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),
-    ("ote/open_positions.py", "OTE Open Positions", "WEBHOOK_OTE_OPEN_POSITIONS"),
-    ("grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
-    ("grs/information.py", "GRS Information", "WEBHOOK_GRS_INFORMATION"),
-    ("grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
-    ("esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
-    ("esd/information.py", "ESD Information", "WEBHOOK_ESD_INFORMATION"),
-    ("esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
+    ("units/ds/chain_of_command.py", "DS Chain of Command", "WEBHOOK_DS_CHAIN_OF_COMMAND"),
+    ("units/ds/public_information.py", "DS Public Information", "WEBHOOK_DS_PUBLIC_INFORMATION"),
+    ("units/ds/server_regulations.py", "Server Regulations", "WEBHOOK_DS_SERVER_REGULATIONS"),
+    ("units/osec/information.py", "OSEC Information", "WEBHOOK_OSEC_INFORMATION"),
+    ("units/osec/staff_documents.py", "OSEC Staff Documents", "WEBHOOK_OSEC_STAFF_DOCUMENTS"),
+    (
+        "units/osec/spp_information.py",
+        "OSEC Security Phase Program",
+        "WEBHOOK_OSEC_SPP_INFORMATION",
+    ),
+    ("units/osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
+    ("units/ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
+    ("units/ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
+    ("units/ote/program_overview.py", "OTE Program Overview", "WEBHOOK_OTE_PROGRAM_OVERVIEW"),
+    ("units/ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),
+    ("units/ote/open_positions.py", "OTE Open Positions", "WEBHOOK_OTE_OPEN_POSITIONS"),
+    ("units/grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
+    ("units/grs/information.py", "GRS Information", "WEBHOOK_GRS_INFORMATION"),
+    ("units/grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
+    ("units/esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
+    ("units/esd/information.py", "ESD Information", "WEBHOOK_ESD_INFORMATION"),
+    ("units/esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
 )
 
 # Safer live rollout: one office (stage) at a time. Operators advance explicitly.
@@ -72,9 +82,11 @@ def resolve_rollout_stage(token: str) -> tuple[str, str, str]:
 
 
 def announcers_for_office(office: str) -> list[tuple[str, str, str]]:
-    """Return catalog entries whose path starts with ``office/``."""
-    prefix = office.strip().lower().rstrip("/") + "/"
-    return [entry for entry in ANNOUNCERS if entry[0].replace("\\", "/").lower().startswith(prefix)]
+    """Return catalog entries for ``office`` (e.g. ``ds`` → ``units/ds/...``)."""
+    name = office.strip().lower().rstrip("/")
+    if name.startswith("units/"):
+        name = name[len("units/") :]
+    return [entry for entry in ANNOUNCERS if name in Path(entry[0].replace("\\", "/")).parts]
 
 
 # === FILE FOOTER ===

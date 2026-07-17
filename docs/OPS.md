@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
 Title: Ops
-Path: OPS.md
+Path: docs/OPS.md
 Created: 2026-07-17
 Created by: docshamxo
 Modified:
@@ -12,6 +12,7 @@ Modified:
   - 2026-07-17 | docshamxo | Least-privilege bot invite and secret-split reminders.
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Mid-batch failure playbook, exit codes, state reset tool.
+  - 2026-07-17 | docshamxo | Move ops runbook to docs/; update unit script paths.
 === END FILE HEADER ===
 -->
 
@@ -19,13 +20,13 @@ Modified:
 
 Operator checklist for live Discord announcer runs. Prefer dry-run before every live send.
 
-**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
+**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](../NOTICE).
 
 **Doctrine:** webhooks post; the bot only reacts; local state tracks what *this* suite can purge. Do not expect full-channel wipe capability.
 
 For versioned releases and staged office rollout, also use
-[docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) and
-[docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md).
+[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) and
+[RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md).
 
 **Run only this repository** (`cia-directorate-of-support`). Do **not** run the legacy flat scripts under `Downloads\DS` — they post without purge or checkmark reactions and leave orphan messages outside `.webhook_messages.json`.
 
@@ -124,8 +125,8 @@ DISCORD_BOT_TOKEN=your-bot-token-here
 5. Confirm with a single channel:
 
 ```bash
-python ds/public_information.py --dry-run
-python ds/public_information.py
+python units/ds/public_information.py --dry-run
+python units/ds/public_information.py
 ```
 
 You should see `Added checkmark to N webhook message(s)` (or a clear error if the token is missing).
@@ -135,7 +136,7 @@ You should see `Added checkmark to N webhook message(s)` (or a clear error if th
 ```bash
 python run_all.py --allow-skip-reaction
 # or per-script:
-python ds/public_information.py --allow-skip-reaction
+python units/ds/public_information.py --allow-skip-reaction
 ```
 
 Webhooks cannot react by themselves — without a bot token, live runs now exit non-zero by default instead of silently skipping checkmarks.
@@ -151,7 +152,7 @@ Webhooks cannot react by themselves — without a bot token, live runs now exit 
 | Rate-limit warnings then success | Normal under burst | Increase `--delay` on `run_all.py` |
 | Posts OK, never checkmark, no warning | Old code or wrong cwd | Run from repo root; pull latest `main` |
 
-**Compartmentation:** treat the bot token like a webhook URL — local `.env` only; never paste into PRs, issues, or chat. If leaked, see [SECURITY.md](SECURITY.md).
+**Compartmentation:** treat the bot token like a webhook URL — local `.env` only; never paste into PRs, issues, or chat. If leaked, see [SECURITY.md](../SECURITY.md).
 
 ---
 
@@ -177,8 +178,8 @@ Current behavior: `send_webhook` detects sibling keys that share the same webhoo
 4. Dry-run, then live-send once:
 
 ```bash
-python ds/public_information.py --dry-run
-python ds/public_information.py
+python units/ds/public_information.py --dry-run
+python units/ds/public_information.py
 ```
 
 Old messages from the **previous** webhook URL cannot be deleted by the new webhook — remove leftovers in Discord manually if needed.
@@ -254,7 +255,7 @@ python tools/reset_webhook_state.py --all --yes
 4. Resume or retry:
 
 ```bash
-python run_all.py --from osec/staff_documents.py
+python run_all.py --from units/osec/staff_documents.py
 python run_all.py --only WEBHOOK_OSEC_STAFF_DOCUMENTS
 python run_all.py --retry 1 --fail-fast
 ```
@@ -283,7 +284,7 @@ python run_all.py --delay 2.0
 python run_all.py --fail-fast
 python run_all.py --allow-skip-reaction
 python run_all.py --bot-channel-purge
-python run_all.py --from grs/coc.py
+python run_all.py --from units/grs/coc.py
 python run_all.py --retry 1 --report .run_report.json
 python run_all.py --strict-skips
 ```
@@ -310,11 +311,11 @@ Staff scripts **fail closed** on live send if embeds still contain `STAFF_LOCAL_
 | Require ✅ | `--require-reaction` or `CIA_REQUIRE_REACTION=1` |
 | Forget purge targets | `python tools/reset_webhook_state.py --key WEBHOOK_...` |
 | Resume mid-batch | `python run_all.py --from path/to/script.py` |
-| Secrets leaked | [SECURITY.md](SECURITY.md) rotation playbooks |
+| Secrets leaked | [SECURITY.md](../SECURITY.md) rotation playbooks |
 
 <!--
 === FILE FOOTER ===
-End of file: OPS.md
+End of file: docs/OPS.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

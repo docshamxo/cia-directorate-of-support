@@ -26,6 +26,7 @@ Modified:
   - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
   - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
   - 2026-07-17 | docshamxo | Point Docs map at docs/README.md index.
+  - 2026-07-17 | docshamxo | Point offices at units/; OPS at docs/OPS.md.
 === END FILE HEADER ===
 -->
 
@@ -81,7 +82,7 @@ python run_all.py --dry-run --delay 0
 python run_all.py
 ```
 
-Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
+Live sends **post first**, then delete previously recorded webhook messages (IDs in gitignored `.webhook_messages.json`, including sibling keys that share a webhook URL), then **require** a checkmark reaction via `DISCORD_BOT_TOKEN`. See **[OPS.md](docs/OPS.md)** for reaction and purge troubleshooting. Prefer staged live refreshes: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md). Accessible channel copy: **[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)**.
 
 ---
 
@@ -90,12 +91,12 @@ Live sends **post first**, then delete previously recorded webhook messages (IDs
 From the repo root:
 
 ```bash
-python ds/chain_of_command.py
-python ds/chain_of_command.py --dry-run
+python units/ds/chain_of_command.py
+python units/ds/chain_of_command.py --dry-run
 ```
 
 `run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--allow-skip-reaction`, `--bot-channel-purge`.
-`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](OPS.md).
+`run_all.py` flags: `--dry-run`, `--fail-fast`, `--delay 1.5`, `--no-skip-empty`, `--only ds,osec`, `--list-stages`, `--stage 1`, `--from`, `--retry`, `--report`, `--strict-skips`, `--require-reaction`. Exit codes / mid-batch: [OPS.md](docs/OPS.md).
 
 ---
 
@@ -109,7 +110,7 @@ python ds/chain_of_command.py --dry-run
 | Colors / bot names / logos | [`config/branding.yaml`](config/branding.yaml) |
 | Public links | [`config/links.yaml`](config/links.yaml) |
 | Staff Drive URLs | `config/links.staff.local.yaml` (gitignored) |
-| Embed layout | Matching script under `ds/` `osec/` `ote/` `grs/` `esd/` |
+| Embed layout | Matching script under `units/ds/` … `units/esd/` |
 | Webhook target | Local `.env` |
 | Run order | [`common/manifest.py`](common/manifest.py) |
 
@@ -137,13 +138,13 @@ Directorate of Support (DS)
 
 | Folder | Scripts | Guide |
 |--------|---------|-------|
-| [`ds/`](ds/) | 3 | [README](ds/README.md) |
-| [`osec/`](osec/) | 4 | [README](osec/README.md) |
-| [`ote/`](ote/) | 5 | [README](ote/README.md) |
-| [`grs/`](grs/) | 3 | [README](grs/README.md) |
-| [`esd/`](esd/) | 3 | [README](esd/README.md) |
+| [`units/ds/`](units/ds/) | 3 | [README](units/ds/README.md) |
+| [`units/osec/`](units/osec/) | 4 | [README](units/osec/README.md) |
+| [`units/ote/`](units/ote/) | 5 | [README](units/ote/README.md) |
+| [`units/grs/`](units/grs/) | 3 | [README](units/grs/README.md) |
+| [`units/esd/`](units/esd/) | 3 | [README](units/esd/README.md) |
 
-Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` (validators + diagnose).
+Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` (validators + diagnose), `docs/` (ops + process).
 
 ---
 
@@ -151,24 +152,24 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 
 | # | Command | `.env` key |
 |---|---------|------------|
-| 1 | `python ds/chain_of_command.py` | `WEBHOOK_DS_CHAIN_OF_COMMAND` |
-| 2 | `python ds/public_information.py` | `WEBHOOK_DS_PUBLIC_INFORMATION` |
-| 3 | `python ds/server_regulations.py` | `WEBHOOK_DS_SERVER_REGULATIONS` |
-| 4 | `python osec/information.py` | `WEBHOOK_OSEC_INFORMATION` |
-| 5 | `python osec/staff_documents.py` | `WEBHOOK_OSEC_STAFF_DOCUMENTS` |
-| 6 | `python osec/spp_information.py` | `WEBHOOK_OSEC_SPP_INFORMATION` |
-| 7 | `python osec/open_positions.py` | `WEBHOOK_OSEC_OPEN_POSITIONS` |
-| 8 | `python ote/coc.py` | `WEBHOOK_OTE_COC` |
-| 9 | `python ote/public_information.py` | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
-| 10 | `python ote/program_overview.py` | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
-| 11 | `python ote/staff_documents.py` | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
-| 12 | `python ote/open_positions.py` | `WEBHOOK_OTE_OPEN_POSITIONS` |
-| 13 | `python grs/coc.py` | `WEBHOOK_GRS_COC` |
-| 14 | `python grs/information.py` | `WEBHOOK_GRS_INFORMATION` |
-| 15 | `python grs/staff_documents.py` | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
-| 16 | `python esd/coc.py` | `WEBHOOK_ESD_COC` |
-| 17 | `python esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
-| 18 | `python esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| 1 | `python units/ds/chain_of_command.py` | `WEBHOOK_DS_CHAIN_OF_COMMAND` |
+| 2 | `python units/ds/public_information.py` | `WEBHOOK_DS_PUBLIC_INFORMATION` |
+| 3 | `python units/ds/server_regulations.py` | `WEBHOOK_DS_SERVER_REGULATIONS` |
+| 4 | `python units/osec/information.py` | `WEBHOOK_OSEC_INFORMATION` |
+| 5 | `python units/osec/staff_documents.py` | `WEBHOOK_OSEC_STAFF_DOCUMENTS` |
+| 6 | `python units/osec/spp_information.py` | `WEBHOOK_OSEC_SPP_INFORMATION` |
+| 7 | `python units/osec/open_positions.py` | `WEBHOOK_OSEC_OPEN_POSITIONS` |
+| 8 | `python units/ote/coc.py` | `WEBHOOK_OTE_COC` |
+| 9 | `python units/ote/public_information.py` | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
+| 10 | `python units/ote/program_overview.py` | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
+| 11 | `python units/ote/staff_documents.py` | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
+| 12 | `python units/ote/open_positions.py` | `WEBHOOK_OTE_OPEN_POSITIONS` |
+| 13 | `python units/grs/coc.py` | `WEBHOOK_GRS_COC` |
+| 14 | `python units/grs/information.py` | `WEBHOOK_GRS_INFORMATION` |
+| 15 | `python units/grs/staff_documents.py` | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| 16 | `python units/esd/coc.py` | `WEBHOOK_ESD_COC` |
+| 17 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
+| 18 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
 
 ---
 
@@ -178,7 +179,7 @@ Full index: **[docs/README.md](docs/README.md)** (OPS, release, security, access
 
 | Doc | Use when |
 |-----|----------|
-| **[OPS.md](OPS.md)** | Live runs, checkmark reactions, purge / state recovery |
+| **[OPS.md](docs/OPS.md)** | Live runs, checkmark reactions, purge / state recovery |
 | [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
 | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Inclusive Discord embed copy |

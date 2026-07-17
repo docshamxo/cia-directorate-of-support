@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Program Overview
-# Path: ote/program_overview.py
+# Path: units/ote/program_overview.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -103,6 +103,6 @@ if __name__ == "__main__":
     send_officer_training_program_overview()
 
 # === FILE FOOTER ===
-# End of file: ote/program_overview.py
+# End of file: units/ote/program_overview.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

@@ -57,7 +57,7 @@ def main() -> None:
         "  2. Paste DISCORD_BOT_TOKEN= (required for live checkmark reactions) and each webhook URL\n"
         "  3. Save .env\n"
         "  4. Diagnose config:     python tools/diagnose_webhook_state.py\n"
-        "  5. Preview one channel: python ds/chain_of_command.py --dry-run\n"
+        "  5. Preview one channel: python units/ds/chain_of_command.py --dry-run\n"
         "  6. Or run all (live):   python run_all.py\n"
         "\n"
         "Live runs fail without DISCORD_BOT_TOKEN unless you pass --allow-skip-reaction.\n"

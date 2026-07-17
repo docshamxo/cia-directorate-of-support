@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: Chain Of Command
-# Path: ds/chain_of_command.py
+# Path: units/ds/chain_of_command.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -149,6 +149,6 @@ if __name__ == "__main__":
     send_chain_of_command()
 
 # === FILE FOOTER ===
-# End of file: ds/chain_of_command.py
+# End of file: units/ds/chain_of_command.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
-Title: ESD README
-Path: esd/README.md
+Title: GRS README
+Path: units/grs/README.md
 Created: 2026-07-14
 Created by: docshamxo
 Modified:
@@ -18,20 +18,20 @@ Modified:
 === END FILE HEADER ===
 -->
 
-# Executive Security Detail (ESD)
+# Global Response Staff (GRS)
 
 [← Back to main README](../README.md)
 
 Parent: OSEC
 
-Setup once at repo root: [README.md](../README.md). Live ops (✅ / purge): [OPS.md](../OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
+Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [OPS.md](../../docs/OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
 
 ## Run (from repo root)
 
 ```bash
-python esd/coc.py
-python esd/information.py
-python esd/staff_documents.py
+python units/grs/coc.py
+python units/grs/information.py
+python units/grs/staff_documents.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -40,19 +40,19 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 
 | Script | Posts | `.env` key |
 |--------|-------|------------|
-| [`coc.py`](coc.py) | ESD chain of command | `WEBHOOK_ESD_COC` |
-| [`information.py`](information.py) | ESD information | `WEBHOOK_ESD_INFORMATION` |
-| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| [`coc.py`](coc.py) | GRS chain of command | `WEBHOOK_GRS_COC` |
+| [`information.py`](information.py) | GRS information | `WEBHOOK_GRS_INFORMATION` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
 
 ## Edit
 
-- Names / ranks / mottos / links → [`../config/`](../config/) YAML
+- Names / ranks / mottos / links → [`../config/`](../../config/) YAML
 - Embed layout → the script above
 - Then: `python tools/validate_repo.py`
 
 <!--
 === FILE FOOTER ===
-End of file: esd/README.md
+End of file: units/grs/README.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->

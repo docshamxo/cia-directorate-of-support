@@ -1,6 +1,6 @@
 # === FILE HEADER ===
 # Title: SPP Information
-# Path: osec/spp_information.py
+# Path: units/osec/spp_information.py
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
@@ -154,6 +154,6 @@ if __name__ == "__main__":
     send_osec_spp_information()
 
 # === FILE FOOTER ===
-# End of file: osec/spp_information.py
+# End of file: units/osec/spp_information.py
 # Maintained by: docshamxo
 # === END FILE FOOTER ===

@@ -1,7 +1,7 @@
 <!--
 === FILE HEADER ===
-Title: GRS README
-Path: grs/README.md
+Title: DS README
+Path: units/ds/README.md
 Created: 2026-07-14
 Created by: docshamxo
 Modified:
@@ -18,41 +18,41 @@ Modified:
 === END FILE HEADER ===
 -->
 
-# Global Response Staff (GRS)
+# Directorate of Support (DS)
 
 [← Back to main README](../README.md)
 
-Parent: OSEC
+Motto: **WE GO AS ONE**
 
-Setup once at repo root: [README.md](../README.md). Live ops (✅ / purge): [OPS.md](../OPS.md). Staff Drive URLs need `config/links.staff.local.yaml` before live staff posts.
+Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [OPS.md](../../docs/OPS.md).
 
 ## Run (from repo root)
 
 ```bash
-python grs/coc.py
-python grs/information.py
-python grs/staff_documents.py
+python units/ds/chain_of_command.py
+python units/ds/public_information.py
+python units/ds/server_regulations.py
 ```
 
-Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
+Dry-run any script with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
 
 ## Scripts
 
 | Script | Posts | `.env` key |
 |--------|-------|------------|
-| [`coc.py`](coc.py) | GRS chain of command | `WEBHOOK_GRS_COC` |
-| [`information.py`](information.py) | GRS information | `WEBHOOK_GRS_INFORMATION` |
-| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| [`chain_of_command.py`](chain_of_command.py) | DS chain of command | `WEBHOOK_DS_CHAIN_OF_COMMAND` |
+| [`public_information.py`](public_information.py) | Public DS information | `WEBHOOK_DS_PUBLIC_INFORMATION` |
+| [`server_regulations.py`](server_regulations.py) | Server regulations | `WEBHOOK_DS_SERVER_REGULATIONS` |
 
 ## Edit
 
-- Names / ranks / mottos / links → [`../config/`](../config/) YAML
+- Names / ranks / mottos / links → [`../config/`](../../config/) YAML
 - Embed layout → the script above
 - Then: `python tools/validate_repo.py`
 
 <!--
 === FILE FOOTER ===
-End of file: grs/README.md
+End of file: units/ds/README.md
 Maintained by: docshamxo
 === END FILE FOOTER ===
 -->
