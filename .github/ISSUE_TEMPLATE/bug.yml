@@ -1,0 +1,67 @@
+# === FILE HEADER ===
+# Title: Bug report issue template
+# Path: .github/ISSUE_TEMPLATE/bug.yml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Structured bug report for announcers / tools.
+# === END FILE HEADER ===
+
+name: Bug report
+description: Something is broken in an announcer, tool, or CI.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do **not** paste webhook URLs, bot tokens, staff Drive links, or `.env` values.
+        For live-run purge / reaction issues, see [OPS.md](https://github.com/docshamxo/cia-directorate-of-support/blob/main/OPS.md) first.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Expected vs actual behavior.
+      placeholder: e.g. dry-run works; live send fails after purge…
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Announcer (ds / osec / ote / grs / esd)
+        - run_all / rollout
+        - Webhook purge / reactions
+        - tools / validate_repo
+        - CI / Dependabot
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command run
+      description: Exact command (redact secrets).
+      placeholder: python run_all.py --dry-run --delay 0
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, branch/commit if known.
+      placeholder: Windows 11 · Python 3.12 · main @ abc1234
+
+# === FILE FOOTER ===
+# End of file: .github/ISSUE_TEMPLATE/bug.yml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

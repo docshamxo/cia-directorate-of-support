@@ -25,6 +25,7 @@ Modified:
   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
   - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
   - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
+  - 2026-07-17 | docshamxo | Point Docs map at docs/README.md index.
 === END FILE HEADER ===
 -->
 
@@ -173,17 +174,21 @@ Also: `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` 
 
 ## Docs map
 
+Full index: **[docs/README.md](docs/README.md)** (OPS, release, security, accessibility, branch protection).
+
 | Doc | Use when |
 |-----|----------|
 | **[OPS.md](OPS.md)** | Live runs, checkmark reactions, purge / state recovery |
 | [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [docs/RELEASE_NOTES_OPERATORS.md](docs/RELEASE_NOTES_OPERATORS.md) | Operator notes after hardening (1.1.0) |
+| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Inclusive Discord embed copy |
 | [CHANGELOG.md](CHANGELOG.md) | Version history (Keep a Changelog) |
 | [SECURITY.md](SECURITY.md) | Secrets, leak rotation, compartmentation |
 | [BRAND.md](BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
 | [LICENSE](LICENSE) | MIT + brand use / trademark notice |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Edits, validation, new announcers |
 | [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
+| [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md) | Maintainer `main` protection / rulesets |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
 | [tools/README.md](tools/README.md) | Validation and diagnose tools |
 | [`.env.example`](.env.example) | Webhook / token template |

@@ -1,0 +1,19 @@
+# === FILE HEADER ===
+# Title: Issue template chooser
+# Path: .github/ISSUE_TEMPLATE/config.yml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Limit blank issues; point to docs index.
+# === END FILE HEADER ===
+
+blank_issues_enabled: false
+contact_links:
+  - name: Operator runbooks
+    url: https://github.com/docshamxo/cia-directorate-of-support/blob/main/docs/README.md
+    about: OPS, release, security, and maintainer docs — check here before filing.
+
+# === FILE FOOTER ===
+# End of file: .github/ISSUE_TEMPLATE/config.yml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

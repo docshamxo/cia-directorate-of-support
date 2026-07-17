@@ -1,0 +1,45 @@
+# === FILE HEADER ===
+# Title: Docs issue template
+# Path: .github/ISSUE_TEMPLATE/docs.yml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Documentation fix / gap template.
+# === END FILE HEADER ===
+
+name: Documentation
+description: Fix or improve docs, README, or runbooks.
+title: "[docs] "
+labels: ["docs"]
+body:
+  - type: dropdown
+    id: doc
+    attributes:
+      label: Which doc?
+      options:
+        - README.md
+        - OPS.md
+        - docs/ (index or specific file)
+        - SECURITY.md / BRAND.md
+        - CONTRIBUTING.md
+        - Office or config README
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: What is wrong or missing
+      description: Quote the confusing section or describe the gap.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix
+      description: Optional — wording or link you would add.
+
+# === FILE FOOTER ===
+# End of file: .github/ISSUE_TEMPLATE/docs.yml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

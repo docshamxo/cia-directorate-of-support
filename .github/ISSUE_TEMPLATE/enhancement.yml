@@ -1,0 +1,57 @@
+# === FILE HEADER ===
+# Title: Enhancement issue template
+# Path: .github/ISSUE_TEMPLATE/enhancement.yml
+# Created: 2026-07-17
+# Created by: docshamxo
+# Modified:
+#   - 2026-07-17 | docshamxo | Feature / improvement request template.
+# === END FILE HEADER ===
+
+name: Enhancement
+description: Propose a feature or improvement.
+title: "[enhancement] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [docs/README.md](https://github.com/docshamxo/cia-directorate-of-support/blob/main/docs/README.md) and existing issues first.
+        Do **not** include secrets, staff Drive URLs, or mid-tier rosters.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What is hard or missing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should change? Keep scope small when possible.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Announcer content / YAML
+        - run_all / rollout
+        - Shared helpers (common/)
+        - Security / compartmentation
+        - Docs / templates
+        - CI / tooling
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional — other approaches you thought about.
+
+# === FILE FOOTER ===
+# End of file: .github/ISSUE_TEMPLATE/enhancement.yml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===
