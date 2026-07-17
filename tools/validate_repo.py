@@ -523,9 +523,7 @@ def validate_style_guide() -> None:
 
     common_eyebrow = COMMON.read_text(encoding="utf-8")
     if 'f"*Central Intelligence Agency · {unit}*"' in common_eyebrow:
-        issues.append(
-            "common/cia_common.py: agency_eyebrow must not use bare CIA USG banner text"
-        )
+        issues.append("common/cia_common.py: agency_eyebrow must not use bare CIA USG banner text")
 
     if issues:
         fail("Style-guide heuristics failed:\n  - " + "\n  - ".join(issues))
