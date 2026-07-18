@@ -16,13 +16,14 @@
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Replace mojibake em dashes with ASCII in phase titles.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
+#   - 2026-07-18 | docshamxo | Restore full OSEC staff training, event, and cert link list.
 # === END FILE HEADER ===
 
 """
 CIA OSEC staff documents announcer.
 
-Posts the Office of Security staff Drive index and core phase guides.
-Detailed TTP / event / certification packs live in the Drive folder (need-to-know).
+Posts official Office of Security staff guides, training material, event
+documentation, and certification resources to a Discord webhook.
 """
 
 from __future__ import annotations
@@ -46,8 +47,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Central Repository",
             description=(
                 "Primary Google Drive folder containing OSEC handbooks, phase guides, "
-                "event documentation, certifications, ORBAT files, and internal forms. "
-                "Use the Drive index as the source of truth for TTP titles not listed here."
+                "event documentation, certifications, ORBAT files, and internal forms."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -62,8 +62,8 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Phase & Candidate Guides",
             description=(
-                "Core documentation for Security Phase tryouts and candidate progression. "
-                "Additional training, event, and certification guides are in Drive."
+                "Official documentation for Security Phase tryouts, candidate progression, "
+                "and phase training requirements."
             ),
             color=c.COLOR_OSEC,
             fields=(
@@ -88,14 +88,97 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
         c.embed(
-            title="Training Materials",
-            description="Shared Directorate of Support standard training references.",
+            title="Standard Training",
+            description=(
+                "Official documentation for the Office of Security Standard Training "
+                "system and shared Directorate of Support training references."
+            ),
             color=c.COLOR_OSEC,
             fields=(
+                c.link_field(
+                    "Training Revamp",
+                    "DS Community | OSEC Standard Training Revamp",
+                    c.url("osec.staff_documents.standard_training_revamp"),
+                    c.marking_note("STAFF"),
+                ),
                 c.link_field(
                     "General Standard Training",
                     "DS Community | General Standard Training Guide",
                     c.url("community.general_standard_training_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Weapons Standard Training",
+                    "DS Community | OSEC Weapons Standard Training Guide",
+                    c.url("osec.staff_documents.weapons_standard_training_guide"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Event Guides",
+            description=(
+                "Official guides for planning, hosting, and supervising Office of "
+                "Security events and operational exercises."
+            ),
+            color=c.COLOR_OSEC,
+            fields=(
+                c.link_field(
+                    "Event Guide",
+                    "DS Community | OSEC Event Guide",
+                    c.url("osec.staff_documents.event_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Base Patrol",
+                    "DS Community | OSEC Base Patrol Event Guide",
+                    c.url("osec.staff_documents.base_patrol_event_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Gate Patrol",
+                    "DS Community | OSEC Gate Patrol Event Guide",
+                    c.url("osec.staff_documents.gate_patrol_event_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Killhouse",
+                    "DS Community | OSEC Killhouse Event Guide",
+                    c.url("osec.staff_documents.killhouse_event_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Combat Training",
+                    "DS Community | OSEC Combat Training Guide",
+                    c.url("osec.staff_documents.combat_training_guide"),
+                    c.marking_note("STAFF"),
+                ),
+            ),
+        ),
+        c.embed(
+            title="Certification Guides",
+            description=(
+                "Official guides for Office of Security staff certifications and "
+                "qualification standards."
+            ),
+            color=c.COLOR_OSEC,
+            fields=(
+                c.link_field(
+                    "Communications & Conduct",
+                    "DS Community | OSEC Communications & Conduct Certification Guide",
+                    c.url("osec.staff_documents.communications_conduct_certification_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Gate",
+                    "DS Community | OSEC Gate Certification Guide",
+                    c.url("osec.staff_documents.gate_certification_guide"),
+                    c.marking_note("STAFF"),
+                ),
+                c.link_field(
+                    "Handcuff",
+                    "DS Community | OSEC Handcuff Certification Guide",
+                    c.url("osec.staff_documents.handcuff_certification_guide"),
                     c.marking_note("STAFF"),
                 ),
             ),
