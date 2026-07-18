@@ -16,6 +16,7 @@
 #   - 2026-07-17 | docshamxo | Add shared General Standard Training Guide for staff docs.
 #   - 2026-07-17 | docshamxo | Add ESD staff handbook, FPCON, phase, and tryout guides.
 #   - 2026-07-17 | docshamxo | ESD phase_i → phase_guide; remove phase_ii.
+#   - 2026-07-18 | docshamxo | Restore full OSEC staff document link placeholders.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -46,6 +47,16 @@ osec:
     tryout_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     phase_i: https://example.invalid/STAFF_LOCAL_REQUIRED
     phase_ii: https://example.invalid/STAFF_LOCAL_REQUIRED
+    standard_training_revamp: https://example.invalid/STAFF_LOCAL_REQUIRED
+    weapons_standard_training_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    event_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    base_patrol_event_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    killhouse_event_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    gate_patrol_event_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    combat_training_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    communications_conduct_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    gate_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    handcuff_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
   open_positions:
     last_updated: June 20th, 2026
 ote:

@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Example staff-link overlay (copy to links.staff.local.yaml).
+#   - 2026-07-18 | docshamxo | Add restored OSEC training/event/certification placeholders.
 # === END FILE HEADER ===
 
 # Copy this file to config/links.staff.local.yaml and replace placeholders with real
@@ -23,6 +24,16 @@ osec:
     tryout_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
     phase_i: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
     phase_ii: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    standard_training_revamp: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    weapons_standard_training_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    event_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    base_patrol_event_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    killhouse_event_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    gate_patrol_event_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    combat_training_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    communications_conduct_certification_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    gate_certification_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
+    handcuff_certification_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
 ote:
   staff_documents:
     google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
