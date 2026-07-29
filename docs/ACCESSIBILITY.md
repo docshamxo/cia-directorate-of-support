@@ -28,10 +28,10 @@ Discord announces **titles, descriptions, and field names/values** to screen rea
 ```python
 from common import cia_common as c
 
-c.command_band_label("MIDCOM")           # Middle Command (MIDCOM)
+c.command_band_label("MIDCOM")  # Middle Command (MIDCOM)
 c.marking_note("STAFF", "Authorized OSEC staff only.")
-c.has_text_signal("✅")                  # False
-c.validate_embed_accessibility(embeds)   # also called from validate_embed_limits
+c.has_text_signal("✅")  # False
+c.validate_embed_accessibility(embeds)  # also called from validate_embed_limits
 ```
 
 ## Channel author checklist
