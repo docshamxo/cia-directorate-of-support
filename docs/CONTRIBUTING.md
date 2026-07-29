@@ -66,7 +66,7 @@ Prefer YAML under [`config/`](../config/) over hardcoding in Python. When changi
 In announcer scripts:
 
 ```python
-c.url('osec.information.handbook')
+c.url("osec.information.handbook")
 ```
 
 ```python

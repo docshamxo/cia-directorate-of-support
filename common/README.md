@@ -57,9 +57,9 @@ c.hero_embed(
     logo=c.LOGOS["osec"],
 )
 
-c.agency_eyebrow("Office of Security")          # *Unofficial community RP · …*
-c.community_link_label("OSEC")                  # DS Community | OSEC
-c.motto_line(c.OSEC_MOTTO)                      # *PROTECT · DETECT · RESPOND*
+c.agency_eyebrow("Office of Security")  # *Unofficial community RP · …*
+c.community_link_label("OSEC")  # DS Community | OSEC
+c.motto_line(c.OSEC_MOTTO)  # *PROTECT · DETECT · RESPOND*
 c.link_field("Handbook", c.community_link_label("OSEC Handbook"), url, "STAFF.")
 c.pending_group_field("ESD", c.community_link_label("ESD"))
 
@@ -77,9 +77,9 @@ Brand / bot naming: [BRAND.md](../docs/BRAND.md).
 ```python
 from common import cia_common as c
 
-c.require_webhook('WEBHOOK_DS_CHAIN_OF_COMMAND')
-c.url('osec.information.handbook')
-c.embed(description='...', logo=c.LOGOS['ds'])
+c.require_webhook("WEBHOOK_DS_CHAIN_OF_COMMAND")
+c.url("osec.information.handbook")
+c.embed(description="...", logo=c.LOGOS["ds"])
 c.send_webhook(url, embeds, username=c.BOT_DS)
 ```
 
