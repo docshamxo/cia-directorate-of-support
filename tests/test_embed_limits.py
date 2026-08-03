@@ -109,6 +109,8 @@ def test_ote_server_regulations_embeds_use_ote_office() -> None:
     assert c.OTE_MOTTO in blob
     assert "based on race,\n" not in blob
     assert "without Office of Training & Education leadership\n" not in blob
+    assert blob.lower().count("unofficial") == 1
+    assert "Unofficial Roblox Roleplay Community" in blob
 
 
 def test_subunit_coc_embeds_within_limits() -> None:
@@ -131,7 +133,8 @@ def test_apply_effective_date_footer_stamps_last() -> None:
     c.apply_effective_date_footer(embeds)
     assert embeds[0].footer.text is None or embeds[0].footer.text == ""
     assert embeds[-1].footer and "Effective" in (embeds[-1].footer.text or "")
-    assert "community roleplay" in (embeds[-1].footer.text or "")
+    assert "community" in (embeds[-1].footer.text or "")
+    assert "roleplay" not in (embeds[-1].footer.text or "").lower()
 
 
 def test_announcer_catalog_nonempty() -> None:

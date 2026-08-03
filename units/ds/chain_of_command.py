@@ -39,7 +39,7 @@ def _build_agency_embed() -> c.discord.Embed:
     return c.embed(
         title="Agency Executive Leadership",
         description=(
-            f"{c.agency_eyebrow('Executive Chain of Command')}\n\n"
+            "**Executive Chain of Command**\n\n"
             "Agency executive leadership sits above all Directorates. The "
             "**Directorate of Support (DS)** chain continues below."
         ),

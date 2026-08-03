@@ -23,7 +23,9 @@ Always keep a clear non-affiliation banner in:
 - Discord disclaimer closers (`config/organization.yaml` → `copy.disclaimer*`)
 - SECURITY / CONTRIBUTING affiliation lines
 
-Required meaning (wording may vary): **unofficial community**, **not affiliated with** the United States Government or the Central Intelligence Agency, and community markings are **roleplay vocabulary only**.
+Required meaning (wording may vary): **community project**, **not affiliated with** the United States Government or the Central Intelligence Agency, and community markings are **roleplay vocabulary only**.
+
+On Discord embeds, the explicit line **Unofficial Roblox Roleplay Community** appears **once** on OTE and OSEC Rules heroes only. Other channels use a bold unit line in the hero and keep non-affiliation in the disclaimer closer.
 
 ## Bot / webhook display names
 
@@ -46,7 +48,7 @@ In-fiction office names in embed **body** copy are fine. The **webhook username*
 
 ## Hero eyebrows
 
-Use `agency_eyebrow()` / `hero_embed()` — they must frame the unit as **unofficial community RP**, not as a bare “Central Intelligence Agency” banner.
+Use `hero_embed()` / `chain_intro_embed()` — bold **unit** line under an ALL CAPS title (not a bare “Central Intelligence Agency” banner). Rules channels use the dedicated regulations hero stack instead.
 
 ## Link labels
 

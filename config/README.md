@@ -38,7 +38,7 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 
 | Element | Rule |
 |---------|------|
-| **Hero** | ALL CAPS `title=` + italic eyebrow `*Unofficial community RP · {Unit}*` + one short supporting sentence |
+| **Hero** | ALL CAPS `title=` + bold `**{Unit}**` + one short supporting sentence. Rules channels use the DIRECTORATE OF SUPPORT stack (office + Community Server Regulations + one unofficial-RP line). |
 | **Body section titles** | Title Case |
 | **Links** | `[CIA {UNIT} \| {Document}](url)` with optional italic note; community groups: `CIA \| {Group}` |
 | **Link notes** | Prefer shared Marking: PUBLIC. / Marking: STAFF. / Marking: CANDIDATE. (c.MARKING_*). Put authorization detail in the Handling Notice, not on every field. |
@@ -52,9 +52,9 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Important Notice** | Chain of command / conduct only |
 | **Classification & Handling Notice** | Restricted document hubs (community marking language -- not USG classification) |
 | **Important Information** | Application rules only |
-| **Disclaimer** | Always last; title `Disclaimer · Unofficial Community`; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
+| **Disclaimer** | Always last; title `Disclaimer · Community`; pass `color=` for the unit; use `links=True` when the message has URLs, `staff=True` (or `classified=True`) for restricted doc hubs |
 
-Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). Bot usernames and brand rules: [BRAND.md](../docs/BRAND.md).
+Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). The phrase **Unofficial Roblox Roleplay Community** appears **once** on OTE/OSEC Rules heroes only. Bot usernames and brand rules: [BRAND.md](../docs/BRAND.md).
 
 **Tone:** Public channels stay welcoming and scannable. Staff / candidate channels stay need-to-know -- short heroes, short link notes, one handling closer.
 
