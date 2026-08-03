@@ -82,6 +82,33 @@ def test_server_regulations_embeds_within_limits() -> None:
     embeds = c.server_regulations_embeds()
     c.validate_embed_limits(embeds)
     assert len(embeds) <= c.EMBEDS_PER_MESSAGE_LIMIT
+    assert embeds[0].title == "DIRECTORATE OF SUPPORT"
+    blob = "\n".join(e.description or "" for e in embeds)
+    assert "Office of Security" in blob
+    assert "Community Server Regulations" in blob
+    assert "Unofficial Roblox Roleplay Community" in blob
+    assert "Office of Training & Education" not in blob
+    # Mid-sentence soft wraps must not appear as Discord hard breaks.
+    assert "based on race,\n" not in blob
+    assert "without Office of Security leadership\n" not in blob
+
+
+def test_ote_server_regulations_embeds_use_ote_office() -> None:
+    embeds = c.server_regulations_embeds(
+        office="Office of Training & Education",
+        motto=c.OTE_MOTTO,
+        logo=c.LOGOS["ote"],
+        color=c.COLOR_OTE,
+    )
+    c.validate_embed_limits(embeds)
+    assert embeds[0].title == "DIRECTORATE OF SUPPORT"
+    blob = "\n".join(e.description or "" for e in embeds)
+    assert "Office of Training & Education" in blob
+    assert "Community Server Regulations" in blob
+    assert "Office of Security" not in blob
+    assert c.OTE_MOTTO in blob
+    assert "based on race,\n" not in blob
+    assert "without Office of Training & Education leadership\n" not in blob
 
 
 def test_subunit_coc_embeds_within_limits() -> None:

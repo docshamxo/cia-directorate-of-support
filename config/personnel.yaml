@@ -12,6 +12,7 @@
 #   - 2026-07-17 | docshamxo | Swap OTE DDTE and ADTE (AndyShotSecond / Railorbsj).
 #   - 2026-07-17 | docshamxo | Add SSA to GRS/ESD LOWCOM (match OSEC ladder).
 #   - 2026-07-17 | docshamxo | Privacy: redact multi-holder CM roster; local holders overlay.
+#   - 2026-08-02 | docshamxo | Update CoS/IG titles-holders; OSEC HC rotation; GRS CM/DCM.
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -29,11 +30,11 @@ agency_executive:
   title: Executive Director of the Central Intelligence Agency
   holder: ashlyn
 - abbrev: CoS
-  title: Chief of Staff
-  holder: Kaoetern1ty
+  title: Chief of Intelligence Staff
+  holder: Dustykingeric
 - abbrev: IG
   title: Inspector General
-  holder: VACANT
+  holder: JenynInvictus
 ds_leadership:
 - abbrev: CDSD
   title: Component Director, Directorate of Support
@@ -64,16 +65,16 @@ ote_staff_ranks:
 osec_high_command:
 - abbrev: DS
   title: Director of Security
-  holder: Dustykingeric
+  holder: liveurlite
 - abbrev: DDS
   title: Deputy Director of Security
-  holder: liveurlite
+  holder: Rattler_289
 - abbrev: ADS
   title: Assistant Director of Security
-  holder: Rattler_289
+  holder: Foxxy_Fan
 - abbrev: Supt
   title: Superintendent
-  holder: Foxxy_Fan
+  holder: VACANT
 osec_main_chief_marshals:
 - abbrev: CM
   title: Chief Marshal
@@ -90,10 +91,10 @@ osec_main_chief_marshals:
 grs_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: kkthegoaty2_0
+  holder: MrPallen
 - abbrev: DCM
   title: Deputy Chief Marshal
-  holder: MrPallen
+  holder: VACANT
 esd_command:
 - abbrev: CM
   title: Chief Marshal

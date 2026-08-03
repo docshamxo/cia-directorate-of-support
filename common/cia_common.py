@@ -22,6 +22,7 @@
 #   - 2026-07-17 | docshamxo | Public webhook-state helpers for empty-channel / IR recovery.
 #   - 2026-07-17 | docshamxo | Soften hero eyebrow; community link labels; stronger disclaimer title.
 #   - 2026-07-17 | docshamxo | Privacy: applicant env URLs, holders overlay, retention notes.
+#   - 2026-08-02 | docshamxo | Parameterize server regulations office for OTE Rules.
 # === END FILE HEADER ===
 
 """
@@ -766,19 +767,35 @@ def classification_handling_embed(
     )
 
 
-def server_regulations_embeds() -> list[discord.Embed]:
-    """Build DS server regulations embeds from config/regulations.yaml."""
+def server_regulations_embeds(
+    *,
+    office: str = "Office of Security",
+    motto: str | None = None,
+    classification: str | None = None,
+    logo: Path | None = None,
+    color: int | None = None,
+) -> list[discord.Embed]:
+    """Build server regulations embeds from config/regulations.yaml.
+
+    ``office`` fills ``{office}`` placeholders (default Office of Security for
+    the DS/OSEC rules channel; use Office of Training & Education for OTE).
+    """
     data = _regulations()
-    intro = str(data["intro"]).format(
-        eyebrow=agency_eyebrow("Directorate of Support"),
-        motto=DS_MOTTO,
-        classification=DS_CLASSIFICATION,
-    )
+    resolve = {
+        "motto": motto if motto is not None else DS_MOTTO,
+        "classification": (
+            classification if classification is not None else DS_CLASSIFICATION
+        ),
+        "office": office,
+    }
+    intro = str(data["intro"]).format(**resolve)
+    embed_color = COLOR_DS if color is None else color
     embeds = [
         embed(
-            title=str(data.get("title", "SERVER REGULATIONS")),
+            title=str(data.get("title", "DIRECTORATE OF SUPPORT")),
             description=intro,
-            logo=LOGOS["ds"],
+            logo=LOGOS["ds"] if logo is None else logo,
+            color=embed_color,
         )
     ]
     for section in data.get("sections", []):
@@ -786,10 +803,11 @@ def server_regulations_embeds() -> list[discord.Embed]:
         embeds.append(
             embed(
                 title=str(title) if title else None,
-                description=str(section["body"]),
+                description=str(section["body"]).format(**resolve),
+                color=embed_color,
             )
         )
-    embeds.append(disclaimer_embed(color=COLOR_DS))
+    embeds.append(disclaimer_embed(color=embed_color))
     return embeds
 
 

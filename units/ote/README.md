@@ -31,6 +31,7 @@ Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [
 
 ```bash
 python units/ote/coc.py
+python units/ote/server_regulations.py
 python units/ote/public_information.py
 python units/ote/program_overview.py
 python units/ote/staff_documents.py
@@ -44,6 +45,7 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 | Script | Posts | `.env` key |
 |--------|-------|------------|
 | [`coc.py`](coc.py) | OTE chain of command | `WEBHOOK_OTE_COC` |
+| [`server_regulations.py`](server_regulations.py) | Server regulations (OTE Rules) | `WEBHOOK_OTE_RULES` |
 | [`public_information.py`](public_information.py) | Public OTE information | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
 | [`program_overview.py`](program_overview.py) | Officer Training Program overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
 | [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
