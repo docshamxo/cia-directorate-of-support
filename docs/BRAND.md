@@ -20,12 +20,12 @@ Legal terms: [LICENSE](../LICENSE) (MIT + Brand Use and Trademark Notice).
 Always keep a clear non-affiliation banner in:
 
 - README hero subtitle
-- Discord disclaimer closers (`config/organization.yaml` → `copy.disclaimer*`)
+- OTE and OSEC **Rules** Discord channels (regulations hero + one Disclaimer closer)
 - SECURITY / CONTRIBUTING affiliation lines
 
 Required meaning (wording may vary): **community project**, **not affiliated with** the United States Government or the Central Intelligence Agency, and community markings are **roleplay vocabulary only**.
 
-On Discord embeds, the explicit line **Unofficial Roblox Roleplay Community** appears **once** on OTE and OSEC Rules heroes only. Other channels use a bold unit line in the hero and keep non-affiliation in the disclaimer closer.
+On Discord, do **not** repeat the Disclaimer embed on every channel. It belongs **once** on each of the OTE and OSEC Rules posts only. Other channels use a bold unit hero line without restating the full community disclaimer.
 
 ## Bot / webhook display names
 

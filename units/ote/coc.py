@@ -57,11 +57,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(("Staff Ranks", c.ranks_text(*c.OTE_STAFF_RANKS)),),
         ),
         c.important_notice_embed(
-            unit="OTE",
-            color=c.COLOR_OTE,
-            parent_units=("Directorate of Support",),
+            unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",)
         ),
-        c.disclaimer_embed(color=c.COLOR_OTE),
     ]
 
 

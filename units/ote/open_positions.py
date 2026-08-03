@@ -106,7 +106,6 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
             ),
         ),
-        c.disclaimer_embed(links=True, color=c.COLOR_OTE),
     ]
 
 

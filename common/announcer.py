@@ -280,7 +280,6 @@ def subunit_coc_embeds(
             color=color,
             parent_units=("Directorate of Support", "Office of Security"),
         ),
-        c.disclaimer_embed(color=color),
     ]
 
 

@@ -101,11 +101,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
         c.classification_handling_embed(
-            unit="ESD",
-            authority="CIA Directorate of Support",
-            color=c.COLOR_ESD,
+            unit="ESD", authority="CIA Directorate of Support", color=c.COLOR_ESD
         ),
-        c.disclaimer_embed(staff=True, color=c.COLOR_ESD),
     ]
 
 

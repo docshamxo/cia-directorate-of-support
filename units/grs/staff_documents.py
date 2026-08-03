@@ -76,11 +76,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
         c.classification_handling_embed(
-            unit="GRS",
-            authority="CIA Directorate of Support",
-            color=c.COLOR_GRS,
+            unit="GRS", authority="CIA Directorate of Support", color=c.COLOR_GRS
         ),
-        c.disclaimer_embed(staff=True, color=c.COLOR_GRS),
     ]
 
 

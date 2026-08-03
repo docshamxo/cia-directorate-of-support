@@ -65,10 +65,10 @@ c.pending_group_field("ESD", c.community_link_label("ESD"))
 
 c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
 c.important_notice_embed(unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",))
-c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required; Community title
+# disclaimer_embed: Rules channels only (OTE/OSEC server_regulations)
 ```
 
-Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer · Community (always last).
+Closers: Classification & Handling Notice / Important Notice as needed. Disclaimer · Community only on Rules.
 
 Brand / bot naming: [BRAND.md](../docs/BRAND.md).
 

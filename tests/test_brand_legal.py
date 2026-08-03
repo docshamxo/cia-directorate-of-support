@@ -44,6 +44,29 @@ def test_disclaimer_title_and_affiliation() -> None:
     assert "not affiliated" in (embed.description or "").lower()
 
 
+def test_disclaimer_only_on_rules_embeds() -> None:
+    """Disclaimer closer is reserved for OTE/OSEC Rules posts."""
+    for embeds in (
+        c.server_regulations_embeds(),
+        c.server_regulations_embeds(
+            office="Office of Training & Education",
+            motto=c.OTE_MOTTO,
+            logo=c.LOGOS["ote"],
+            color=c.COLOR_OTE,
+        ),
+    ):
+        titles = [e.title or "" for e in embeds]
+        assert titles.count("Disclaimer · Community") == 1
+
+    hero = c.hero_embed(
+        title="PUBLIC INFORMATION",
+        unit="Office of Security",
+        supporting="Reference hub.",
+        color=c.COLOR_OSEC,
+    )
+    assert "Disclaimer" not in (hero.title or "")
+
+
 def test_unofficial_roleplay_only_on_rules_heroes() -> None:
     """\"Unofficial … Roleplay\" appears once, and only on OTE/OSEC rules intros."""
     osec = c.server_regulations_embeds()
