@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Example staff-link overlay (copy to links.staff.local.yaml).
 #   - 2026-07-18 | docshamxo | Add restored OSEC training/event/certification placeholders.
+#   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
 # === END FILE HEADER ===
 
 # Copy this file to config/links.staff.local.yaml and replace placeholders with real
@@ -49,8 +50,6 @@ ote:
 grs:
   staff_documents:
     google_drive: https://drive.google.com/drive/folders/REPLACE_ME?usp=drive_link
-    handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
-  information:
     handbook: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
 esd:
   staff_documents:
