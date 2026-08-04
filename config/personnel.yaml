@@ -12,6 +12,7 @@
 #   - 2026-07-17 | docshamxo | Swap OTE DDTE and ADTE (AndyShotSecond / Railorbsj).
 #   - 2026-07-17 | docshamxo | Add SSA to GRS/ESD LOWCOM (match OSEC ladder).
 #   - 2026-07-17 | docshamxo | Privacy: redact multi-holder CM roster; local holders overlay.
+#   - 2026-08-04 | docshamxo | GRS CM MrPallen; DCM vacant.
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -90,10 +91,10 @@ osec_main_chief_marshals:
 grs_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: kkthegoaty2_0
+  holder: MrPallen
 - abbrev: DCM
   title: Deputy Chief Marshal
-  holder: MrPallen
+  holder: VACANT
 esd_command:
 - abbrev: CM
   title: Chief Marshal
