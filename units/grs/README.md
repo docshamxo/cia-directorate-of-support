@@ -40,9 +40,9 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 
 | Script | Posts | `.env` key |
 |--------|-------|------------|
-| [`coc.py`](coc.py) | GRS chain of command | `WEBHOOK_GRS_COC` |
-| [`information.py`](information.py) | GRS information | `WEBHOOK_GRS_INFORMATION` |
-| [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| [`coc.py`](coc.py) | GRS chain of command (PUBLIC) | `WEBHOOK_GRS_COC` |
+| [`information.py`](information.py) | GRS public information | `WEBHOOK_GRS_INFORMATION` |
+| [`staff_documents.py`](staff_documents.py) | Staff documents (STAFF) | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
 
 ## Edit
 

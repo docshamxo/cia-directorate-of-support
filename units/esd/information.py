@@ -10,10 +10,11 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align public-info template and link grammar.
+#   - 2026-08-04 | docshamxo | Align ESD information hero with PUBLIC channel template.
 # === END FILE HEADER ===
 
 """
-CIA ESD information announcer.
+CIA ESD public information announcer.
 
 Posts the Executive Security Detail overview and community links
 to a Discord webhook.
@@ -30,10 +31,10 @@ from common.announcer import run_announcer
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.hero_embed(
-            title="INFORMATION",
+            title="PUBLIC INFORMATION",
             unit="Executive Security Detail",
             supporting=(
-                "Unclassified overview of ESD, its mission, and official community resources."
+                "Public overview of ESD, its mission, and official community resources."
             ),
             color=c.COLOR_ESD,
             logo=c.LOGOS["esd"],

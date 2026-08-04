@@ -10,10 +10,11 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Attach ESD logo on chain-of-command hero.
+#   - 2026-08-04 | docshamxo | Confirm ESD CoC posts as PUBLIC channel content.
 # === END FILE HEADER ===
 
 """
-CIA ESD chain of command announcer.
+CIA ESD public chain of command announcer.
 
 Sends the Executive Security Detail chain of command to a Discord webhook.
 """

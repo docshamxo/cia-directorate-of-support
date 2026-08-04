@@ -37,10 +37,10 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
     ("units/ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),
     ("units/ote/open_positions.py", "OTE Open Positions", "WEBHOOK_OTE_OPEN_POSITIONS"),
     ("units/grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
-    ("units/grs/information.py", "GRS Information", "WEBHOOK_GRS_INFORMATION"),
+    ("units/grs/information.py", "GRS Public Information", "WEBHOOK_GRS_INFORMATION"),
     ("units/grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
     ("units/esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
-    ("units/esd/information.py", "ESD Information", "WEBHOOK_ESD_INFORMATION"),
+    ("units/esd/information.py", "ESD Public Information", "WEBHOOK_ESD_INFORMATION"),
     ("units/esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
 )
 

@@ -12,6 +12,7 @@
 #   - 2026-07-17 | docshamxo | Expand MIDCOM/LOWCOM labels for accessibility.
 #   - 2026-07-17 | docshamxo | Alerting exit codes and structured IR event logs.
 #   - 2026-07-17 | docshamxo | Default require_reaction; allow-skip and bot channel purge flags.
+#   - 2026-08-04 | docshamxo | Frame GRS/ESD subunit CoC as PUBLIC channel content.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -228,7 +229,7 @@ def subunit_coc_embeds(
     command_roles: tuple[c.Role, ...],
     logo: Path | None = None,
 ) -> list[discord.Embed]:
-    """Shared GRS/ESD chain-of-command embed layout (need-to-know; no full DS ORBAT)."""
+    """Shared GRS/ESD public chain-of-command embed layout (no full DS ORBAT)."""
     return [
         c.chain_intro_embed(
             unit=unit_full,
@@ -238,7 +239,7 @@ def subunit_coc_embeds(
                 f"The **{unit_full} ({unit_abbrev})** is a sub-unit of the **Office of Security** "
                 "under the **Directorate of Support**. "
                 f"{unit_abbrev} reports through OSEC and DS. "
-                "Full parent Order of Battle (ORBAT) is published in DS / OSEC chain-of-command channels only."
+                "Full parent Order of Battle (ORBAT) is published in DS / OSEC chain-of-command channels."
             ),
         ),
         c.embed(
@@ -246,7 +247,7 @@ def subunit_coc_embeds(
             description=(
                 f"{unit_abbrev} → **Office of Security** → **Directorate of Support**. "
                 "Consult your immediate supervisor before escalating. "
-                "Parent leadership names are omitted here (need-to-know)."
+                "Parent leadership names are listed in DS / OSEC chain-of-command channels."
             ),
             color=color,
         ),
