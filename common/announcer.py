@@ -13,6 +13,7 @@
 #   - 2026-07-17 | docshamxo | Alerting exit codes and structured IR event logs.
 #   - 2026-07-17 | docshamxo | Default require_reaction; allow-skip and bot channel purge flags.
 #   - 2026-08-04 | docshamxo | Frame GRS/ESD subunit CoC as PUBLIC channel content.
+#   - 2026-08-04 | docshamxo | Omit Disclaimer embed from GRS/ESD subunit CoC.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -281,7 +282,6 @@ def subunit_coc_embeds(
             color=color,
             parent_units=("Directorate of Support", "Office of Security"),
         ),
-        c.disclaimer_embed(color=color),
     ]
 
 

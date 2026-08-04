@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Accessible marking notes.
 #   - 2026-08-03 | docshamxo | Remove Reference Documents section from GRS information.
 #   - 2026-08-04 | docshamxo | Treat GRS information as a PUBLIC channel.
+#   - 2026-08-04 | docshamxo | Omit Disclaimer embed on GRS public information.
 # === END FILE HEADER ===
 
 """
@@ -50,7 +51,6 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
             color=c.COLOR_GRS,
         ),
-        c.disclaimer_embed(color=c.COLOR_GRS),
     ]
 
 

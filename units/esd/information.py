@@ -11,6 +11,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align public-info template and link grammar.
 #   - 2026-08-04 | docshamxo | Align ESD information hero with PUBLIC channel template.
+#   - 2026-08-04 | docshamxo | Omit Disclaimer embed on ESD public information.
 # === END FILE HEADER ===
 
 """
@@ -33,9 +34,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="PUBLIC INFORMATION",
             unit="Executive Security Detail",
-            supporting=(
-                "Public overview of ESD, its mission, and official community resources."
-            ),
+            supporting=("Public overview of ESD, its mission, and official community resources."),
             color=c.COLOR_ESD,
             logo=c.LOGOS["esd"],
         ),
@@ -69,7 +68,6 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
             ),
         ),
-        c.disclaimer_embed(links=True, color=c.COLOR_ESD),
     ]
 
 
