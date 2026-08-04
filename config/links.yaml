@@ -17,6 +17,7 @@
 #   - 2026-07-17 | docshamxo | Add ESD staff handbook, FPCON, phase, and tryout guides.
 #   - 2026-07-17 | docshamxo | ESD phase_i → phase_guide; remove phase_ii.
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff document link placeholders.
+#   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -79,8 +80,6 @@ ote:
 grs:
   staff_documents:
     google_drive: https://example.invalid/STAFF_LOCAL_REQUIRED
-    handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
-  information:
     handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
 esd:
   staff_documents:
