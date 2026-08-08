@@ -77,9 +77,7 @@ def test_unofficial_roleplay_only_on_rules_heroes() -> None:
         color=c.COLOR_OTE,
     )
     for embeds in (osec, ote):
-        blob = "\n".join(
-            [(e.title or "") + "\n" + (e.description or "") for e in embeds]
-        )
+        blob = "\n".join([(e.title or "") + "\n" + (e.description or "") for e in embeds])
         assert blob.lower().count("unofficial") == 1
         assert "Unofficial Roblox Roleplay Community" in blob
 

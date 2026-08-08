@@ -17,6 +17,7 @@
 #   - 2026-07-17 | docshamxo | Replace mojibake em dashes with ASCII in phase titles.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff training, event, and cert link list.
+#   - 2026-08-04 | docshamxo | Remove Unofficial Community disclaimer from OSEC staff docs.
 # === END FILE HEADER ===
 
 """

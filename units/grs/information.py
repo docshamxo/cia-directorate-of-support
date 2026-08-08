@@ -12,13 +12,15 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align internal info template and closing vocabulary.
 #   - 2026-07-17 | docshamxo | Accessible marking notes.
+#   - 2026-08-03 | docshamxo | Remove Reference Documents section from GRS information.
+#   - 2026-08-04 | docshamxo | Treat GRS information as a PUBLIC channel.
+#   - 2026-08-04 | docshamxo | Omit Disclaimer embed on GRS public information.
 # === END FILE HEADER ===
 
 """
-CIA GRS information announcer.
+CIA GRS public information announcer.
 
-Posts the Global Response Staff overview and reference documentation
-to a Discord webhook.
+Posts the Global Response Staff overview to a Discord webhook.
 """
 
 from __future__ import annotations
@@ -32,9 +34,11 @@ from common.announcer import run_announcer
 def _build_embeds() -> list[c.discord.Embed]:
     return [
         c.hero_embed(
-            title="INFORMATION",
+            title="PUBLIC INFORMATION",
             unit="Global Response Staff",
-            supporting="Reference hub for GRS mission overview and authorized documentation.",
+            supporting=(
+                "Public overview of the GRS mission and place in the Directorate of Support."
+            ),
             color=c.COLOR_GRS,
             logo=c.LOGOS["grs"],
         ),
@@ -46,22 +50,6 @@ def _build_embeds() -> list[c.discord.Embed]:
                 f"{c.GRS_ABOUT}"
             ),
             color=c.COLOR_GRS,
-        ),
-        c.embed(
-            title="Reference Documents",
-            description="Key GRS reference material for authorized personnel.",
-            color=c.COLOR_GRS,
-            fields=(
-                c.link_field(
-                    "Handbook",
-                    "DS Community | GRS Handbook",
-                    c.url("grs.information.handbook"),
-                    c.MARKING_STAFF,
-                ),
-            ),
-        ),
-        c.classification_handling_embed(
-            unit="GRS", authority="CIA Directorate of Support", color=c.COLOR_GRS
         ),
     ]
 

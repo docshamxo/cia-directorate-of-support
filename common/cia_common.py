@@ -786,9 +786,7 @@ def server_regulations_embeds(
     data = _regulations()
     resolve = {
         "motto": motto if motto is not None else DS_MOTTO,
-        "classification": (
-            classification if classification is not None else DS_CLASSIFICATION
-        ),
+        "classification": (classification if classification is not None else DS_CLASSIFICATION),
         "office": office,
     }
     intro = str(data["intro"]).format(**resolve)
