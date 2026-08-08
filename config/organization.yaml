@@ -13,6 +13,7 @@
 #   - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice to affiliation/disclaimer copy.
 #   - 2026-07-17 | docshamxo | Strengthen non-affiliation banners for brand/legal compliance.
 #   - 2026-07-17 | docshamxo | Product/content UX: tighter about copy, shared marking notes, leaner closers.
+#   - 2026-08-02 | docshamxo | Drop repeated unofficial-RP phrasing from closers (rules heroes only).
 # === END FILE HEADER ===
 
 ds:
@@ -62,7 +63,7 @@ copy:
 
     Do not bypass an available lower rank to reach senior leadership. Escalate one level
     at a time.'
-  affiliation_notice: '**Unofficial community roleplay.** This project is **not affiliated with**,
+  affiliation_notice: '**Community project -- not USG/CIA.** This project is **not affiliated with**,
     endorsed by, sponsored by, or connected to the United States Government or the Central Intelligence
     Agency. Nothing here is an official government communication. Community markings (**PUBLIC** /
     **STAFF** / **CANDIDATE**) are roleplay vocabulary only -- not USG classification.
@@ -70,38 +71,38 @@ copy:
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
   property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
-  disclaimer: '**Unofficial community roleplay -- not USG/CIA.**
+  disclaimer: '**Community project -- not USG/CIA.**
 
 
     All text here is marked **PUBLIC**.
 
 
-    This Discord content is fiction for an unofficial Roblox community. It is **not affiliated with**
+    This Discord content is fiction for a Roblox community. It is **not affiliated with**
     the United States Government or the Central Intelligence Agency. Markings are roleplay vocabulary
     only.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_links: '**Unofficial community roleplay -- not USG/CIA.**
+  disclaimer_links: '**Community project -- not USG/CIA.**
 
 
     All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
 
 
-    Links point to community / Roblox resources for this unofficial group. This project is **not
+    Links point to community / Roblox resources for this group. This project is **not
     affiliated with** the United States Government or the Central Intelligence Agency. Markings are
     roleplay vocabulary only.
 
 
     **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  disclaimer_staff: '**Unofficial community roleplay -- not USG/CIA.**
+  disclaimer_staff: '**Community project -- not USG/CIA.**
 
 
     Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked staff
     materials are **STAFF** unless otherwise noted.
 
 
-    Staff markings are community access rules for this Roblox roleplay -- **not** United States
+    Staff markings are community access rules for this Roblox community -- **not** United States
     Government classification. This project is **not affiliated with** the US Government or CIA.
 
 

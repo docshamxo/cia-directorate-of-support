@@ -7,6 +7,7 @@
 #   - 2026-07-17 | docshamxo | Single announcer catalog for run_all and validate_repo.
 #   - 2026-07-17 | docshamxo | Staged office rollout order for safer live sends.
 #   - 2026-07-17 | docshamxo | Announcer scripts live under units/<office>/.
+#   - 2026-08-02 | docshamxo | Add OTE Server Regulations (WEBHOOK_OTE_RULES).
 # === END FILE HEADER ===
 
 """Announcer catalog — single source of truth for run_all and validate_repo."""
@@ -32,6 +33,7 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
     ),
     ("units/osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
     ("units/ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
+    ("units/ote/server_regulations.py", "OTE Server Regulations", "WEBHOOK_OTE_RULES"),
     ("units/ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
     ("units/ote/program_overview.py", "OTE Program Overview", "WEBHOOK_OTE_PROGRAM_OVERVIEW"),
     ("units/ote/staff_documents.py", "OTE Staff Documents", "WEBHOOK_OTE_STAFF_DOCUMENTS"),

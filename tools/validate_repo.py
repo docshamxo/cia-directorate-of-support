@@ -496,6 +496,15 @@ def validate_style_guide() -> None:
                     f"{rel}: USG-style marking vocabulary found; use PUBLIC/STAFF/CANDIDATE"
                 )
 
+            if (
+                "disclaimer_embed(" in text
+                and "def disclaimer_embed" not in text
+                and path.name != "server_regulations.py"
+            ):
+                issues.append(
+                    f"{rel}: disclaimer_embed is Rules-only (OTE/OSEC server_regulations)"
+                )
+
             for match in DISCLAIMER_CALL_RE.finditer(text):
                 args = match.group(1)
                 if "color=" not in args:

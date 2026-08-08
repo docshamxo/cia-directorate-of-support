@@ -28,6 +28,7 @@ def test_bot_names_include_community_or_rp_marker() -> None:
 def test_agency_eyebrow_is_community_rp() -> None:
     text = c.agency_eyebrow("Office of Security")
     assert "community" in text.lower()
+    assert "unofficial" not in text.lower()
     assert "Central Intelligence Agency ·" not in text
 
 
@@ -37,8 +38,57 @@ def test_community_link_label() -> None:
 
 def test_disclaimer_title_and_affiliation() -> None:
     embed = c.disclaimer_embed(color=c.COLOR_DS)
-    assert embed.title and "Unofficial" in embed.title
+    assert embed.title and "Disclaimer" in embed.title
+    assert "unofficial" not in (embed.title or "").lower()
+    assert "unofficial" not in (embed.description or "").lower()
     assert "not affiliated" in (embed.description or "").lower()
+
+
+def test_disclaimer_only_on_rules_embeds() -> None:
+    """Disclaimer closer is reserved for OTE/OSEC Rules posts."""
+    for embeds in (
+        c.server_regulations_embeds(),
+        c.server_regulations_embeds(
+            office="Office of Training & Education",
+            motto=c.OTE_MOTTO,
+            logo=c.LOGOS["ote"],
+            color=c.COLOR_OTE,
+        ),
+    ):
+        titles = [e.title or "" for e in embeds]
+        assert titles.count("Disclaimer · Community") == 1
+
+    hero = c.hero_embed(
+        title="PUBLIC INFORMATION",
+        unit="Office of Security",
+        supporting="Reference hub.",
+        color=c.COLOR_OSEC,
+    )
+    assert "Disclaimer" not in (hero.title or "")
+
+
+def test_unofficial_roleplay_only_on_rules_heroes() -> None:
+    """\"Unofficial … Roleplay\" appears once, and only on OTE/OSEC rules intros."""
+    osec = c.server_regulations_embeds()
+    ote = c.server_regulations_embeds(
+        office="Office of Training & Education",
+        motto=c.OTE_MOTTO,
+        logo=c.LOGOS["ote"],
+        color=c.COLOR_OTE,
+    )
+    for embeds in (osec, ote):
+        blob = "\n".join([(e.title or "") + "\n" + (e.description or "") for e in embeds])
+        assert blob.lower().count("unofficial") == 1
+        assert "Unofficial Roblox Roleplay Community" in blob
+
+    hero = c.hero_embed(
+        title="PUBLIC INFORMATION",
+        unit="Office of Security",
+        supporting="Reference hub.",
+        color=c.COLOR_OSEC,
+    )
+    assert "unofficial" not in (hero.description or "").lower()
+    assert "**Office of Security**" in (hero.description or "")
 
 
 def test_license_and_brand_docs_exist() -> None:

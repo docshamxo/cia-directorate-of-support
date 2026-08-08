@@ -48,7 +48,7 @@ Put editable values in config instead:
 ```python
 from common import cia_common as c
 
-# Hero: ALL CAPS title + italic community-RP eyebrow + supporting sentence
+# Hero: ALL CAPS title + bold unit line + supporting sentence
 c.hero_embed(
     title="INFORMATION",
     unit="Office of Security",
@@ -57,7 +57,7 @@ c.hero_embed(
     logo=c.LOGOS["osec"],
 )
 
-c.agency_eyebrow("Office of Security")  # *Unofficial community RP · …*
+c.agency_eyebrow("Office of Security")  # *Community · …*
 c.community_link_label("OSEC")  # DS Community | OSEC
 c.motto_line(c.OSEC_MOTTO)  # *PROTECT · DETECT · RESPOND*
 c.link_field("Handbook", c.community_link_label("OSEC Handbook"), url, "STAFF.")
@@ -65,10 +65,10 @@ c.pending_group_field("ESD", c.community_link_label("ESD"))
 
 c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
 c.important_notice_embed(unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",))
-c.disclaimer_embed(links=True, color=c.COLOR_OSEC)  # color= required; unofficial-community title
+# disclaimer_embed: Rules channels only (OTE/OSEC server_regulations)
 ```
 
-Closers order: Classification & Handling Notice (optional) → Important Notice (CoC only) → Disclaimer · Unofficial Community (always last).
+Closers: Classification & Handling Notice / Important Notice as needed. Disclaimer · Community only on Rules.
 
 Brand / bot naming: [BRAND.md](../docs/BRAND.md).
 

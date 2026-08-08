@@ -29,17 +29,14 @@ from common.announcer import run_announcer
 
 
 def _build_intro_embed() -> c.discord.Embed:
-    return c.chain_intro_embed(
-        unit="Directorate of Support",
-        color=c.COLOR_DS,
-    )
+    return c.chain_intro_embed(unit="Directorate of Support", color=c.COLOR_DS)
 
 
 def _build_agency_embed() -> c.discord.Embed:
     return c.embed(
         title="Agency Executive Leadership",
         description=(
-            f"{c.agency_eyebrow('Executive Chain of Command')}\n\n"
+            "**Executive Chain of Command**\n\n"
             "Agency executive leadership sits above all Directorates. The "
             "**Directorate of Support (DS)** chain continues below."
         ),
@@ -131,7 +128,6 @@ def _build_embeds() -> list[c.discord.Embed]:
         _build_grs_embed(),
         _build_esd_embed(),
         _build_ranks_embed(),
-        c.disclaimer_embed(color=c.COLOR_DS),
     ]
 
 

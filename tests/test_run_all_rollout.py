@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Unit tests for --only / --stage selection.
 #   - 2026-07-17 | docshamxo | Expect units/<office>/ catalog paths.
+#   - 2026-08-07 | docshamxo | Count OTE Rules announcer in the OTE selection.
 # === END FILE HEADER ===
 
 """Unit tests for staged rollout and --only filtering."""
@@ -49,7 +50,7 @@ def test_selected_scripts_only_office() -> None:
 
 def test_selected_scripts_only_units_office_path() -> None:
     selected = selected_scripts(only_arg="units/ote", stage_arg="")
-    assert len(selected) == 5
+    assert len(selected) == 6
     assert all(path.startswith("units/ote/") for path, _label, _key in selected)
 
 

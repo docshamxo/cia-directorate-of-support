@@ -20,10 +20,12 @@ Legal terms: [LICENSE](../LICENSE) (MIT + Brand Use and Trademark Notice).
 Always keep a clear non-affiliation banner in:
 
 - README hero subtitle
-- Discord disclaimer closers (`config/organization.yaml` → `copy.disclaimer*`)
+- OTE and OSEC **Rules** Discord channels (regulations hero + one Disclaimer closer)
 - SECURITY / CONTRIBUTING affiliation lines
 
-Required meaning (wording may vary): **unofficial community**, **not affiliated with** the United States Government or the Central Intelligence Agency, and community markings are **roleplay vocabulary only**.
+Required meaning (wording may vary): **community project**, **not affiliated with** the United States Government or the Central Intelligence Agency, and community markings are **roleplay vocabulary only**.
+
+On Discord, do **not** repeat the Disclaimer embed on every channel. It belongs **once** on each of the OTE and OSEC Rules posts only. Other channels use a bold unit hero line without restating the full community disclaimer.
 
 ## Bot / webhook display names
 
@@ -46,7 +48,7 @@ In-fiction office names in embed **body** copy are fine. The **webhook username*
 
 ## Hero eyebrows
 
-Use `agency_eyebrow()` / `hero_embed()` — they must frame the unit as **unofficial community RP**, not as a bare “Central Intelligence Agency” banner.
+Use `hero_embed()` / `chain_intro_embed()` — bold **unit** line under an ALL CAPS title (not a bare “Central Intelligence Agency” banner). Rules channels use the dedicated regulations hero stack instead.
 
 ## Link labels
 
