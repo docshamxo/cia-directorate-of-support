@@ -16,6 +16,7 @@
 #   - 2026-08-04 | docshamxo | GRS CM MrPallen; DCM vacant.
 #   - 2026-08-07 | docshamxo | Fix Chief of Intelligence Staff abbreviation (CoS -> CIS).
 #   - 2026-08-08 | docshamxo | OTE ADTE and Dean vacant.
+#   - 2026-08-23 | docshamxo | Fill OTE ADTE (crazybijij2) and Dean (Astroshard21).
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -54,10 +55,10 @@ ote_high_command:
   holder: AndyShotSecond
 - abbrev: ADTE
   title: Assistant Director of Training and Education
-  holder: VACANT
+  holder: crazybijij2
 - abbrev: D
   title: Dean
-  holder: VACANT
+  holder: Astroshard21
 ote_staff_ranks:
 - abbrev: SP
   title: Senior Professor
