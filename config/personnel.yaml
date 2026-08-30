@@ -17,6 +17,9 @@
 #   - 2026-08-07 | docshamxo | Fix Chief of Intelligence Staff abbreviation (CoS -> CIS).
 #   - 2026-08-08 | docshamxo | OTE ADTE and Dean vacant.
 #   - 2026-08-23 | docshamxo | Fill OTE ADTE (crazybijij2) and Dean (Astroshard21).
+#   - 2026-08-30 | docshamxo | Rotate DS, OSEC, OTE, GRS, and ESD CoC holders.
+#   - 2026-08-30 | docshamxo | Rename CIS holder Dustykingeric to DustyInvictus.
+#   - 2026-08-30 | docshamxo | Fix OSEC Superintendent abbrev Supt to S.
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -35,27 +38,27 @@ agency_executive:
   holder: ashlyn
 - abbrev: CIS
   title: Chief of Intelligence Staff
-  holder: Dustykingeric
+  holder: DustyInvictus
 - abbrev: IG
   title: Inspector General
   holder: JenynInvictus
 ds_leadership:
 - abbrev: CDSD
   title: Component Director, Directorate of Support
-  holder: ClassifiedDark24
+  holder: ClassifiedInvictus
 - abbrev: DCDSD
   title: Deputy Component Director, Directorate of Support
   holder: docshamxo
 ote_high_command:
 - abbrev: DTE
   title: Director of Training and Education
-  holder: Shaikhuu
+  holder: AndyShotSecond
 - abbrev: DDTE
   title: Deputy Director of Training and Education
-  holder: AndyShotSecond
+  holder: VACANT
 - abbrev: ADTE
-  title: Assistant Director of Training and Education
-  holder: crazybijij2
+  title: Assistant Deputy Director of Training and Education
+  holder: Shaikhuu
 - abbrev: D
   title: Dean
   holder: Astroshard21
@@ -74,9 +77,9 @@ osec_high_command:
   title: Deputy Director of Security
   holder: Rattler_289
 - abbrev: ADS
-  title: Assistant Director of Security
-  holder: Foxxy_Fan
-- abbrev: Supt
+  title: Assistant Deputy Director of Security
+  holder: crazybijij2
+- abbrev: S
   title: Superintendent
   holder: VACANT
 osec_main_chief_marshals:
@@ -95,7 +98,7 @@ osec_main_chief_marshals:
 grs_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: MrPallen
+  holder: Shaikhuu
 - abbrev: DCM
   title: Deputy Chief Marshal
   holder: VACANT
@@ -105,7 +108,7 @@ esd_command:
   holder: xBlq_h
 - abbrev: DCM
   title: Deputy Chief Marshal
-  holder: Ghostfac32009
+  holder: jayheart592010
 osec_middle_command:
 - abbrev: CM
   title: Chief Marshal
