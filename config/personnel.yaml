@@ -22,10 +22,17 @@
 #   - 2026-08-30 | docshamxo | Fix OSEC Superintendent abbrev Supt to S.
 #   - 2026-08-30 | docshamxo | Remove OSEC Main Element CM roster from CoC.
 #   - 2026-08-30 | docshamxo | OSEC ADS Shaikhuu, Supt crazybijij2; vacate GRS CM.
+#   - 2026-08-30 | docshamxo | Optional discord_id per holder for clickable profile links.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
 # membership rosters.
+#
+# Optional per-holder field: discord_id (numeric Discord user snowflake).
+# When set, CoC / contact embeds render the holder as a clickable profile link:
+#   [username](https://discord.com/users/<discord_id>)
+# How to get an ID: Discord User Settings → Advanced → Developer Mode ON →
+# right-click the member → Copy User ID. Does not ping (AllowedMentions.none).
 
 agency_executive:
 - abbrev: DIR
@@ -83,6 +90,7 @@ osec_high_command:
 - abbrev: S
   title: Superintendent
   holder: crazybijij2
+  # discord_id: "123456789012345678"  # paste real snowflake to make name clickable
 grs_command:
 - abbrev: CM
   title: Chief Marshal

@@ -21,6 +21,11 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Changed
 
+- Application reapply rules (OSEC + OTE open positions): wait **24 hours** after grading
+  before reapplying; max **3** applications then wait a **full week**.
+- OSEC open positions: application questions may go to full OSEC High Command (includes
+  Superintendent). Optional `discord_id` on `config/personnel.yaml` holders for clickable
+  Discord profile links in CoC / contact embeds.
 - Reorganize layout: office announcers under `units/<office>/`; ops runbook at `docs/OPS.md`.
 - Clean root layout: docs/tools/requirements folders; `python tools/run_all.py`.
 

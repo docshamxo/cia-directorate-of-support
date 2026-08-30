@@ -15,6 +15,8 @@
 #   - 2026-07-17 | docshamxo | Accessible LOWCOM/MIDCOM field names and first-use expansions.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Replace mojibake bullets/dashes with ASCII in Important Info.
+#   - 2026-08-30 | docshamxo | Reapply: 24h after graded; max 3 attempts then 1 week.
+#   - 2026-08-30 | docshamxo | Application questions: full OSEC HICOM incl. Superintendent.
 # === END FILE HEADER ===
 
 """
@@ -75,10 +77,12 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "status - that is an **immediate failure**.\n"
                 "- Proper grammar and professionalism are required. Every question must be answered "
                 "in **at least two complete sentences**.\n"
-                "- After a **passing** result, wait a **full week** before reapplying for a higher "
-                "position.\n"
-                "- Application questions may be directed **only** to:\n"
-                f"{c.roles_text(*c.OSEC_HIGH_COMMAND[:3])}"
+                "- You may reapply only after **24 hours** from when your application is "
+                "**graded**.\n"
+                "- You may apply a maximum of **3 times**, then must wait a **full week** before "
+                "applying again.\n"
+                "- Application questions may be directed **only** to OSEC High Command:\n"
+                f"{c.roles_text(*c.OSEC_HIGH_COMMAND)}"
             ),
             color=c.COLOR_OSEC,
         ),

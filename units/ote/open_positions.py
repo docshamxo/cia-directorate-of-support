@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align hero supporting line, link grammar, unit-color closer.
 #   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
+#   - 2026-08-30 | docshamxo | Reapply: 24h after graded; max 3 attempts then 1 week.
 # === END FILE HEADER ===
 
 """
@@ -83,6 +84,10 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "→ The use of **AI** in any application response will result in a "
                 "**BLACKLIST** from OTE.\n"
                 "→ Use proper grammar, spelling, and professionalism throughout your application.\n"
+                "→ You may reapply only after **24 hours** from when your application is "
+                "**graded**.\n"
+                "→ You may apply a maximum of **3 times**, then must wait a **full week** before "
+                "applying again.\n"
                 "→ All applicants must follow Agency regulations and the OTE chain of command."
             ),
             color=c.COLOR_OTE,

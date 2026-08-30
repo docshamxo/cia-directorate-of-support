@@ -24,6 +24,7 @@
 #   - 2026-07-17 | docshamxo | Privacy: applicant env URLs, holders overlay, retention notes.
 #   - 2026-08-02 | docshamxo | Parameterize server regulations office for OTE Rules.
 #   - 2026-08-30 | docshamxo | Drop OSEC Main Element CM roster and holders overlay.
+#   - 2026-08-30 | docshamxo | Optional discord_id on Role for clickable profile links.
 # === END FILE HEADER ===
 
 """
@@ -466,11 +467,16 @@ class Role:
     abbrev: str
     title: str
     holder: str
+    discord_id: str | None = None
 
     def format(self) -> str:
         # Username on its own line so Discord embed wrapping does not split
         # "Title - username" awkwardly across lines for long role titles.
-        return f"**[{self.abbrev}] {self.title}**\n→ {self.holder}"
+        # Optional discord_id → markdown profile link (clickable, does not ping).
+        holder = self.holder
+        if self.discord_id and self.holder.upper() != "VACANT":
+            holder = f"[{self.holder}](https://discord.com/users/{self.discord_id})"
+        return f"**[{self.abbrev}] {self.title}**\n→ {holder}"
 
 
 @dataclass(frozen=True, slots=True)
@@ -484,8 +490,28 @@ class Rank:
         return f"**[{self.abbrev}] {self.title}**"
 
 
+def _normalize_discord_id(raw: object | None) -> str | None:
+    """Return a Discord user snowflake string, or None if unset."""
+    if raw is None:
+        return None
+    value = str(raw).strip()
+    if not value:
+        return None
+    if not value.isdigit():
+        raise ValueError(f"discord_id must be numeric snowflake, got {raw!r}")
+    return value
+
+
 def _roles(key: str) -> tuple[Role, ...]:
-    return tuple(Role(item["abbrev"], item["title"], item["holder"]) for item in _personnel()[key])
+    return tuple(
+        Role(
+            item["abbrev"],
+            item["title"],
+            item["holder"],
+            discord_id=_normalize_discord_id(item.get("discord_id")),
+        )
+        for item in _personnel()[key]
+    )
 
 
 def _ranks(key: str) -> tuple[Rank, ...]:
