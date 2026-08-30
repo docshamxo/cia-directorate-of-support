@@ -32,7 +32,7 @@ Modified:
 
 - [ ] No new public staff Drive/share / ORBAT links (use `config/links.staff.local.yaml`)
 - [ ] No Discord invite / channel snowflakes / applicant form or tracker URLs committed (use `.env`)
-- [ ] No multi-person mid-tier rosters committed (use `personnel.holders.local.yaml`)
+- [ ] No multi-person mid-tier rosters committed (`config/personnel.yaml` stays high command / small command teams)
 - [ ] Markings use community vocabulary only: **PUBLIC** / **STAFF** / **CANDIDATE** (no USG SECRET/CUI/etc.)
 - [ ] Affiliation / fiction disclaimer preserved where closers changed
 - [ ] Secret classes stay split (no bot token on webhook path; no webhook URLs in YAML)
@@ -40,7 +40,7 @@ Modified:
 ## Checklist
 
 - [ ] Updated READMEs / `docs/` / `.env.example` / `common/manifest.py` if scripts or webhook keys changed
-- [ ] No `.env` / `links.staff.local.yaml` / `personnel.holders.local.yaml` / `.webhook_messages.json` secrets in this PR
+- [ ] No `.env` / `links.staff.local.yaml` / `.webhook_messages.json` secrets in this PR
 - [ ] Dependency / Actions bumps reviewed (pins + CI) if supply-chain files changed
 - [ ] Docs map / [docs/README.md](../docs/README.md) updated if new operator docs were added
 

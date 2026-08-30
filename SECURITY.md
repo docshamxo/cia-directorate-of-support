@@ -44,13 +44,12 @@ This suite posts community roleplay content to Discord. Treat Roblox usernames, 
 | Applicant intake forms | `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`) | Rotate without writing IDs into git history |
 | Applicant status tracker | `.env` (`OTE_APPLICATION_TRACKER_URL`) | **Staff/ops only** — do not post in public channels |
 | Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` | Placeholders only in public `links.yaml` |
-| Mid-tier named rosters (e.g. multi CM) | `config/personnel.holders.local.yaml` | Committed YAML keeps `VACANT`; fill locally |
 | High-command holders | `config/personnel.yaml` | Minimal public CoC names only — no bulk rosters |
 | Webhook message IDs | `.webhook_messages.json` | Local snowflakes only; dispose on rotation / exit |
 
 **Applicant handling:** Forms collect applicant answers. Prefer env-backed form URLs so operators can rotate links after campaigns. Never commit tracker spreadsheet IDs. The public OTE open-positions announcer links the application form only — not the tracker.
 
-**Roster minimization:** Do not expand `personnel.yaml` with full membership lists. Multi-holder Mid/Main Element slots use the holders overlay. Rank ladders without holders are fine in public YAML.
+**Roster minimization:** Do not expand `personnel.yaml` with full membership lists, and do not add multi-holder mid-tier slots to chain-of-command embeds. Rank ladders without holders are fine in public YAML.
 
 ## Secret split (compartmentation)
 
@@ -63,7 +62,6 @@ Keep credential classes separated — do not collapse them into one file or one 
 | Community URLs (invite / channel link) | Local `.env` | Announcer embeds | Not committed in `config/links.yaml` |
 | Applicant form / tracker URLs | Local `.env` | Open-positions / ops | Not committed in `config/links.yaml`; tracker never posted publicly |
 | Staff Drive / ORBAT / TTP URLs | `config/links.staff.local.yaml` (gitignored) | Staff announcers | Public YAML keeps `STAFF_LOCAL_REQUIRED` placeholders |
-| Mid-tier roster holders | `config/personnel.holders.local.yaml` (gitignored) | CoC embeds | Public YAML uses `VACANT` for multi-CM slots |
 | Message ID state | `.webhook_messages.json` (gitignored) | Local purge tracking | Snowflakes only — no URLs or tokens |
 
 `python tools/validate_repo.py` fails if Discord webhook URLs or bot-token-shaped strings appear in tracked config/docs, or if `.env.example` secret values are non-empty.
@@ -72,7 +70,6 @@ Keep credential classes separated — do not collapse them into one file or one 
 |-----------------|-----|
 | `.env` | Webhooks, `DISCORD_BOT_TOKEN`, invite / results / applicant form URLs |
 | `config/links.staff.local.yaml` | Staff Drive / ORBAT / TTP share links |
-| `config/personnel.holders.local.yaml` | Mid-tier named rosters |
 | `.webhook_messages.json` | Message snowflakes for purge tracking (no secrets, still operational) |
 
 - Create `.env` via `python tools/bootstrap.py` (copies `.env.example`)

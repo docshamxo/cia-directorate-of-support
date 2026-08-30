@@ -23,6 +23,7 @@
 #   - 2026-07-17 | docshamxo | Soften hero eyebrow; community link labels; stronger disclaimer title.
 #   - 2026-07-17 | docshamxo | Privacy: applicant env URLs, holders overlay, retention notes.
 #   - 2026-08-02 | docshamxo | Parameterize server regulations office for OTE Rules.
+#   - 2026-08-30 | docshamxo | Drop OSEC Main Element CM roster and holders overlay.
 # === END FILE HEADER ===
 
 """
@@ -32,7 +33,6 @@ Editable data lives in config/*.yaml - not in this file:
   - config/branding.yaml      colors, bots, logos, community URLs
   - config/organization.yaml  mottos, about text, offices, disclaimers
   - config/personnel.yaml     chain-of-command names and ranks
-  - config/personnel.holders.local.yaml  optional mid-tier roster overlay (gitignored)
   - config/links.yaml         public document / form / channel URLs
   - config/links.staff.local.yaml  optional staff Drive overlay (gitignored)
   - config/regulations.yaml   server regulations prose
@@ -252,17 +252,7 @@ def _organization() -> dict[str, Any]:
 
 @lru_cache(maxsize=1)
 def _personnel() -> dict[str, Any]:
-    data = _load_yaml("personnel.yaml")
-    local_path = CONFIG_DIR / "personnel.holders.local.yaml"
-    if local_path.is_file():
-        overlay = yaml.safe_load(local_path.read_text(encoding="utf-8"))
-        if isinstance(overlay, dict):
-            for key, value in overlay.items():
-                data[key] = value
-            logger.debug("Merged personnel holders overlay from %s", local_path.name)
-        else:
-            logger.warning("%s is not a mapping; ignoring", local_path.name)
-    return data
+    return _load_yaml("personnel.yaml")
 
 
 @lru_cache(maxsize=1)
@@ -507,7 +497,6 @@ DS_LEADERSHIP = _roles("ds_leadership")
 OTE_HIGH_COMMAND = _roles("ote_high_command")
 OTE_STAFF_RANKS = _ranks("ote_staff_ranks")
 OSEC_HIGH_COMMAND = _roles("osec_high_command")
-OSEC_MAIN_CHIEF_MARSHALS = _roles("osec_main_chief_marshals")
 GRS_COMMAND = _roles("grs_command")
 ESD_COMMAND = _roles("esd_command")
 OSEC_MIDDLE_COMMAND = _ranks("osec_middle_command")

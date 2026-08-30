@@ -11,6 +11,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Standardize hero title and unit-color disclaimer.
 #   - 2026-07-17 | docshamxo | Use chain_intro_embed for proper CoC hierarchy.
+#   - 2026-08-30 | docshamxo | Drop OSEC Main Element CM section from OSEC embed.
 # === END FILE HEADER ===
 
 """
@@ -74,7 +75,6 @@ def _build_osec_embed() -> c.discord.Embed:
         logo=c.LOGOS["osec"],
         fields=(
             ("High Command", c.roles_text(*c.OSEC_HIGH_COMMAND)),
-            ("Main Element — Chief Marshals", c.roles_text(*c.OSEC_MAIN_CHIEF_MARSHALS)),
             ("Sub-Units", c.bullets(*c.OSEC_SUB_UNITS)),
         ),
     )
