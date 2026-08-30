@@ -21,6 +21,7 @@
 #   - 2026-08-30 | docshamxo | Rename CIS holder Dustykingeric to DustyInvictus.
 #   - 2026-08-30 | docshamxo | Fix OSEC Superintendent abbrev Supt to S.
 #   - 2026-08-30 | docshamxo | Remove OSEC Main Element CM roster from CoC.
+#   - 2026-08-30 | docshamxo | OSEC ADS Shaikhuu, Supt crazybijij2; vacate GRS CM.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -78,14 +79,14 @@ osec_high_command:
   holder: Rattler_289
 - abbrev: ADS
   title: Assistant Deputy Director of Security
-  holder: crazybijij2
+  holder: Shaikhuu
 - abbrev: S
   title: Superintendent
-  holder: VACANT
+  holder: crazybijij2
 grs_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: Shaikhuu
+  holder: VACANT
 - abbrev: DCM
   title: Deputy Chief Marshal
   holder: VACANT
