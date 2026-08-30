@@ -18,6 +18,7 @@
 #   - 2026-08-08 | docshamxo | OTE ADTE and Dean vacant.
 #   - 2026-08-23 | docshamxo | Fill OTE ADTE (crazybijij2) and Dean (Astroshard21).
 #   - 2026-08-30 | docshamxo | Rotate DS, OSEC, OTE, GRS, and ESD CoC holders.
+#   - 2026-08-30 | docshamxo | Rename CIS holder Dustykingeric to DustyInvictus.
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -36,7 +37,7 @@ agency_executive:
   holder: ashlyn
 - abbrev: CIS
   title: Chief of Intelligence Staff
-  holder: Dustykingeric
+  holder: DustyInvictus
 - abbrev: IG
   title: Inspector General
   holder: JenynInvictus
