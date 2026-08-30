@@ -19,6 +19,7 @@
 #   - 2026-08-23 | docshamxo | Fill OTE ADTE (crazybijij2) and Dean (Astroshard21).
 #   - 2026-08-30 | docshamxo | Rotate DS, OSEC, OTE, GRS, and ESD CoC holders.
 #   - 2026-08-30 | docshamxo | Rename CIS holder Dustykingeric to DustyInvictus.
+#   - 2026-08-30 | docshamxo | Fix OSEC Superintendent abbrev Supt to S.
 # === END FILE HEADER ===
 
 # Named holders for multi-person rosters (e.g. Main Element CMs) belong in
@@ -78,7 +79,7 @@ osec_high_command:
 - abbrev: ADS
   title: Assistant Deputy Director of Security
   holder: crazybijij2
-- abbrev: Supt
+- abbrev: S
   title: Superintendent
   holder: VACANT
 osec_main_chief_marshals:
