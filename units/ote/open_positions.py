@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
 #   - 2026-08-30 | docshamxo | Reapply: 24h after graded; max 3 attempts then 1 week.
 #   - 2026-08-30 | docshamxo | State SIS-6+ once; tighten eligibility and rules copy.
+#   - 2026-08-30 | docshamxo | General Staff eligibility GS-2+ → GS-7+.
 # === END FILE HEADER ===
 
 """
@@ -63,7 +64,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
                 (
                     "General Staff",
-                    "**GS-2+** may apply and must complete the full **OTP**.",
+                    "**GS-7+** may apply and must complete the full **OTP**.",
                 ),
                 (
                     "Restrictions",
