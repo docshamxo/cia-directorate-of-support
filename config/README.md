@@ -24,8 +24,7 @@ Editable data for the announcers. Change these files instead of hardcoding value
 |------|-------------------|
 | [`branding.yaml`](branding.yaml) | Colors, bot usernames, logo filenames, property notice |
 | [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers, affiliation / property notices |
-| [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks (mid-tier rosters via local holders overlay) |
-| [`personnel.holders.example.yaml`](personnel.holders.example.yaml) | Example mid-tier roster overlay (copy → `personnel.holders.local.yaml`) |
+| [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks (high command and small command teams only) |
 | [`links.yaml`](links.yaml) | Public document and Roblox URLs (staff Drive / ORBAT via local overlay; applicant forms via `.env`) |
 | [`links.staff.example.yaml`](links.staff.example.yaml) | Example staff Drive / ORBAT overlay (copy → `links.staff.local.yaml`) |
 | [`regulations.yaml`](regulations.yaml) | Server regulations prose |

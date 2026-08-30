@@ -33,9 +33,9 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 
 ## Sensitivity
 
-- Never commit `.env`, `config/links.staff.local.yaml`, `config/personnel.holders.local.yaml`, or `.webhook_messages.json`
+- Never commit `.env`, `config/links.staff.local.yaml`, or `.webhook_messages.json`
 - Staff Drive / ORBAT / TTP URLs → local overlay only (not public `config/links.yaml`)
-- Do not commit multi-person mid-tier rosters — use `personnel.holders.local.yaml`
+- Do not commit multi-person mid-tier rosters — keep `config/personnel.yaml` to high command and small command teams
 - Discord invites, channel snowflakes, and applicant form/tracker URLs → `.env`
 - Never post `OTE_APPLICATION_TRACKER_URL` into public Discord embeds
 - Keep affiliation / fiction disclaimer text in closers
@@ -51,7 +51,6 @@ Prefer YAML under [`config/`](../config/) over hardcoding in Python. When changi
 | Change | Where |
 |--------|-------|
 | High-command names, ranks | [`config/personnel.yaml`](../config/personnel.yaml) |
-| Mid-tier named rosters | `config/personnel.holders.local.yaml` (from [`personnel.holders.example.yaml`](../config/personnel.holders.example.yaml)) |
 | Mottos, about, disclaimers | [`config/organization.yaml`](../config/organization.yaml) |
 | Regulations prose | [`config/regulations.yaml`](../config/regulations.yaml) |
 | Colors, bot usernames, logos | [`config/branding.yaml`](../config/branding.yaml) |

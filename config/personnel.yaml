@@ -20,11 +20,11 @@
 #   - 2026-08-30 | docshamxo | Rotate DS, OSEC, OTE, GRS, and ESD CoC holders.
 #   - 2026-08-30 | docshamxo | Rename CIS holder Dustykingeric to DustyInvictus.
 #   - 2026-08-30 | docshamxo | Fix OSEC Superintendent abbrev Supt to S.
+#   - 2026-08-30 | docshamxo | Remove OSEC Main Element CM roster from CoC.
 # === END FILE HEADER ===
 
-# Named holders for multi-person rosters (e.g. Main Element CMs) belong in
-# gitignored config/personnel.holders.local.yaml — see personnel.holders.example.yaml.
-# Keep committed holders to high-command / small command teams only.
+# Keep committed holders to high-command / small command teams only — no bulk
+# membership rosters.
 
 agency_executive:
 - abbrev: DIR
@@ -81,19 +81,6 @@ osec_high_command:
   holder: crazybijij2
 - abbrev: S
   title: Superintendent
-  holder: VACANT
-osec_main_chief_marshals:
-- abbrev: CM
-  title: Chief Marshal
-  holder: VACANT
-- abbrev: CM
-  title: Chief Marshal
-  holder: VACANT
-- abbrev: CM
-  title: Chief Marshal
-  holder: VACANT
-- abbrev: CM
-  title: Chief Marshal
   holder: VACANT
 grs_command:
 - abbrev: CM

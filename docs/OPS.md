@@ -53,15 +53,6 @@ copy config\links.staff.example.yaml config\links.staff.local.yaml
 cp config/links.staff.example.yaml config/links.staff.local.yaml
 ```
 
-Optional mid-tier roster overlay:
-
-```bash
-# Windows
-copy config\personnel.holders.example.yaml config\personnel.holders.local.yaml
-# macOS / Linux
-cp config/personnel.holders.example.yaml config/personnel.holders.local.yaml
-```
-
 Fill real Drive URLs in the local file, then:
 
 ```bash
