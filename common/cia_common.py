@@ -88,7 +88,8 @@ DISCORD_API_BASE = "https://discord.com/api/v10"
 # U+2705 WHITE HEAVY CHECK MARK — applied to every successful webhook post.
 CHECKMARK_REACTION = "\u2705"
 BOT_TOKEN_ENV = "DISCORD_BOT_TOKEN"
-DISCORD_INVITE_ENV = "DISCORD_INVITE_URL"
+DISCORD_OSEC_INVITE_ENV = "DISCORD_OSEC_INVITE_URL"
+DISCORD_OTE_INVITE_ENV = "DISCORD_OTE_INVITE_URL"
 OSEC_RESULTS_ENV = "DISCORD_OSEC_APPLICATION_RESULTS_URL"
 OSEC_LOWCOM_APP_ENV = "OSEC_LOWCOM_APPLICATION_URL"
 OSEC_MIDCOM_APP_ENV = "OSEC_MIDCOM_APPLICATION_URL"
@@ -375,12 +376,18 @@ LOGOS = {key: confined_logo_path(filename) for key, filename in _logo_files.item
 URL_ROBLOX_GROUP_DS = url("community.roblox_group_ds")
 URL_ROBLOX_GROUP_OSEC = url("community.roblox_group_osec")
 URL_ROBLOX_GROUP_GRS = url("community.roblox_group_grs")
+URL_ROBLOX_GROUP_ESD = url("community.roblox_group_esd")
 URL_ROBLOX_GROUP_OTE = url("community.roblox_group_ote")
 
 
-def discord_invite_url() -> str:
-    """Community Discord invite from env (not committed in public YAML)."""
-    return env_url(DISCORD_INVITE_ENV, required=True)
+def discord_osec_invite_url() -> str:
+    """OSEC server Discord invite from env (not committed in public YAML)."""
+    return env_url(DISCORD_OSEC_INVITE_ENV, required=True)
+
+
+def discord_ote_invite_url() -> str:
+    """OTE server Discord invite from env (not committed in public YAML)."""
+    return env_url(DISCORD_OTE_INVITE_ENV, required=True)
 
 
 def osec_application_results_url() -> str:

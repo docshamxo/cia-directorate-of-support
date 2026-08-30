@@ -11,6 +11,8 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Standardize eyebrow, link grammar, and public-info template.
 #   - 2026-07-17 | docshamxo | Tighten public hero supporting line.
+#   - 2026-08-30 | docshamxo | Wire ESD Roblox group link into community embed.
+#   - 2026-08-30 | docshamxo | Split OSEC and OTE Discord invites in community links.
 # === END FILE HEADER ===
 
 """
@@ -85,9 +87,10 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.community_link_label("GRS"),
                     c.URL_ROBLOX_GROUP_GRS,
                 ),
-                c.pending_group_field(
+                c.link_field(
                     "Executive Security Detail",
                     c.community_link_label("ESD"),
+                    c.URL_ROBLOX_GROUP_ESD,
                 ),
                 c.link_field(
                     "Office of Training & Education",
@@ -95,9 +98,14 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.URL_ROBLOX_GROUP_OTE,
                 ),
                 c.link_field(
-                    "Discord",
-                    c.community_link_label("Discord Invite"),
-                    c.discord_invite_url(),
+                    "Office of Security (Discord)",
+                    c.community_link_label("OSEC Discord"),
+                    c.discord_osec_invite_url(),
+                ),
+                c.link_field(
+                    "Office of Training & Education (Discord)",
+                    c.community_link_label("OTE Discord"),
+                    c.discord_ote_invite_url(),
                 ),
             ),
         ),

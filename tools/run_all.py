@@ -364,7 +364,8 @@ def run_all(argv: list[str] | None = None) -> int:
         env["CIA_ALLOW_SKIP_REACTION"] = "1"
     if args.bot_channel_purge:
         env[c.BOT_CHANNEL_PURGE_ENV] = "1"
-    env.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
+    env.setdefault("DISCORD_OSEC_INVITE_URL", "https://example.invalid/osec-discord")
+    env.setdefault("DISCORD_OTE_INVITE_URL", "https://example.invalid/ote-discord")
     env.setdefault(
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",

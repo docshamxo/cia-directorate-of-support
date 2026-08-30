@@ -96,7 +96,8 @@ WEBHOOK_URL_LEAK_RE = re.compile(
 BOT_TOKEN_LEAK_RE = re.compile(r"\b[MN][A-Za-z0-9_-]{23,}\.[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{27,}\b")
 BARE_LOGO_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 SECRET_ENV_VALUE_RE = re.compile(
-    r"^(DISCORD_BOT_TOKEN|DISCORD_INVITE_URL|DISCORD_OSEC_APPLICATION_RESULTS_URL|"
+    r"^(DISCORD_BOT_TOKEN|DISCORD_OSEC_INVITE_URL|DISCORD_OTE_INVITE_URL|"
+    r"DISCORD_OSEC_APPLICATION_RESULTS_URL|"
     r"WEBHOOK_[A-Z0-9_]+)=(.*)$",
     re.MULTILINE,
 )
@@ -325,7 +326,8 @@ def validate_config() -> None:
     except ImportError as exc:
         fail(f"PyYAML is required: {exc}")
 
-    os.environ.setdefault("DISCORD_INVITE_URL", "https://example.invalid/discord-invite")
+    os.environ.setdefault("DISCORD_OSEC_INVITE_URL", "https://example.invalid/osec-discord")
+    os.environ.setdefault("DISCORD_OTE_INVITE_URL", "https://example.invalid/ote-discord")
     os.environ.setdefault(
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",
@@ -343,7 +345,8 @@ def validate_config() -> None:
         c.AGENCY_EXECUTIVE,
         c.LOGOS,
         c.GRS_ESD_MIDDLE_COMMAND,
-        c.discord_invite_url(),
+        c.discord_osec_invite_url(),
+        c.discord_ote_invite_url(),
         c.osec_application_results_url(),
         c.osec_lowcom_application_url(),
         c.ote_application_url(),
