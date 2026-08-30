@@ -369,8 +369,13 @@ def validate_config() -> None:
     public_disc = c.disclaimer_embed(color=c.COLOR_DS).description or ""
     if "not affiliated" not in public_disc.lower():
         fail("disclaimer_embed must state non-affiliation")
-    if "Inter Studios" not in public_disc:
-        fail("disclaimer_embed should append property_notice")
+    if "Inter Studios" in public_disc:
+        fail("disclaimer body must not duplicate property_notice (footer owns it)")
+    stamp_check = [c.discord.Embed(description="stamp")]
+    c.apply_effective_date_footer(stamp_check)
+    footer_text = stamp_check[-1].footer.text or ""
+    if "Inter Studios" not in footer_text:
+        fail("effective-date footer should include property_notice")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 

@@ -11,6 +11,8 @@
 
 from __future__ import annotations
 
+from datetime import date
+
 import discord
 import pytest
 
@@ -134,7 +136,29 @@ def test_apply_effective_date_footer_stamps_last() -> None:
     assert embeds[0].footer.text is None or embeds[0].footer.text == ""
     assert embeds[-1].footer and "Effective" in (embeds[-1].footer.text or "")
     assert "community" in (embeds[-1].footer.text or "")
+    assert "Inter Studios" in (embeds[-1].footer.text or "")
     assert "roleplay" not in (embeds[-1].footer.text or "").lower()
+
+
+def test_disclaimer_does_not_duplicate_property_notice() -> None:
+    text = c.disclaimer_embed(color=c.COLOR_DS).description or ""
+    assert "not affiliated" in text.lower()
+    assert "Inter Studios" not in text
+    assert "Property of the Central Intelligence Agency" not in text
+
+
+def test_format_display_date_uses_ordinal() -> None:
+    assert c.format_display_date(date(2026, 8, 30)) == "August 30th, 2026"
+    assert c.format_display_date(date(2026, 6, 1)) == "June 1st, 2026"
+    assert c.format_display_date(date(2026, 6, 2)) == "June 2nd, 2026"
+    assert c.format_display_date(date(2026, 6, 3)) == "June 3rd, 2026"
+    assert c.format_display_date(date(2026, 6, 11)) == "June 11th, 2026"
+    assert c.format_display_date(date(2026, 6, 21)) == "June 21st, 2026"
+
+
+def test_last_updated_line_is_italic() -> None:
+    line = c.last_updated_line(date(2026, 8, 30))
+    assert line == "*Last updated: August 30th, 2026*"
 
 
 def test_announcer_catalog_nonempty() -> None:

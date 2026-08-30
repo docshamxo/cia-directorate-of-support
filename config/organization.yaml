@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Strengthen non-affiliation banners for brand/legal compliance.
 #   - 2026-07-17 | docshamxo | Product/content UX: tighter about copy, shared marking notes, leaner closers.
 #   - 2026-08-02 | docshamxo | Drop repeated unofficial-RP phrasing from closers (rules heroes only).
+#   - 2026-08-30 | docshamxo | Tighten disclaimer / handling copy; property notice once via footer helper.
 # === END FILE HEADER ===
 
 ds:
@@ -65,11 +66,7 @@ copy:
     at a time.'
   affiliation_notice: '**Community project -- not USG/CIA.** This project is **not affiliated with**,
     endorsed by, sponsored by, or connected to the United States Government or the Central Intelligence
-    Agency. Nothing here is an official government communication. Community markings (**PUBLIC** /
-    **STAFF** / **CANDIDATE**) are roleplay vocabulary only -- not USG classification.
-
-
-    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
+    Agency. Community markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.'
   property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
   disclaimer: '**Community project -- not USG/CIA.**
 
@@ -77,24 +74,16 @@ copy:
     All text here is marked **PUBLIC**.
 
 
-    This Discord content is fiction for a Roblox community. It is **not affiliated with**
-    the United States Government or the Central Intelligence Agency. Markings are roleplay vocabulary
-    only.
-
-
-    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
+    Fiction for a Roblox community. **Not affiliated with** the United States Government or the
+    Central Intelligence Agency. Markings are roleplay vocabulary only.'
   disclaimer_links: '**Community project -- not USG/CIA.**
 
 
     All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
 
 
-    Links point to community / Roblox resources for this group. This project is **not
-    affiliated with** the United States Government or the Central Intelligence Agency. Markings are
-    roleplay vocabulary only.
-
-
-    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
+    Links are community / Roblox resources. **Not affiliated with** the United States Government or
+    the Central Intelligence Agency. Markings are roleplay vocabulary only.'
   disclaimer_staff: '**Community project -- not USG/CIA.**
 
 
@@ -102,34 +91,22 @@ copy:
     materials are **STAFF** unless otherwise noted.
 
 
-    Staff markings are community access rules for this Roblox community -- **not** United States
-    Government classification. This project is **not affiliated with** the US Government or CIA.
-
-
-    **Property of the Central Intelligence Agency (ROBLOX), Inter Studios**'
-  important_notice: 'All {unit} personnel and candidates must follow Agency regulations and
-    the **{chain}** chain of command.
+    Staff markings are community access rules -- **not** USG classification. **Not affiliated with**
+    the US Government or CIA.'
+  important_notice: 'Follow Agency regulations and the **{chain}** chain of command.
 
 
     Unauthorized direct contact with command teams is **not permitted**.'
-  staff_handling_notice: 'Documents in this channel are for **authorized {unit} personnel**
-    only (marking: **STAFF**).
+  staff_handling_notice: '**STAFF** -- authorized {unit} personnel only.
 
 
-    Unauthorized disclosure or redistribution may result in a **BLACKLIST** from the
-    **{authority}**.
+    Unauthorized disclosure may result in a **BLACKLIST** from the **{authority}**. Do not share
+    outside authorized channels.'
+  staff_handling_notice_restricted: 'Marked **STAFF** unless otherwise noted.
 
 
-    Do not share outside authorized channels or personnel.'
-  staff_handling_notice_restricted: 'Documents in this channel are marked **STAFF** unless
-    otherwise noted.
-
-
-    Unauthorized disclosure or redistribution will result in a **BLACKLIST** from the
-    **{authority}**.
-
-
-    Do not share outside authorized channels or personnel.'
+    Unauthorized disclosure results in a **BLACKLIST** from the **{authority}**. Do not share
+    outside authorized channels.'
   marking_public: 'Marking: PUBLIC.'
   marking_staff: 'Marking: STAFF.'
   marking_candidate: 'Marking: CANDIDATE.'

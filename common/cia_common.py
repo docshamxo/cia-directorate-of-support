@@ -25,6 +25,8 @@
 #   - 2026-08-02 | docshamxo | Parameterize server regulations office for OTE Rules.
 #   - 2026-08-30 | docshamxo | Drop OSEC Main Element CM roster and holders overlay.
 #   - 2026-08-30 | docshamxo | Optional discord_id on Role for clickable profile links.
+#   - 2026-08-30 | docshamxo | Dynamic last-updated / effective-date stamps on each post.
+#   - 2026-08-30 | docshamxo | Property notice only in effective-date footer (no body duplicate).
 # === END FILE HEADER ===
 
 """
@@ -674,7 +676,10 @@ def set_logo(embed: discord.Embed, path: Path) -> None:
 def apply_effective_date_footer(
     embeds: Sequence[discord.Embed], *, when: date | None = None
 ) -> None:
-    """Stamp an effective-date footer on the last embed (mutates in place)."""
+    """Stamp effective date + property notice on the last embed footer (mutates in place).
+
+    Property notice lives here only — do not also append it in disclaimer body copy.
+    """
     if not embeds:
         return
     stamp = when or date.today()
@@ -682,6 +687,22 @@ def apply_effective_date_footer(
     if PROPERTY_NOTICE:
         footer = f"{footer} · {PROPERTY_NOTICE}"
     embeds[-1].set_footer(text=footer)
+
+
+def format_display_date(when: date | None = None) -> str:
+    """Human-readable date for embed body copy (e.g. August 30th, 2026)."""
+    stamp = when or date.today()
+    day = stamp.day
+    if 11 <= day <= 13:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+    return f"{stamp.strftime('%B')} {day}{suffix}, {stamp.year}"
+
+
+def last_updated_line(when: date | None = None) -> str:
+    """Italic 'Last updated' line that reflects the post/send date."""
+    return f"*Last updated: {format_display_date(when)}*"
 
 
 def embed(
@@ -734,8 +755,7 @@ def disclaimer_embed(
         text = DISCLAIMER_TEXT
     if "not affiliated" not in text.lower():
         text = f"{AFFILIATION_NOTICE}\n\n{text}"
-    if PROPERTY_NOTICE and PROPERTY_NOTICE not in text:
-        text = f"{text.rstrip()}\n\n**{PROPERTY_NOTICE}**"
+    # Property notice is stamped once via apply_effective_date_footer — not here.
     return embed(title="Disclaimer · Community", description=text, color=color)
 
 

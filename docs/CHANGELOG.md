@@ -26,6 +26,11 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - OSEC open positions: application questions may go to full OSEC High Command (includes
   Superintendent). Optional `discord_id` on `config/personnel.yaml` holders for clickable
   Discord profile links in CoC / contact embeds.
+- Populate `discord_id` for ClassifiedInvictus, docshamxo, liveurlite, Rattler_289,
+  Shaikhuu, crazybijij2, xBlq_h, jayheart592010, AndyShotSecond, and Astroshard21.
+- Fill GRS command: CM Kyongqie, DCM Arthas_1124 (with profile links).
+- Last-updated / effective dates stamp from the send date (no static YAML date).
+- Property notice appears once in the effective-date footer (not also in disclaimer body).
 - Reorganize layout: office announcers under `units/<office>/`; ops runbook at `docs/OPS.md`.
 - Clean root layout: docs/tools/requirements folders; `python tools/run_all.py`.
 
