@@ -82,7 +82,8 @@ jobs:
       - name: Validate repository consistency
         run: python tools/validate_repo.py
         env:
-          DISCORD_INVITE_URL: https://example.invalid/discord-invite
+          DISCORD_OSEC_INVITE_URL: https://example.invalid/osec-discord
+          DISCORD_OTE_INVITE_URL: https://example.invalid/ote-discord
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
 
       - name: Unit tests with coverage floor
@@ -91,7 +92,8 @@ jobs:
       - name: Dry-run all announcers
         run: python tools/run_all.py --dry-run --delay 0
         env:
-          DISCORD_INVITE_URL: https://example.invalid/discord-invite
+          DISCORD_OSEC_INVITE_URL: https://example.invalid/osec-discord
+          DISCORD_OTE_INVITE_URL: https://example.invalid/ote-discord
           DISCORD_OSEC_APPLICATION_RESULTS_URL: https://example.invalid/application-results
           CIA_DRY_RUN: "1"
 

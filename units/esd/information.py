@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Align public-info template and link grammar.
 #   - 2026-08-04 | docshamxo | Align ESD information hero with PUBLIC channel template.
 #   - 2026-08-04 | docshamxo | Omit Disclaimer embed on ESD public information.
+#   - 2026-08-30 | docshamxo | Wire ESD Roblox group link into community embed.
 # === END FILE HEADER ===
 
 """
@@ -52,9 +53,10 @@ def _build_embeds() -> list[c.discord.Embed]:
             description="Official Roblox groups for ESD and its parent organizations.",
             color=c.COLOR_ESD,
             fields=(
-                c.pending_group_field(
+                c.link_field(
                     "Executive Security Detail",
                     c.community_link_label("ESD"),
+                    c.URL_ROBLOX_GROUP_ESD,
                 ),
                 c.link_field(
                     "Office of Security",

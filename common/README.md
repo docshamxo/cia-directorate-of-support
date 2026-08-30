@@ -61,7 +61,7 @@ c.agency_eyebrow("Office of Security")  # *Community · …*
 c.community_link_label("OSEC")  # DS Community | OSEC
 c.motto_line(c.OSEC_MOTTO)  # *PROTECT · DETECT · RESPOND*
 c.link_field("Handbook", c.community_link_label("OSEC Handbook"), url, "STAFF.")
-c.pending_group_field("ESD", c.community_link_label("ESD"))
+c.link_field("ESD", c.community_link_label("ESD"), c.URL_ROBLOX_GROUP_ESD)
 
 c.classification_handling_embed(unit="OSEC", authority="CIA Office of Security", color=c.COLOR_OSEC)
 c.important_notice_embed(unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",))

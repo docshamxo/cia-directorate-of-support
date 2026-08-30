@@ -19,6 +19,7 @@
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff document link placeholders.
 #   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
 #   - 2026-08-30 | docshamxo | Drop static open_positions last_updated (computed at post time).
+#   - 2026-08-30 | docshamxo | Add ESD Roblox group URL for community embeds.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -30,6 +31,7 @@ community:
   roblox_group_ds: https://www.roblox.com/share/g/945806945
   roblox_group_osec: https://www.roblox.com/communities/288542436/CIA-Office-of-Security#!/about
   roblox_group_grs: https://www.roblox.com/share/g/450710337
+  roblox_group_esd: https://www.roblox.com/communities/630084317/CIA-Executive-Security-Detail#!/about
   roblox_group_ote: https://www.roblox.com/share/g/1003614105
   # Shared across unit staff-document channels (public sharing link).
   general_standard_training_guide: https://docs.google.com/document/d/1GV-c5lNL6mcx0Wuf-Jl5D2gT-H7rhgley9dQSMUNs6w/edit?usp=sharing
