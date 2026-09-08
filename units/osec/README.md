@@ -15,6 +15,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Slim office README; point to OPS for reactions/purge.
+  - 2026-09-08 | docshamxo | Add Chief Marshal Hub announcer.
 === END FILE HEADER ===
 -->
 
@@ -34,6 +35,7 @@ python units/osec/information.py
 python units/osec/staff_documents.py
 python units/osec/spp_information.py
 python units/osec/open_positions.py
+python units/osec/marshal_information.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -46,6 +48,7 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 | [`staff_documents.py`](staff_documents.py) | Staff documents | `WEBHOOK_OSEC_STAFF_DOCUMENTS` |
 | [`spp_information.py`](spp_information.py) | Security Phase Program | `WEBHOOK_OSEC_SPP_INFORMATION` |
 | [`open_positions.py`](open_positions.py) | Open positions | `WEBHOOK_OSEC_OPEN_POSITIONS` |
+| [`marshal_information.py`](marshal_information.py) | Chief Marshal Hub | `WEBHOOK_OSEC_MARSHAL_INFORMATION` |
 
 ## Edit
 

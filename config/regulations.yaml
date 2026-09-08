@@ -14,6 +14,7 @@
 #   - 2026-08-02 | docshamxo | Collapse mid-sentence wraps so Discord does not leave empty line space.
 #   - 2026-08-02 | docshamxo | Single unofficial-RP mention in rules hero; scrub welcome duplicates.
 #   - 2026-08-30 | docshamxo | Tighten rules intro (drop triple welcome / affiliation restatement).
+#   - 2026-09-08 | docshamxo | Require Discord/Roblox ToS and Code of Agency Conduct compliance.
 # === END FILE HEADER ===
 
 title: DIRECTORATE OF SUPPORT
@@ -34,8 +35,8 @@ sections:
       **Discrimination and Harassment**
       Harassment, discrimination, hate speech, threats, or targeted abuse based on race, religion, nationality, gender, or any protected characteristic will not be tolerated.
 
-      **Compliance with Discord Policies**
-      All members must comply with Discord's Terms of Service and Community Guidelines. Discord-policy violations are also server-regulation violations.
+      **Compliance with Platform and Agency Policies**
+      All members must comply with Discord's Terms of Service and Community Guidelines, Roblox's Terms of Use, and the CIA Code of Agency Conduct. Violations of those policies are also server-regulation violations. See **Governing Policies** below for links.
 
       **Spam and Unauthorized Promotion**
       Spamming, flooding, mass messaging, excessive pinging, or advertising communities, products, services, Roblox groups, or platforms without {office} leadership authorization is prohibited.

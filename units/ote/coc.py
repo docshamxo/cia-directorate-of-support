@@ -10,6 +10,8 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Attach OTE logo and unit-color disclaimer.
+#   - 2026-09-08 | docshamxo | Include Agency EL and full DS CoC above OTE command.
+#   - 2026-09-08 | docshamxo | Standardize hierarchy blocks onto shared CoC builders.
 # === END FILE HEADER ===
 
 """
@@ -23,7 +25,13 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    agency_executive_embed,
+    ds_leadership_embed,
+    logo_files,
+    office_command_embed,
+    run_announcer,
+)
 
 
 def _build_embeds() -> list[c.discord.Embed]:
@@ -38,17 +46,15 @@ def _build_embeds() -> list[c.discord.Embed]:
                 "OTE leadership reports through the DS chain to Agency leadership."
             ),
         ),
-        c.embed(
-            title="Directorate of Support",
-            description="OTE reports through the Directorate of Support chain of command.",
+        agency_executive_embed(color=c.COLOR_OTE),
+        ds_leadership_embed(color=c.COLOR_OTE, logo=c.LOGOS["ds"]),
+        office_command_embed(
+            title="Office of Training & Education",
+            motto=c.OTE_MOTTO,
+            about=c.OTE_ABOUT,
+            roles=c.OTE_HIGH_COMMAND,
             color=c.COLOR_OTE,
-            fields=(("Leadership", c.roles_text(*c.DS_LEADERSHIP)),),
-        ),
-        c.embed(
-            title="OTE High Command",
-            description="Senior leadership responsible for OTE operations and policy.",
-            color=c.COLOR_OTE,
-            fields=(("Command Team", c.roles_text(*c.OTE_HIGH_COMMAND)),),
+            logo=c.LOGOS["ote"],
         ),
         c.embed(
             title="OTE Staff",
@@ -67,7 +73,7 @@ def send_chain_of_command() -> None:
         webhook_key="WEBHOOK_OTE_COC",
         username=c.BOT_OTE,
         build_embeds=_build_embeds,
-        files=[c.logo_file(c.LOGOS["ote"])],
+        files=lambda: logo_files("ds", "ote"),
         dry_run="--dry-run" in sys.argv,
     )
 

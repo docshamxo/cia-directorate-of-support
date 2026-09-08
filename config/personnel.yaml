@@ -26,6 +26,9 @@
 #   - 2026-08-30 | docshamxo | Fill discord_id for DS/OSEC/OTE/ESD holders on hand.
 #   - 2026-08-30 | docshamxo | Add discord_id for AndyShotSecond and Astroshard21.
 #   - 2026-08-30 | docshamxo | Fill GRS CM Kyongqie / DCM Arthas_1124 with discord_id.
+#   - 2026-09-08 | docshamxo | Fill OTE DDTE maximdu67220 with discord_id.
+#   - 2026-09-08 | docshamxo | OTE: remove Shaikhuu; promote Astroshard21 to ADTE; Dean vacant.
+#   - 2026-09-08 | docshamxo | Fill agency_executive discord_id for DIR/DDIR/EDIR/CIS/IG.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -41,18 +44,23 @@ agency_executive:
 - abbrev: DIR
   title: Director of the Central Intelligence Agency
   holder: YepaInvictus
+  discord_id: "268496346040893441"
 - abbrev: DDIR
   title: Deputy Director of the Central Intelligence Agency
   holder: laks_l
+  discord_id: "500975857230151700"
 - abbrev: EDIR
   title: Executive Director of the Central Intelligence Agency
   holder: ashlyn
+  discord_id: "650283793374249011"
 - abbrev: CIS
   title: Chief of Intelligence Staff
   holder: DustyInvictus
+  discord_id: "735921422286717038"
 - abbrev: IG
   title: Inspector General
   holder: JenynInvictus
+  discord_id: "495899195937521689"
 ds_leadership:
 - abbrev: CDSD
   title: Component Director, Directorate of Support
@@ -69,15 +77,15 @@ ote_high_command:
   discord_id: "386957636542922762"
 - abbrev: DDTE
   title: Deputy Director of Training and Education
-  holder: VACANT
+  holder: maximdu67220
+  discord_id: "917484772308164690"
 - abbrev: ADTE
   title: Assistant Deputy Director of Training and Education
-  holder: Shaikhuu
-  discord_id: "718133092916920360"
-- abbrev: D
-  title: Dean
   holder: Astroshard21
   discord_id: "929378869524443158"
+- abbrev: D
+  title: Dean
+  holder: VACANT
 ote_staff_ranks:
 - abbrev: SP
   title: Senior Professor

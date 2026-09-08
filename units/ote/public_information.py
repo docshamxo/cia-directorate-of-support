@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Align public-info template, hero, and link grammar.
 #   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
+#   - 2026-09-08 | docshamxo | Refactor onto shared information-channel frame builders.
 # === END FILE HEADER ===
 
 """
@@ -26,41 +27,59 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    info_about_embed,
+    info_community_links_embed,
+    info_hero_embed,
+    info_public_link,
+    run_announcer,
+)
+
+_UNIT = "Office of Training & Education"
+_ABBREV = "OTE"
+_COLOR = c.COLOR_OTE
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
 
     return [
-        c.hero_embed(
-            title="PUBLIC INFORMATION",
-            unit="Office of Training & Education",
-            supporting="Overview of OTE, the Officer Training Program, and community links.",
-            color=c.COLOR_OTE,
+        info_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["ote"],
         ),
-        c.embed(
-            title="About the Office",
-            description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
-            color=c.COLOR_OTE,
+        info_about_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            about=c.OTE_ABOUT,
+            motto=c.OTE_MOTTO,
+            color=_COLOR,
             fields=ote_pillars,
         ),
-        c.embed(
-            title="Community Links",
-            description="Official documents and Roblox group for OTE.",
-            color=c.COLOR_OTE,
+        info_community_links_embed(
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
+            description=(
+                "Official documents and Roblox groups for the Office of Training & Education "
+                "and its parent Directorate of Support."
+            ),
             fields=(
-                c.link_field(
+                info_public_link(
                     "Program Overview",
-                    c.community_link_label("OTE Program Overview"),
+                    "OTE Program Overview",
                     c.url("ote.public_information.program_overview"),
-                    c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Office of Training & Education",
                     c.community_link_label("OTE"),
                     c.URL_ROBLOX_GROUP_OTE,
+                ),
+                c.link_field(
+                    "Directorate of Support",
+                    c.community_link_label("Directorate of Support"),
+                    c.URL_ROBLOX_GROUP_DS,
                 ),
             ),
         ),

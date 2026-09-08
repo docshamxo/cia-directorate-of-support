@@ -56,13 +56,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Program Overview",
-                    "DS Community | OTE Program Overview",
+                    "CIA DS | OTE Program Overview",
                     c.url("ote.program_overview.program_overview"),
                     c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Graduation",
-                    "DS Community | OTE Graduation Ceremony Procedures",
+                    "CIA DS | OTE Graduation Ceremony Procedures",
                     c.url("ote.program_overview.graduation_ceremony_procedures"),
                     c.marking_note("PUBLIC"),
                 ),

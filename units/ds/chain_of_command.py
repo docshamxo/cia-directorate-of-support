@@ -12,6 +12,7 @@
 #   - 2026-07-15 | docshamxo | Standardize hero title and unit-color disclaimer.
 #   - 2026-07-17 | docshamxo | Use chain_intro_embed for proper CoC hierarchy.
 #   - 2026-08-30 | docshamxo | Drop OSEC Main Element CM section from OSEC embed.
+#   - 2026-09-08 | docshamxo | Refactor hierarchy blocks onto shared CoC builders.
 # === END FILE HEADER ===
 
 """
@@ -26,108 +27,64 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
-
-
-def _build_intro_embed() -> c.discord.Embed:
-    return c.chain_intro_embed(unit="Directorate of Support", color=c.COLOR_DS)
-
-
-def _build_agency_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Agency Executive Leadership",
-        description=(
-            "**Executive Chain of Command**\n\n"
-            "Agency executive leadership sits above all Directorates. The "
-            "**Directorate of Support (DS)** chain continues below."
-        ),
-        fields=(("Executive Leadership", c.roles_text(*c.AGENCY_EXECUTIVE)),),
-    )
-
-
-def _build_ds_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Directorate of Support",
-        description=(
-            f"{c.motto_line(c.DS_MOTTO, classification=c.DS_CLASSIFICATION)}\n\n{c.DS_ABOUT}"
-        ),
-        logo=c.LOGOS["ds"],
-        fields=(
-            ("Leadership", c.roles_text(*c.DS_LEADERSHIP)),
-            ("Offices", c.bullets(*c.DS_OFFICES)),
-        ),
-    )
-
-
-def _build_ote_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Office of Training & Education",
-        description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
-        logo=c.LOGOS["ote"],
-        fields=(("High Command", c.roles_text(*c.OTE_HIGH_COMMAND)),),
-    )
-
-
-def _build_osec_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Office of Security",
-        description=(f"{c.motto_line(c.OSEC_MOTTO)}\n\n{c.OSEC_ABOUT}"),
-        logo=c.LOGOS["osec"],
-        fields=(
-            ("High Command", c.roles_text(*c.OSEC_HIGH_COMMAND)),
-            ("Sub-Units", c.bullets(*c.OSEC_SUB_UNITS)),
-        ),
-    )
-
-
-def _build_grs_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Global Response Staff",
-        description=(
-            "A sub-unit of the **Office of Security** under the **Directorate of Support**.\n\n"
-            f"{c.GRS_ABOUT}"
-        ),
-        logo=c.LOGOS["grs"],
-        fields=(("Command Team", c.roles_text(*c.GRS_COMMAND)),),
-    )
-
-
-def _build_esd_embed() -> c.discord.Embed:
-    return c.embed(
-        title="Executive Security Detail",
-        description=(
-            "A sub-unit of the **Office of Security** under the **Directorate of Support**.\n\n"
-            f"{c.ESD_ABOUT}"
-        ),
-        logo=c.LOGOS["esd"],
-        fields=(("Command Team", c.roles_text(*c.ESD_COMMAND)),),
-    )
-
-
-def _build_ranks_embed() -> c.discord.Embed:
-    return c.embed(
-        title="OSEC Rank Structure",
-        description=(
-            "Mid- and field-level ranks shared across the **Office of Security** and its "
-            "sub-units (main OSEC, GRS, and ESD)."
-        ),
-        fields=(
-            ("Middle Command", c.ranks_text(*c.OSEC_MIDDLE_COMMAND)),
-            ("Low Command", c.ranks_text(*c.OSEC_LOW_COMMAND)),
-        ),
-    )
+from common.announcer import (
+    agency_executive_embed,
+    ds_leadership_embed,
+    office_command_embed,
+    run_announcer,
+    subunit_command_about,
+)
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        _build_intro_embed(),
-        _build_agency_embed(),
-        _build_ds_embed(),
-        _build_ote_embed(),
-        _build_osec_embed(),
-        _build_grs_embed(),
-        _build_esd_embed(),
-        _build_ranks_embed(),
+        c.chain_intro_embed(unit="Directorate of Support", color=c.COLOR_DS),
+        agency_executive_embed(color=c.COLOR_DS),
+        ds_leadership_embed(color=c.COLOR_DS, logo=c.LOGOS["ds"]),
+        office_command_embed(
+            title="Office of Training & Education",
+            motto=c.OTE_MOTTO,
+            about=c.OTE_ABOUT,
+            roles=c.OTE_HIGH_COMMAND,
+            color=c.COLOR_DS,
+            logo=c.LOGOS["ote"],
+        ),
+        office_command_embed(
+            title="Office of Security",
+            motto=c.OSEC_MOTTO,
+            about=c.OSEC_ABOUT,
+            roles=c.OSEC_HIGH_COMMAND,
+            color=c.COLOR_DS,
+            logo=c.LOGOS["osec"],
+            extra_fields=(("Sub-Units", c.bullets(*c.OSEC_SUB_UNITS)),),
+        ),
+        office_command_embed(
+            title="Global Response Staff",
+            about=subunit_command_about(c.GRS_ABOUT),
+            roles=c.GRS_COMMAND,
+            color=c.COLOR_DS,
+            logo=c.LOGOS["grs"],
+            roles_field="Command Team",
+        ),
+        office_command_embed(
+            title="Executive Security Detail",
+            about=subunit_command_about(c.ESD_ABOUT),
+            roles=c.ESD_COMMAND,
+            color=c.COLOR_DS,
+            logo=c.LOGOS["esd"],
+            roles_field="Command Team",
+        ),
+        c.embed(
+            title="OSEC Rank Structure",
+            description=(
+                "Mid- and field-level ranks shared across the **Office of Security** and its "
+                "sub-units (main OSEC, GRS, and ESD)."
+            ),
+            fields=(
+                ("Middle Command", c.ranks_text(*c.OSEC_MIDDLE_COMMAND)),
+                ("Low Command", c.ranks_text(*c.OSEC_LOW_COMMAND)),
+            ),
+        ),
     ]
 
 

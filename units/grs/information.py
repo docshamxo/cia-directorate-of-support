@@ -15,6 +15,8 @@
 #   - 2026-08-03 | docshamxo | Remove Reference Documents section from GRS information.
 #   - 2026-08-04 | docshamxo | Treat GRS information as a PUBLIC channel.
 #   - 2026-08-04 | docshamxo | Omit Disclaimer embed on GRS public information.
+#   - 2026-08-30 | docshamxo | Add GRS tryout / application requirements embed.
+#   - 2026-09-08 | docshamxo | Refactor onto shared information-channel frame; add Community Links.
 # === END FILE HEADER ===
 
 """
@@ -28,28 +30,59 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    info_about_embed,
+    info_community_links_embed,
+    info_hero_embed,
+    info_tryout_requirements_embed,
+    run_announcer,
+)
+
+_UNIT = "Global Response Staff"
+_ABBREV = "GRS"
+_COLOR = c.COLOR_GRS
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="PUBLIC INFORMATION",
-            unit="Global Response Staff",
-            supporting=(
-                "Public overview of the GRS mission and place in the Directorate of Support."
-            ),
-            color=c.COLOR_GRS,
+        info_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["grs"],
         ),
-        c.embed(
-            title="About GRS",
-            description=(
-                "The Global Response Staff is a sub-unit of the **Office of Security**, "
-                "operating under the **Directorate of Support**.\n\n"
-                f"{c.GRS_ABOUT}"
+        info_about_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            about=c.GRS_ABOUT,
+            color=_COLOR,
+            subunit_parent="Office of Security",
+        ),
+        info_tryout_requirements_embed(
+            unit_abbrev=_ABBREV,
+            combat_requirement=c.GRS_TRYOUT_COMBAT,
+            color=_COLOR,
+        ),
+        info_community_links_embed(
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
+            fields=(
+                c.link_field(
+                    "Global Response Staff",
+                    c.community_link_label("GRS"),
+                    c.URL_ROBLOX_GROUP_GRS,
+                ),
+                c.link_field(
+                    "Office of Security",
+                    c.community_link_label("OSEC"),
+                    c.URL_ROBLOX_GROUP_OSEC,
+                ),
+                c.link_field(
+                    "Directorate of Support",
+                    c.community_link_label("Directorate of Support"),
+                    c.URL_ROBLOX_GROUP_DS,
+                ),
             ),
-            color=c.COLOR_GRS,
         ),
     ]
 

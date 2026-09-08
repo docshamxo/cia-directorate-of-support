@@ -18,6 +18,7 @@
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff training, event, and cert link list.
 #   - 2026-08-04 | docshamxo | Remove Unofficial Community disclaimer from OSEC staff docs.
+#   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame builders.
 # === END FILE HEADER ===
 
 """
@@ -32,164 +33,145 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    run_announcer,
+    staff_docs_central_embed,
+    staff_docs_handling_embed,
+    staff_docs_hero_embed,
+    staff_docs_link,
+    staff_docs_section_embed,
+)
+
+_UNIT = "Office of Security"
+_ABBREV = "OSEC"
+_COLOR = c.COLOR_OSEC
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="STAFF DOCUMENTS",
-            unit="Office of Security",
-            supporting="Authorized OSEC staff documentation index. Need-to-know access only.",
-            color=c.COLOR_OSEC,
+        staff_docs_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["osec"],
         ),
-        c.embed(
-            title="Central Repository",
-            description=(
-                "Primary Google Drive folder containing OSEC handbooks, phase guides, "
-                "event documentation, certifications, ORBAT files, and internal forms."
-            ),
-            color=c.COLOR_OSEC,
-            fields=(
-                c.link_field(
-                    "Google Drive",
-                    "DS Community | OSEC Google Drive",
-                    c.url("osec.staff_documents.google_drive"),
-                    c.marking_note("STAFF"),
-                ),
-            ),
+        staff_docs_central_embed(
+            unit_abbrev=_ABBREV,
+            drive_url_key="osec.staff_documents.google_drive",
+            drive_link_name="OSEC Google Drive",
+            color=_COLOR,
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Phase & Candidate Guides",
             description=(
                 "Official documentation for Security Phase tryouts, candidate progression, "
                 "and phase training requirements."
             ),
-            color=c.COLOR_OSEC,
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Tryout Guide",
-                    "DS Community | OSEC Tryout Guide",
-                    c.url("osec.staff_documents.tryout_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Tryout Guide",
+                    "osec.staff_documents.tryout_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Phase I - Foundation",
-                    "DS Community | OSEC Phase I Guide",
-                    c.url("osec.staff_documents.phase_i"),
-                    c.marking_note("STAFF"),
+                    "OSEC Phase I Guide",
+                    "osec.staff_documents.phase_i",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Phase II - Intermediate",
-                    "DS Community | OSEC Phase II Guide",
-                    c.url("osec.staff_documents.phase_ii"),
-                    c.marking_note("STAFF"),
+                    "OSEC Phase II Guide",
+                    "osec.staff_documents.phase_ii",
                 ),
             ),
         ),
-        c.embed(
-            title="Standard Training",
+        staff_docs_section_embed(
+            title="Training Materials",
             description=(
                 "Official documentation for the Office of Security Standard Training "
                 "system and shared Directorate of Support training references."
             ),
-            color=c.COLOR_OSEC,
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Training Revamp",
-                    "DS Community | OSEC Standard Training Revamp",
-                    c.url("osec.staff_documents.standard_training_revamp"),
-                    c.marking_note("STAFF"),
+                    "OSEC Standard Training Revamp",
+                    "osec.staff_documents.standard_training_revamp",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "General Standard Training",
-                    "DS Community | General Standard Training Guide",
-                    c.url("community.general_standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "General Standard Training Guide",
+                    "community.general_standard_training_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Weapons Standard Training",
-                    "DS Community | OSEC Weapons Standard Training Guide",
-                    c.url("osec.staff_documents.weapons_standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Weapons Standard Training Guide",
+                    "osec.staff_documents.weapons_standard_training_guide",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Event Guides",
             description=(
                 "Official guides for planning, hosting, and supervising Office of "
                 "Security events and operational exercises."
             ),
-            color=c.COLOR_OSEC,
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Event Guide",
-                    "DS Community | OSEC Event Guide",
-                    c.url("osec.staff_documents.event_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Event Guide",
+                    "osec.staff_documents.event_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Base Patrol",
-                    "DS Community | OSEC Base Patrol Event Guide",
-                    c.url("osec.staff_documents.base_patrol_event_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Base Patrol Event Guide",
+                    "osec.staff_documents.base_patrol_event_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Gate Patrol",
-                    "DS Community | OSEC Gate Patrol Event Guide",
-                    c.url("osec.staff_documents.gate_patrol_event_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Gate Patrol Event Guide",
+                    "osec.staff_documents.gate_patrol_event_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Killhouse",
-                    "DS Community | OSEC Killhouse Event Guide",
-                    c.url("osec.staff_documents.killhouse_event_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Killhouse Event Guide",
+                    "osec.staff_documents.killhouse_event_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Combat Training",
-                    "DS Community | OSEC Combat Training Guide",
-                    c.url("osec.staff_documents.combat_training_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Combat Training Guide",
+                    "osec.staff_documents.combat_training_guide",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Certification Guides",
             description=(
                 "Official guides for Office of Security staff certifications and "
                 "qualification standards."
             ),
-            color=c.COLOR_OSEC,
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Communications & Conduct",
-                    "DS Community | OSEC Communications & Conduct Certification Guide",
-                    c.url("osec.staff_documents.communications_conduct_certification_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Communications & Conduct Certification Guide",
+                    "osec.staff_documents.communications_conduct_certification_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Gate",
-                    "DS Community | OSEC Gate Certification Guide",
-                    c.url("osec.staff_documents.gate_certification_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Gate Certification Guide",
+                    "osec.staff_documents.gate_certification_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Handcuff",
-                    "DS Community | OSEC Handcuff Certification Guide",
-                    c.url("osec.staff_documents.handcuff_certification_guide"),
-                    c.marking_note("STAFF"),
+                    "OSEC Handcuff Certification Guide",
+                    "osec.staff_documents.handcuff_certification_guide",
                 ),
             ),
         ),
-        c.classification_handling_embed(
-            unit="Office of Security",
-            authority="CIA Office of Security",
-            color=c.COLOR_OSEC,
-            restricted=True,
-        ),
+        staff_docs_handling_embed(unit_full=_UNIT, color=_COLOR),
     ]
 
 

@@ -370,6 +370,17 @@ def run_all(argv: list[str] | None = None) -> int:
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",
     )
+    env.setdefault("DISCORD_OSEC_ENROLLMENTS_URL", "https://example.invalid/osec-enrollments")
+    env.setdefault("DISCORD_OSEC_LOA_URL", "https://example.invalid/osec-loa")
+    env.setdefault("DISCORD_OSEC_PATROL_LOGS_URL", "https://example.invalid/osec-patrol-logs")
+    env.setdefault("DISCORD_OSEC_EVENT_LOGS_URL", "https://example.invalid/osec-event-logs")
+    env.setdefault("DISCORD_OSEC_TRYOUT_LOGS_URL", "https://example.invalid/osec-tryout-logs")
+    env.setdefault("DISCORD_OSEC_PHASE_LOGS_URL", "https://example.invalid/osec-phase-logs")
+    env.setdefault("DISCORD_OSEC_SUPERVISION_URL", "https://example.invalid/osec-supervision")
+    env.setdefault(
+        "DISCORD_OSEC_MARSHAL_REPORTS_URL",
+        "https://example.invalid/osec-marshal-reports",
+    )
     env.setdefault("OSEC_LOWCOM_APPLICATION_URL", "https://example.invalid/osec-lowcom-app")
     env.setdefault("OSEC_MIDCOM_APPLICATION_URL", "https://example.invalid/osec-midcom-app")
     env.setdefault("OTE_APPLICATION_URL", "https://example.invalid/ote-application")

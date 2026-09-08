@@ -81,8 +81,15 @@ FOOTER_MARKER = "=== FILE FOOTER ==="
 SKIP_BANNER_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pyc"}
 SKIP_BANNER_NAMES = {"LICENSE"}
 ANNOUNCER_DIRS = ("units/ds", "units/osec", "units/ote", "units/grs", "units/esd")
-BOT_COMMUNITY_MARKER_RE = re.compile(r"Community|\(RP\)", re.IGNORECASE)
+BOT_OFFICE_NAME_RE = re.compile(r"^CIA .+ Bot$")
 OFFICIAL_LOOKING_BOT_RE = re.compile(r"^CIA\s*\|")
+EXPECTED_BOT_NAMES = {
+    "ds": "CIA Directorate of Support Bot",
+    "osec": "CIA Office of Security Bot",
+    "ote": "CIA Office of Training & Education Bot",
+    "grs": "CIA Global Response Staff Bot",
+    "esd": "CIA Executive Security Detail Bot",
+}
 BARE_CIA_EYEBROW_RE = re.compile(
     r"\*Central Intelligence Agency\s*·",
 )
@@ -98,6 +105,10 @@ BARE_LOGO_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 SECRET_ENV_VALUE_RE = re.compile(
     r"^(DISCORD_BOT_TOKEN|DISCORD_OSEC_INVITE_URL|DISCORD_OTE_INVITE_URL|"
     r"DISCORD_OSEC_APPLICATION_RESULTS_URL|"
+    r"DISCORD_OSEC_ENROLLMENTS_URL|DISCORD_OSEC_LOA_URL|"
+    r"DISCORD_OSEC_PATROL_LOGS_URL|DISCORD_OSEC_EVENT_LOGS_URL|"
+    r"DISCORD_OSEC_TRYOUT_LOGS_URL|DISCORD_OSEC_PHASE_LOGS_URL|"
+    r"DISCORD_OSEC_SUPERVISION_URL|DISCORD_OSEC_MARSHAL_REPORTS_URL|"
     r"WEBHOOK_[A-Z0-9_]+)=(.*)$",
     re.MULTILINE,
 )
@@ -332,6 +343,17 @@ def validate_config() -> None:
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",
     )
+    os.environ.setdefault("DISCORD_OSEC_ENROLLMENTS_URL", "https://example.invalid/osec-enrollments")
+    os.environ.setdefault("DISCORD_OSEC_LOA_URL", "https://example.invalid/osec-loa")
+    os.environ.setdefault("DISCORD_OSEC_PATROL_LOGS_URL", "https://example.invalid/osec-patrol-logs")
+    os.environ.setdefault("DISCORD_OSEC_EVENT_LOGS_URL", "https://example.invalid/osec-event-logs")
+    os.environ.setdefault("DISCORD_OSEC_TRYOUT_LOGS_URL", "https://example.invalid/osec-tryout-logs")
+    os.environ.setdefault("DISCORD_OSEC_PHASE_LOGS_URL", "https://example.invalid/osec-phase-logs")
+    os.environ.setdefault("DISCORD_OSEC_SUPERVISION_URL", "https://example.invalid/osec-supervision")
+    os.environ.setdefault(
+        "DISCORD_OSEC_MARSHAL_REPORTS_URL",
+        "https://example.invalid/osec-marshal-reports",
+    )
     os.environ.setdefault("OSEC_LOWCOM_APPLICATION_URL", "https://example.invalid/osec-lowcom-app")
     os.environ.setdefault("OSEC_MIDCOM_APPLICATION_URL", "https://example.invalid/osec-midcom-app")
     os.environ.setdefault("OTE_APPLICATION_URL", "https://example.invalid/ote-application")
@@ -395,8 +417,8 @@ def validate_brand_legal() -> None:
     if not brand_path.is_file():
         fail("docs/BRAND.md is required (bot naming / non-affiliation guidance)")
     brand_text = brand_path.read_text(encoding="utf-8")
-    if "Community" not in brand_text or "(RP)" not in brand_text:
-        fail("docs/BRAND.md must document Community / (RP) bot naming markers")
+    if "CIA {Office}" not in brand_text and "CIA Office of Security Bot" not in brand_text:
+        fail("docs/BRAND.md must document CIA {Office} Bot naming")
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     if "not affiliated" not in readme.lower():
@@ -413,15 +435,18 @@ def validate_brand_legal() -> None:
         "grs": c.BOT_GRS,
         "esd": c.BOT_ESD,
     }.items():
-        if not BOT_COMMUNITY_MARKER_RE.search(name):
+        expected = EXPECTED_BOT_NAMES[key]
+        if name != expected:
+            fail(f"config/branding.yaml bots.{key}={name!r} must be {expected!r}")
+        if not BOT_OFFICE_NAME_RE.match(name.strip()):
             fail(
-                f"config/branding.yaml bots.{key}={name!r} must include "
-                "'Community' or '(RP)' (see docs/BRAND.md)"
+                f"config/branding.yaml bots.{key}={name!r} must match "
+                "'CIA … Bot' (see docs/BRAND.md)"
             )
         if OFFICIAL_LOOKING_BOT_RE.match(name.strip()):
             fail(
                 f"config/branding.yaml bots.{key}={name!r} looks like an official "
-                "CIA | … account; use a community/RP display name"
+                "CIA | … account; use CIA {{Office}} Bot"
             )
         if len(name) > 80:
             fail(f"config/branding.yaml bots.{key} exceeds Discord's 80-char username limit")

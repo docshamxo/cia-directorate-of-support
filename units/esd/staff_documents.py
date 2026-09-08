@@ -10,6 +10,8 @@
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-07-17 | docshamxo | Add handbook, FPCON, phase, and tryout guides.
 #   - 2026-07-17 | docshamxo | Collapse Phase I/II into single Phase Guide; drop Phase II.
+#   - 2026-09-07 | docshamxo | Add After Action Report Google Form to staff documents.
+#   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame builders.
 # === END FILE HEADER ===
 
 """
@@ -24,85 +26,104 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    run_announcer,
+    staff_docs_central_embed,
+    staff_docs_handling_embed,
+    staff_docs_hero_embed,
+    staff_docs_link,
+    staff_docs_section_embed,
+)
+
+_UNIT = "Executive Security Detail"
+_ABBREV = "ESD"
+_COLOR = c.COLOR_ESD
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="STAFF DOCUMENTS",
-            unit="Executive Security Detail",
-            supporting="Authorized ESD staff documentation index. Need-to-know access only.",
-            color=c.COLOR_ESD,
+        staff_docs_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["esd"],
         ),
-        c.embed(
-            title="Central Repository",
-            description="Primary folder for all ESD staff files, guides, and forms.",
-            color=c.COLOR_ESD,
-            fields=(
-                c.link_field(
-                    "Google Drive",
-                    "DS Community | ESD Google Drive",
-                    c.url("esd.staff_documents.google_drive"),
-                    c.marking_note("STAFF"),
-                ),
-            ),
+        staff_docs_central_embed(
+            unit_abbrev=_ABBREV,
+            drive_url_key="esd.staff_documents.google_drive",
+            drive_link_name="ESD Google Drive",
+            color=_COLOR,
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Handbook & Force Protection",
-            description="Core ESD handbook and force protection condition protocols.",
-            color=c.COLOR_ESD,
+            description=(
+                "Official ESD handbook and force protection condition protocols "
+                "for Executive Security Detail operations."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Official Handbook",
-                    "DS Community | ESD Official Handbook",
-                    c.url("esd.staff_documents.handbook"),
-                    c.marking_note("STAFF"),
+                    "ESD Official Handbook",
+                    "esd.staff_documents.handbook",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "FPCON Protocols",
-                    "DS Community | ESD Force Protection Conditions and Protocols",
-                    c.url("esd.staff_documents.fpcon"),
-                    c.marking_note("STAFF"),
+                    "ESD Force Protection Conditions and Protocols",
+                    "esd.staff_documents.fpcon",
                 ),
             ),
         ),
-        c.embed(
-            title="Phase & Tryout Guides",
-            description="Core documentation for ESD tryouts and candidate progression.",
-            color=c.COLOR_ESD,
+        staff_docs_section_embed(
+            title="Phase & Candidate Guides",
+            description=(
+                "Official documentation for ESD tryouts and candidate progression "
+                "through the phase program."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Tryout Guide",
-                    "DS Community | ESD Tryout Guide",
-                    c.url("esd.staff_documents.tryout_guide"),
-                    c.marking_note("STAFF"),
+                    "ESD Tryout Guide",
+                    "esd.staff_documents.tryout_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Phase Guide",
-                    "DS Community | ESD Phase Guide",
-                    c.url("esd.staff_documents.phase_guide"),
-                    c.marking_note("STAFF"),
+                    "ESD Phase Guide",
+                    "esd.staff_documents.phase_guide",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Training Materials",
-            description="Shared Directorate of Support standard training references.",
-            color=c.COLOR_ESD,
+            description=(
+                "Official shared Directorate of Support standard training references "
+                "for Executive Security Detail."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "General Standard Training",
-                    "DS Community | General Standard Training Guide",
-                    c.url("community.general_standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "General Standard Training Guide",
+                    "community.general_standard_training_guide",
                 ),
             ),
         ),
-        c.classification_handling_embed(
-            unit="ESD", authority="CIA Directorate of Support", color=c.COLOR_ESD
+        staff_docs_section_embed(
+            title="Reports & Forms",
+            description=(
+                "Official operational reporting forms for Executive Security Detail staff."
+            ),
+            color=_COLOR,
+            fields=(
+                staff_docs_link(
+                    "After Action Report",
+                    "ESD After Action Reports",
+                    "esd.staff_documents.after_action_report",
+                ),
+            ),
         ),
+        staff_docs_handling_embed(unit_full=_UNIT, color=_COLOR),
     ]
 
 

@@ -27,6 +27,7 @@
 #   - 2026-08-30 | docshamxo | Optional discord_id on Role for clickable profile links.
 #   - 2026-08-30 | docshamxo | Dynamic last-updated / effective-date stamps on each post.
 #   - 2026-08-30 | docshamxo | Property notice only in effective-date footer (no body duplicate).
+#   - 2026-09-08 | docshamxo | Rules Governing Policies: Discord/Roblox ToS + Code of Agency Conduct.
 # === END FILE HEADER ===
 
 """
@@ -91,6 +92,14 @@ BOT_TOKEN_ENV = "DISCORD_BOT_TOKEN"
 DISCORD_OSEC_INVITE_ENV = "DISCORD_OSEC_INVITE_URL"
 DISCORD_OTE_INVITE_ENV = "DISCORD_OTE_INVITE_URL"
 OSEC_RESULTS_ENV = "DISCORD_OSEC_APPLICATION_RESULTS_URL"
+OSEC_ENROLLMENTS_CHANNEL_ENV = "DISCORD_OSEC_ENROLLMENTS_URL"
+OSEC_LOA_CHANNEL_ENV = "DISCORD_OSEC_LOA_URL"
+OSEC_PATROL_LOGS_CHANNEL_ENV = "DISCORD_OSEC_PATROL_LOGS_URL"
+OSEC_EVENT_LOGS_CHANNEL_ENV = "DISCORD_OSEC_EVENT_LOGS_URL"
+OSEC_TRYOUT_LOGS_CHANNEL_ENV = "DISCORD_OSEC_TRYOUT_LOGS_URL"
+OSEC_PHASE_LOGS_CHANNEL_ENV = "DISCORD_OSEC_PHASE_LOGS_URL"
+OSEC_SUPERVISION_CHANNEL_ENV = "DISCORD_OSEC_SUPERVISION_URL"
+OSEC_MARSHAL_REPORTS_CHANNEL_ENV = "DISCORD_OSEC_MARSHAL_REPORTS_URL"
 OSEC_LOWCOM_APP_ENV = "OSEC_LOWCOM_APPLICATION_URL"
 OSEC_MIDCOM_APP_ENV = "OSEC_MIDCOM_APPLICATION_URL"
 OTE_APPLICATION_ENV = "OTE_APPLICATION_URL"
@@ -395,6 +404,46 @@ def osec_application_results_url() -> str:
     return env_url(OSEC_RESULTS_ENV, required=True)
 
 
+def osec_enrollments_channel_url() -> str:
+    """OSEC enrollments channel URL from env."""
+    return env_url(OSEC_ENROLLMENTS_CHANNEL_ENV, required=True)
+
+
+def osec_loa_channel_url() -> str:
+    """OSEC Leave of Absence / inactivity-request channel URL from env."""
+    return env_url(OSEC_LOA_CHANNEL_ENV, required=True)
+
+
+def osec_patrol_logs_channel_url() -> str:
+    """OSEC patrol logs channel URL from env."""
+    return env_url(OSEC_PATROL_LOGS_CHANNEL_ENV, required=True)
+
+
+def osec_event_logs_channel_url() -> str:
+    """OSEC event logs channel URL from env."""
+    return env_url(OSEC_EVENT_LOGS_CHANNEL_ENV, required=True)
+
+
+def osec_tryout_logs_channel_url() -> str:
+    """OSEC tryout logs channel URL from env."""
+    return env_url(OSEC_TRYOUT_LOGS_CHANNEL_ENV, required=True)
+
+
+def osec_phase_logs_channel_url() -> str:
+    """OSEC phase logs channel URL from env."""
+    return env_url(OSEC_PHASE_LOGS_CHANNEL_ENV, required=True)
+
+
+def osec_supervision_channel_url() -> str:
+    """OSEC supervision channel URL from env."""
+    return env_url(OSEC_SUPERVISION_CHANNEL_ENV, required=True)
+
+
+def osec_marshal_reports_channel_url() -> str:
+    """OSEC Chief Marshal weekly reports channel URL from env."""
+    return env_url(OSEC_MARSHAL_REPORTS_CHANNEL_ENV, required=True)
+
+
 def osec_lowcom_application_url() -> str:
     """OSEC LOWCOM Google Form URL from env (applicant intake)."""
     return env_url(OSEC_LOWCOM_APP_ENV, required=True)
@@ -436,6 +485,9 @@ OTE_PILLARS = tuple((item["title"], item["description"]) for item in _get_org("o
 
 GRS_ABOUT = _get_org("grs", "about")
 ESD_ABOUT = _get_org("esd", "about")
+GRS_ESD_TRYOUT_BASE = tuple(_get_org("osec", "grs_esd_tryout_requirements"))
+GRS_TRYOUT_COMBAT = _get_org("grs", "tryout_combat_requirement")
+ESD_TRYOUT_COMBAT = _get_org("esd", "tryout_combat_requirement")
 
 _copy = _get_org("copy")
 CHAIN_OF_COMMAND_INTRO = _copy["chain_of_command_intro"]
@@ -540,6 +592,13 @@ GRS_ESD_LOW_COMMAND = _ranks("grs_esd_low_command")
 GRS_ESD_MIDDLE_COMMAND = _ranks("grs_esd_middle_command")
 
 # ── Formatting helpers ────────────────────────────────────────────────────────
+
+
+def tryout_requirements_text(*, combat_requirement: str) -> str:
+    """Format shared GRS/ESD tryout bullets plus a unit-specific combat line."""
+    lines = [f"- {req}" for req in GRS_ESD_TRYOUT_BASE]
+    lines.append(f"- {combat_requirement}")
+    return "\n".join(lines)
 
 
 def roles_text(*roles: Role) -> str:
@@ -647,8 +706,8 @@ def agency_eyebrow(unit: str) -> str:
 
 
 def community_link_label(name: str) -> str:
-    """Discord link text that stays RP-clear without looking like an official agency hyperlink."""
-    return f"DS Community | {name}"
+    """Discord link text: CIA DS prefix + document/group name."""
+    return f"CIA DS | {name}"
 
 
 def motto_line(motto: str, *, classification: str | None = None) -> str:
@@ -690,7 +749,7 @@ def apply_effective_date_footer(
     if not embeds:
         return
     stamp = when or date.today()
-    footer = f"Effective {stamp.isoformat()} (community)"
+    footer = f"Effective {stamp.isoformat()}"
     if PROPERTY_NOTICE:
         footer = f"{footer} · {PROPERTY_NOTICE}"
     embeds[-1].set_footer(text=footer)
@@ -850,6 +909,39 @@ def server_regulations_embeds(
                 color=embed_color,
             )
         )
+    embeds.append(
+        embed(
+            title="Governing Policies",
+            description=(
+                "Members must follow these platform and agency policies in addition to "
+                "the regulations above."
+            ),
+            color=embed_color,
+            fields=(
+                link_field(
+                    "Discord Terms of Service",
+                    "Discord Terms of Service",
+                    url("community.discord_tos"),
+                ),
+                link_field(
+                    "Discord Community Guidelines",
+                    "Discord Community Guidelines",
+                    url("community.discord_guidelines"),
+                ),
+                link_field(
+                    "Roblox Terms of Use",
+                    "Roblox Terms of Use",
+                    url("community.roblox_tos"),
+                ),
+                link_field(
+                    "Code of Agency Conduct",
+                    community_link_label("Code of Agency Conduct"),
+                    url("osec.information.code_of_agency_conduct"),
+                    marking_note("PUBLIC"),
+                ),
+            ),
+        )
+    )
     embeds.append(disclaimer_embed(color=embed_color))
     return embeds
 

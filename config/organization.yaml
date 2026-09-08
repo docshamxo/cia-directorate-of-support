@@ -15,6 +15,7 @@
 #   - 2026-07-17 | docshamxo | Product/content UX: tighter about copy, shared marking notes, leaner closers.
 #   - 2026-08-02 | docshamxo | Drop repeated unofficial-RP phrasing from closers (rules heroes only).
 #   - 2026-08-30 | docshamxo | Tighten disclaimer / handling copy; property notice once via footer helper.
+#   - 2026-08-30 | docshamxo | Add shared GRS/ESD tryout requirements and unit combat notes.
 # === END FILE HEADER ===
 
 ds:
@@ -39,6 +40,11 @@ osec:
   sub_units:
   - Global Response Staff (GRS)
   - Executive Security Detail (ESD)
+  grs_esd_tryout_requirements:
+  - Communications certification
+  - Minimum 2 weeks in OSEC
+  - SSA+
+  - GS-3+
 ote:
   motto: SCIENTIA EST LUX LUCIS
   about: The **Office of Training & Education (OTE)** runs the Agency's **Officer Training
@@ -55,9 +61,11 @@ ote:
 grs:
   about: Rapid-response security element -- high-threat site security, contingency support,
     and protective reinforcement for field operations.
+  tryout_combat_requirement: Strong **offensive** combat ability
 esd:
   about: Close-protection unit for senior leadership and designated principals during travel
     and operations.
+  tryout_combat_requirement: Strong **defensive** combat ability
 copy:
   chain_of_command_intro: 'Use the chain. Raise concerns with your immediate supervisor first.
 

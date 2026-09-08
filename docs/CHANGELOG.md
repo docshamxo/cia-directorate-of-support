@@ -19,7 +19,16 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Added
+
+- OSEC Chief Marshal Hub announcer (`units/osec/marshal_information.py`) for
+  `#marshal-information` (`WEBHOOK_OSEC_MARSHAL_INFORMATION`).
+
 ### Changed
+
+- Webhook bot display names: `CIA {Office} Bot` (DS / OSEC / OTE / GRS / ESD).
+- Effective-date footer drops the `(community)` suffix.
+- Link labels use `CIA DS | …` (not `DS Community | …`).
 
 - Application reapply rules (OSEC + OTE open positions): wait **24 hours** after grading
   before reapplying; max **3** applications then wait a **full week**.

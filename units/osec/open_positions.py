@@ -58,13 +58,13 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     c.command_band_label("LOWCOM"),
-                    "DS Community | OSEC Lower Command (LOWCOM) Application",
+                    "CIA DS | OSEC Lower Command (LOWCOM) Application",
                     c.osec_lowcom_application_url(),
                     "Base operations and standards across ranks.",
                 ),
                 c.link_field(
                     c.command_band_label("MIDCOM"),
-                    "DS Community | OSEC Middle Command (MIDCOM) Application",
+                    "CIA DS | OSEC Middle Command (MIDCOM) Application",
                     c.osec_midcom_application_url(),
                     "Tryouts, phases, events, and LOWCOM supervision.",
                 ),
