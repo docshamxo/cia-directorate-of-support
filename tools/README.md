@@ -30,13 +30,14 @@ python tools/bootstrap.py
 python tools/run_all.py --dry-run --delay 0
 ```
 
-## Roblox → DS CoC sync
+## Roblox → DS / OTE CoC sync
 
-Poll Roblox Open Cloud group ranks and **edit** the DS Chain of Command webhook message
-every 15 minutes (see [docs/ROBLOX_COC_SYNC.md](../docs/ROBLOX_COC_SYNC.md)):
+Poll Roblox Open Cloud group ranks and **edit** DS and/or OTE Chain of Command webhook
+messages every 15 minutes (see [docs/ROBLOX_COC_SYNC.md](../docs/ROBLOX_COC_SYNC.md)):
 
 ```bash
 python -m tools.roblox_coc_sync --once --dry-run
+python -m tools.roblox_coc_sync --once --dry-run --channel ote_coc
 python -m tools.roblox_coc_sync --loop
 ```
 
