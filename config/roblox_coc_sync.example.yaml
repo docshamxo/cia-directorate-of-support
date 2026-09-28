@@ -1,0 +1,127 @@
+# === FILE HEADER ===
+# Title: Roblox CoC Sync Example Config
+# Path: config/roblox_coc_sync.example.yaml
+# Created: 2026-09-28
+# Created by: docshamxo
+# Modified:
+#   - 2026-09-28 | docshamxo | Example rank→CoC mapping for DS webhook edit sync.
+# === END FILE HEADER ===
+
+# Copy to config/roblox_coc_sync.yaml (gitignored optional) and set real roblox_rank
+# values to match each group's roleset ranks (0–255) in Creator Hub.
+#
+# MVP target: DS #chain-of-command webhook message (edits by message ID).
+# Agency EL is left on personnel.yaml (not auto-synced) unless you add mappings.
+
+interval_minutes: 15
+vacant_label: VACANT
+dry_run_default: false
+
+target:
+  channel: ds_coc
+  webhook_env: WEBHOOK_DS_CHAIN_OF_COMMAND
+  # Leave blank in .env until you have the snowflake; sync skips live edit until set.
+  message_id_env: WEBHOOK_DS_COC_MESSAGE_ID
+
+groups:
+  ds:
+    group_id_env: ROBLOX_GROUP_ID_DS
+    default_group_id: "945806945"
+  osec:
+    group_id_env: ROBLOX_GROUP_ID_OSEC
+    default_group_id: "288542436"
+  ote:
+    group_id_env: ROBLOX_GROUP_ID_OTE
+    default_group_id: "1003614105"
+  grs:
+    group_id_env: ROBLOX_GROUP_ID_GRS
+    default_group_id: "450710337"
+  esd:
+    group_id_env: ROBLOX_GROUP_ID_ESD
+    # Override via ROBLOX_GROUP_ID_ESD when ESD community ID is confirmed.
+    default_group_id: "630084317"
+
+# personnel_key must match a key in config/personnel.yaml (titles/abbrevs).
+# Set roblox_rank to the numeric roleset rank in that Roblox group, OR
+# roblox_role_name to the display name (exact match, case-insensitive).
+# Placeholder ranks below (255/254/…) — replace with your real roleset ranks.
+mappings:
+  - personnel_key: ds_leadership
+    abbrev: CDSD
+    group: ds
+    roblox_rank: 255
+    max_holders: 1
+  - personnel_key: ds_leadership
+    abbrev: DCDSD
+    group: ds
+    roblox_rank: 254
+    max_holders: 1
+
+  - personnel_key: ote_high_command
+    abbrev: DTE
+    group: ote
+    roblox_rank: 255
+    max_holders: 1
+  - personnel_key: ote_high_command
+    abbrev: DDTE
+    group: ote
+    roblox_rank: 254
+    max_holders: 1
+  - personnel_key: ote_high_command
+    abbrev: ADTE
+    group: ote
+    roblox_rank: 253
+    max_holders: 1
+  - personnel_key: ote_high_command
+    abbrev: D
+    group: ote
+    roblox_rank: 252
+    max_holders: 1
+
+  - personnel_key: osec_high_command
+    abbrev: DS
+    group: osec
+    roblox_rank: 255
+    max_holders: 1
+  - personnel_key: osec_high_command
+    abbrev: DDS
+    group: osec
+    roblox_rank: 254
+    max_holders: 1
+  - personnel_key: osec_high_command
+    abbrev: ADS
+    group: osec
+    roblox_rank: 253
+    max_holders: 1
+  - personnel_key: osec_high_command
+    abbrev: S
+    group: osec
+    roblox_rank: 252
+    max_holders: 1
+
+  - personnel_key: grs_command
+    abbrev: CM
+    group: grs
+    roblox_rank: 255
+    max_holders: 1
+  - personnel_key: grs_command
+    abbrev: DCM
+    group: grs
+    roblox_rank: 254
+    max_holders: 1
+
+  - personnel_key: esd_command
+    abbrev: CM
+    group: esd
+    roblox_rank: 255
+    max_holders: 1
+  - personnel_key: esd_command
+    abbrev: DCM
+    group: esd
+    roblox_rank: 254
+    max_holders: 1
+
+# === FILE FOOTER ===
+# End of file: config/roblox_coc_sync.example.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===
