@@ -69,7 +69,6 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "ote.staff_documents.handbook",
                 ),
             ),
-
         ),
         staff_docs_section_embed(
             title="Phase Documents",
