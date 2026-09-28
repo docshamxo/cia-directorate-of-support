@@ -372,6 +372,7 @@ def run_all(argv: list[str] | None = None) -> int:
     env.setdefault("OSEC_LOWCOM_APPLICATION_URL", "https://example.invalid/osec-lowcom-app")
     env.setdefault("OSEC_MIDCOM_APPLICATION_URL", "https://example.invalid/osec-midcom-app")
     env.setdefault("OTE_APPLICATION_URL", "https://example.invalid/ote-application")
+    env.setdefault("ESD_MIDCOM_APPLICATION_URL", "https://example.invalid/esd-midcom-app")
 
     mode = "dry-run" if args.dry_run else "live"
     started_at = datetime.now(timezone.utc).isoformat()

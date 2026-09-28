@@ -92,6 +92,7 @@ OSEC_MIDCOM_APP_ENV = "OSEC_MIDCOM_APPLICATION_URL"
 OTE_APPLICATION_ENV = "OTE_APPLICATION_URL"
 OTE_APPLICATION_TRACKER_ENV = "OTE_APPLICATION_TRACKER_URL"
 STAFF_PLACEHOLDER_MARKER = "STAFF_LOCAL_REQUIRED"
+ESD_MIDCOM_APP_ENV = "ESD_MIDCOM_APPLICATION_URL"
 
 # Optional: after post, bot deletes other recent webhook messages in the channel
 # (requires Manage Messages + Read Message History). Set CIA_BOT_CHANNEL_PURGE=1.
@@ -407,6 +408,11 @@ def ote_application_tracker_url(*, required: bool = False) -> str:
     applicant status and other PII-adjacent fields.
     """
     return env_url(OTE_APPLICATION_TRACKER_ENV, required=required)
+
+
+def esd_midcom_application_url() -> str:
+    """ESD MIDCOM Google Form URL from env (applicant intake)."""
+    return env_url(ESD_MIDCOM_APP_ENV, required=True)
 
 
 # ── Organization copy ─────────────────────────────────────────────────────────

@@ -172,6 +172,7 @@ Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (share
 | 17 | `python units/esd/coc.py` | `WEBHOOK_ESD_COC` |
 | 18 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
 | 19 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| 20 | `python units/esd/open_positions.py` | `WEBHOOK_ESD_OPEN_POSITIONS` |
 
 ---
 

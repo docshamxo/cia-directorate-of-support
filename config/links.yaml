@@ -18,6 +18,7 @@
 #   - 2026-07-17 | docshamxo | ESD phase_i → phase_guide; remove phase_ii.
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff document link placeholders.
 #   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
+#   - 2026-09-28 | docshamxo | Add ESD open_positions last_updated stamp.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -82,6 +83,8 @@ grs:
     google_drive: https://example.invalid/STAFF_LOCAL_REQUIRED
     handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
 esd:
+  open_positions:
+    last_updated: September 28th, 2026
   staff_documents:
     google_drive: https://example.invalid/STAFF_LOCAL_REQUIRED
     # Public sharing links for ESD staff channel (usp=sharing).

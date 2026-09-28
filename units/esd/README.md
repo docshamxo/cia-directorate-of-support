@@ -15,6 +15,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Slim office README; point to OPS for reactions/purge.
+  - 2026-09-28 | docshamxo | Document ESD open positions announcer.
 === END FILE HEADER ===
 -->
 
@@ -32,6 +33,7 @@ Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [
 python units/esd/coc.py
 python units/esd/information.py
 python units/esd/staff_documents.py
+python units/esd/open_positions.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -43,6 +45,7 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 | [`coc.py`](coc.py) | ESD chain of command (PUBLIC) | `WEBHOOK_ESD_COC` |
 | [`information.py`](information.py) | ESD public information | `WEBHOOK_ESD_INFORMATION` |
 | [`staff_documents.py`](staff_documents.py) | Staff documents (STAFF) | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| [`open_positions.py`](open_positions.py) | Open positions (MIDCOM) | `WEBHOOK_ESD_OPEN_POSITIONS` |
 
 ## Edit
 
