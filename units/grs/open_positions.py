@@ -37,7 +37,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Applications",
             description=(
-                f"{c.motto_line('WE GO AS ONE')}\n\n"
+                f"{c.motto_line(c.DS_MOTTO)}\n\n"
                 "An application for the **Global Response Staff (GRS)** is currently open. "
                 "GRS is a sub-unit of the **Office of Security (OSEC)**, operating under the "
                 "**Directorate of Support (DS)** — OSEC's dedicated tactical element for "
