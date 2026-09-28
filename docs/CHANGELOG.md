@@ -19,6 +19,13 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Added
+
+- GRS and ESD MIDCOM open-positions announcers (`units/grs/open_positions.py`,
+  `units/esd/open_positions.py`) with env form URLs
+  (`GRS_MIDCOM_APPLICATION_URL`, `ESD_MIDCOM_APPLICATION_URL`) and webhooks
+  (`WEBHOOK_GRS_OPEN_POSITIONS`, `WEBHOOK_ESD_OPEN_POSITIONS`).
+
 ### Changed
 
 - Reorganize layout: office announcers under `units/<office>/`; ops runbook at `docs/OPS.md`.
