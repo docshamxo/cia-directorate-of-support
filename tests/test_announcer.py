@@ -6,6 +6,7 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Dry-run, staff fail-closed, CoC username wrap.
 #   - 2026-07-17 | docshamxo | Expect alerting SystemExit codes from run_announcer.
+#   - 2026-09-28 | docshamxo | Cover optional discord_id profile links in Role.format.
 # === END FILE HEADER ===
 
 """Regression tests for shared announcer entry helpers."""
@@ -28,6 +29,23 @@ def test_role_format_puts_holder_on_own_line() -> None:
     text = role.format()
     assert "\n→ Andy" in text
     assert " - Andy" not in text
+
+
+def test_role_format_links_holder_when_discord_id_set() -> None:
+    role = c.Role(
+        abbrev="S",
+        title="Superintendent",
+        holder="crazybijij2",
+        discord_id="123456789012345678",
+    )
+    text = role.format()
+    assert "[crazybijij2](https://discord.com/users/123456789012345678)" in text
+    assert "VACANT" not in text
+
+
+def test_role_format_skips_link_for_vacant() -> None:
+    role = c.Role(abbrev="CM", title="Chief Marshal", holder="VACANT", discord_id="999")
+    assert role.format().endswith("→ VACANT")
 
 
 def test_roles_text_joins_with_newlines() -> None:
