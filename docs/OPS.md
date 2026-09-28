@@ -13,6 +13,7 @@ Modified:
   - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Mid-batch failure playbook, exit codes, state reset tool.
   - 2026-07-17 | docshamxo | Move ops runbook to docs/; update unit script paths.
+  - 2026-09-28 | docshamxo | Link Roblox → CoC webhook edit sync guide.
 === END FILE HEADER ===
 -->
 
@@ -27,6 +28,9 @@ Operator checklist for live Discord announcer runs. Prefer dry-run before every 
 For versioned releases and staged office rollout, also use
 [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) and
 [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md).
+
+Roblox group-rank → DS CoC webhook **message edit** (15-minute poll): see
+[ROBLOX_COC_SYNC.md](ROBLOX_COC_SYNC.md) (`python -m tools.roblox_coc_sync`).
 
 **Run only this repository** (`cia-directorate-of-support`). Do **not** run the legacy flat scripts under `Downloads\DS` — they post without purge or checkmark reactions and leave orphan messages outside `.webhook_messages.json`.
 

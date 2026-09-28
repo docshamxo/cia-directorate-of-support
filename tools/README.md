@@ -13,6 +13,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Document diagnose_webhook_state.py diagnostic tool.
+  - 2026-09-28 | docshamxo | Document Roblox CoC sync CLI module.
 === END FILE HEADER ===
 -->
 
@@ -27,6 +28,16 @@ From the repository root:
 ```bash
 python tools/bootstrap.py
 python tools/run_all.py --dry-run --delay 0
+```
+
+## Roblox → DS CoC sync
+
+Poll Roblox Open Cloud group ranks and **edit** the DS Chain of Command webhook message
+every 15 minutes (see [docs/ROBLOX_COC_SYNC.md](../docs/ROBLOX_COC_SYNC.md)):
+
+```bash
+python -m tools.roblox_coc_sync --once --dry-run
+python -m tools.roblox_coc_sync --loop
 ```
 
 ## Sync file headers and footers

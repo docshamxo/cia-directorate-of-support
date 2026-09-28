@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | Mapping, vacant, dry-run, config parse tests.
+#   - 2026-09-28 | docshamxo | discord_id merge / map / clickable holder tests.
 # === END FILE HEADER ===
 
 """Unit tests for Roblox → CoC sync helpers (no live Discord/Roblox)."""
@@ -13,7 +14,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import Any
 from unittest.mock import MagicMock
 
 import pytest
@@ -25,11 +25,13 @@ if str(REPO_ROOT) not in sys.path:
 
 from common import cia_common as c
 from tools.roblox_coc_sync.client import GroupMember, GroupRole
-from tools.roblox_coc_sync.config import parse_sync_config
+from tools.roblox_coc_sync.config import GroupConfig, RoleMapping, SyncConfig, SyncTarget, parse_sync_config
 from tools.roblox_coc_sync.embeds import build_ds_coc_embeds
 from tools.roblox_coc_sync.mapping import (
+    HolderOverride,
     apply_holder_overrides,
     base_roles_catalog,
+    collect_holder_overrides,
     format_holders,
 )
 from tools.roblox_coc_sync.sync import SyncSkip, run_once
@@ -44,8 +46,8 @@ def test_format_holders_vacant() -> None:
 def test_apply_holder_overrides_sets_vacant() -> None:
     catalog = {
         "ds_leadership": (
-            c.Role("CDSD", "Component Director", "OldName"),
-            c.Role("DCDSD", "Deputy", "KeepMe"),
+            c.Role("CDSD", "Component Director", "OldName", discord_id="111"),
+            c.Role("DCDSD", "Deputy", "KeepMe", discord_id="222"),
         )
     }
     updated = apply_holder_overrides(
@@ -53,7 +55,56 @@ def test_apply_holder_overrides_sets_vacant() -> None:
         {("ds_leadership", "CDSD"): "VACANT"},
     )
     assert updated["ds_leadership"][0].holder == "VACANT"
+    assert updated["ds_leadership"][0].discord_id is None
     assert updated["ds_leadership"][1].holder == "KeepMe"
+    assert updated["ds_leadership"][1].discord_id == "222"
+
+
+def test_apply_holder_overrides_keeps_personnel_discord_id() -> None:
+    catalog = {
+        "ds_leadership": (
+            c.Role("CDSD", "Component Director", "OldName", discord_id="333881654227763200"),
+        )
+    }
+    updated = apply_holder_overrides(
+        catalog,
+        {("ds_leadership", "CDSD"): "RobloxOnlyName"},
+    )
+    role = updated["ds_leadership"][0]
+    assert role.holder == "RobloxOnlyName"
+    assert role.discord_id == "333881654227763200"
+    assert "discord.com/users/333881654227763200" in role.format()
+    assert "[RobloxOnlyName]" in role.format()
+
+
+def test_apply_holder_overrides_uses_config_discord_ids_map() -> None:
+    catalog = {
+        "ds_leadership": (
+            c.Role("CDSD", "Component Director", "OldName", discord_id="111"),
+        )
+    }
+    cfg = SyncConfig(
+        interval_minutes=15,
+        target=SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),
+        groups={},
+        mappings=(),
+        discord_ids={"robloxuser": "999888777666555444", "42": "999888777666555444"},
+    )
+    updated = apply_holder_overrides(
+        catalog,
+        {
+            ("ds_leadership", "CDSD"): HolderOverride(
+                holder="RobloxUser",
+                roblox_usernames=("RobloxUser",),
+                roblox_user_ids=("42",),
+            )
+        },
+        config=cfg,
+    )
+    role = updated["ds_leadership"][0]
+    assert role.holder == "RobloxUser"
+    assert role.discord_id == "999888777666555444"
+    assert "[RobloxUser](https://discord.com/users/999888777666555444)" in role.format()
 
 
 def test_parse_example_config() -> None:
@@ -65,6 +116,29 @@ def test_parse_example_config() -> None:
     assert "ds" in cfg.groups
     assert cfg.groups["ds"].group_id == "945806945"
     assert any(m.abbrev == "CDSD" for m in cfg.mappings)
+    assert cfg.discord_ids == {}
+
+
+def test_parse_discord_ids_map() -> None:
+    cfg = parse_sync_config(
+        {
+            "interval_minutes": 15,
+            "target": {},
+            "groups": {},
+            "mappings": [
+                {
+                    "personnel_key": "ds_leadership",
+                    "abbrev": "CDSD",
+                    "group": "ds",
+                    "roblox_rank": 255,
+                }
+            ],
+            "discord_ids": {"Alice": "123456789012345678", "99": "123456789012345678"},
+        }
+    )
+    assert cfg.discord_ids["Alice"] == "123456789012345678"
+    assert cfg.discord_ids["alice"] == "123456789012345678"
+    assert cfg.discord_ids["99"] == "123456789012345678"
 
 
 def test_build_ds_coc_embeds_includes_overridden_holder() -> None:
@@ -103,7 +177,6 @@ def test_run_once_live_skips_without_message_id(monkeypatch: pytest.MonkeyPatch)
     fake_client.list_members_for_role.return_value = [
         GroupMember("99", "SyncedUser"),
     ]
-    # collect_holder_overrides uses list_roles via find_role_by_rank
     fake_client.find_role_by_name.return_value = None
 
     path = REPO_ROOT / "config" / "roblox_coc_sync.example.yaml"
@@ -112,9 +185,6 @@ def test_run_once_live_skips_without_message_id(monkeypatch: pytest.MonkeyPatch)
 
 
 def test_collect_overrides_empty_rank_is_vacant() -> None:
-    from tools.roblox_coc_sync.config import GroupConfig, RoleMapping, SyncConfig, SyncTarget
-    from tools.roblox_coc_sync.mapping import collect_holder_overrides
-
     cfg = SyncConfig(
         interval_minutes=15,
         target=SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),
@@ -133,7 +203,7 @@ def test_collect_overrides_empty_rank_is_vacant() -> None:
     client.find_role_by_rank.return_value = GroupRole("9", "Owner", 255)
     client.list_members_for_role.return_value = []
     overrides = collect_holder_overrides(client, cfg)
-    assert overrides[("ds_leadership", "CDSD")] == "VACANT"
+    assert overrides[("ds_leadership", "CDSD")].holder == "VACANT"
 
 
 # === FILE FOOTER ===

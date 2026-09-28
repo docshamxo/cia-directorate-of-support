@@ -6,6 +6,7 @@ Created: 2026-09-28
 Created by: docshamxo
 Modified:
   - 2026-09-28 | docshamxo | Ops guide for 15-minute Roblox → Discord CoC edit sync.
+  - 2026-09-28 | docshamxo | Document clickable discord_id merge + optional map.
 === END FILE HEADER ===
 -->
 
@@ -100,7 +101,14 @@ Prefer Task Scheduler + `--once` over a background loop if the PC sleeps often.
 - Empty Roblox rank → holder **`VACANT`**.
 - HTTP **429** → exponential backoff / `Retry-After`.
 - Missing message ID or webhook on a live run → exit **10** (skip), no crash loop poison.
-- Usernames come from the public Users API (`users.roblox.com`); Discord profile links are not auto-filled from Roblox.
+- Usernames come from the public Users API (`users.roblox.com`).
+- **Clickable Discord profile links:** Roblox does not provide Discord IDs. Without a
+  link source, holders render as plain text (not `[name](https://discord.com/users/<id>)`).
+  Sync keeps links by:
+  1. Optional `discord_ids` map in `roblox_coc_sync.yaml` (Roblox username **or** Roblox
+     user id → Discord snowflake), or
+  2. Existing `discord_id` on the same abbrev in `personnel.yaml` (Roblox display name
+     merged with that snowflake).
 - Optional local config path: `ROBLOX_COC_SYNC_CONFIG=C:\path\to\roblox_coc_sync.yaml`
 
 ## API reference

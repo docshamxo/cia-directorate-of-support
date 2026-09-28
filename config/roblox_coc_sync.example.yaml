@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | Example rank→CoC mapping for DS webhook edit sync.
+#   - 2026-09-28 | docshamxo | Optional discord_ids map for clickable CoC profile links.
 # === END FILE HEADER ===
 
 # Copy to config/roblox_coc_sync.yaml (gitignored optional) and set real roblox_rank
@@ -40,6 +41,16 @@ groups:
     group_id_env: ROBLOX_GROUP_ID_ESD
     # Override via ROBLOX_GROUP_ID_ESD when ESD community ID is confirmed.
     default_group_id: "630084317"
+
+# Optional: Roblox username OR Roblox user id → Discord user snowflake.
+# When set, synced holders render as [Name](https://discord.com/users/<id>).
+# If omitted, sync still keeps personnel.yaml discord_id on the same abbrev slot
+# (Roblox display name + existing Discord profile link). Plain usernames alone
+# are not clickable — fill this map or personnel.yaml discord_id.
+#
+# discord_ids:
+#   ClassifiedInvictus: "123456789012345678"
+#   "9876543210": "123456789012345678"   # Roblox user id key
 
 # personnel_key must match a key in config/personnel.yaml (titles/abbrevs).
 # Set roblox_rank to the numeric roleset rank in that Roblox group, OR

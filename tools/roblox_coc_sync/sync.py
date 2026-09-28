@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | One-shot sync: Roblox → embeds → webhook edit.
+#   - 2026-09-28 | docshamxo | Pass sync config into holder overrides for discord_id merge.
 # === END FILE HEADER ===
 
 """One-shot and looped CoC sync entrypoints."""
@@ -68,7 +69,7 @@ def run_once(
 
     if client is not None:
         overrides = collect_holder_overrides(client, cfg)
-        catalog = apply_holder_overrides(base_roles_catalog(), overrides)
+        catalog = apply_holder_overrides(base_roles_catalog(), overrides, config=cfg)
     else:
         catalog = base_roles_catalog()
         overrides = {}
@@ -79,13 +80,16 @@ def run_once(
     webhook_url = env_or_none(cfg.target.webhook_env)
     message_id_raw = env_or_none(cfg.target.message_id_env)
 
+    def _holder_text(value: object) -> str:
+        return value.holder if hasattr(value, "holder") else str(value)
+
     if effective_dry:
         preview_embeds(
             embeds,
             webhook_key=cfg.target.webhook_env,
             username=c.BOT_DS,
         )
-        summary = {f"{k}/{a}": h for (k, a), h in overrides.items()}
+        summary = {f"{k}/{a}": _holder_text(h) for (k, a), h in overrides.items()}
         logger.info("event=dry_run_complete overrides=%s", len(summary))
         return summary
 
@@ -108,7 +112,7 @@ def run_once(
         files=files,
         dry_run=False,
     )
-    return {f"{k}/{a}": h for (k, a), h in overrides.items()}
+    return {f"{k}/{a}": _holder_text(h) for (k, a), h in overrides.items()}
 
 
 def run_loop(

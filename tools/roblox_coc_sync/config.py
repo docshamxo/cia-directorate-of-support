@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | Load YAML mapping + env overrides.
+#   - 2026-09-28 | docshamxo | Optional roblox→discord_id map for clickable CoC links.
 # === END FILE HEADER ===
 
 """Load roblox_coc_sync YAML and resolve env placeholders."""
@@ -56,6 +57,8 @@ class SyncConfig:
     mappings: tuple[RoleMapping, ...]
     vacant_label: str = "VACANT"
     dry_run_default: bool = False
+    # Keys: Roblox username (case-insensitive) or Roblox user id → Discord snowflake.
+    discord_ids: dict[str, str] | None = None
 
 
 def resolve_config_path(explicit: Path | None = None) -> Path:
@@ -127,7 +130,31 @@ def parse_sync_config(raw: dict[str, Any]) -> SyncConfig:
         mappings=tuple(mappings),
         vacant_label=str(raw.get("vacant_label") or "VACANT"),
         dry_run_default=bool(raw.get("dry_run_default") or False),
+        discord_ids=_parse_discord_ids(raw.get("discord_ids")),
     )
+
+
+def _parse_discord_ids(raw: object | None) -> dict[str, str]:
+    """Parse optional roblox username / user id → Discord snowflake map."""
+    if not isinstance(raw, dict):
+        return {}
+    out: dict[str, str] = {}
+    for key, value in raw.items():
+        if value is None:
+            continue
+        snowflake = str(value).strip()
+        if not snowflake:
+            continue
+        if not snowflake.isdigit():
+            raise ValueError(
+                f"discord_ids[{key!r}] must be a numeric Discord snowflake, got {value!r}"
+            )
+        key_str = str(key).strip()
+        if not key_str:
+            continue
+        out[key_str] = snowflake
+        out[key_str.lower()] = snowflake
+    return out
 
 
 def _resolve_group_id(key: str, item: dict[str, Any]) -> str:
