@@ -11,6 +11,7 @@
 #   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Ignore local webhook message ID state file.
+#   - 2026-09-28 | docshamxo | Ignore local roblox_coc_sync.yaml overrides.
 # === END FILE HEADER ===
 
 # Secrets
@@ -27,6 +28,7 @@ config/links.staff.local.yaml
 config/*.staff.local.yaml
 config/personnel.holders.local.yaml
 config/*.holders.local.yaml
+config/roblox_coc_sync.yaml
 
 # Python
 __pycache__/
