@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import importlib.util
+from datetime import date
 from pathlib import Path
 
 import discord
@@ -22,6 +23,14 @@ import pytest
 from common import cia_common as c
 from common.announcer import subunit_coc_embeds
 from common.manifest import ANNOUNCERS
+from units.esd import information as esd_info
+from units.esd import staff_documents as esd_staff
+from units.grs import information as grs_info
+from units.grs import staff_documents as grs_staff
+from units.osec import information as osec_info
+from units.osec import staff_documents as osec_staff
+from units.ote import public_information as ote_info
+from units.ote import staff_documents as ote_staff
 
 _ROOT = Path(__file__).resolve().parents[1]
 
@@ -108,6 +117,13 @@ def test_server_regulations_embeds_within_limits() -> None:
     # Mid-sentence soft wraps must not appear as Discord hard breaks.
     assert "based on race,\n" not in blob
     assert "without Office of Security leadership\n" not in blob
+    policy = next(e for e in embeds if e.title == "Governing Policies")
+    field_names = [f.name for f in policy.fields]
+    assert "Discord Terms of Service" in field_names
+    assert "Roblox Terms of Use" in field_names
+    assert "Code of Agency Conduct" in field_names
+    assert "discord.com/terms" in (policy.fields[0].value or "")
+    assert "roblox.com/info/terms" in "\n".join(f.value for f in policy.fields)
 
 
 def test_ote_server_regulations_embeds_use_ote_office() -> None:
@@ -140,6 +156,18 @@ def test_subunit_coc_embeds_within_limits() -> None:
         logo=c.LOGOS["grs"],
     )
     c.validate_embed_limits(embeds)
+    titles = [e.title for e in embeds]
+    assert titles[0] == "CHAIN OF COMMAND"
+    assert "Agency Executive Leadership" not in titles
+    assert "Directorate of Support" not in titles
+    assert "Global Response Staff" in titles
+    assert "Reporting Line" not in titles
+    assert any(f.name == "Command Team" for e in embeds for f in e.fields)
+    assert all(f.name != "Executive Leadership" for e in embeds for f in e.fields)
+    assert all(f.name != "Leadership" for e in embeds for f in e.fields)
+    thumbs = [e.thumbnail.url for e in embeds if e.thumbnail and e.thumbnail.url]
+    assert len(thumbs) == 1
+    assert thumbs[0].startswith("attachment://")
 
 
 def test_apply_effective_date_footer_stamps_last() -> None:
@@ -150,8 +178,30 @@ def test_apply_effective_date_footer_stamps_last() -> None:
     c.apply_effective_date_footer(embeds)
     assert embeds[0].footer.text is None or embeds[0].footer.text == ""
     assert embeds[-1].footer and "Effective" in (embeds[-1].footer.text or "")
-    assert "community" in (embeds[-1].footer.text or "")
+    assert "(community)" not in (embeds[-1].footer.text or "")
+    assert "Inter Studios" in (embeds[-1].footer.text or "")
     assert "roleplay" not in (embeds[-1].footer.text or "").lower()
+
+
+def test_disclaimer_does_not_duplicate_property_notice() -> None:
+    text = c.disclaimer_embed(color=c.COLOR_DS).description or ""
+    assert "not affiliated" in text.lower()
+    assert "Inter Studios" not in text
+    assert "Property of the Central Intelligence Agency" not in text
+
+
+def test_format_display_date_uses_ordinal() -> None:
+    assert c.format_display_date(date(2026, 8, 30)) == "August 30th, 2026"
+    assert c.format_display_date(date(2026, 6, 1)) == "June 1st, 2026"
+    assert c.format_display_date(date(2026, 6, 2)) == "June 2nd, 2026"
+    assert c.format_display_date(date(2026, 6, 3)) == "June 3rd, 2026"
+    assert c.format_display_date(date(2026, 6, 11)) == "June 11th, 2026"
+    assert c.format_display_date(date(2026, 6, 21)) == "June 21st, 2026"
+
+
+def test_last_updated_line_is_italic() -> None:
+    line = c.last_updated_line(date(2026, 8, 30))
+    assert line == "*Last updated: August 30th, 2026*"
 
 
 def test_announcer_catalog_nonempty() -> None:
@@ -197,6 +247,63 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
     assert "instant denial" in esd_blob
     assert "@" not in grs_blob  # no inventing Discord pings
     assert "<@" not in grs_blob
+
+
+@pytest.mark.parametrize(
+    ("builder", "abbrev", "unit_full"),
+    [
+        (osec_staff._build_embeds, "OSEC", "Office of Security"),
+        (ote_staff._build_embeds, "OTE", "Office of Training & Education"),
+        (grs_staff._build_embeds, "GRS", "Global Response Staff"),
+        (esd_staff._build_embeds, "ESD", "Executive Security Detail"),
+    ],
+)
+def test_staff_documents_share_standard_frame(builder, abbrev: str, unit_full: str) -> None:
+    embeds = builder()
+    c.validate_embed_limits(embeds)
+    assert embeds[0].title == "STAFF DOCUMENTS"
+    assert f"Authorized {abbrev} staff documentation index. Need-to-know access only." in (
+        embeds[0].description or ""
+    )
+    assert embeds[1].title == "Central Repository"
+    assert embeds[-1].title == "Classification & Handling Notice"
+    assert unit_full in (embeds[-1].description or "")
+    assert f"CIA {unit_full}" in (embeds[-1].description or "")
+    blob = "\n".join(
+        [
+            *(e.description or "" for e in embeds),
+            *(f.value for e in embeds for f in e.fields),
+        ]
+    )
+    assert "CIA OTE |" not in blob
+    assert "CIA DS |" in blob
+
+
+def test_information_channels_share_standard_frame() -> None:
+    osec = osec_info._build_embeds()
+    ote = ote_info._build_embeds()
+    grs = grs_info._build_embeds()
+    esd = esd_info._build_embeds()
+    for embeds in (osec, ote, grs, esd):
+        c.validate_embed_limits(embeds)
+
+    assert osec[0].title == "INFORMATION"
+    assert "Reference hub for OSEC records" in (osec[0].description or "")
+    assert osec[1].title == "About the Office"
+    assert osec[2].title == "Reference Documents"
+
+    for embeds, abbrev in ((ote, "OTE"), (grs, "GRS"), (esd, "ESD")):
+        assert embeds[0].title == "PUBLIC INFORMATION"
+        assert f"Public overview of {abbrev}, its mission, and official community resources." in (
+            embeds[0].description or ""
+        )
+        assert embeds[-1].title == "Community Links"
+
+    assert grs[1].title == "About GRS"
+    assert esd[1].title == "About ESD"
+    assert ote[1].title == "About the Office"
+    assert grs[2].title == "Tryout Requirements"
+    assert esd[2].title == "Tryout Requirements"
 
 
 # === FILE FOOTER ===

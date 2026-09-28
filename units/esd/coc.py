@@ -11,6 +11,7 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-15 | docshamxo | Attach ESD logo on chain-of-command hero.
 #   - 2026-08-04 | docshamxo | Confirm ESD CoC posts as PUBLIC channel content.
+#   - 2026-09-08 | docshamxo | ESD CoC unit-only (no EL/DS/OSEC parent blocks).
 # === END FILE HEADER ===
 
 """

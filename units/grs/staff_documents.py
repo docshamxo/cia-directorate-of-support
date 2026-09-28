@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Prefer Drive root + handbook; STAFF markings.
 #   - 2026-07-17 | docshamxo | Text marking notes and clearer field labels.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
+#   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame builders.
 # === END FILE HEADER ===
 
 """
@@ -28,56 +29,57 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    run_announcer,
+    staff_docs_central_embed,
+    staff_docs_handling_embed,
+    staff_docs_hero_embed,
+    staff_docs_link,
+    staff_docs_section_embed,
+)
+
+_UNIT = "Global Response Staff"
+_ABBREV = "GRS"
+_COLOR = c.COLOR_GRS
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="STAFF DOCUMENTS",
-            unit="Global Response Staff",
-            supporting="Authorized GRS staff documentation index. Need-to-know access only.",
-            color=c.COLOR_GRS,
+        staff_docs_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["grs"],
         ),
-        c.embed(
-            title="Central Repository",
-            description=(
-                "Primary folder for all GRS staff files, guides, and forms. "
-                "Use Drive for training and certification packs not listed here."
-            ),
-            color=c.COLOR_GRS,
-            fields=(
-                c.link_field(
-                    "Google Drive",
-                    "DS Community | GRS Google Drive",
-                    c.url("grs.staff_documents.google_drive"),
-                    c.marking_note("STAFF"),
-                ),
-                c.link_field(
+        staff_docs_central_embed(
+            unit_abbrev=_ABBREV,
+            drive_url_key="grs.staff_documents.google_drive",
+            drive_link_name="GRS Google Drive",
+            color=_COLOR,
+            extra_fields=(
+                staff_docs_link(
                     "Handbook",
-                    "DS Community | GRS Handbook",
-                    c.url("grs.staff_documents.handbook"),
-                    c.marking_note("STAFF"),
+                    "GRS Handbook",
+                    "grs.staff_documents.handbook",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Training Materials",
-            description="Shared Directorate of Support standard training references.",
-            color=c.COLOR_GRS,
+            description=(
+                "Official shared Directorate of Support standard training references "
+                "for Global Response Staff."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "General Standard Training",
-                    "DS Community | General Standard Training Guide",
-                    c.url("community.general_standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "General Standard Training Guide",
+                    "community.general_standard_training_guide",
                 ),
             ),
         ),
-        c.classification_handling_embed(
-            unit="GRS", authority="CIA Directorate of Support", color=c.COLOR_GRS
-        ),
+        staff_docs_handling_embed(unit_full=_UNIT, color=_COLOR),
     ]
 
 

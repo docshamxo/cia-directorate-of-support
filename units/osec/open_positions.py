@@ -15,6 +15,10 @@
 #   - 2026-07-17 | docshamxo | Accessible LOWCOM/MIDCOM field names and first-use expansions.
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Replace mojibake bullets/dashes with ASCII in Important Info.
+#   - 2026-08-30 | docshamxo | Reapply: 24h after graded; max 3 attempts then 1 week.
+#   - 2026-08-30 | docshamxo | Application questions: full OSEC HICOM incl. Superintendent.
+#   - 2026-08-30 | docshamxo | Last updated line uses post date (not static YAML).
+#   - 2026-08-30 | docshamxo | Merge results rules; tighten Important Information copy.
 # === END FILE HEADER ===
 
 """
@@ -37,8 +41,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="OPEN POSITIONS",
             unit="Office of Security",
             supporting=(
-                "Applications for Lower Command (LOWCOM) and Middle Command (MIDCOM) "
-                "positions are linked below. Read all requirements before submitting."
+                "Lower Command (LOWCOM) and Middle Command (MIDCOM) applications. "
+                "Read all requirements before submitting."
             ),
             color=c.COLOR_OSEC,
             logo=c.LOGOS["osec"],
@@ -47,47 +51,39 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Applications",
             description=(
                 f"{c.motto_line(c.OSEC_MOTTO)}\n\n"
-                "Positions tend to open every **Sunday**, following the weekly quota reset.\n"
-                f"*Last updated: {c.url('osec.open_positions.last_updated')}*"
+                "Positions typically open **Sunday** after the weekly quota reset.\n"
+                f"{c.last_updated_line()}"
             ),
             color=c.COLOR_OSEC,
             fields=(
                 c.link_field(
                     c.command_band_label("LOWCOM"),
-                    "DS Community | OSEC Lower Command (LOWCOM) Application",
+                    "CIA DS | OSEC Lower Command (LOWCOM) Application",
                     c.osec_lowcom_application_url(),
-                    "Assists with base operations and standards across ranks.",
+                    "Base operations and standards across ranks.",
                 ),
                 c.link_field(
                     c.command_band_label("MIDCOM"),
-                    "DS Community | OSEC Middle Command (MIDCOM) Application",
+                    "CIA DS | OSEC Middle Command (MIDCOM) Application",
                     c.osec_midcom_application_url(),
-                    "Leads tryouts, phases, events, and Lower Command (LOWCOM) supervision.",
+                    "Tryouts, phases, events, and LOWCOM supervision.",
                 ),
             ),
         ),
         c.embed(
             title="Important Information",
             description=(
-                "- The use of **AI**, trolling, sharing answers, requesting answers, or asking for "
-                "application results will result in an **automatic failure**.\n"
-                "- Be patient after submitting. **Do not contact staff** for updates, results, or "
-                "status - that is an **immediate failure**.\n"
-                "- Proper grammar and professionalism are required. Every question must be answered "
-                "in **at least two complete sentences**.\n"
-                "- After a **passing** result, wait a **full week** before reapplying for a higher "
-                "position.\n"
-                "- Application questions may be directed **only** to:\n"
-                f"{c.roles_text(*c.OSEC_HIGH_COMMAND[:3])}"
-            ),
-            color=c.COLOR_OSEC,
-        ),
-        c.embed(
-            title="Application Results",
-            description=(
-                "**Do not ask for results, updates, or status.** Doing so is an instant fail.\n\n"
-                f"You will be pinged in [#application-results]({c.osec_application_results_url()}) "
-                "when your application has been graded."
+                "- **AI**, trolling, sharing answers, requesting answers, or asking for results = "
+                "**automatic failure**.\n"
+                "- **Do not contact staff** for updates, results, or status — **immediate failure**.\n"
+                f"- Graded results: you will be pinged in "
+                f"[#application-results]({c.osec_application_results_url()}).\n"
+                "- Use proper grammar and professionalism. Answer every question in "
+                "**at least two complete sentences**.\n"
+                "- Reapply only **24 hours** after your application is **graded**.\n"
+                "- Maximum **3** applications, then wait a **full week** before applying again.\n"
+                "- Application questions → OSEC High Command only:\n"
+                f"{c.roles_text(*c.OSEC_HIGH_COMMAND)}"
             ),
             color=c.COLOR_OSEC,
         ),

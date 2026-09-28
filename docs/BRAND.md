@@ -6,6 +6,7 @@ Created: 2026-07-17
 Created by: docshamxo
 Modified:
   - 2026-07-17 | docshamxo | Brand use, bot naming, and non-affiliation guidance.
+  - 2026-09-08 | docshamxo | CIA {Office} Bot webhook display names.
 === END FILE HEADER ===
 -->
 
@@ -33,18 +34,22 @@ Edit [`config/branding.yaml`](../config/branding.yaml) `bots:`.
 
 | Rule | Guidance |
 |------|----------|
-| Include a community marker | Every name must contain `Community` or `(RP)` |
-| Prefer short office tags | Example: `DS Community (RP) · OSEC` |
-| Avoid official-looking sole names | Do **not** use bare `CIA \| Office of …` as the webhook username |
+| Pattern | `CIA {Office full name} Bot` |
+| DS | `CIA Directorate of Support Bot` |
+| OSEC | `CIA Office of Security Bot` |
+| OTE | `CIA Office of Training & Education Bot` |
+| GRS | `CIA Global Response Staff Bot` |
+| ESD | `CIA Executive Security Detail Bot` |
+| Avoid | Bare `CIA \| …` pipe-style names |
 | Discord limit | Keep names ≤ 80 characters |
 
-Default pattern used in this repo:
+Default pattern:
 
 ```text
-DS Community (RP) · {OfficeTag}
+CIA {Office} Bot
 ```
 
-In-fiction office names in embed **body** copy are fine. The **webhook username** is what Discord shows as the speaker — that is where impersonation risk is highest.
+In-fiction office names in embed **body** copy are fine. Embeds and Rules closers still carry non-affiliation notices.
 
 ## Hero eyebrows
 
@@ -52,7 +57,7 @@ Use `hero_embed()` / `chain_intro_embed()` — bold **unit** line under an ALL C
 
 ## Link labels
 
-Prefer community-framed link text (example: `DS Community | OSEC`) over labels that read like an official agency hyperlink (`CIA | Office of Security`). Roblox group titles outside this repo are uncontrolled; labels inside embeds are ours to keep clear.
+Use `CIA DS | {name}` (via `community_link_label()`). Prefer that over bare `CIA | …` pipe labels. Roblox group titles outside this repo are uncontrolled; labels inside embeds are ours to keep clear.
 
 ## What not to change for “brand purity”
 
@@ -68,7 +73,7 @@ pytest -q
 python tools/run_all.py --dry-run --delay 0
 ```
 
-Confirm bot names still pass validation (community / RP marker required).
+Confirm bot names still pass validation (`CIA … Bot` pattern; no `CIA |`).
 
 <!--
 === FILE FOOTER ===
