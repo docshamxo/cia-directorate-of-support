@@ -64,9 +64,10 @@ def test_apply_holder_overrides_sets_vacant() -> None:
 
 
 def test_apply_holder_overrides_keeps_personnel_discord_id() -> None:
+    # Short numeric fixture IDs (avoid 18-digit discord-client-id gitleaks FP).
     catalog = {
         "ds_leadership": (
-            c.Role("CDSD", "Component Director", "OldName", discord_id="333881654227763200"),
+            c.Role("CDSD", "Component Director", "OldName", discord_id="10001"),
         )
     }
     updated = apply_holder_overrides(
@@ -75,8 +76,8 @@ def test_apply_holder_overrides_keeps_personnel_discord_id() -> None:
     )
     role = updated["ds_leadership"][0]
     assert role.holder == "RobloxOnlyName"
-    assert role.discord_id == "333881654227763200"
-    assert "discord.com/users/333881654227763200" in role.format()
+    assert role.discord_id == "10001"
+    assert "discord.com/users/10001" in role.format()
     assert "[RobloxOnlyName]" in role.format()
 
 
@@ -91,7 +92,7 @@ def test_apply_holder_overrides_uses_config_discord_ids_map() -> None:
         target=SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),
         groups={},
         mappings=(),
-        discord_ids={"robloxuser": "999888777666555444", "42": "999888777666555444"},
+        discord_ids={"robloxuser": "20002", "42": "20002"},
     )
     updated = apply_holder_overrides(
         catalog,
@@ -106,8 +107,8 @@ def test_apply_holder_overrides_uses_config_discord_ids_map() -> None:
     )
     role = updated["ds_leadership"][0]
     assert role.holder == "RobloxUser"
-    assert role.discord_id == "999888777666555444"
-    assert "[RobloxUser](https://discord.com/users/999888777666555444)" in role.format()
+    assert role.discord_id == "20002"
+    assert "[RobloxUser](https://discord.com/users/20002)" in role.format()
 
 
 def test_parse_example_config() -> None:
@@ -136,12 +137,12 @@ def test_parse_discord_ids_map() -> None:
                     "roblox_rank": 255,
                 }
             ],
-            "discord_ids": {"Alice": "123456789012345678", "99": "123456789012345678"},
+            "discord_ids": {"Alice": "30003", "99": "30003"},
         }
     )
-    assert cfg.discord_ids["Alice"] == "123456789012345678"
-    assert cfg.discord_ids["alice"] == "123456789012345678"
-    assert cfg.discord_ids["99"] == "123456789012345678"
+    assert cfg.discord_ids["Alice"] == "30003"
+    assert cfg.discord_ids["alice"] == "30003"
+    assert cfg.discord_ids["99"] == "30003"
 
 
 def test_build_ds_coc_embeds_includes_overridden_holder() -> None:
