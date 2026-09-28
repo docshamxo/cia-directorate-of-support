@@ -16,6 +16,7 @@
 #   - 2026-07-17 | docshamxo | Require accessibility helpers and docs.
 #   - 2026-07-17 | docshamxo | Brand/legal checks: LICENSE, bot names, affiliation, eyebrow.
 #   - 2026-07-17 | docshamxo | Announcers under units/; OPS.md under docs/.
+#   - 2026-09-28 | docshamxo | Ignore WEBHOOK_*_MESSAGE_ID placeholders in webhook key audit.
 # === END FILE HEADER ===
 
 """
@@ -162,6 +163,9 @@ def validate_webhooks() -> None:
     declared = webhook_keys_in_env_example()
 
     used.discard("WEBHOOK_PLACEHOLDER")
+    # Message-ID placeholders (edit-by-id sync) are not announcer webhook URLs.
+    declared = {key for key in declared if not key.endswith("_MESSAGE_ID")}
+    used = {key for key in used if not key.endswith("_MESSAGE_ID")}
 
     missing_env = sorted(used - declared)
     unused_env = sorted(declared - used)

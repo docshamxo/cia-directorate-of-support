@@ -221,8 +221,10 @@ class RobloxOpenCloudClient:
 
             if response.status_code == 429:
                 retry_after = response.headers.get("Retry-After")
-                sleep_s = float(retry_after) if retry_after and retry_after.isdigit() else min(
-                    2**attempt, 60
+                sleep_s = (
+                    float(retry_after)
+                    if retry_after and retry_after.isdigit()
+                    else min(2**attempt, 60)
                 )
                 logger.warning(
                     "event=rate_limited attempt=%s sleep_s=%s url=%s",

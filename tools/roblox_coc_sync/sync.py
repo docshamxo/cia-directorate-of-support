@@ -54,9 +54,7 @@ def run_once(
     if client is None:
         if not api_key:
             if effective_dry:
-                logger.warning(
-                    "event=dry_run_no_api_key using YAML holders only (no Roblox pull)"
-                )
+                logger.warning("event=dry_run_no_api_key using YAML holders only (no Roblox pull)")
                 catalog = base_roles_catalog()
                 overrides: dict[tuple[str, str], str] = {}
             else:

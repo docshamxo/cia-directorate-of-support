@@ -6,10 +6,11 @@
 # Modified:
 #   - 2026-09-28 | docshamxo | Allowlist Discord user snowflakes (discord-client-id FP).
 #   - 2026-09-28 | docshamxo | Allowlist Roblox CoC sync test fixtures (discord-client-id FP).
+#   - 2026-09-28 | docshamxo | Replace non-ASCII dashes in comments (TOML parse FP).
 # === END FILE HEADER ===
 
 # Extends the default ruleset shipped with gitleaks (CI pins v8.30.1).
-# Only document false positives here — never blanket-ignore real secrets.
+# Only document false positives here -- never blanket-ignore real secrets.
 
 [extend]
 useDefault = true
@@ -17,7 +18,7 @@ useDefault = true
 # Discord user snowflakes (`discord_id` in CoC personnel) power clickable
 # profile links: https://discord.com/users/<id>
 # The default `discord-client-id` rule treats 18-digit IDs near "discord" as
-# OAuth application client IDs — false positive for public user IDs.
+# OAuth application client IDs -- false positive for public user IDs.
 [[allowlists]]
 targetRules = ["discord-client-id"]
 description = "Discord user snowflakes in CoC personnel and announcer fixtures (not OAuth client IDs)"
