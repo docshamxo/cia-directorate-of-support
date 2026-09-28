@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Strengthen non-affiliation banners for brand/legal compliance.
 #   - 2026-07-17 | docshamxo | Product/content UX: tighter about copy, shared marking notes, leaner closers.
 #   - 2026-08-02 | docshamxo | Drop repeated unofficial-RP phrasing from closers (rules heroes only).
+#   - 2026-09-28 | docshamxo | Align OSEC/OTE/GRS/ESD about blurbs with canonical office copy.
 # === END FILE HEADER ===
 
 ds:
@@ -30,18 +31,15 @@ ds:
   - Office of Security (OSEC)
 osec:
   motto: PROTECT · DETECT · RESPOND
-  about: 'The **Office of Security (OSEC)** is the Agency''s internal security force --
-    facility protection, access control, and protocol enforcement across CIA sites.
-
-
-    Two specialized sub-units handle escalated and high-priority protective taskings.'
+  about: The frontline defence of our installations. OSEC mans every primary access
+    point, repels hostile raids and enforces the Agency Codex.
   sub_units:
   - Global Response Staff (GRS)
   - Executive Security Detail (ESD)
 ote:
   motto: SCIENTIA EST LUX LUCIS
-  about: The **Office of Training & Education (OTE)** runs the Agency's **Officer Training
-    Program** -- recruiting, instructing, and certifying officers before active duty.
+  about: Runs specialist training and the Officer Candidate Program, and coordinates
+    Agency-wide events.
   pillars:
   - title: Recruitment & Selection
     description: Screen and onboard applicants into the officer pipeline before training begins.
@@ -52,11 +50,10 @@ ote:
     description: Ongoing education and re-certification so active officers stay current with
       Agency standards.
 grs:
-  about: Rapid-response security element -- high-threat site security, contingency support,
-    and protective reinforcement for field operations.
+  about: 'OSEC''s rapid-response element, deployed to secure Agency personnel and assets
+    wherever they are threatened.'
 esd:
-  about: Close-protection unit for senior leadership and designated principals during travel
-    and operations.
+  about: Provides close protection for Agency leadership and high-value personnel.
 copy:
   chain_of_command_intro: 'Use the chain. Raise concerns with your immediate supervisor first.
 
