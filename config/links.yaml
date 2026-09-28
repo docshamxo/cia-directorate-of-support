@@ -76,8 +76,9 @@ ote:
     phase_i: https://example.invalid/STAFF_LOCAL_REQUIRED
     phase_ii: https://example.invalid/STAFF_LOCAL_REQUIRED
     phase_iii: https://example.invalid/STAFF_LOCAL_REQUIRED
-    general_info_coc: https://example.invalid/STAFF_LOCAL_REQUIRED
+    handbook: https://example.invalid/STAFF_LOCAL_REQUIRED
     tryout_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+
     graduation_ceremony_procedures: https://example.invalid/STAFF_LOCAL_REQUIRED
     standard_training_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     weapons_st_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
