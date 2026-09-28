@@ -119,9 +119,7 @@ def parse_sync_config(raw: dict[str, Any]) -> SyncConfig:
         )
 
     interval = int(
-        os.environ.get("ROBLOX_COC_SYNC_INTERVAL_MINUTES")
-        or raw.get("interval_minutes")
-        or 15
+        os.environ.get("ROBLOX_COC_SYNC_INTERVAL_MINUTES") or raw.get("interval_minutes") or 15
     )
     return SyncConfig(
         interval_minutes=max(1, interval),
