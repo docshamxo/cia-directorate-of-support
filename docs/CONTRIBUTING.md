@@ -56,7 +56,7 @@ Prefer YAML under [`config/`](../config/) over hardcoding in Python. When changi
 | Colors, bot usernames, logos | [`config/branding.yaml`](../config/branding.yaml) |
 | Public links | [`config/links.yaml`](../config/links.yaml) |
 | Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` (from [`links.staff.example.yaml`](../config/links.staff.example.yaml)) |
-| Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
+| Applicant forms / tracker | Local `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `GRS_MIDCOM_APPLICATION_URL`, `OTE_APPLICATION_TRACKER_URL`) |
 | Embed layout | Script in `units/ds/`, `units/osec/`, `units/ote/`, `units/grs/`, or `units/esd/` |
 | Webhook target | Local `.env` (never commit) |
 | Logo files | [`assets/logos/`](../assets/logos/) — keep filenames |

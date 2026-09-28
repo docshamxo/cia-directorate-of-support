@@ -15,6 +15,7 @@ Modified:
   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
   - 2026-07-17 | docshamxo | Slim office README; point to OPS for reactions/purge.
+  - 2026-09-28 | docshamxo | Document GRS open positions announcer.
 === END FILE HEADER ===
 -->
 
@@ -32,6 +33,7 @@ Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [
 python units/grs/coc.py
 python units/grs/information.py
 python units/grs/staff_documents.py
+python units/grs/open_positions.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -43,6 +45,7 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 | [`coc.py`](coc.py) | GRS chain of command (PUBLIC) | `WEBHOOK_GRS_COC` |
 | [`information.py`](information.py) | GRS public information | `WEBHOOK_GRS_INFORMATION` |
 | [`staff_documents.py`](staff_documents.py) | Staff documents (STAFF) | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| [`open_positions.py`](open_positions.py) | Open positions (MIDCOM) | `WEBHOOK_GRS_OPEN_POSITIONS` |
 
 ## Edit
 

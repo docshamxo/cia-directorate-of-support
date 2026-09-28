@@ -91,6 +91,7 @@ OSEC_LOWCOM_APP_ENV = "OSEC_LOWCOM_APPLICATION_URL"
 OSEC_MIDCOM_APP_ENV = "OSEC_MIDCOM_APPLICATION_URL"
 OTE_APPLICATION_ENV = "OTE_APPLICATION_URL"
 OTE_APPLICATION_TRACKER_ENV = "OTE_APPLICATION_TRACKER_URL"
+GRS_MIDCOM_APP_ENV = "GRS_MIDCOM_APPLICATION_URL"
 STAFF_PLACEHOLDER_MARKER = "STAFF_LOCAL_REQUIRED"
 
 # Optional: after post, bot deletes other recent webhook messages in the channel
@@ -398,6 +399,11 @@ def osec_midcom_application_url() -> str:
 def ote_application_url() -> str:
     """OTE Professor application form URL from env (applicant intake)."""
     return env_url(OTE_APPLICATION_ENV, required=True)
+
+
+def grs_midcom_application_url() -> str:
+    """GRS MIDCOM Google Form URL from env (applicant intake)."""
+    return env_url(GRS_MIDCOM_APP_ENV, required=True)
 
 
 def ote_application_tracker_url(*, required: bool = False) -> str:

@@ -8,6 +8,7 @@
 #   - 2026-07-17 | docshamxo | Staged office rollout order for safer live sends.
 #   - 2026-07-17 | docshamxo | Announcer scripts live under units/<office>/.
 #   - 2026-08-02 | docshamxo | Add OTE Server Regulations (WEBHOOK_OTE_RULES).
+#   - 2026-09-28 | docshamxo | Add GRS Open Positions (WEBHOOK_GRS_OPEN_POSITIONS).
 # === END FILE HEADER ===
 
 """Announcer catalog — single source of truth for run_all and validate_repo."""
@@ -41,6 +42,7 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
     ("units/grs/coc.py", "GRS Chain of Command", "WEBHOOK_GRS_COC"),
     ("units/grs/information.py", "GRS Public Information", "WEBHOOK_GRS_INFORMATION"),
     ("units/grs/staff_documents.py", "GRS Staff Documents", "WEBHOOK_GRS_STAFF_DOCUMENTS"),
+    ("units/grs/open_positions.py", "GRS Open Positions", "WEBHOOK_GRS_OPEN_POSITIONS"),
     ("units/esd/coc.py", "ESD Chain of Command", "WEBHOOK_ESD_COC"),
     ("units/esd/information.py", "ESD Public Information", "WEBHOOK_ESD_INFORMATION"),
     ("units/esd/staff_documents.py", "ESD Staff Documents", "WEBHOOK_ESD_STAFF_DOCUMENTS"),
