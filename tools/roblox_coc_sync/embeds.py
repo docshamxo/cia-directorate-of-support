@@ -5,13 +5,15 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | Build DS CoC embeds from overridden Role catalog.
+#   - 2026-09-28 | docshamxo | Add OTE CoC layout (mirrors units/ote/coc.py).
 # === END FILE HEADER ===
 
-"""Rebuild DS Chain of Command embeds using a Role catalog (YAML titles + Roblox holders)."""
+"""Rebuild CoC embeds using a Role catalog (YAML titles + Roblox holders)."""
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from pathlib import Path
 
 import discord
 
@@ -98,6 +100,71 @@ def build_ds_coc_embeds(
             ),
         ),
     ]
+
+
+def build_ote_coc_embeds(
+    catalog: Mapping[str, tuple[c.Role, ...]],
+) -> list[discord.Embed]:
+    """Mirror ``units/ote/coc.py`` layout with injectable role holders."""
+    ds = catalog.get("ds_leadership", c.DS_LEADERSHIP)
+    ote = catalog.get("ote_high_command", c.OTE_HIGH_COMMAND)
+
+    return [
+        c.chain_intro_embed(
+            unit="Office of Training & Education",
+            color=c.COLOR_OTE,
+            logo=c.LOGOS["ote"],
+            context=(
+                f"{c.motto_line(c.OTE_MOTTO)}\n\n"
+                "The Office of Training & Education sits under the **Directorate of Support**. "
+                "OTE leadership reports through the DS chain to Agency leadership."
+            ),
+        ),
+        c.embed(
+            title="Directorate of Support",
+            description="OTE reports through the Directorate of Support chain of command.",
+            color=c.COLOR_OTE,
+            fields=(("Leadership", c.roles_text(*ds)),),
+        ),
+        c.embed(
+            title="OTE High Command",
+            description="Senior leadership responsible for OTE operations and policy.",
+            color=c.COLOR_OTE,
+            fields=(("Command Team", c.roles_text(*ote)),),
+        ),
+        c.embed(
+            title="OTE Staff",
+            description="Instructional and training staff ranks within the Office.",
+            color=c.COLOR_OTE,
+            fields=(("Staff Ranks", c.ranks_text(*c.OTE_STAFF_RANKS)),),
+        ),
+        c.important_notice_embed(
+            unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",)
+        ),
+    ]
+
+
+def build_embeds_for_layout(
+    layout: str,
+    catalog: Mapping[str, tuple[c.Role, ...]],
+) -> list[discord.Embed]:
+    if layout == "ote_coc":
+        return build_ote_coc_embeds(catalog)
+    if layout == "ds_coc":
+        return build_ds_coc_embeds(catalog)
+    raise ValueError(f"Unknown CoC embed layout: {layout!r}")
+
+
+def bot_username_for_layout(layout: str) -> str:
+    if layout == "ote_coc":
+        return c.BOT_OTE
+    return c.BOT_DS
+
+
+def logo_paths_for_layout(layout: str) -> Sequence[Path]:
+    if layout == "ote_coc":
+        return (c.LOGOS["ote"],)
+    return tuple(c.LOGOS.values())
 
 
 # === FILE FOOTER ===

@@ -5,9 +5,10 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | CLI: once / loop / dry-run.
+#   - 2026-09-28 | docshamxo | --channel filter for DS / OTE targets.
 # === END FILE HEADER ===
 
-"""python -m tools.roblox_coc_sync [--once] [--dry-run] [--loop]"""
+"""python -m tools.roblox_coc_sync [--once] [--dry-run] [--loop] [--channel ...]"""
 
 from __future__ import annotations
 
@@ -15,7 +16,6 @@ import argparse
 import sys
 from pathlib import Path
 
-# Ensure repo root is on sys.path when invoked as a script.
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
@@ -27,7 +27,9 @@ from tools.roblox_coc_sync.sync import SyncSkip, configure_logging, run_loop, ru
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Sync Roblox group ranks into the DS Chain of Command webhook message.",
+        description=(
+            "Sync Roblox group ranks into Discord CoC webhook message(s) (DS and/or OTE)."
+        ),
     )
     parser.add_argument(
         "--once",
@@ -45,6 +47,16 @@ def main(argv: list[str] | None = None) -> int:
         help="Pull/map and preview embeds; do not edit Discord.",
     )
     parser.add_argument(
+        "--channel",
+        action="append",
+        default=None,
+        metavar="NAME",
+        help=(
+            "Only sync this target channel key (repeatable). "
+            "Examples: ds_coc, ote_coc. Default: all configured targets."
+        ),
+    )
+    parser.add_argument(
         "--config",
         type=Path,
         default=None,
@@ -54,17 +66,27 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     load_dotenv(_REPO_ROOT / ".env")
+    if not (_REPO_ROOT / ".env").is_file():
+        sibling = _REPO_ROOT.parent / "cia-directorate-of-support" / ".env"
+        if sibling.is_file():
+            load_dotenv(sibling)
+
     configure_logging(verbose=args.verbose)
 
     once = args.once or not args.loop
     try:
         if once and not args.loop:
-            run_once(config_path=args.config, dry_run=args.dry_run or None)
+            run_once(
+                config_path=args.config,
+                dry_run=args.dry_run or None,
+                channels=args.channel,
+            )
         else:
             run_loop(
                 config_path=args.config,
                 dry_run=args.dry_run or None,
                 once=False,
+                channels=args.channel,
             )
     except SyncSkip as exc:
         print(f"SKIP: {exc}", file=sys.stderr)

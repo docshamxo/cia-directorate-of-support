@@ -4,25 +4,34 @@
 # Created: 2026-09-28
 # Created by: docshamxo
 # Modified:
-#   - 2026-09-28 | docshamxo | Example rank→CoC mapping for DS webhook edit sync.
+#   - 2026-09-28 | docshamxo | Example rank->CoC mapping for DS webhook edit sync.
 #   - 2026-09-28 | docshamxo | Optional discord_ids map for clickable CoC profile links.
+#   - 2026-09-28 | docshamxo | Dual targets: DS CoC + OTE CoC webhook message edits.
 # === END FILE HEADER ===
 
 # Copy to config/roblox_coc_sync.yaml (gitignored optional) and set real roblox_rank
-# values to match each group's roleset ranks (0–255) in Creator Hub.
+# values to match each group's roleset ranks (0-255) in Creator Hub.
 #
-# MVP target: DS #chain-of-command webhook message (edits by message ID).
-# Agency EL is left on personnel.yaml (not auto-synced) unless you add mappings.
+# Targets: DS #chain-of-command and OTE #chain-of-command webhook messages
+# (edits by message ID). Agency EL stays on personnel.yaml unless you add mappings.
+#
+# OTE high-command ranks must be filled below (placeholder 255/254/... until you
+# confirm Creator Hub roleset ranks for group ROBLOX_GROUP_ID_OTE).
 
 interval_minutes: 15
 vacant_label: VACANT
 dry_run_default: false
 
-target:
-  channel: ds_coc
-  webhook_env: WEBHOOK_DS_CHAIN_OF_COMMAND
-  # Leave blank in .env until you have the snowflake; sync skips live edit until set.
-  message_id_env: WEBHOOK_DS_COC_MESSAGE_ID
+targets:
+  - channel: ds_coc
+    layout: ds_coc
+    webhook_env: WEBHOOK_DS_CHAIN_OF_COMMAND
+    # Leave blank in .env until you have the snowflake; that target skips live edit.
+    message_id_env: WEBHOOK_DS_COC_MESSAGE_ID
+  - channel: ote_coc
+    layout: ote_coc
+    webhook_env: WEBHOOK_OTE_COC
+    message_id_env: WEBHOOK_OTE_COC_MESSAGE_ID
 
 groups:
   ds:
@@ -42,11 +51,11 @@ groups:
     # Override via ROBLOX_GROUP_ID_ESD when ESD community ID is confirmed.
     default_group_id: "630084317"
 
-# Optional: Roblox username OR Roblox user id → Discord user snowflake.
+# Optional: Roblox username OR Roblox user id -> Discord user snowflake.
 # When set, synced holders render as [Name](https://discord.com/users/<id>).
 # If omitted, sync still keeps personnel.yaml discord_id on the same abbrev slot
 # (Roblox display name + existing Discord profile link). Plain usernames alone
-# are not clickable — fill this map or personnel.yaml discord_id.
+# are not clickable -- fill this map or personnel.yaml discord_id.
 #
 # discord_ids:
 #   ClassifiedInvictus: "123456789012345678"
@@ -55,7 +64,7 @@ groups:
 # personnel_key must match a key in config/personnel.yaml (titles/abbrevs).
 # Set roblox_rank to the numeric roleset rank in that Roblox group, OR
 # roblox_role_name to the display name (exact match, case-insensitive).
-# Placeholder ranks below (255/254/…) — replace with your real roleset ranks.
+# Placeholder ranks below (255/254/...) -- replace with your real roleset ranks.
 mappings:
   - personnel_key: ds_leadership
     abbrev: CDSD
@@ -68,6 +77,7 @@ mappings:
     roblox_rank: 254
     max_holders: 1
 
+  # OTE High Command -- confirm ranks against Creator Hub for group 1003614105.
   - personnel_key: ote_high_command
     abbrev: DTE
     group: ote
