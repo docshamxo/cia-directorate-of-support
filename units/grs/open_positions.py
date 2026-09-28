@@ -72,10 +72,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             description=(
                 "- Read the form carefully and answer every question completely.\n"
                 "- Use proper grammar and professionalism.\n"
-                "- Application questions → GRS High Command only.\n\n"
-                "**Signed,**\n"
-                "**[CM] Chief Marshal** — qv4_pendragon\n"
-                "**[DCM] Deputy Chief Marshal** — idk_manti"
+                "- Application questions → GRS Command only:\n"
+                f"{c.roles_text(*c.GRS_COMMAND)}"
             ),
             color=c.COLOR_GRS,
         ),
