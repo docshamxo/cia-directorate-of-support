@@ -37,7 +37,12 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Applications",
             description=(
-                "**Global Response Staff (GRS) MIDCOM** is accepting applications."
+                f"{c.motto_line('WE GO AS ONE')}\n\n"
+                "An application for the **Global Response Staff (GRS)** is currently open. "
+                "GRS is a sub-unit of the **Office of Security (OSEC)**, operating under the "
+                "**Directorate of Support (DS)** — OSEC's dedicated tactical element for "
+                "rapid-response security, covert protection, mission support, stealth and "
+                "tradecraft, and deployments."
             ),
             color=c.COLOR_GRS,
             fields=(
@@ -53,11 +58,12 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Requirements",
             description=(
                 "- Must play on a **PC or laptop**.\n"
-                "- Rank requirement: **SSA+**. Applicants with **2 weeks** in OSEC may be "
+                "- Requirement for being **SSA** and in **OSEC for two weeks** is "
                 "**exempted for 1 week**.\n"
-                "- **Above-average combat** ability.\n"
-                "- Must be **14+**.\n"
-                "- **Do not DM High Command (HICOM)** about applications, results, or status."
+                "- Demonstrate **above-average combat** skills.\n"
+                "- Must be at least **14** years of age (OSEC-wide requirement).\n"
+                "- **Do not DM** any GRS High Command (HICOM) about application status — "
+                "doing so is an **instant denial**."
             ),
             color=c.COLOR_GRS,
         ),
@@ -66,9 +72,10 @@ def _build_embeds() -> list[c.discord.Embed]:
             description=(
                 "- Read the form carefully and answer every question completely.\n"
                 "- Use proper grammar and professionalism.\n"
-                "- Application questions → GRS Command only "
-                "(**CM** qv4_pendragon · **DCM** idk_manti).\n"
-                "- Do not invent Discord pings; contact via the form or listed usernames only."
+                "- Application questions → GRS High Command only.\n\n"
+                "**Signed,**\n"
+                "**[CM] Chief Marshal** — qv4_pendragon\n"
+                "**[DCM] Deputy Chief Marshal** — idk_manti"
             ),
             color=c.COLOR_GRS,
         ),

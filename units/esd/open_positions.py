@@ -37,7 +37,11 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.embed(
             title="Applications",
             description=(
-                "**Executive Security Detail (ESD) MIDCOM** is accepting applications."
+                f"{c.motto_line('WE GO AS ONE')}\n\n"
+                "An application for the **Executive Security Detail (ESD)** is currently open. "
+                "ESD is a sub-unit of the **Office of Security (OSEC)**, operating under the "
+                "**Directorate of Support (DS)** — a close-protection unit for senior leadership "
+                "and designated principals during travel and operations."
             ),
             color=c.COLOR_ESD,
             fields=(
@@ -54,10 +58,11 @@ def _build_embeds() -> list[c.discord.Embed]:
             description=(
                 "- Must play on a **PC or laptop**.\n"
                 "- Rank requirement: **SSA+**.\n"
-                "- **2 weeks** in OSEC.\n"
-                "- **Strong defensive combat** ability.\n"
-                "- Must be **14+**.\n"
-                "- **Do not DM High Command (HICOM)** about applications, results, or status."
+                "- Minimum **2 weeks** in OSEC.\n"
+                "- **Strong defensive combat** skills.\n"
+                "- Must be at least **14** years of age (OSEC-wide requirement).\n"
+                "- **Do not DM** any ESD High Command (HICOM) about application status — "
+                "doing so is an **instant denial**."
             ),
             color=c.COLOR_ESD,
         ),
