@@ -43,11 +43,7 @@ class HolderOverride:
 
 def base_roles_catalog() -> dict[str, tuple[c.Role, ...]]:
     """Snapshot current YAML-backed Role tuples (titles/abbrevs source of truth)."""
-    return {
-        key: getattr(c, attr)
-        for key, attr in PERSONNEL_ROLE_ATTRS.items()
-        if hasattr(c, attr)
-    }
+    return {key: getattr(c, attr) for key, attr in PERSONNEL_ROLE_ATTRS.items() if hasattr(c, attr)}
 
 
 def format_holders(usernames: list[str], *, vacant_label: str = "VACANT") -> str:
@@ -120,9 +116,7 @@ def apply_holder_overrides(
                 user_ids = raw.roblox_user_ids
             else:
                 override = raw
-                usernames = tuple(
-                    part.strip() for part in override.split(",") if part.strip()
-                )
+                usernames = tuple(part.strip() for part in override.split(",") if part.strip())
                 user_ids = ()
 
             kwargs: dict[str, object] = {

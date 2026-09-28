@@ -5,7 +5,8 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-09-28 | docshamxo | Load YAML mapping + env overrides.
-#   - 2026-09-28 | docshamxo | Optional roblox→discord_id map for clickable CoC links.
+#   - 2026-09-28 | docshamxo | Optional roblox->discord_id map for clickable CoC links.
+#   - 2026-09-28 | docshamxo | Multi-target sync (DS + OTE CoC layouts).
 # === END FILE HEADER ===
 
 """Load roblox_coc_sync YAML and resolve env placeholders."""
@@ -22,6 +23,8 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = REPO_ROOT / "config" / "roblox_coc_sync.yaml"
 EXAMPLE_CONFIG_PATH = REPO_ROOT / "config" / "roblox_coc_sync.example.yaml"
+
+KNOWN_LAYOUTS = frozenset({"ds_coc", "ote_coc"})
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,18 +50,24 @@ class SyncTarget:
     webhook_env: str
     message_id_env: str
     channel: str = "ds_coc"
+    layout: str = "ds_coc"
 
 
 @dataclass(frozen=True, slots=True)
 class SyncConfig:
     interval_minutes: int
-    target: SyncTarget
+    targets: tuple[SyncTarget, ...]
     groups: dict[str, GroupConfig]
     mappings: tuple[RoleMapping, ...]
     vacant_label: str = "VACANT"
     dry_run_default: bool = False
-    # Keys: Roblox username (case-insensitive) or Roblox user id → Discord snowflake.
+    # Keys: Roblox username (case-insensitive) or Roblox user id -> Discord snowflake.
     discord_ids: dict[str, str] | None = None
+
+    @property
+    def target(self) -> SyncTarget:
+        """First sync target (backward-compatible accessor)."""
+        return self.targets[0]
 
 
 def resolve_config_path(explicit: Path | None = None) -> Path:
@@ -77,19 +86,14 @@ def load_sync_config(path: Path | None = None) -> SyncConfig:
     if not config_path.is_file():
         raise FileNotFoundError(
             f"Missing sync config at {config_path}. "
-            f"Copy {EXAMPLE_CONFIG_PATH.name} → roblox_coc_sync.yaml and edit ranks."
+            f"Copy {EXAMPLE_CONFIG_PATH.name} -> roblox_coc_sync.yaml and edit ranks."
         )
     raw = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     return parse_sync_config(raw)
 
 
 def parse_sync_config(raw: dict[str, Any]) -> SyncConfig:
-    target_raw = raw.get("target") or {}
-    target = SyncTarget(
-        webhook_env=str(target_raw.get("webhook_env") or "WEBHOOK_DS_CHAIN_OF_COMMAND"),
-        message_id_env=str(target_raw.get("message_id_env") or "WEBHOOK_DS_COC_MESSAGE_ID"),
-        channel=str(target_raw.get("channel") or "ds_coc"),
-    )
+    targets = _parse_targets(raw)
 
     groups: dict[str, GroupConfig] = {}
     for key, item in (raw.get("groups") or {}).items():
@@ -119,13 +123,11 @@ def parse_sync_config(raw: dict[str, Any]) -> SyncConfig:
         )
 
     interval = int(
-        os.environ.get("ROBLOX_COC_SYNC_INTERVAL_MINUTES")
-        or raw.get("interval_minutes")
-        or 15
+        os.environ.get("ROBLOX_COC_SYNC_INTERVAL_MINUTES") or raw.get("interval_minutes") or 15
     )
     return SyncConfig(
         interval_minutes=max(1, interval),
-        target=target,
+        targets=targets,
         groups=groups,
         mappings=tuple(mappings),
         vacant_label=str(raw.get("vacant_label") or "VACANT"),
@@ -134,8 +136,62 @@ def parse_sync_config(raw: dict[str, Any]) -> SyncConfig:
     )
 
 
+def _parse_targets(raw: dict[str, Any]) -> tuple[SyncTarget, ...]:
+    """Accept ``targets:`` list or legacy singular ``target:``."""
+    targets_raw = raw.get("targets")
+    if targets_raw is None and raw.get("target") is not None:
+        targets_raw = [raw["target"]]
+    if not targets_raw:
+        targets_raw = [
+            {
+                "channel": "ds_coc",
+                "layout": "ds_coc",
+                "webhook_env": "WEBHOOK_DS_CHAIN_OF_COMMAND",
+                "message_id_env": "WEBHOOK_DS_COC_MESSAGE_ID",
+            }
+        ]
+
+    parsed: list[SyncTarget] = []
+    seen_channels: set[str] = set()
+    for item in targets_raw:
+        item = item or {}
+        channel = str(item.get("channel") or "ds_coc").strip() or "ds_coc"
+        layout = str(item.get("layout") or channel or "ds_coc").strip() or "ds_coc"
+        if layout not in KNOWN_LAYOUTS:
+            raise ValueError(
+                f"Unknown sync layout {layout!r} for channel {channel!r}; "
+                f"expected one of {sorted(KNOWN_LAYOUTS)}"
+            )
+        if channel in seen_channels:
+            raise ValueError(f"Duplicate sync target channel {channel!r}")
+        seen_channels.add(channel)
+
+        defaults = _defaults_for_layout(layout)
+        parsed.append(
+            SyncTarget(
+                webhook_env=str(item.get("webhook_env") or defaults["webhook_env"]),
+                message_id_env=str(item.get("message_id_env") or defaults["message_id_env"]),
+                channel=channel,
+                layout=layout,
+            )
+        )
+    return tuple(parsed)
+
+
+def _defaults_for_layout(layout: str) -> dict[str, str]:
+    if layout == "ote_coc":
+        return {
+            "webhook_env": "WEBHOOK_OTE_COC",
+            "message_id_env": "WEBHOOK_OTE_COC_MESSAGE_ID",
+        }
+    return {
+        "webhook_env": "WEBHOOK_DS_CHAIN_OF_COMMAND",
+        "message_id_env": "WEBHOOK_DS_COC_MESSAGE_ID",
+    }
+
+
 def _parse_discord_ids(raw: object | None) -> dict[str, str]:
-    """Parse optional roblox username / user id → Discord snowflake map."""
+    """Parse optional roblox username / user id -> Discord snowflake map."""
     if not isinstance(raw, dict):
         return {}
     out: dict[str, str] = {}

@@ -16,6 +16,7 @@
 #   - 2026-07-17 | docshamxo | Require accessibility helpers and docs.
 #   - 2026-07-17 | docshamxo | Brand/legal checks: LICENSE, bot names, affiliation, eyebrow.
 #   - 2026-07-17 | docshamxo | Announcers under units/; OPS.md under docs/.
+#   - 2026-09-28 | docshamxo | Count WEBHOOK_*_MESSAGE_ID string literals as used env keys.
 # === END FILE HEADER ===
 
 """
@@ -57,6 +58,8 @@ MANIFEST = ROOT / "common" / "manifest.py"
 WEBHOOK_RE = re.compile(
     r'(?:require_webhook|webhook_key)\s*(?:\(|\=)\s*["\'](WEBHOOK_[A-Z0-9_]+)["\']'
 )
+# Edit-in-place Discord message snowflake env keys (Roblox CoC sync PATCH target).
+MESSAGE_ID_ENV_RE = re.compile(r'["\'](WEBHOOK_[A-Z0-9_]+_MESSAGE_ID)["\']')
 ENV_KEY_RE = re.compile(r"^(WEBHOOK_[A-Z0-9_]+)=", re.MULTILINE)
 URL_CALL_RE = re.compile(r"""c\.url\(\s*['"]([^'"]+)['"]\s*\)""")
 
@@ -135,6 +138,7 @@ def webhook_keys_in_code() -> set[str]:
             continue
         text = path.read_text(encoding="utf-8")
         keys.update(WEBHOOK_RE.findall(text))
+        keys.update(MESSAGE_ID_ENV_RE.findall(text))
     return keys
 
 
