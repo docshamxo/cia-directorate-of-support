@@ -6,11 +6,15 @@
 # Modified:
 #   - 2026-07-17 | docshamxo | Cover Discord embed preflight limits end-to-end.
 #   - 2026-09-28 | docshamxo | Cover GRS/ESD MIDCOM open-positions embeds.
+#   - 2026-09-28 | docshamxo | Load open_positions via importlib (units are scripts).
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
 
 from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
 
 import discord
 import pytest
@@ -18,6 +22,18 @@ import pytest
 from common import cia_common as c
 from common.announcer import subunit_coc_embeds
 from common.manifest import ANNOUNCERS
+
+_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_unit_module(relative_path: str, module_name: str):
+    """Load a units/*.py announcer by path (units/ is not a Python package)."""
+    path = _ROOT / relative_path
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_validate_embed_limits_accepts_valid() -> None:
@@ -155,8 +171,8 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
         "ESD_MIDCOM_APPLICATION_URL",
         "https://example.invalid/esd-midcom-app",
     )
-    from units.grs import open_positions as grs_open
-    from units.esd import open_positions as esd_open
+    grs_open = _load_unit_module("units/grs/open_positions.py", "grs_open_positions")
+    esd_open = _load_unit_module("units/esd/open_positions.py", "esd_open_positions")
 
     grs = grs_open._build_embeds()
     esd = esd_open._build_embeds()
