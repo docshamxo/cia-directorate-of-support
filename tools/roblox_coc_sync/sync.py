@@ -19,7 +19,6 @@ from pathlib import Path
 
 from common import cia_common as c
 from common.announcer import is_dry_run, preview_embeds
-
 from tools.roblox_coc_sync.client import RobloxOpenCloudClient
 from tools.roblox_coc_sync.config import SyncConfig, env_or_none, load_sync_config
 from tools.roblox_coc_sync.discord_edit import edit_webhook_message

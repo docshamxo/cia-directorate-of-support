@@ -12,20 +12,21 @@
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 import yaml
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
-
 from common import cia_common as c
 from tools.roblox_coc_sync.client import GroupMember, GroupRole
-from tools.roblox_coc_sync.config import GroupConfig, RoleMapping, SyncConfig, SyncTarget, parse_sync_config
+from tools.roblox_coc_sync.config import (
+    GroupConfig,
+    RoleMapping,
+    SyncConfig,
+    SyncTarget,
+    parse_sync_config,
+)
 from tools.roblox_coc_sync.embeds import build_ds_coc_embeds
 from tools.roblox_coc_sync.mapping import (
     HolderOverride,
@@ -35,6 +36,8 @@ from tools.roblox_coc_sync.mapping import (
     format_holders,
 )
 from tools.roblox_coc_sync.sync import SyncSkip, run_once
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_format_holders_vacant() -> None:
