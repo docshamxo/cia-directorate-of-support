@@ -85,9 +85,7 @@ def test_apply_holder_overrides_uses_config_discord_ids_map() -> None:
     }
     cfg = SyncConfig(
         interval_minutes=15,
-        targets=(
-            SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),
-        ),
+        targets=(SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),),
         groups={},
         mappings=(),
         discord_ids={"robloxuser": "20002", "42": "20002"},
@@ -244,9 +242,7 @@ def test_run_once_live_skips_without_message_id(monkeypatch: pytest.MonkeyPatch)
 def test_collect_overrides_empty_rank_is_vacant() -> None:
     cfg = SyncConfig(
         interval_minutes=15,
-        targets=(
-            SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),
-        ),
+        targets=(SyncTarget("WEBHOOK_DS_CHAIN_OF_COMMAND", "WEBHOOK_DS_COC_MESSAGE_ID"),),
         groups={"ds": GroupConfig("ds", "1")},
         mappings=(
             RoleMapping(
