@@ -17,6 +17,7 @@
 #   - 2026-07-17 | docshamxo | Use DS Community link labels (brand/legal).
 #   - 2026-07-17 | docshamxo | Consolidate sections; shared Marking: STAFF notes.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
+#   - 2026-08-30 | docshamxo | Drop duplicate General Information; regroup training links.
 # === END FILE HEADER ===
 
 """
@@ -39,16 +40,13 @@ def _build_embeds() -> list[c.discord.Embed]:
         c.hero_embed(
             title="STAFF DOCUMENTS",
             unit="Office of Training & Education",
-            supporting="Authorized OTE staff documentation index. Need-to-know access only.",
+            supporting="Authorized OTE staff documentation. Need-to-know only.",
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
         ),
         c.embed(
             title="Central Repository",
-            description=(
-                "Primary Drive folder for applications, forms, guides, and supporting files. "
-                "Use Drive as the source of truth for materials not listed below."
-            ),
+            description="Drive source of truth for forms, guides, and files not listed below.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
@@ -58,7 +56,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.marking_note("STAFF"),
                 ),
                 c.link_field(
-                    "General Information",
+                    "General Information & CoC",
                     "CIA OTE | General Information & Chain of Command",
                     c.url("ote.staff_documents.general_info_coc"),
                     c.marking_note("STAFF"),
@@ -67,7 +65,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Phase Documents",
-            description="OTP Staff Handbook split by phase for instruction and progression.",
+            description="OTP Staff Handbook by phase.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
@@ -91,21 +89,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
         c.embed(
-            title="Policy & Structure",
-            description="Core references for structure, expectations, and chain of command.",
-            color=c.COLOR_OTE,
-            fields=(
-                c.link_field(
-                    "General Information",
-                    "DS Community | OTE General Information & Chain of Command",
-                    c.url("ote.staff_documents.general_info_coc"),
-                    c.marking_note("STAFF", "Authorized OTE staff only."),
-                ),
-            ),
-        ),
-        c.embed(
             title="Tryouts & Ceremonies",
-            description="Candidate screening and official ceremony procedures.",
+            description="Candidate screening and graduation procedures.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(
@@ -120,6 +105,13 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.url("ote.staff_documents.graduation_ceremony_procedures"),
                     c.marking_note("STAFF"),
                 ),
+            ),
+        ),
+        c.embed(
+            title="Training Materials",
+            description="OTE and shared DS standard training references.",
+            color=c.COLOR_OTE,
+            fields=(
                 c.link_field(
                     "Standard Training",
                     "DS Community | OTE Standard Training Guide",
@@ -132,13 +124,6 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.url("ote.staff_documents.weapons_st_guide"),
                     c.marking_note("STAFF"),
                 ),
-            ),
-        ),
-        c.embed(
-            title="Training Materials",
-            description="Shared Directorate of Support standard training references.",
-            color=c.COLOR_OTE,
-            fields=(
                 c.link_field(
                     "General Standard Training",
                     "DS Community | General Standard Training Guide",
@@ -149,7 +134,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Personnel Records",
-            description="Live tracking for staff assignments and program records.",
+            description="Staff assignments and program tracking.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(

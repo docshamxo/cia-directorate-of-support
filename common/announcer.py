@@ -14,6 +14,7 @@
 #   - 2026-07-17 | docshamxo | Default require_reaction; allow-skip and bot channel purge flags.
 #   - 2026-08-04 | docshamxo | Frame GRS/ESD subunit CoC as PUBLIC channel content.
 #   - 2026-08-04 | docshamxo | Omit Disclaimer embed from GRS/ESD subunit CoC.
+#   - 2026-08-30 | docshamxo | Stamp effective-date footer on every announcer send.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -138,7 +139,10 @@ def run_announcer(
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
     require_reaction = not allow_skip_reaction()
-    effective_date = env_flag("CIA_EFFECTIVE_DATE") or _cli_flag("--effective-date")
+    # Stamp every post with today's date unless explicitly disabled.
+    effective_date = not (
+        env_flag("CIA_NO_EFFECTIVE_DATE") or _cli_flag("--no-effective-date")
+    )
     bot_channel_purge = True if bot_channel_purge_requested() else None
     started = time.monotonic()
 

@@ -18,6 +18,7 @@
 #   - 2026-07-17 | docshamxo | ESD phase_i → phase_guide; remove phase_ii.
 #   - 2026-07-18 | docshamxo | Restore full OSEC staff document link placeholders.
 #   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
+#   - 2026-08-30 | docshamxo | Drop static open_positions last_updated (computed at post time).
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -58,8 +59,6 @@ osec:
     communications_conduct_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     gate_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     handcuff_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
-  open_positions:
-    last_updated: June 20th, 2026
 ote:
   staff_documents:
     google_drive: https://example.invalid/STAFF_LOCAL_REQUIRED

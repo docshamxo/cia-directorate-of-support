@@ -13,6 +13,7 @@
 #   - 2026-07-15 | docshamxo | Align hero supporting line, link grammar, unit-color closer.
 #   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
 #   - 2026-08-30 | docshamxo | Reapply: 24h after graded; max 3 attempts then 1 week.
+#   - 2026-08-30 | docshamxo | State SIS-6+ once; tighten eligibility and rules copy.
 # === END FILE HEADER ===
 
 """
@@ -36,8 +37,8 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="OPEN POSITIONS",
             unit="Office of Training & Education",
             supporting=(
-                "OTE is accepting applications for Associate Professor and above. "
-                "Review eligibility and important information before submitting."
+                "Applications for Associate Professor and above. "
+                "Review eligibility before submitting."
             ),
             color=c.COLOR_OTE,
             logo=c.LOGOS["ote"],
@@ -46,57 +47,45 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Available Positions",
             description=(
                 f"{c.motto_line(c.OTE_MOTTO)}\n\n"
-                "As a sub-division under the **Directorate of Support**, personnel from "
-                "**all Agency divisions** may apply, with the exception of members holding "
-                "**SIS-6+** in their respective division.\n\n"
-                "The following staff positions are open for application:"
+                "Personnel from **all Agency divisions** may apply. Open staff ranks:"
             ),
             color=c.COLOR_OTE,
             fields=(("Staff Ranks", c.ranks_text(*c.OTE_STAFF_RANKS)),),
         ),
         c.embed(
             title="Eligibility",
-            description="Applicants must meet the following rank and training requirements:",
+            description="Rank and training requirements:",
             color=c.COLOR_OTE,
             fields=(
                 (
                     "Graduated Officers",
-                    "Applicants who are **Graduated Officers [SIS-1+]** may bypass the "
-                    "**Officer Training Program (OTP)**.",
+                    "**Graduated Officers [SIS-1+]** may bypass the **Officer Training Program (OTP)**.",
                 ),
                 (
                     "General Staff",
-                    "Applicants at **GS-2+** may apply but must be willing to complete the full "
-                    "**Officer Training Program (OTP)**.",
+                    "**GS-2+** may apply and must complete the full **OTP**.",
                 ),
                 (
                     "Restrictions",
-                    "Applicants at **SIS-6+** rank in their respective office are **not eligible**.",
+                    "**SIS-6+** in their respective office are **not eligible**.",
                 ),
             ),
         ),
         c.embed(
             title="Important Information",
             description=(
-                "→ Applicants must be **13 years of age or older**.\n"
-                "→ Applicants must be **willing to use a microphone**.\n"
-                "→ **Past hosting or instructional experience** is preferred.\n"
-                "→ The use of **AI** in any application response will result in a "
-                "**BLACKLIST** from OTE.\n"
-                "→ Use proper grammar, spelling, and professionalism throughout your application.\n"
-                "→ You may reapply only after **24 hours** from when your application is "
-                "**graded**.\n"
-                "→ You may apply a maximum of **3 times**, then must wait a **full week** before "
-                "applying again.\n"
-                "→ All applicants must follow Agency regulations and the OTE chain of command."
+                "→ Must be **13+** and **willing to use a microphone**.\n"
+                "→ **Past hosting or instructional experience** preferred.\n"
+                "→ **AI** in any response = **BLACKLIST** from OTE.\n"
+                "→ Use proper grammar, spelling, and professionalism.\n"
+                "→ Reapply only **24 hours** after grading; max **3** applications, then wait a "
+                "**full week**."
             ),
             color=c.COLOR_OTE,
         ),
         c.embed(
             title="How to Apply",
-            description=(
-                "Before submitting, ensure you have **requested to join the OTE Roblox group**."
-            ),
+            description="Request to join the **OTE Roblox group** before submitting.",
             color=c.COLOR_OTE,
             fields=(
                 c.link_field(

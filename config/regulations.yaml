@@ -13,6 +13,7 @@
 #   - 2026-08-02 | docshamxo | Stronger hero hierarchy and welcome copy (community review).
 #   - 2026-08-02 | docshamxo | Collapse mid-sentence wraps so Discord does not leave empty line space.
 #   - 2026-08-02 | docshamxo | Single unofficial-RP mention in rules hero; scrub welcome duplicates.
+#   - 2026-08-30 | docshamxo | Tighten rules intro (drop triple welcome / affiliation restatement).
 # === END FILE HEADER ===
 
 title: DIRECTORATE OF SUPPORT
@@ -23,9 +24,7 @@ intro: |
 
   *{motto} · Marking: {classification}*
 
-  Welcome to the Directorate of Support {office} Community Server. This server is designed to promote professionalism, respectful interaction, and immersive operations. It is **not affiliated with** the United States Government, the Central Intelligence Agency, or any government entity. All members are expected to uphold these regulations while participating in the community.
-
-  These regulations establish the standards of conduct expected of all community members. They exist to ensure a professional, respectful, and enjoyable environment while protecting the integrity of the community.
+  These regulations set conduct standards for the Directorate of Support {office} community. Follow them while participating.
 sections:
   - title: Professional Conduct & Community Standards
     body: |
