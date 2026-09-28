@@ -175,6 +175,10 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
     assert "MIDCOM" in esd_blob
     assert "example.invalid/esd-midcom-app" in esd_blob
     assert "SSA+" in esd_blob
+    assert "2 weeks" in esd_blob
+    assert "exempted for 1 week" in grs_blob
+    assert "instant denial" in grs_blob
+    assert "instant denial" in esd_blob
     assert "@" not in grs_blob  # no inventing Discord pings
     assert "<@" not in grs_blob
 
