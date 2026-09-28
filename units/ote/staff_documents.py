@@ -18,6 +18,7 @@
 #   - 2026-07-17 | docshamxo | Consolidate sections; shared Marking: STAFF notes.
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-08-30 | docshamxo | Drop duplicate General Information; regroup training links.
+#   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame; fix CIA DS | labels.
 # === END FILE HEADER ===
 
 """
@@ -32,122 +33,127 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    run_announcer,
+    staff_docs_central_embed,
+    staff_docs_handling_embed,
+    staff_docs_hero_embed,
+    staff_docs_link,
+    staff_docs_section_embed,
+)
+
+_UNIT = "Office of Training & Education"
+_ABBREV = "OTE"
+_COLOR = c.COLOR_OTE
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="STAFF DOCUMENTS",
-            unit="Office of Training & Education",
-            supporting="Authorized OTE staff documentation. Need-to-know only.",
-            color=c.COLOR_OTE,
+        staff_docs_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["ote"],
         ),
-        c.embed(
-            title="Central Repository",
-            description="Drive source of truth for forms, guides, and files not listed below.",
-            color=c.COLOR_OTE,
-            fields=(
-                c.link_field(
-                    "Google Drive",
-                    "DS Community | OTE Google Drive",
-                    c.url("ote.staff_documents.google_drive"),
-                    c.marking_note("STAFF"),
-                ),
-                c.link_field(
+        staff_docs_central_embed(
+            unit_abbrev=_ABBREV,
+            drive_url_key="ote.staff_documents.google_drive",
+            drive_link_name="OTE Google Drive",
+            color=_COLOR,
+            extra_fields=(
+                staff_docs_link(
                     "General Information & CoC",
-                    "CIA OTE | General Information & Chain of Command",
-                    c.url("ote.staff_documents.general_info_coc"),
-                    c.marking_note("STAFF"),
+                    "OTE General Information & Chain of Command",
+                    "ote.staff_documents.general_info_coc",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Phase Documents",
-            description="OTP Staff Handbook by phase.",
-            color=c.COLOR_OTE,
+            description=(
+                "Official OTP Staff Handbook documents covering each phase of the "
+                "Office of Training & Education program."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Phase I",
-                    "DS Community | OTE OTP Staff Handbook Phase I",
-                    c.url("ote.staff_documents.phase_i"),
-                    c.marking_note("STAFF"),
+                    "OTE OTP Staff Handbook Phase I",
+                    "ote.staff_documents.phase_i",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Phase II",
-                    "DS Community | OTE OTP Staff Handbook Phase II",
-                    c.url("ote.staff_documents.phase_ii"),
-                    c.marking_note("STAFF"),
+                    "OTE OTP Staff Handbook Phase II",
+                    "ote.staff_documents.phase_ii",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Phase III",
-                    "DS Community | OTE OTP Staff Handbook Phase III",
-                    c.url("ote.staff_documents.phase_iii"),
-                    c.marking_note("STAFF"),
+                    "OTE OTP Staff Handbook Phase III",
+                    "ote.staff_documents.phase_iii",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Tryouts & Ceremonies",
-            description="Candidate screening and graduation procedures.",
-            color=c.COLOR_OTE,
+            description=(
+                "Official documentation for candidate screening and graduation "
+                "ceremony procedures."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Tryout Guide",
-                    "DS Community | OTE Tryout Guide",
-                    c.url("ote.staff_documents.tryout_guide"),
-                    c.marking_note("STAFF"),
+                    "OTE Tryout Guide",
+                    "ote.staff_documents.tryout_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Graduation",
-                    "DS Community | OTE Graduation Ceremony Procedures",
-                    c.url("ote.staff_documents.graduation_ceremony_procedures"),
-                    c.marking_note("STAFF"),
+                    "OTE Graduation Ceremony Procedures",
+                    "ote.staff_documents.graduation_ceremony_procedures",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Training Materials",
-            description="OTE and shared DS standard training references.",
-            color=c.COLOR_OTE,
+            description=(
+                "Official OTE training guides and shared Directorate of Support "
+                "standard training references."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Standard Training",
-                    "DS Community | OTE Standard Training Guide",
-                    c.url("ote.staff_documents.standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "OTE Standard Training Guide",
+                    "ote.staff_documents.standard_training_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "Weapons Standard Training",
-                    "DS Community | OTE Weapons Standard Training Guide",
-                    c.url("ote.staff_documents.weapons_st_guide"),
-                    c.marking_note("STAFF"),
+                    "OTE Weapons Standard Training Guide",
+                    "ote.staff_documents.weapons_st_guide",
                 ),
-                c.link_field(
+                staff_docs_link(
                     "General Standard Training",
-                    "DS Community | General Standard Training Guide",
-                    c.url("community.general_standard_training_guide"),
-                    c.marking_note("STAFF"),
+                    "General Standard Training Guide",
+                    "community.general_standard_training_guide",
                 ),
             ),
         ),
-        c.embed(
+        staff_docs_section_embed(
             title="Personnel Records",
-            description="Staff assignments and program tracking.",
-            color=c.COLOR_OTE,
+            description=(
+                "Official documentation for staff assignments and program tracking "
+                "within the Office of Training & Education."
+            ),
+            color=_COLOR,
             fields=(
-                c.link_field(
+                staff_docs_link(
                     "Staff Database (ORBAT)",
-                    "DS Community | OTE Staff Database (ORBAT)",
-                    c.url("ote.staff_documents.staff_database"),
-                    c.marking_note("STAFF"),
+                    "OTE Staff Database (ORBAT)",
+                    "ote.staff_documents.staff_database",
                 ),
             ),
         ),
-        c.classification_handling_embed(
-            unit="OTE", authority="CIA Directorate of Support", color=c.COLOR_OTE
-        ),
+        staff_docs_handling_embed(unit_full=_UNIT, color=_COLOR),
     ]
 
 

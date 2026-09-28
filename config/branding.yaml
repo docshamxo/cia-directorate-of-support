@@ -11,6 +11,8 @@
 #   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
 #   - 2026-07-17 | docshamxo | Document Inter Studios proprietary property notice constant.
 #   - 2026-07-17 | docshamxo | Community/RP bot display names (anti-impersonation).
+#   - 2026-09-08 | docshamxo | Office-named CIA … Bot webhook display names.
+#   - 2026-09-08 | docshamxo | ESD Discord embed accent: crimson → silver.
 # === END FILE HEADER ===
 
 # Legal / brand line (Discord closers load from organization.yaml copy)
@@ -21,20 +23,20 @@ colors:
   osec: '0x1E3F78'
   ote: '0x1E3F78'
   grs: '0xFFD700'
-  esd: '0x9B111E'
+  esd: '0xC0C0C0'
 logos:
   ds: DS.png
   ote: OTE.png
   osec: OSEC.png
   grs: GRS.png
   esd: ESD.png
-# Webhook usernames must include Community or (RP). See docs/BRAND.md / LICENSE.
+# Webhook usernames: CIA {Office} Bot. See docs/BRAND.md / LICENSE.
 bots:
-  ds: DS Community (RP) · Support
-  osec: DS Community (RP) · OSEC
-  ote: DS Community (RP) · OTE
-  grs: DS Community (RP) · GRS
-  esd: DS Community (RP) · ESD
+  ds: CIA Directorate of Support Bot
+  osec: CIA Office of Security Bot
+  ote: CIA Office of Training & Education Bot
+  grs: CIA Global Response Staff Bot
+  esd: CIA Executive Security Detail Bot
 
 # === FILE FOOTER ===
 # End of file: config/branding.yaml

@@ -20,6 +20,9 @@
 #   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
 #   - 2026-08-30 | docshamxo | Drop static open_positions last_updated (computed at post time).
 #   - 2026-08-30 | docshamxo | Add ESD Roblox group URL for community embeds.
+#   - 2026-09-07 | docshamxo | Add ESD After Action Report Google Form link.
+#   - 2026-09-08 | docshamxo | Add OSEC Chief Marshal Hub guide placeholder.
+#   - 2026-09-08 | docshamxo | Add Discord/Roblox ToS URLs for rules Governing Policies.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -33,6 +36,9 @@ community:
   roblox_group_grs: https://www.roblox.com/share/g/450710337
   roblox_group_esd: https://www.roblox.com/communities/630084317/CIA-Executive-Security-Detail#!/about
   roblox_group_ote: https://www.roblox.com/share/g/1003614105
+  discord_tos: https://discord.com/terms
+  discord_guidelines: https://discord.com/guidelines
+  roblox_tos: https://www.roblox.com/info/terms
   # Shared across unit staff-document channels (public sharing link).
   general_standard_training_guide: https://docs.google.com/document/d/1GV-c5lNL6mcx0Wuf-Jl5D2gT-H7rhgley9dQSMUNs6w/edit?usp=sharing
 osec:
@@ -61,6 +67,9 @@ osec:
     communications_conduct_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     gate_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     handcuff_certification_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+  marshal_information:
+    cm_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
+    google_groups: https://groups.google.com/
 ote:
   staff_documents:
     google_drive: https://example.invalid/STAFF_LOCAL_REQUIRED
@@ -90,6 +99,7 @@ esd:
     fpcon: https://docs.google.com/document/d/1_cGA--_uBtgNZV-YkzKMWxxt6TFI6fkAHLPlOrMQekY/edit?usp=sharing
     tryout_guide: https://docs.google.com/document/d/16PRGm7Of5dCBMznoblfTJJ41pyB_pMzset0YExH9pOo/edit?usp=sharing
     phase_guide: https://docs.google.com/document/d/1_7iAkbY9EyBY8V8RdhLg2dsdIVMWdwd_8g3Tj1Qky2A/edit?usp=sharing
+    after_action_report: https://forms.gle/KvLYWzNXXcSQz7Ja7
 
 # === FILE FOOTER ===
 # End of file: config/links.yaml

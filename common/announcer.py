@@ -15,6 +15,10 @@
 #   - 2026-08-04 | docshamxo | Frame GRS/ESD subunit CoC as PUBLIC channel content.
 #   - 2026-08-04 | docshamxo | Omit Disclaimer embed from GRS/ESD subunit CoC.
 #   - 2026-08-30 | docshamxo | Stamp effective-date footer on every announcer send.
+#   - 2026-09-08 | docshamxo | Shared CoC hierarchy block builders; subunit CoC unit-only (no EL/DS/OSEC).
+#   - 2026-09-08 | docshamxo | Shared staff-documents frame builders (hero/central/section/handling).
+#   - 2026-09-08 | docshamxo | Shared information-channel frame builders (public + reference hubs).
+#   - 2026-09-08 | docshamxo | GRS/ESD CoC: logo on hero embed only (not command block).
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -225,6 +229,91 @@ def run_announcer(
     )
 
 
+def hierarchy_block_description(
+    *,
+    about: str,
+    motto: str | None = None,
+    classification: str | None = None,
+) -> str:
+    """Standard CoC block body: optional motto line, then about/context."""
+    if motto:
+        return f"{c.motto_line(motto, classification=classification)}\n\n{about}"
+    return about
+
+
+def agency_executive_embed(*, color: int = c.COLOR_DS) -> discord.Embed:
+    """Agency EL hierarchy block (shared across CoC channels)."""
+    return c.embed(
+        title="Agency Executive Leadership",
+        description=hierarchy_block_description(
+            about=(
+                "**Executive Chain of Command**\n\n"
+                "Agency executive leadership sits above all Directorates. The "
+                "**Directorate of Support (DS)** chain continues below."
+            )
+        ),
+        color=color,
+        fields=(("Executive Leadership", c.roles_text(*c.AGENCY_EXECUTIVE)),),
+    )
+
+
+def ds_leadership_embed(
+    *,
+    color: int = c.COLOR_DS,
+    include_offices: bool = True,
+    logo: Path | None = None,
+) -> discord.Embed:
+    """Directorate of Support leadership block (shared across CoC channels)."""
+    fields: list[tuple[str, str]] = [("Leadership", c.roles_text(*c.DS_LEADERSHIP))]
+    if include_offices:
+        fields.append(("Offices", c.bullets(*c.DS_OFFICES)))
+    return c.embed(
+        title="Directorate of Support",
+        description=hierarchy_block_description(
+            motto=c.DS_MOTTO,
+            classification=c.DS_CLASSIFICATION,
+            about=c.DS_ABOUT,
+        ),
+        color=color,
+        logo=logo,
+        fields=tuple(fields),
+    )
+
+
+def office_command_embed(
+    *,
+    title: str,
+    about: str,
+    roles: tuple[c.Role, ...],
+    color: int,
+    motto: str | None = None,
+    classification: str | None = None,
+    logo: Path | None = None,
+    roles_field: str = "High Command",
+    extra_fields: tuple[tuple[str, str], ...] = (),
+) -> discord.Embed:
+    """Office or sub-unit command block with standardized title / body / role field."""
+    return c.embed(
+        title=title,
+        description=hierarchy_block_description(
+            motto=motto,
+            classification=classification,
+            about=about,
+        ),
+        color=color,
+        logo=logo,
+        fields=((roles_field, c.roles_text(*roles)),) + extra_fields,
+    )
+
+
+def subunit_command_about(about: str) -> str:
+    """Parent framing + unit about for GRS/ESD command blocks."""
+    return (
+        "A sub-unit of the **Office of Security** under the **Directorate of Support**.\n\n"
+        f"{about}"
+    )
+
+
 def subunit_coc_embeds(
     *,
     unit_full: str,
@@ -234,7 +323,7 @@ def subunit_coc_embeds(
     command_roles: tuple[c.Role, ...],
     logo: Path | None = None,
 ) -> list[discord.Embed]:
-    """Shared GRS/ESD public chain-of-command embed layout (no full DS ORBAT)."""
+    """Shared GRS/ESD public CoC layout (unit command only; no parent EL/DS/OSEC blocks)."""
     return [
         c.chain_intro_embed(
             unit=unit_full,
@@ -243,24 +332,16 @@ def subunit_coc_embeds(
             context=(
                 f"The **{unit_full} ({unit_abbrev})** is a sub-unit of the **Office of Security** "
                 "under the **Directorate of Support**. "
-                f"{unit_abbrev} reports through OSEC and DS. "
-                "Full parent Order of Battle (ORBAT) is published in DS / OSEC chain-of-command channels."
+                f"{unit_abbrev} reports through OSEC and DS to Agency leadership. "
+                "Parent DS / OSEC Order of Battle is published in those chain-of-command channels."
             ),
         ),
-        c.embed(
-            title="Reporting Line",
-            description=(
-                f"{unit_abbrev} → **Office of Security** → **Directorate of Support**. "
-                "Consult your immediate supervisor before escalating. "
-                "Parent leadership names are listed in DS / OSEC chain-of-command channels."
-            ),
+        office_command_embed(
+            title=unit_full,
+            about=subunit_command_about(about),
+            roles=command_roles,
             color=color,
-        ),
-        c.embed(
-            title=f"{unit_abbrev} Command",
-            description=(f"Senior leadership for {unit_abbrev} operations and policy.\n\n{about}"),
-            color=color,
-            fields=(("Command Team", c.roles_text(*command_roles)),),
+            roles_field="Command Team",
         ),
         c.embed(
             title=f"{unit_abbrev} MIDCOM",
@@ -287,6 +368,223 @@ def subunit_coc_embeds(
             parent_units=("Directorate of Support", "Office of Security"),
         ),
     ]
+
+
+def staff_docs_hero_embed(
+    *,
+    unit_full: str,
+    unit_abbrev: str,
+    color: int,
+    logo: Path | None = None,
+) -> discord.Embed:
+    """Standard STAFF DOCUMENTS hero for office and sub-unit channels."""
+    return c.hero_embed(
+        title="STAFF DOCUMENTS",
+        unit=unit_full,
+        supporting=(
+            f"Authorized {unit_abbrev} staff documentation index. Need-to-know access only."
+        ),
+        color=color,
+        logo=logo,
+    )
+
+
+def staff_docs_central_embed(
+    *,
+    unit_abbrev: str,
+    drive_url_key: str,
+    drive_link_name: str,
+    color: int,
+    extra_fields: tuple[tuple[str, str], ...] = (),
+) -> discord.Embed:
+    """Central Repository block with Drive root and optional extras."""
+    fields = (
+        c.link_field(
+            "Google Drive",
+            c.community_link_label(drive_link_name),
+            c.url(drive_url_key),
+            c.marking_note("STAFF"),
+        ),
+    ) + extra_fields
+    return c.embed(
+        title="Central Repository",
+        description=(
+            f"Primary Google Drive folder for {unit_abbrev} handbooks, guides, forms, and "
+            "internal files. Use Drive for materials not listed below."
+        ),
+        color=color,
+        fields=fields,
+    )
+
+
+def staff_docs_section_embed(
+    *,
+    title: str,
+    description: str,
+    fields: tuple[tuple[str, str], ...],
+    color: int,
+) -> discord.Embed:
+    """Category section for staff document links."""
+    return c.embed(
+        title=title,
+        description=description,
+        color=color,
+        fields=fields,
+    )
+
+
+def staff_docs_handling_embed(*, unit_full: str, color: int) -> discord.Embed:
+    """Restricted Classification & Handling closer for staff-docs channels."""
+    return c.classification_handling_embed(
+        unit=unit_full,
+        authority=f"CIA {unit_full}",
+        color=color,
+        restricted=True,
+    )
+
+
+def staff_docs_link(
+    name: str,
+    link_name: str,
+    url_key: str,
+) -> tuple[str, str]:
+    """STAFF-marked link field with standard CIA DS | label."""
+    return c.link_field(
+        name,
+        c.community_link_label(link_name),
+        c.url(url_key),
+        c.marking_note("STAFF"),
+    )
+
+
+def info_hero_embed(
+    *,
+    unit_full: str,
+    unit_abbrev: str,
+    color: int,
+    logo: Path | None = None,
+    public: bool = True,
+    supporting: str | None = None,
+) -> discord.Embed:
+    """Standard INFORMATION / PUBLIC INFORMATION hero."""
+    if supporting is None:
+        supporting = (
+            f"Public overview of {unit_abbrev}, its mission, and official community resources."
+            if public
+            else f"Reference hub for {unit_abbrev} records and authorized documentation."
+        )
+    return c.hero_embed(
+        title="PUBLIC INFORMATION" if public else "INFORMATION",
+        unit=unit_full,
+        supporting=supporting,
+        color=color,
+        logo=logo,
+    )
+
+
+def info_about_embed(
+    *,
+    unit_full: str,
+    unit_abbrev: str,
+    about: str,
+    color: int,
+    motto: str | None = None,
+    classification: str | None = None,
+    fields: tuple[tuple[str, str], ...] = (),
+    subunit_parent: str | None = None,
+) -> discord.Embed:
+    """About block: offices use 'About the Office'; sub-units use 'About {ABBREV}'."""
+    if subunit_parent:
+        title = f"About {unit_abbrev}"
+        framing = (
+            f"The **{unit_full}** is a sub-unit of the **{subunit_parent}**, "
+            "operating under the **Directorate of Support**.\n\n"
+        )
+        body = framing + about
+    else:
+        title = "About the Office"
+        body = hierarchy_block_description(
+            motto=motto,
+            classification=classification,
+            about=about,
+        )
+    return c.embed(
+        title=title,
+        description=body,
+        color=color,
+        fields=fields,
+    )
+
+
+def info_community_links_embed(
+    *,
+    unit_abbrev: str,
+    fields: tuple[tuple[str, str], ...],
+    color: int,
+    description: str | None = None,
+) -> discord.Embed:
+    """Community Links block with full-sentence description."""
+    return c.embed(
+        title="Community Links",
+        description=(
+            description
+            or (
+                f"Official Roblox groups and community resources for {unit_abbrev} "
+                "and its parent organizations."
+            )
+        ),
+        color=color,
+        fields=fields,
+    )
+
+
+def info_tryout_requirements_embed(
+    *,
+    unit_abbrev: str,
+    combat_requirement: str,
+    color: int,
+) -> discord.Embed:
+    """Shared GRS/ESD tryout eligibility block."""
+    return c.embed(
+        title="Tryout Requirements",
+        description=(
+            f"Minimum eligibility for {unit_abbrev} tryouts and applications:\n"
+            f"{c.tryout_requirements_text(combat_requirement=combat_requirement)}"
+        ),
+        color=color,
+    )
+
+
+def info_reference_documents_embed(
+    *,
+    unit_full: str,
+    fields: tuple[tuple[str, str], ...],
+    color: int,
+) -> discord.Embed:
+    """Reference Documents block for mixed-clearance information hubs."""
+    return c.embed(
+        title="Reference Documents",
+        description=(
+            f"Agency-wide and {unit_full} reference material. Observe each "
+            "document's clearance marking."
+        ),
+        color=color,
+        fields=fields,
+    )
+
+
+def info_public_link(
+    name: str,
+    link_name: str,
+    url_value: str,
+) -> tuple[str, str]:
+    """PUBLIC-marked document link with CIA DS | label."""
+    return c.link_field(
+        name,
+        c.community_link_label(link_name),
+        url_value,
+        c.marking_note("PUBLIC"),
+    )
 
 
 def logo_files(*keys: str) -> list[discord.File]:

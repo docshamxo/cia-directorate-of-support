@@ -21,12 +21,21 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
+<<<<<<< HEAD
 - GRS and ESD MIDCOM open-positions announcers (`units/grs/open_positions.py`,
   `units/esd/open_positions.py`) with env form URLs
   (`GRS_MIDCOM_APPLICATION_URL`, `ESD_MIDCOM_APPLICATION_URL`) and webhooks
   (`WEBHOOK_GRS_OPEN_POSITIONS`, `WEBHOOK_ESD_OPEN_POSITIONS`).
+=======
+- OSEC Chief Marshal Hub announcer (`units/osec/marshal_information.py`) for
+  `#marshal-information` (`WEBHOOK_OSEC_MARSHAL_INFORMATION`).
+>>>>>>> e871079 (Polish ESD branding and standardize Discord announcer frames.)
 
 ### Changed
+
+- Webhook bot display names: `CIA {Office} Bot` (DS / OSEC / OTE / GRS / ESD).
+- Effective-date footer drops the `(community)` suffix.
+- Link labels use `CIA DS | …` (not `DS Community | …`).
 
 - Application reapply rules (OSEC + OTE open positions): wait **24 hours** after grading
   before reapplying; max **3** applications then wait a **full week**.

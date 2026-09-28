@@ -41,10 +41,10 @@ This Software supports an unofficial Roblox community roleplay (RP) project.
    must not present bots, webhooks, embeds, or channels as official government
    communications.
 
-4. Bot display names. Webhook and bot usernames configured for this project
-   must include a community or RP marker (for example "Community" or "(RP)")
-   and must not use a display name that solely impersonates an official agency
-   account. See docs/BRAND.md.
+4. Bot display names. Webhook and bot usernames use the fiction office form
+   ``CIA {Office} Bot`` (for example ``CIA Office of Security Bot``). Do not use
+   pipe-style official-looking names such as ``CIA | …``. Keep non-affiliation
+   notices in documentation and Discord Rules closers. See docs/BRAND.md.
 
 5. Community assets. Logos under assets/logos/ are community presentation
    assets for this roleplay Discord. Do not use them to imply government

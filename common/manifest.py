@@ -8,6 +8,7 @@
 #   - 2026-07-17 | docshamxo | Staged office rollout order for safer live sends.
 #   - 2026-07-17 | docshamxo | Announcer scripts live under units/<office>/.
 #   - 2026-08-02 | docshamxo | Add OTE Server Regulations (WEBHOOK_OTE_RULES).
+#   - 2026-09-08 | docshamxo | Add OSEC Marshal Information (WEBHOOK_OSEC_MARSHAL_INFORMATION).
 #   - 2026-09-28 | docshamxo | Add GRS/ESD open positions announcers.
 # === END FILE HEADER ===
 
@@ -33,6 +34,11 @@ ANNOUNCERS: tuple[tuple[str, str, str], ...] = (
         "WEBHOOK_OSEC_SPP_INFORMATION",
     ),
     ("units/osec/open_positions.py", "OSEC Open Positions", "WEBHOOK_OSEC_OPEN_POSITIONS"),
+    (
+        "units/osec/marshal_information.py",
+        "OSEC Chief Marshal Hub",
+        "WEBHOOK_OSEC_MARSHAL_INFORMATION",
+    ),
     ("units/ote/coc.py", "OTE Chain of Command", "WEBHOOK_OTE_COC"),
     ("units/ote/server_regulations.py", "OTE Server Regulations", "WEBHOOK_OTE_RULES"),
     ("units/ote/public_information.py", "OTE Public Information", "WEBHOOK_OTE_PUBLIC_INFORMATION"),
@@ -66,6 +72,7 @@ STAFF_WEBHOOK_KEYS: frozenset[str] = frozenset(
         "WEBHOOK_OSEC_INFORMATION",
         "WEBHOOK_OSEC_STAFF_DOCUMENTS",
         "WEBHOOK_OSEC_SPP_INFORMATION",
+        "WEBHOOK_OSEC_MARSHAL_INFORMATION",
         "WEBHOOK_OTE_STAFF_DOCUMENTS",
         "WEBHOOK_GRS_INFORMATION",
         "WEBHOOK_GRS_STAFF_DOCUMENTS",

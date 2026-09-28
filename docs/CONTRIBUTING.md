@@ -42,7 +42,7 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 - Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](../SECURITY.md)
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](CODEOWNERS_ENFORCEMENT.md))
 - Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](../config/organization.yaml); see [NOTICE](NOTICE))
-- Keep webhook bot names community-marked (`Community` or `(RP)`); do not restore bare `CIA | …` usernames
+- Keep webhook bot names as `CIA {Office} Bot` (see [BRAND.md](BRAND.md)); do not use bare `CIA | …` usernames
 - Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation / privacy: [SECURITY.md](../SECURITY.md)
 ## Everyday edits
 

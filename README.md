@@ -160,6 +160,7 @@ Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (share
 | 5 | `python units/osec/staff_documents.py` | `WEBHOOK_OSEC_STAFF_DOCUMENTS` |
 | 6 | `python units/osec/spp_information.py` | `WEBHOOK_OSEC_SPP_INFORMATION` |
 | 7 | `python units/osec/open_positions.py` | `WEBHOOK_OSEC_OPEN_POSITIONS` |
+<<<<<<< HEAD
 | 8 | `python units/ote/coc.py` | `WEBHOOK_OTE_COC` |
 | 9 | `python units/ote/server_regulations.py` | `WEBHOOK_OTE_RULES` |
 | 10 | `python units/ote/public_information.py` | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
@@ -174,6 +175,21 @@ Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (share
 | 19 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
 | 20 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
 | 21 | `python units/esd/open_positions.py` | `WEBHOOK_ESD_OPEN_POSITIONS` |
+=======
+| 8 | `python units/osec/marshal_information.py` | `WEBHOOK_OSEC_MARSHAL_INFORMATION` |
+| 9 | `python units/ote/coc.py` | `WEBHOOK_OTE_COC` |
+| 10 | `python units/ote/server_regulations.py` | `WEBHOOK_OTE_RULES` |
+| 11 | `python units/ote/public_information.py` | `WEBHOOK_OTE_PUBLIC_INFORMATION` |
+| 12 | `python units/ote/program_overview.py` | `WEBHOOK_OTE_PROGRAM_OVERVIEW` |
+| 13 | `python units/ote/staff_documents.py` | `WEBHOOK_OTE_STAFF_DOCUMENTS` |
+| 14 | `python units/ote/open_positions.py` | `WEBHOOK_OTE_OPEN_POSITIONS` |
+| 15 | `python units/grs/coc.py` | `WEBHOOK_GRS_COC` |
+| 16 | `python units/grs/information.py` | `WEBHOOK_GRS_INFORMATION` |
+| 17 | `python units/grs/staff_documents.py` | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| 18 | `python units/esd/coc.py` | `WEBHOOK_ESD_COC` |
+| 19 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
+| 20 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+>>>>>>> e871079 (Polish ESD branding and standardize Discord announcer frames.)
 
 ---
 

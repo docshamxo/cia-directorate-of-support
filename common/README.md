@@ -58,7 +58,7 @@ c.hero_embed(
 )
 
 c.agency_eyebrow("Office of Security")  # *Community · …*
-c.community_link_label("OSEC")  # DS Community | OSEC
+c.community_link_label("OSEC")  # CIA DS | OSEC
 c.motto_line(c.OSEC_MOTTO)  # *PROTECT · DETECT · RESPOND*
 c.link_field("Handbook", c.community_link_label("OSEC Handbook"), url, "STAFF.")
 c.link_field("ESD", c.community_link_label("ESD"), c.URL_ROBLOX_GROUP_ESD)

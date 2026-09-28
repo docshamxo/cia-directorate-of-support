@@ -13,6 +13,8 @@
 #   - 2026-08-04 | docshamxo | Align ESD information hero with PUBLIC channel template.
 #   - 2026-08-04 | docshamxo | Omit Disclaimer embed on ESD public information.
 #   - 2026-08-30 | docshamxo | Wire ESD Roblox group link into community embed.
+#   - 2026-08-30 | docshamxo | Add ESD tryout / application requirements embed.
+#   - 2026-09-08 | docshamxo | Refactor onto shared information-channel frame builders.
 # === END FILE HEADER ===
 
 """
@@ -27,31 +29,42 @@ from __future__ import annotations
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import (
+    info_about_embed,
+    info_community_links_embed,
+    info_hero_embed,
+    info_tryout_requirements_embed,
+    run_announcer,
+)
+
+_UNIT = "Executive Security Detail"
+_ABBREV = "ESD"
+_COLOR = c.COLOR_ESD
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     return [
-        c.hero_embed(
-            title="PUBLIC INFORMATION",
-            unit="Executive Security Detail",
-            supporting=("Public overview of ESD, its mission, and official community resources."),
-            color=c.COLOR_ESD,
+        info_hero_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             logo=c.LOGOS["esd"],
         ),
-        c.embed(
-            title="About ESD",
-            description=(
-                "The Executive Security Detail is a sub-unit of the **Office of Security**, "
-                "operating under the **Directorate of Support**.\n\n"
-                f"{c.ESD_ABOUT}"
-            ),
-            color=c.COLOR_ESD,
+        info_about_embed(
+            unit_full=_UNIT,
+            unit_abbrev=_ABBREV,
+            about=c.ESD_ABOUT,
+            color=_COLOR,
+            subunit_parent="Office of Security",
         ),
-        c.embed(
-            title="Community Links",
-            description="Official Roblox groups for ESD and its parent organizations.",
-            color=c.COLOR_ESD,
+        info_tryout_requirements_embed(
+            unit_abbrev=_ABBREV,
+            combat_requirement=c.ESD_TRYOUT_COMBAT,
+            color=_COLOR,
+        ),
+        info_community_links_embed(
+            unit_abbrev=_ABBREV,
+            color=_COLOR,
             fields=(
                 c.link_field(
                     "Executive Security Detail",

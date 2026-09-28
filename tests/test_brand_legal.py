@@ -18,9 +18,18 @@ from common import cia_common as c
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_bot_names_include_community_or_rp_marker() -> None:
-    for name in (c.BOT_DS, c.BOT_OSEC, c.BOT_OTE, c.BOT_GRS, c.BOT_ESD):
-        assert "Community" in name or "(RP)" in name
+def test_bot_names_follow_office_bot_pattern() -> None:
+    expected = {
+        c.BOT_DS: "CIA Directorate of Support Bot",
+        c.BOT_OSEC: "CIA Office of Security Bot",
+        c.BOT_OTE: "CIA Office of Training & Education Bot",
+        c.BOT_GRS: "CIA Global Response Staff Bot",
+        c.BOT_ESD: "CIA Executive Security Detail Bot",
+    }
+    for name, want in expected.items():
+        assert name == want
+        assert name.startswith("CIA ")
+        assert name.endswith(" Bot")
         assert not name.strip().startswith("CIA |")
         assert len(name) <= 80
 
@@ -33,7 +42,7 @@ def test_agency_eyebrow_is_community_rp() -> None:
 
 
 def test_community_link_label() -> None:
-    assert c.community_link_label("OSEC") == "DS Community | OSEC"
+    assert c.community_link_label("OSEC") == "CIA DS | OSEC"
 
 
 def test_disclaimer_title_and_affiliation() -> None:
@@ -96,8 +105,8 @@ def test_license_and_brand_docs_exist() -> None:
     brand_text = (ROOT / "docs" / "BRAND.md").read_text(encoding="utf-8")
     assert "not affiliated" in license_text.lower()
     assert "Brand Use" in license_text or "brand use" in license_text.lower()
-    assert "(RP)" in brand_text
-    assert "Community" in brand_text
+    assert "CIA Office of Security Bot" in brand_text or "CIA {Office}" in brand_text
+    assert "Bot" in brand_text
 
 
 # === FILE FOOTER ===

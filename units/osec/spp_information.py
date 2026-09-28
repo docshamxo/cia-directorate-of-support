@@ -101,25 +101,25 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(
                 c.link_field(
                     "Orientation",
-                    "DS Community | OSEC Security Phase Candidate Orientation Guide",
+                    "CIA DS | OSEC Security Phase Candidate Orientation Guide",
                     c.url("osec.spp_information.orientation_guide"),
                     c.marking_note("CANDIDATE"),
                 ),
                 c.link_field(
                     "Handbook",
-                    "DS Community | OSEC Handbook",
+                    "CIA DS | OSEC Handbook",
                     c.url("osec.spp_information.official_handbook"),
                     c.marking_note("STAFF"),
                 ),
                 c.link_field(
                     "Code of Agency Conduct",
-                    "DS Community | OSEC Code of Agency Conduct",
+                    "CIA DS | OSEC Code of Agency Conduct",
                     c.url("osec.spp_information.code_of_agency_conduct"),
                     c.marking_note("PUBLIC"),
                 ),
                 c.link_field(
                     "Civilian Access",
-                    "DS Community | OSEC Civilian Access",
+                    "CIA DS | OSEC Civilian Access",
                     c.url("osec.spp_information.civilian_access"),
                     c.marking_note("PUBLIC"),
                 ),
