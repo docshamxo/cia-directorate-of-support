@@ -166,6 +166,9 @@ def validate_webhooks() -> None:
     declared = webhook_keys_in_env_example()
 
     used.discard("WEBHOOK_PLACEHOLDER")
+    # Message-ID placeholders are edit-in-place snowflakes, not announcer webhook URLs.
+    declared = {key for key in declared if not key.endswith("_MESSAGE_ID")}
+    used = {key for key in used if not key.endswith("_MESSAGE_ID")}
 
     missing_env = sorted(used - declared)
     unused_env = sorted(declared - used)

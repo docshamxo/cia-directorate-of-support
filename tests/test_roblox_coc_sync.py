@@ -66,9 +66,7 @@ def test_apply_holder_overrides_sets_vacant() -> None:
 
 def test_apply_holder_overrides_keeps_personnel_discord_id() -> None:
     catalog = {
-        "ds_leadership": (
-            c.Role("CDSD", "Component Director", "OldName", discord_id="10001"),
-        )
+        "ds_leadership": (c.Role("CDSD", "Component Director", "OldName", discord_id="10001"),)
     }
     updated = apply_holder_overrides(
         catalog,
@@ -83,9 +81,7 @@ def test_apply_holder_overrides_keeps_personnel_discord_id() -> None:
 
 def test_apply_holder_overrides_uses_config_discord_ids_map() -> None:
     catalog = {
-        "ds_leadership": (
-            c.Role("CDSD", "Component Director", "OldName", discord_id="111"),
-        )
+        "ds_leadership": (c.Role("CDSD", "Component Director", "OldName", discord_id="111"),)
     }
     cfg = SyncConfig(
         interval_minutes=15,
