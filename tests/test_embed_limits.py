@@ -262,9 +262,8 @@ def test_staff_documents_share_standard_frame(builder, abbrev: str, unit_full: s
     embeds = builder()
     c.validate_embed_limits(embeds)
     assert embeds[0].title == "STAFF DOCUMENTS"
-    assert (
-        f"Authorized {abbrev} staff documentation index. Need-to-know access only."
-        in (embeds[0].description or "")
+    assert f"Authorized {abbrev} staff documentation index. Need-to-know access only." in (
+        embeds[0].description or ""
     )
     assert embeds[1].title == "Central Repository"
     assert embeds[-1].title == "Classification & Handling Notice"
@@ -295,9 +294,8 @@ def test_information_channels_share_standard_frame() -> None:
 
     for embeds, abbrev in ((ote, "OTE"), (grs, "GRS"), (esd, "ESD")):
         assert embeds[0].title == "PUBLIC INFORMATION"
-        assert (
-            f"Public overview of {abbrev}, its mission, and official community resources."
-            in (embeds[0].description or "")
+        assert f"Public overview of {abbrev}, its mission, and official community resources." in (
+            embeds[0].description or ""
         )
         assert embeds[-1].title == "Community Links"
 

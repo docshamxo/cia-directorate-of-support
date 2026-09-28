@@ -350,13 +350,21 @@ def validate_config() -> None:
         "DISCORD_OSEC_APPLICATION_RESULTS_URL",
         "https://example.invalid/application-results",
     )
-    os.environ.setdefault("DISCORD_OSEC_ENROLLMENTS_URL", "https://example.invalid/osec-enrollments")
+    os.environ.setdefault(
+        "DISCORD_OSEC_ENROLLMENTS_URL", "https://example.invalid/osec-enrollments"
+    )
     os.environ.setdefault("DISCORD_OSEC_LOA_URL", "https://example.invalid/osec-loa")
-    os.environ.setdefault("DISCORD_OSEC_PATROL_LOGS_URL", "https://example.invalid/osec-patrol-logs")
+    os.environ.setdefault(
+        "DISCORD_OSEC_PATROL_LOGS_URL", "https://example.invalid/osec-patrol-logs"
+    )
     os.environ.setdefault("DISCORD_OSEC_EVENT_LOGS_URL", "https://example.invalid/osec-event-logs")
-    os.environ.setdefault("DISCORD_OSEC_TRYOUT_LOGS_URL", "https://example.invalid/osec-tryout-logs")
+    os.environ.setdefault(
+        "DISCORD_OSEC_TRYOUT_LOGS_URL", "https://example.invalid/osec-tryout-logs"
+    )
     os.environ.setdefault("DISCORD_OSEC_PHASE_LOGS_URL", "https://example.invalid/osec-phase-logs")
-    os.environ.setdefault("DISCORD_OSEC_SUPERVISION_URL", "https://example.invalid/osec-supervision")
+    os.environ.setdefault(
+        "DISCORD_OSEC_SUPERVISION_URL", "https://example.invalid/osec-supervision"
+    )
     os.environ.setdefault(
         "DISCORD_OSEC_MARSHAL_REPORTS_URL",
         "https://example.invalid/osec-marshal-reports",

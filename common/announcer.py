@@ -144,9 +144,7 @@ def run_announcer(
 
     require_reaction = not allow_skip_reaction()
     # Stamp every post with today's date unless explicitly disabled.
-    effective_date = not (
-        env_flag("CIA_NO_EFFECTIVE_DATE") or _cli_flag("--no-effective-date")
-    )
+    effective_date = not (env_flag("CIA_NO_EFFECTIVE_DATE") or _cli_flag("--no-effective-date"))
     bot_channel_purge = True if bot_channel_purge_requested() else None
     started = time.monotonic()
 
@@ -309,8 +307,7 @@ def office_command_embed(
 def subunit_command_about(about: str) -> str:
     """Parent framing + unit about for GRS/ESD command blocks."""
     return (
-        "A sub-unit of the **Office of Security** under the **Directorate of Support**.\n\n"
-        f"{about}"
+        f"A sub-unit of the **Office of Security** under the **Directorate of Support**.\n\n{about}"
     )
 
 

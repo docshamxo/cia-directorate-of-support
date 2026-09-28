@@ -112,9 +112,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Log Review Channels",
-            description=(
-                "Review and accept the following logs in their dedicated channels."
-            ),
+            description=("Review and accept the following logs in their dedicated channels."),
             color=c.COLOR_OSEC,
             fields=(
                 c.link_field(

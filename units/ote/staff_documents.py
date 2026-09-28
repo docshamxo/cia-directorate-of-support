@@ -96,8 +96,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         staff_docs_section_embed(
             title="Tryouts & Ceremonies",
             description=(
-                "Official documentation for candidate screening and graduation "
-                "ceremony procedures."
+                "Official documentation for candidate screening and graduation ceremony procedures."
             ),
             color=_COLOR,
             fields=(
