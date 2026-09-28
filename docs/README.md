@@ -7,6 +7,7 @@ Created by: docshamxo
 Modified:
   - 2026-07-17 | docshamxo | Index OPS, security, release, and maintainer docs.
   - 2026-09-28 | docshamxo | Link Roblox CoC sync ops guide.
+  - 2026-09-28 | docshamxo | Link Discord webhook message ID anchors.
 === END FILE HEADER ===
 -->
 
@@ -20,6 +21,7 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 |-----|----------|
 | [OPS.md](OPS.md) | Live runs, checkmark reactions, purge / state recovery |
 | [ROBLOX_COC_SYNC.md](ROBLOX_COC_SYNC.md) | Roblox group-rank → DS CoC webhook message edit (15 min) |
+| [DISCORD_MESSAGE_IDS.md](DISCORD_MESSAGE_IDS.md) | Edit-in-place webhook message snowflakes (OTE/OSEC/DS) |
 | [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) | Staged office live release checklist |
 | [RELEASE_NOTES_OPERATORS.md](RELEASE_NOTES_OPERATORS.md) | Operator notes for the 1.1.0 hardening release |
 | [ACCESSIBILITY.md](ACCESSIBILITY.md) | Inclusive Discord embed copy (screen readers, color) |

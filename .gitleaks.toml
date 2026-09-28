@@ -7,6 +7,7 @@
 #   - 2026-09-28 | docshamxo | Allowlist Discord user snowflakes (discord-client-id FP).
 #   - 2026-09-28 | docshamxo | Allowlist Roblox CoC sync test fixtures (discord-client-id FP).
 #   - 2026-09-28 | docshamxo | ASCII-only comments (gitleaks TOML rejects CP1252 dashes).
+#   - 2026-09-28 | docshamxo | Allowlist public webhook message snowflakes in docs.
 # === END FILE HEADER ===
 
 # Extends the default ruleset shipped with gitleaks (CI pins v8.30.1).
@@ -26,6 +27,7 @@ paths = [
   '''(^|/)config/personnel\.ya?ml$''',
   '''(^|/)tests/test_announcer\.py$''',
   '''(^|/)tests/test_roblox_coc_sync\.py$''',
+  '''(^|/)docs/DISCORD_MESSAGE_IDS\.md$''',
 ]
 
 # === FILE FOOTER ===
