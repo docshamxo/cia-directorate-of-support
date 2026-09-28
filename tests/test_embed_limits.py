@@ -5,11 +5,16 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Cover Discord embed preflight limits end-to-end.
+#   - 2026-09-28 | docshamxo | Cover GRS/ESD MIDCOM open-positions embeds.
+#   - 2026-09-28 | docshamxo | Load open_positions via importlib (units are scripts).
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
 
 from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
 
 import discord
 import pytest
@@ -17,6 +22,18 @@ import pytest
 from common import cia_common as c
 from common.announcer import subunit_coc_embeds
 from common.manifest import ANNOUNCERS
+
+_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_unit_module(relative_path: str, module_name: str):
+    """Load a units/*.py announcer by path (units/ is not a Python package)."""
+    path = _ROOT / relative_path
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_validate_embed_limits_accepts_valid() -> None:
@@ -138,9 +155,48 @@ def test_apply_effective_date_footer_stamps_last() -> None:
 
 
 def test_announcer_catalog_nonempty() -> None:
-    assert len(ANNOUNCERS) >= 18
+    assert len(ANNOUNCERS) >= 20
     keys = [item[2] for item in ANNOUNCERS]
     assert len(keys) == len(set(keys))
+    assert "WEBHOOK_GRS_OPEN_POSITIONS" in keys
+    assert "WEBHOOK_ESD_OPEN_POSITIONS" in keys
+
+
+def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv(
+        "GRS_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/grs-midcom-app",
+    )
+    monkeypatch.setenv(
+        "ESD_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/esd-midcom-app",
+    )
+    grs_open = _load_unit_module("units/grs/open_positions.py", "grs_open_positions")
+    esd_open = _load_unit_module("units/esd/open_positions.py", "esd_open_positions")
+
+    grs = grs_open._build_embeds()
+    esd = esd_open._build_embeds()
+    c.validate_embed_limits(grs)
+    c.validate_embed_limits(esd)
+    grs_blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in grs]
+    )
+    esd_blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in esd]
+    )
+    assert "MIDCOM" in grs_blob
+    assert "example.invalid/grs-midcom-app" in grs_blob
+    assert "qv4_pendragon" in grs_blob
+    assert "idk_manti" in grs_blob
+    assert "MIDCOM" in esd_blob
+    assert "example.invalid/esd-midcom-app" in esd_blob
+    assert "SSA+" in esd_blob
+    assert "2 weeks" in esd_blob
+    assert "exempted for 1 week" in grs_blob
+    assert "instant denial" in grs_blob
+    assert "instant denial" in esd_blob
+    assert "@" not in grs_blob  # no inventing Discord pings
+    assert "<@" not in grs_blob
 
 
 # === FILE FOOTER ===

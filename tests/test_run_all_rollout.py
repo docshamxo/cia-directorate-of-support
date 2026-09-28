@@ -7,6 +7,7 @@
 #   - 2026-07-17 | docshamxo | Unit tests for --only / --stage selection.
 #   - 2026-07-17 | docshamxo | Expect units/<office>/ catalog paths.
 #   - 2026-08-07 | docshamxo | Count OTE Rules announcer in the OTE selection.
+#   - 2026-09-28 | docshamxo | Count GRS/ESD open-positions in office filters.
 # === END FILE HEADER ===
 
 """Unit tests for staged rollout and --only filtering."""
@@ -44,8 +45,13 @@ def test_selected_scripts_stage_intersects_only() -> None:
 
 def test_selected_scripts_only_office() -> None:
     selected = selected_scripts(only_arg="esd", stage_arg="")
-    assert len(selected) == 3
+    assert len(selected) == 4
     assert all(path.startswith("units/esd/") for path, _label, _key in selected)
+    keys = [key for _path, _label, key in selected]
+    assert "WEBHOOK_ESD_OPEN_POSITIONS" in keys
+    grs = selected_scripts(only_arg="grs", stage_arg="")
+    assert len(grs) == 4
+    assert "WEBHOOK_GRS_OPEN_POSITIONS" in [key for _p, _l, key in grs]
 
 
 def test_selected_scripts_only_units_office_path() -> None:
