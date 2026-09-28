@@ -333,6 +333,8 @@ def validate_config() -> None:
     os.environ.setdefault("OSEC_LOWCOM_APPLICATION_URL", "https://example.invalid/osec-lowcom-app")
     os.environ.setdefault("OSEC_MIDCOM_APPLICATION_URL", "https://example.invalid/osec-midcom-app")
     os.environ.setdefault("OTE_APPLICATION_URL", "https://example.invalid/ote-application")
+    os.environ.setdefault("GRS_MIDCOM_APPLICATION_URL", "https://example.invalid/grs-midcom-app")
+    os.environ.setdefault("ESD_MIDCOM_APPLICATION_URL", "https://example.invalid/esd-midcom-app")
 
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
@@ -347,6 +349,8 @@ def validate_config() -> None:
         c.osec_application_results_url(),
         c.osec_lowcom_application_url(),
         c.ote_application_url(),
+        c.grs_midcom_application_url(),
+        c.esd_midcom_application_url(),
         c.server_regulations_embeds(),
     )
     if len(c.GRS_ESD_MIDDLE_COMMAND) < 1:

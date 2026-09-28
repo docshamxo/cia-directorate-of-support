@@ -41,7 +41,7 @@ This suite posts community roleplay content to Discord. Treat Roblox usernames, 
 |------|----------------|------|
 | Webhooks / bot token | `.env` (gitignored) | Never commit or paste into PRs |
 | Discord invite / channel snowflakes | `.env` | Not in `config/links.yaml` |
-| Applicant intake forms | `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`) | Rotate without writing IDs into git history |
+| Applicant intake forms | `.env` (`OSEC_*_APPLICATION_URL`, `OTE_APPLICATION_URL`, `GRS_MIDCOM_APPLICATION_URL`, `ESD_MIDCOM_APPLICATION_URL`) | Rotate without writing IDs into git history |
 | Applicant status tracker | `.env` (`OTE_APPLICATION_TRACKER_URL`) | **Staff/ops only** — do not post in public channels |
 | Staff Drive / ORBAT / TTP | `config/links.staff.local.yaml` | Placeholders only in public `links.yaml` |
 | High-command holders | `config/personnel.yaml` | Minimal public CoC names only — no bulk rosters |

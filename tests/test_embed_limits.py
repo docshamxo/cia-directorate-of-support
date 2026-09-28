@@ -5,6 +5,7 @@
 # Created by: docshamxo
 # Modified:
 #   - 2026-07-17 | docshamxo | Cover Discord embed preflight limits end-to-end.
+#   - 2026-09-28 | docshamxo | Cover GRS/ESD MIDCOM open-positions embeds.
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
@@ -138,9 +139,44 @@ def test_apply_effective_date_footer_stamps_last() -> None:
 
 
 def test_announcer_catalog_nonempty() -> None:
-    assert len(ANNOUNCERS) >= 18
+    assert len(ANNOUNCERS) >= 20
     keys = [item[2] for item in ANNOUNCERS]
     assert len(keys) == len(set(keys))
+    assert "WEBHOOK_GRS_OPEN_POSITIONS" in keys
+    assert "WEBHOOK_ESD_OPEN_POSITIONS" in keys
+
+
+def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv(
+        "GRS_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/grs-midcom-app",
+    )
+    monkeypatch.setenv(
+        "ESD_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/esd-midcom-app",
+    )
+    from units.grs import open_positions as grs_open
+    from units.esd import open_positions as esd_open
+
+    grs = grs_open._build_embeds()
+    esd = esd_open._build_embeds()
+    c.validate_embed_limits(grs)
+    c.validate_embed_limits(esd)
+    grs_blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in grs]
+    )
+    esd_blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in esd]
+    )
+    assert "MIDCOM" in grs_blob
+    assert "example.invalid/grs-midcom-app" in grs_blob
+    assert "qv4_pendragon" in grs_blob
+    assert "idk_manti" in grs_blob
+    assert "MIDCOM" in esd_blob
+    assert "example.invalid/esd-midcom-app" in esd_blob
+    assert "SSA+" in esd_blob
+    assert "@" not in grs_blob  # no inventing Discord pings
+    assert "<@" not in grs_blob
 
 
 # === FILE FOOTER ===

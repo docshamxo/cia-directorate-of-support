@@ -32,6 +32,7 @@ Setup once at repo root: [README.md](../../README.md). Live ops (✅ / purge): [
 python units/grs/coc.py
 python units/grs/information.py
 python units/grs/staff_documents.py
+python units/grs/open_positions.py
 ```
 
 Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BOT_TOKEN` is set.
@@ -43,6 +44,7 @@ Dry-run with `--dry-run`. Require ✅ with `--require-reaction` when `DISCORD_BO
 | [`coc.py`](coc.py) | GRS chain of command (PUBLIC) | `WEBHOOK_GRS_COC` |
 | [`information.py`](information.py) | GRS public information | `WEBHOOK_GRS_INFORMATION` |
 | [`staff_documents.py`](staff_documents.py) | Staff documents (STAFF) | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
+| [`open_positions.py`](open_positions.py) | MIDCOM open positions | `WEBHOOK_GRS_OPEN_POSITIONS` |
 
 ## Edit
 
