@@ -19,7 +19,9 @@
 #   - 2026-07-17 | docshamxo | Add General Standard Training Guide (shared community link).
 #   - 2026-08-30 | docshamxo | Drop duplicate General Information; regroup training links.
 #   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame; fix CIA DS | labels.
+#   - 2026-09-28 | docshamxo | Replace retired General Info & CoC with Handbook.
 # === END FILE HEADER ===
+
 
 """
 CIA OTE staff documents announcer.
@@ -62,9 +64,9 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=_COLOR,
             extra_fields=(
                 staff_docs_link(
-                    "General Information & CoC",
-                    "OTE General Information & Chain of Command",
-                    "ote.staff_documents.general_info_coc",
+                    "Handbook",
+                    "OTE Handbook",
+                    "ote.staff_documents.handbook",
                 ),
             ),
         ),
