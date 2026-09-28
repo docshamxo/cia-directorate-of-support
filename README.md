@@ -142,8 +142,8 @@ Directorate of Support (DS)
 | [`units/ds/`](units/ds/) | 3 | [README](units/ds/README.md) |
 | [`units/osec/`](units/osec/) | 4 | [README](units/osec/README.md) |
 | [`units/ote/`](units/ote/) | 5 | [README](units/ote/README.md) |
-| [`units/grs/`](units/grs/) | 3 | [README](units/grs/README.md) |
-| [`units/esd/`](units/esd/) | 3 | [README](units/esd/README.md) |
+| [`units/grs/`](units/grs/) | 4 | [README](units/grs/README.md) |
+| [`units/esd/`](units/esd/) | 4 | [README](units/esd/README.md) |
 
 Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (shared helpers), `assets/` (logos), `tools/` (validators + diagnose), `docs/` (ops + process).
 
@@ -169,9 +169,11 @@ Also: [`units/`](units/) (office announcers), `config/` (YAML), `common/` (share
 | 14 | `python units/grs/coc.py` | `WEBHOOK_GRS_COC` |
 | 15 | `python units/grs/information.py` | `WEBHOOK_GRS_INFORMATION` |
 | 16 | `python units/grs/staff_documents.py` | `WEBHOOK_GRS_STAFF_DOCUMENTS` |
-| 17 | `python units/esd/coc.py` | `WEBHOOK_ESD_COC` |
-| 18 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
-| 19 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| 17 | `python units/grs/open_positions.py` | `WEBHOOK_GRS_OPEN_POSITIONS` |
+| 18 | `python units/esd/coc.py` | `WEBHOOK_ESD_COC` |
+| 19 | `python units/esd/information.py` | `WEBHOOK_ESD_INFORMATION` |
+| 20 | `python units/esd/staff_documents.py` | `WEBHOOK_ESD_STAFF_DOCUMENTS` |
+| 21 | `python units/esd/open_positions.py` | `WEBHOOK_ESD_OPEN_POSITIONS` |
 
 ---
 
