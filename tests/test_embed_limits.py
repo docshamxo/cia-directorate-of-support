@@ -249,6 +249,46 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
     assert "<@" not in grs_blob
 
 
+def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv(
+        "OSEC_LOWCOM_APPLICATION_URL",
+        "https://example.invalid/osec-lowcom-app",
+    )
+    monkeypatch.setenv(
+        "OSEC_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/osec-midcom-app",
+    )
+    monkeypatch.setenv(
+        "GRS_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/grs-midcom-app",
+    )
+    monkeypatch.setenv(
+        "ESD_MIDCOM_APPLICATION_URL",
+        "https://example.invalid/esd-midcom-app",
+    )
+    osec_open = _load_unit_module("units/osec/open_positions.py", "osec_open_positions")
+    embeds = osec_open._build_embeds()
+    c.validate_embed_limits(embeds)
+    blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds]
+    )
+    titles = [e.title or "" for e in embeds]
+    assert "GRS MIDCOM (OPEN)" in titles
+    assert "ESD MIDCOM (OPEN)" in titles
+    assert "example.invalid/osec-lowcom-app" in blob
+    assert "example.invalid/osec-midcom-app" in blob
+    assert "example.invalid/grs-midcom-app" in blob
+    assert "example.invalid/esd-midcom-app" in blob
+    assert "qv4_pendragon" in blob
+    assert "idk_manti" in blob
+    assert "exempted for 1 week" in blob
+    assert "SSA+" in blob
+    assert "instant denial" in blob
+    assert "<@" not in blob
+    assert "@everyone" not in blob
+    assert "@here" not in blob
+
+
 @pytest.mark.parametrize(
     ("builder", "abbrev", "unit_full"),
     [

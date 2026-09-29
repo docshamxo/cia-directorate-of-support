@@ -7,6 +7,7 @@
 #   - 2026-07-17 | docshamxo | Dry-run, staff fail-closed, CoC username wrap.
 #   - 2026-07-17 | docshamxo | Expect alerting SystemExit codes from run_announcer.
 #   - 2026-09-28 | docshamxo | Cover optional discord_id profile links in Role.format.
+#   - 2026-09-28 | docshamxo | Cover MESSAGE_ID edit-in-place path.
 # === END FILE HEADER ===
 
 """Regression tests for shared announcer entry helpers."""
@@ -151,6 +152,41 @@ def test_skip_empty_webhook(monkeypatch: pytest.MonkeyPatch) -> None:
         )
     assert excinfo.value.code == ANNOUNCER_SKIPPED
     called.assert_not_called()
+
+
+def test_resolve_edit_message_id(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID", raising=False)
+    assert a.resolve_edit_message_id("WEBHOOK_OSEC_OPEN_POSITIONS") is None
+    monkeypatch.setenv("WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID", "1554285150685233232")
+    assert a.resolve_edit_message_id("WEBHOOK_OSEC_OPEN_POSITIONS") == 1554285150685233232
+    monkeypatch.setenv("WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID", "not-a-snowflake")
+    with pytest.raises(SystemExit) as excinfo:
+        a.resolve_edit_message_id("WEBHOOK_OSEC_OPEN_POSITIONS")
+    assert excinfo.value.code == ANNOUNCER_CONFIG
+
+
+def test_edit_in_place_uses_message_id(monkeypatch: pytest.MonkeyPatch, capsys: Any) -> None:
+    monkeypatch.delenv("CIA_DRY_RUN", raising=False)
+    monkeypatch.setenv("WEBHOOK_OSEC_OPEN_POSITIONS", "https://discord.com/api/webhooks/1/token")
+    monkeypatch.setenv("WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID", "1554285150685233232")
+    monkeypatch.setenv("CIA_ALLOW_SKIP_REACTION", "1")
+    edited = MagicMock()
+    send = MagicMock()
+    monkeypatch.setattr(
+        "tools.roblox_coc_sync.discord_edit.edit_webhook_message",
+        edited,
+    )
+    monkeypatch.setattr(c, "send_webhook", send)
+    a.run_announcer(
+        webhook_key="WEBHOOK_OSEC_OPEN_POSITIONS",
+        username="OSEC",
+        build_embeds=lambda: [discord.Embed(title="t", description="d", color=1)],
+        dry_run=False,
+    )
+    edited.assert_called_once()
+    assert edited.call_args.kwargs["message_id"] == 1554285150685233232
+    send.assert_not_called()
+    assert "1554285150685233232" in capsys.readouterr().out
 
 
 def test_missing_webhook_raises_without_skip(monkeypatch: pytest.MonkeyPatch) -> None:

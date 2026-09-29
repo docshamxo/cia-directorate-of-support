@@ -19,6 +19,7 @@
 #   - 2026-09-08 | docshamxo | Shared staff-documents frame builders (hero/central/section/handling).
 #   - 2026-09-08 | docshamxo | Shared information-channel frame builders (public + reference hubs).
 #   - 2026-09-08 | docshamxo | GRS/ESD CoC: logo on hero embed only (not command block).
+#   - 2026-09-28 | docshamxo | Edit-in-place when WEBHOOK_*_MESSAGE_ID is set.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -27,6 +28,9 @@ Live sends go through ``cia_common.send_webhook``, which posts first, then
 deletes previously recorded message IDs (including sibling keys that share a
 webhook URL), and requires a checkmark via ``DISCORD_BOT_TOKEN``. Pass
 ``--allow-skip-reaction`` or set ``CIA_ALLOW_SKIP_REACTION=1`` to post without.
+
+When ``{webhook_key}_MESSAGE_ID`` is set to a numeric snowflake, the announcer
+PATCHes that webhook message in place instead of posting a new one.
 """
 
 from __future__ import annotations
@@ -76,6 +80,26 @@ def bot_channel_purge_requested() -> bool:
 
 def _cli_flag(name: str) -> bool:
     return name in sys.argv
+
+
+def message_id_env_key(webhook_key: str) -> str:
+    """Env key for optional edit-in-place snowflake (``WEBHOOK_*_MESSAGE_ID``)."""
+    return f"{webhook_key}_MESSAGE_ID"
+
+
+def resolve_edit_message_id(webhook_key: str) -> int | None:
+    """Return the webhook message snowflake to PATCH, or None to post+purge."""
+    raw = os.environ.get(message_id_env_key(webhook_key), "").strip()
+    if not raw:
+        return None
+    if not raw.isdigit():
+        key = message_id_env_key(webhook_key)
+        print(
+            f"{key} must be a numeric Discord snowflake (got {raw!r}).",
+            file=sys.stderr,
+        )
+        raise SystemExit(ANNOUNCER_CONFIG)
+    return int(raw)
 
 
 def preview_embeds(
@@ -195,23 +219,47 @@ def run_announcer(
             reopened.append(c.logo_file(c.confined_logo_path(filename)))
         return reopened
 
+    edit_message_id = resolve_edit_message_id(webhook_key)
     logger.info(
-        "event=send_start webhook_key=%s require_reaction=%s bot_channel_purge=%s",
+        "event=send_start webhook_key=%s require_reaction=%s bot_channel_purge=%s "
+        "edit_message_id=%s",
         webhook_key,
         require_reaction,
         bot_channel_purge,
+        edit_message_id,
     )
     try:
-        c.send_webhook(
-            webhook_url,
-            embeds,
-            username=username,
-            files=file_factory,
-            state_key=webhook_key,
-            require_reaction=require_reaction,
-            effective_date=False,  # already applied above when requested
-            bot_channel_purge=bot_channel_purge,
-        )
+        if edit_message_id is not None:
+            from tools.roblox_coc_sync.discord_edit import edit_webhook_message
+
+            edit_webhook_message(
+                webhook_url=webhook_url,
+                message_id=edit_message_id,
+                embeds=embeds,
+                username=username,
+                files=file_factory(),
+                dry_run=False,
+            )
+            c.console_print(
+                f"Edited webhook message {edit_message_id} "
+                f"({message_id_env_key(webhook_key)})"
+            )
+            if require_reaction:
+                c.console_print(
+                    "Note: edit-in-place skips checkmark reaction "
+                    "(use --allow-skip-reaction or add reaction manually)."
+                )
+        else:
+            c.send_webhook(
+                webhook_url,
+                embeds,
+                username=username,
+                files=file_factory,
+                state_key=webhook_key,
+                require_reaction=require_reaction,
+                effective_date=False,  # already applied above when requested
+                bot_channel_purge=bot_channel_purge,
+            )
     except Exception:
         logger.exception(
             "event=send_fail webhook_key=%s duration_ms=%s",
@@ -220,10 +268,11 @@ def run_announcer(
         )
         raise
     logger.info(
-        "event=send_ok webhook_key=%s embeds=%s duration_ms=%s",
+        "event=send_ok webhook_key=%s embeds=%s duration_ms=%s edit_message_id=%s",
         webhook_key,
         len(embeds),
         int((time.monotonic() - started) * 1000),
+        edit_message_id,
     )
 
 
