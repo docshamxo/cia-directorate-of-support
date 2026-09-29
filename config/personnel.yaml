@@ -34,6 +34,7 @@
 #   - 2026-09-19 | docshamxo | DCDSD AndyShotSecond; vacate DTE; GRS CM qv4_pendragon, DCM vacant.
 #   - 2026-09-19 | docshamxo | Vacate OTE Dean (MythicalArlo).
 #   - 2026-09-28 | docshamxo | GRS DCM idk_manti; OTE DTE DeviantReyes, Dean zieahnwwechampion; ADTE vacant.
+#   - 2026-09-28 | docshamxo | OSEC HC: DS rattler_29, DDS Shaikhuu, ADS crazybijij2, S Astroshard21.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -101,20 +102,20 @@ ote_staff_ranks:
 osec_high_command:
 - abbrev: DS
   title: Director of Security
-  holder: liveurlite
-  discord_id: "970702225817096203"
+  holder: rattler_29
+  discord_id: "1349431013469851688"
 - abbrev: DDS
   title: Deputy Director of Security
-  holder: Rattler_289
-  discord_id: "1349431013469851688"
-- abbrev: ADS
-  title: Assistant Deputy Director of Security
   holder: Shaikhuu
   discord_id: "718133092916920360"
-- abbrev: S
-  title: Superintendent
+- abbrev: ADS
+  title: Assistant Deputy Director of Security
   holder: crazybijij2
   discord_id: "1198235273570554022"
+- abbrev: S
+  title: Superintendent
+  holder: Astroshard21
+  discord_id: "929378869524443158"
 grs_command:
 - abbrev: CM
   title: Chief Marshal
