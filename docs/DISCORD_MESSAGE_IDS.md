@@ -7,6 +7,7 @@ Created by: docshamxo
 Modified:
   - 2026-09-28 | docshamxo | Record OTE + OSEC webhook message snowflakes for edit-in-place.
   - 2026-09-28 | docshamxo | Note OTE/DS CoC IDs are consumed by roblox_coc_sync.
+  - 2026-09-28 | docshamxo | Record OSEC open positions message ID.
 === END FILE HEADER ===
 -->
 
@@ -19,6 +20,9 @@ Set the matching `*_MESSAGE_ID` keys in local `.env` (see `.env.example`).
 `WEBHOOK_OTE_COC_MESSAGE_ID` and `WEBHOOK_DS_COC_MESSAGE_ID` are used by
 `python -m tools.roblox_coc_sync` — see [ROBLOX_COC_SYNC.md](ROBLOX_COC_SYNC.md).
 
+Announcers also honor `{webhook_key}_MESSAGE_ID` when set: they PATCH that message
+instead of posting a new one (see `common/announcer.py`).
+
 ## Recorded anchors (2026-09-28)
 
 | Purpose | Env key | Message ID | Channel | Guild |
@@ -27,6 +31,7 @@ Set the matching `*_MESSAGE_ID` keys in local `.env` (see `.env.example`).
 | OTE Program Overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW_MESSAGE_ID` | `1554039682675900467` | `1450874818504298566` | `1450874817459912789` (OTE) |
 | OTE Chain of Command | `WEBHOOK_OTE_COC_MESSAGE_ID` | `1554041080259805256` | `1450874818328264811` | `1450874817459912789` (OTE) |
 | OSEC Chain of Command | `WEBHOOK_OSEC_COC_MESSAGE_ID` | `1554041066376790046` | `1442014373538168934` | `1442014369507446918` (OSEC) |
+| OSEC Open Positions | `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID` | `1554285150685233232` | `1495760504596201512` | `1442014369507446918` (OSEC) |
 
 ### Links
 
@@ -34,6 +39,7 @@ Set the matching `*_MESSAGE_ID` keys in local `.env` (see `.env.example`).
 - [OTE Program Overview](https://discord.com/channels/1450874817459912789/1450874818504298566/1554039682675900467)
 - [OTE CoC](https://discord.com/channels/1450874817459912789/1450874818328264811/1554041080259805256)
 - [OSEC CoC](https://discord.com/channels/1442014369507446918/1442014373538168934/1554041066376790046)
+- [OSEC Open Positions](https://discord.com/channels/1442014369507446918/1495760504596201512/1554285150685233232)
 
 ## Naming
 
@@ -42,6 +48,7 @@ Message ID env keys follow the webhook key + `_MESSAGE_ID`:
 - `WEBHOOK_OTE_OPEN_POSITIONS` → `WEBHOOK_OTE_OPEN_POSITIONS_MESSAGE_ID`
 - `WEBHOOK_OTE_PROGRAM_OVERVIEW` → `WEBHOOK_OTE_PROGRAM_OVERVIEW_MESSAGE_ID`
 - `WEBHOOK_OTE_COC` → `WEBHOOK_OTE_COC_MESSAGE_ID`
+- `WEBHOOK_OSEC_OPEN_POSITIONS` → `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID`
 - OSEC CoC has no announcer webhook key in-repo yet; use `WEBHOOK_OSEC_COC_MESSAGE_ID` for the live CoC channel message.
 - Roblox CoC sync uses `WEBHOOK_DS_COC_MESSAGE_ID` (`WEBHOOK_DS_CHAIN_OF_COMMAND`) and
   `WEBHOOK_OTE_COC_MESSAGE_ID` (`WEBHOOK_OTE_COC`) — see `docs/ROBLOX_COC_SYNC.md`.

@@ -21,6 +21,13 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
+- OSEC open positions now includes GRS and ESD MIDCOM applications (forms via
+  `GRS_MIDCOM_APPLICATION_URL` / `ESD_MIDCOM_APPLICATION_URL`) in
+  `units/osec/open_positions.py`.
+- Announcer edit-in-place when `{webhook_key}_MESSAGE_ID` is set (PATCH instead
+  of post+purge); OSEC open positions anchor
+  `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID` documented in
+  `docs/DISCORD_MESSAGE_IDS.md`.
 - GRS and ESD MIDCOM open-positions announcers (`units/grs/open_positions.py`,
   `units/esd/open_positions.py`) with env form URLs
   (`GRS_MIDCOM_APPLICATION_URL`, `ESD_MIDCOM_APPLICATION_URL`) and webhooks
