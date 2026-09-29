@@ -266,12 +266,14 @@ def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyP
         "ESD_MIDCOM_APPLICATION_URL",
         "https://example.invalid/esd-midcom-app",
     )
+    monkeypatch.setenv(
+        "DISCORD_OSEC_APPLICATION_RESULTS_URL",
+        "https://example.invalid/osec-results",
+    )
     osec_open = _load_unit_module("units/osec/open_positions.py", "osec_open_positions")
     embeds = osec_open._build_embeds()
     c.validate_embed_limits(embeds)
-    blob = "\n".join(
-        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds]
-    )
+    blob = "\n".join([(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds])
     titles = [e.title or "" for e in embeds]
     assert "GRS MIDCOM (OPEN)" in titles
     assert "ESD MIDCOM (OPEN)" in titles

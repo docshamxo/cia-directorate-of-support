@@ -239,8 +239,7 @@ def run_announcer(
                 dry_run=False,
             )
             c.console_print(
-                f"Edited webhook message {edit_message_id} "
-                f"({message_id_env_key(webhook_key)})"
+                f"Edited webhook message {edit_message_id} ({message_id_env_key(webhook_key)})"
             )
             if require_reaction:
                 c.console_print(
