@@ -230,9 +230,7 @@ def run_announcer(
     )
     try:
         if edit_message_id is not None:
-            from tools.roblox_coc_sync.discord_edit import edit_webhook_message
-
-            edit_webhook_message(
+            c.edit_webhook_message(
                 webhook_url=webhook_url,
                 message_id=edit_message_id,
                 embeds=embeds,

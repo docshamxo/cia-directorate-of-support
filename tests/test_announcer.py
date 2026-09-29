@@ -172,10 +172,7 @@ def test_edit_in_place_uses_message_id(monkeypatch: pytest.MonkeyPatch, capsys: 
     monkeypatch.setenv("CIA_ALLOW_SKIP_REACTION", "1")
     edited = MagicMock()
     send = MagicMock()
-    monkeypatch.setattr(
-        "tools.roblox_coc_sync.discord_edit.edit_webhook_message",
-        edited,
-    )
+    monkeypatch.setattr(c, "edit_webhook_message", edited)
     monkeypatch.setattr(c, "send_webhook", send)
     a.run_announcer(
         webhook_key="WEBHOOK_OSEC_OPEN_POSITIONS",

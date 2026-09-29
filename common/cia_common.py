@@ -30,6 +30,7 @@
 #   - 2026-08-30 | docshamxo | Dynamic last-updated / effective-date stamps on each post.
 #   - 2026-08-30 | docshamxo | Property notice only in effective-date footer (no body duplicate).
 #   - 2026-09-08 | docshamxo | Rules Governing Policies: Discord/Roblox ToS + Code of Agency Conduct.
+#   - 2026-09-28 | docshamxo | Add edit_webhook_message for announcer PATCH by message ID.
 # === END FILE HEADER ===
 
 """
@@ -1491,6 +1492,58 @@ def _react_to_messages(
         raise RuntimeError("Required checkmark reactions failed: " + "; ".join(errors))
     if require_reaction and reacted == 0 and messages:
         raise RuntimeError("Required checkmark reactions failed: no messages reacted")
+
+
+def edit_webhook_message(
+    *,
+    webhook_url: str,
+    message_id: int,
+    embeds: list[discord.Embed],
+    username: str | None = None,
+    files: list[discord.File] | None = None,
+    dry_run: bool = False,
+) -> None:
+    """PATCH an existing Discord webhook message by snowflake ID.
+
+    Webhook edits cannot change the display username; ``username`` is logged only.
+    Attach logo files via ``attachments=`` (discord.py does not accept ``files=``).
+    """
+    from discord import SyncWebhook
+
+    validate_webhook_url(webhook_url)
+    validate_embed_limits(embeds)
+    masked = mask_webhook_url(webhook_url)
+    if dry_run:
+        console_print(
+            f"[dry-run] edit message {message_id} via {masked} "
+            f"as {username or '(unchanged)'} - {len(embeds)} embed(s)"
+        )
+        logger.info(
+            "event=dry_run_edit message_id=%s username=%s embeds=%s",
+            message_id,
+            username or "(unchanged)",
+            len(embeds),
+        )
+        return
+
+    session = _session_with_timeout()
+    try:
+        webhook = SyncWebhook.from_url(webhook_url, session=session)
+        kwargs: dict[str, Any] = {
+            "embeds": list(embeds),
+            "allowed_mentions": discord.AllowedMentions.none(),
+        }
+        if files:
+            kwargs["attachments"] = list(files)
+        webhook.edit_message(message_id, **kwargs)
+        logger.info(
+            "event=edit_ok message_id=%s embeds=%s webhook=%s",
+            message_id,
+            len(embeds),
+            masked,
+        )
+    finally:
+        session.close()
 
 
 def send_webhook(
