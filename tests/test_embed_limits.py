@@ -8,6 +8,7 @@
 #   - 2026-09-28 | docshamxo | Cover GRS/ESD MIDCOM open-positions embeds.
 #   - 2026-09-28 | docshamxo | Load open_positions via importlib (units are scripts).
 #   - 2026-10-03 | docshamxo | Expect VACANT for vacated GRS CM/DCM in open-positions embeds.
+#   - 2026-10-03 | docshamxo | Expect VACANT for vacated OSEC ADS / ESD CM in open-positions embeds.
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
@@ -247,6 +248,9 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
     assert "idk_manti" not in grs_blob
     assert "MIDCOM" in esd_blob
     assert "example.invalid/esd-midcom-app" in esd_blob
+    assert "VACANT" in esd_blob
+    assert "xBlq_h" not in esd_blob
+    assert "jayheart592010" in esd_blob
     assert "SSA+" in esd_blob
     assert "2 weeks" in esd_blob
     assert "exempted for 1 week" in grs_blob
@@ -291,6 +295,8 @@ def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyP
     assert "VACANT" in blob
     assert "qv4_pendragon" not in blob
     assert "idk_manti" not in blob
+    assert "crazybijij2" not in blob
+    assert "xBlq_h" not in blob
     assert "exempted for 1 week" in blob
     assert "SSA+" in blob
     assert "instant denial" in blob
