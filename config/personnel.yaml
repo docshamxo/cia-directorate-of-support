@@ -36,6 +36,7 @@
 #   - 2026-09-28 | docshamxo | GRS DCM idk_manti; OTE DTE DeviantReyes, Dean zieahnwwechampion; ADTE vacant.
 #   - 2026-09-28 | docshamxo | OSEC HC: DS rattler_29, DDS Shaikhuu, ADS crazybijij2, S Astroshard21.
 #   - 2026-10-03 | docshamxo | Agency EL: DDIR ashlyn, EDIR DustyInvictus, CIS VintInvictus.
+#   - 2026-10-03 | docshamxo | Vacate GRS CM (qv4_pendragon) and DCM (idk_manti).
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -120,12 +121,10 @@ osec_high_command:
 grs_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: qv4_pendragon
-  discord_id: "1292618607225733140"
+  holder: VACANT
 - abbrev: DCM
   title: Deputy Chief Marshal
-  holder: idk_manti
-  discord_id: "347696589495861248"
+  holder: VACANT
 esd_command:
 - abbrev: CM
   title: Chief Marshal

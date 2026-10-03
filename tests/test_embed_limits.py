@@ -7,6 +7,7 @@
 #   - 2026-07-17 | docshamxo | Cover Discord embed preflight limits end-to-end.
 #   - 2026-09-28 | docshamxo | Cover GRS/ESD MIDCOM open-positions embeds.
 #   - 2026-09-28 | docshamxo | Load open_positions via importlib (units are scripts).
+#   - 2026-10-03 | docshamxo | Expect VACANT for vacated GRS CM/DCM in open-positions embeds.
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
@@ -241,8 +242,9 @@ def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyP
     )
     assert "MIDCOM" in grs_blob
     assert "example.invalid/grs-midcom-app" in grs_blob
-    assert "qv4_pendragon" in grs_blob
-    assert "idk_manti" in grs_blob
+    assert "VACANT" in grs_blob
+    assert "qv4_pendragon" not in grs_blob
+    assert "idk_manti" not in grs_blob
     assert "MIDCOM" in esd_blob
     assert "example.invalid/esd-midcom-app" in esd_blob
     assert "SSA+" in esd_blob
@@ -286,8 +288,9 @@ def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyP
     assert "example.invalid/osec-midcom-app" in blob
     assert "example.invalid/grs-midcom-app" in blob
     assert "example.invalid/esd-midcom-app" in blob
-    assert "qv4_pendragon" in blob
-    assert "idk_manti" in blob
+    assert "VACANT" in blob
+    assert "qv4_pendragon" not in blob
+    assert "idk_manti" not in blob
     assert "exempted for 1 week" in blob
     assert "SSA+" in blob
     assert "instant denial" in blob
