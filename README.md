@@ -22,7 +22,7 @@ Modified:
   - 2026-07-17 | docshamxo | Shorten README; point operators to OPS runbooks.
   - 2026-07-17 | docshamxo | Document staged rollout, changelog, and release checklist.
   - 2026-07-17 | docshamxo | Require bot token for live; allow-skip, bot purge, diagnose tool.
-  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice callout.
+  - 2026-07-17 | docshamxo | Add Invictus Studios proprietary property notice callout.
   - 2026-07-17 | docshamxo | Link accessibility guidance for channel embeds.
   - 2026-07-17 | docshamxo | Strengthen non-affiliation banner; link LICENSE and BRAND.md.
   - 2026-07-17 | docshamxo | Point Docs map at docs/README.md index.
@@ -44,7 +44,7 @@ Modified:
 </p>
 
 <blockquote align="center">
-  <strong>Property of the Central Intelligence Agency (ROBLOX), Inter Studios</strong><br>
+  <strong>Property of the Central Intelligence Agency (ROBLOX), Invictus Studios</strong><br>
   <small>Proprietary community material — see <a href="docs/NOTICE">NOTICE</a>.</small>
 </blockquote>
 
@@ -193,7 +193,7 @@ Full index: **[docs/README.md](docs/README.md)** (OPS, release, security, access
 | [BRAND.md](docs/BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
 | [LICENSE](LICENSE) | MIT + brand use / trademark notice |
 | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Edits, validation, new announcers |
-| [NOTICE](docs/NOTICE) | Proprietary ownership (Inter Studios) |
+| [NOTICE](docs/NOTICE) | Proprietary ownership (Invictus Studios) |
 | [docs/BRANCH_PROTECTION.md](docs/BRANCH_PROTECTION.md) | Maintainer `main` protection / rulesets |
 | [config/README.md](config/README.md) | YAML + Discord embed style |
 | [tools/README.md](tools/README.md) | Validation and diagnose tools |

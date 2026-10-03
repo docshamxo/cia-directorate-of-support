@@ -53,8 +53,8 @@ def test_disclaimer_title_and_affiliation() -> None:
     assert "not affiliated" in (embed.description or "").lower()
 
 
-def test_disclaimer_only_on_rules_embeds() -> None:
-    """Disclaimer closer is reserved for OTE/OSEC Rules posts."""
+def test_rules_close_with_classification_not_disclaimer() -> None:
+    """OIG-aligned: rules closers are Classification LEVEL blocks, not Disclaimer."""
     for embeds in (
         c.server_regulations_embeds(),
         c.server_regulations_embeds(
@@ -65,7 +65,9 @@ def test_disclaimer_only_on_rules_embeds() -> None:
         ),
     ):
         titles = [e.title or "" for e in embeds]
-        assert titles.count("Disclaimer · Community") == 1
+        assert "Disclaimer · Community" not in titles
+        assert titles[-1] == "Classification"
+        assert "LEVEL 1" in (embeds[-1].description or "")
 
     hero = c.hero_embed(
         title="PUBLIC INFORMATION",

@@ -77,6 +77,7 @@ REQUIRED_CONFIG = (
     ROOT / "config" / "personnel.yaml",
     ROOT / "config" / "links.yaml",
     ROOT / "config" / "regulations.yaml",
+    ROOT / "config" / "classification.yaml",
 )
 
 HEADER_MARKER = "=== FILE HEADER ==="
@@ -395,10 +396,12 @@ def validate_config() -> None:
     )
     if len(c.GRS_ESD_MIDDLE_COMMAND) < 1:
         fail("grs_esd_middle_command must contain at least one rank")
-    if "PUBLIC" not in c.DISCLAIMER_TEXT and "PUBLIC" not in c.DISCLAIMER_LINKS_TEXT:
-        fail("disclaimer copy should use community PUBLIC marking")
-    if "Inter Studios" not in c.PROPERTY_NOTICE:
-        fail("property_notice should name Inter Studios")
+    if "LEVEL" not in c.DISCLAIMER_TEXT and "LEVEL" not in c.DISCLAIMER_LINKS_TEXT:
+        fail("disclaimer copy should use community LEVEL vocabulary")
+    if "Invictus Studios" not in c.PROPERTY_NOTICE:
+        fail("property_notice should name Invictus Studios")
+    if getattr(c, "STUDIO", "") != "Invictus Studios":
+        fail("branding.yaml studio should be Invictus Studios")
     if "not affiliated" not in c.AFFILIATION_NOTICE.lower():
         fail("affiliation_notice must state non-affiliation")
     if "not affiliated" not in c.DISCLAIMER_TEXT.lower():
@@ -408,18 +411,27 @@ def validate_config() -> None:
         fail("agency_eyebrow must frame units as community/RP (not bare USG banner)")
     if BARE_CIA_EYEBROW_RE.search(eyebrow):
         fail("agency_eyebrow must not use a bare Central Intelligence Agency banner")
-    if "PUBLIC" not in c.MARKING_PUBLIC or "STAFF" not in c.MARKING_STAFF:
-        fail("marking_public / marking_staff copy should use community markings")
+    if "LEVEL 1" not in c.MARKING_PUBLIC or "LEVEL 2" not in c.MARKING_STAFF:
+        fail("marking_public / marking_staff copy should use LEVEL vocabulary")
+    if "LEVEL 1" not in c.classification_label("level_1"):
+        fail("classification.yaml markings.level_1 should resolve to LEVEL 1")
     public_disc = c.disclaimer_embed(color=c.COLOR_DS).description or ""
     if "not affiliated" not in public_disc.lower():
         fail("disclaimer_embed must state non-affiliation")
-    if "Inter Studios" in public_disc:
-        fail("disclaimer body must not duplicate property_notice (footer owns it)")
+    if "Invictus Studios" in public_disc:
+        fail("disclaimer body must not duplicate property_notice (docs/NOTICE owns it)")
+    rules = c.server_regulations_embeds()
+    if any((e.title or "") == "Disclaimer · Community" for e in rules):
+        fail("server_regulations_embeds must not include Disclaimer (OIG-aligned)")
+    if (rules[-1].title or "") != "Classification":
+        fail("server_regulations_embeds must close with Classification block")
     stamp_check = [c.discord.Embed(description="stamp")]
     c.apply_effective_date_footer(stamp_check)
     footer_text = stamp_check[-1].footer.text or ""
-    if "Inter Studios" not in footer_text:
-        fail("effective-date footer should include property_notice")
+    if "Effective" not in footer_text:
+        fail("effective-date footer should include Effective date")
+    if "Invictus Studios" in footer_text or "Inter Studios" in footer_text:
+        fail("effective-date footer must not include property_notice (OIG placement)")
     print(f"Config: {len(REQUIRED_CONFIG)} YAML files load successfully")
 
 
@@ -545,16 +557,12 @@ def validate_style_guide() -> None:
                 issues.append(f"{rel}: use BOT_OTE instead of BOT_OTE_ALT")
             if USG_MARKING_RE.search(text):
                 issues.append(
-                    f"{rel}: USG-style marking vocabulary found; use PUBLIC/STAFF/CANDIDATE"
+                    f"{rel}: USG-style marking vocabulary found; use CLASSIFICATION LEVEL N"
                 )
 
-            if (
-                "disclaimer_embed(" in text
-                and "def disclaimer_embed" not in text
-                and path.name != "server_regulations.py"
-            ):
+            if "disclaimer_embed(" in text and "def disclaimer_embed" not in text:
                 issues.append(
-                    f"{rel}: disclaimer_embed is Rules-only (OTE/OSEC server_regulations)"
+                    f"{rel}: disclaimer_embed is retired from live announcers (OIG-aligned)"
                 )
 
             for match in DISCLAIMER_CALL_RE.finditer(text):

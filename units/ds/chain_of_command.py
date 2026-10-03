@@ -37,7 +37,7 @@ from common.announcer import (
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         c.chain_intro_embed(unit="Directorate of Support", color=c.COLOR_DS),
         agency_executive_embed(color=c.COLOR_DS),
         ds_leadership_embed(color=c.COLOR_DS, logo=c.LOGOS["ds"]),
@@ -86,6 +86,9 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
     ]
+    return c.append_classification_block(
+        embeds, c.classification_label("level_1"), color=c.COLOR_DS
+    )
 
 
 def send_chain_of_command() -> None:

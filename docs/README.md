@@ -33,7 +33,7 @@ Start here when you need an operator or maintainer guide. Day-to-day setup stays
 | [SECURITY.md](../SECURITY.md) | Secrets, leak rotation, compartmentation |
 | [BRAND.md](BRAND.md) | Bot naming, non-affiliation, trademark / brand use |
 | [LICENSE](../LICENSE) | MIT + brand use / trademark notice |
-| [NOTICE](NOTICE) | Proprietary ownership (Inter Studios) |
+| [NOTICE](NOTICE) | Proprietary ownership (Invictus Studios) |
 
 ## Maintainers (GitHub / process)
 

@@ -45,7 +45,7 @@ def build_ds_coc_embeds(
         c.embed(
             title="Directorate of Support",
             description=(
-                f"{c.motto_line(c.DS_MOTTO, classification=c.DS_CLASSIFICATION)}\n\n{c.DS_ABOUT}"
+                f"{c.motto_line(c.DS_MOTTO)}\n\n{c.DS_ABOUT}"
             ),
             logo=c.LOGOS["ds"],
             fields=(

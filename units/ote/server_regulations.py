@@ -4,15 +4,10 @@
 # Created: 2026-08-02
 # Created by: docshamxo
 # Modified:
-#   - 2026-08-02 | docshamxo | OTE rules channel — same regulations as OSEC with OTE office name.
+#   - 2026-10-03 | docshamxo | OIG Levels closer + policy link buttons; drop Disclaimer.
 # === END FILE HEADER ===
 
-"""
-CIA OTE server regulations announcer.
-
-Posts the same communications-server regulations as DS/OSEC, branded for the
-Office of Training & Education, to the OTE Rules webhook.
-"""
+"""CIA OTE server regulations announcer."""
 
 from __future__ import annotations
 
@@ -36,6 +31,7 @@ def send_ote_server_regulations() -> None:
         webhook_key="WEBHOOK_OTE_RULES",
         username=c.BOT_OTE,
         build_embeds=_build_embeds,
+        build_view=c.rules_policy_view,
         files=[c.logo_file(c.LOGOS["ote"])],
         dry_run="--dry-run" in sys.argv,
     )

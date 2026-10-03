@@ -38,7 +38,7 @@ from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         c.hero_embed(
             title="OPEN POSITIONS",
             unit="Office of Security",
@@ -151,6 +151,9 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=c.COLOR_OSEC,
         ),
     ]
+    return c.append_classification_block(
+        embeds, c.classification_label("level_1"), color=c.COLOR_OSEC
+    )
 
 
 def send_open_positions() -> None:

@@ -17,7 +17,7 @@ Modified:
   - 2026-07-17 | docshamxo | Document pre-commit hooks and coverage floor.
   - 2026-07-17 | docshamxo | Point maintainers at changelog and release checklist.
   - 2026-07-17 | docshamxo | Secret-split + CODEOWNERS enforcement pointers.
-  - 2026-07-17 | docshamxo | Note Inter Studios proprietary property notice.
+  - 2026-07-17 | docshamxo | Note Invictus Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Point contributors at accessibility embed rules.
   - 2026-07-17 | docshamxo | Point contributors at BRAND.md / LICENSE bot-naming rules.
 === END FILE HEADER ===
@@ -29,7 +29,7 @@ Install once via the root [README.md](../README.md) (`git`, Python 3.10+, clone,
 
 Unofficial Roblox community project — **not affiliated with** the US Government or CIA. Markings: **PUBLIC** / **STAFF** / **CANDIDATE** only. Brand and bot naming: [BRAND.md](BRAND.md) · [LICENSE](../LICENSE).
 
-**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](NOTICE).
+**Property of the Central Intelligence Agency (ROBLOX), Invictus Studios** — see [NOTICE](NOTICE).
 
 ## Sensitivity
 
@@ -41,7 +41,7 @@ Unofficial Roblox community project — **not affiliated with** the US Governmen
 - Keep affiliation / fiction disclaimer text in closers
 - Keep secret classes split (webhooks vs bot token vs staff overlay) — see [SECURITY.md](../SECURITY.md)
 - Changes under `common/`, `config/`, `.github/`, and dependency pins expect Code Owner review once enforcement is enabled ([docs/CODEOWNERS_ENFORCEMENT.md](CODEOWNERS_ENFORCEMENT.md))
-- Keep the Inter Studios property notice (`copy.property_notice` in [`config/organization.yaml`](../config/organization.yaml); see [NOTICE](NOTICE))
+- Keep the Invictus Studios property notice (`copy.property_notice` in [`config/organization.yaml`](../config/organization.yaml); see [NOTICE](NOTICE))
 - Keep webhook bot names as `CIA {Office} Bot` (see [BRAND.md](BRAND.md)); do not use bare `CIA | …` usernames
 - Live ops (✅ / purge): [OPS.md](OPS.md) · leak rotation / privacy: [SECURITY.md](../SECURITY.md)
 ## Everyday edits

@@ -20,6 +20,7 @@
 #   - 2026-09-08 | docshamxo | Shared information-channel frame builders (public + reference hubs).
 #   - 2026-09-08 | docshamxo | GRS/ESD CoC: logo on hero embed only (not command block).
 #   - 2026-09-28 | docshamxo | Edit-in-place when WEBHOOK_*_MESSAGE_ID is set.
+#   - 2026-10-03 | docshamxo | OIG Levels closers, link-button views, motto-once CoC.
 # === END FILE HEADER ===
 
 """Shared entry helpers for Discord announcer scripts.
@@ -50,6 +51,7 @@ from common.manifest import STAFF_WEBHOOK_KEYS
 
 EmbedBuilder = Callable[[], list[discord.Embed]]
 FileBuilder = Callable[[], list[discord.File]]
+ViewBuilder = Callable[[], discord.ui.View | None]
 
 logger = logging.getLogger("cia.announcer")
 
@@ -107,6 +109,7 @@ def preview_embeds(
     *,
     webhook_key: str,
     username: str,
+    view: discord.ui.View | None = None,
 ) -> None:
     c.validate_embed_limits(embeds)
     c.console_print(f"[dry-run] {webhook_key} as {username} - {len(embeds)} embed(s)")
@@ -115,6 +118,13 @@ def preview_embeds(
         field_count = len(embed.fields)
         desc_len = len(embed.description or "")
         c.console_print(f"  {index}. {title}  fields={field_count}  description_chars={desc_len}")
+    if view is not None:
+        buttons = [
+            child.label
+            for child in view.children
+            if isinstance(child, discord.ui.Button)
+        ]
+        c.console_print(f"  buttons: {buttons}")
 
 
 def _warn_or_fail_staff_placeholders(
@@ -153,6 +163,7 @@ def run_announcer(
     username: str,
     build_embeds: EmbedBuilder,
     files: Sequence[discord.File] | FileBuilder | None = None,
+    build_view: ViewBuilder | None = None,
     dry_run: bool | None = None,
 ) -> None:
     """Build embeds and either preview or send them to Discord.
@@ -179,13 +190,14 @@ def run_announcer(
         is_dry_run(dry_run=dry_run),
     )
     embeds = build_embeds()
+    view = build_view() if build_view else None
     c.validate_embed_limits(embeds)
     if effective_date:
         c.apply_effective_date_footer(embeds)
     _warn_or_fail_staff_placeholders(webhook_key, embeds, dry_run=dry_run)
 
     if is_dry_run(dry_run=dry_run):
-        preview_embeds(embeds, webhook_key=webhook_key, username=username)
+        preview_embeds(embeds, webhook_key=webhook_key, username=username, view=view)
         logger.info(
             "event=dry_run_ok webhook_key=%s embeds=%s duration_ms=%s",
             webhook_key,
@@ -222,20 +234,23 @@ def run_announcer(
     edit_message_id = resolve_edit_message_id(webhook_key)
     logger.info(
         "event=send_start webhook_key=%s require_reaction=%s bot_channel_purge=%s "
-        "edit_message_id=%s",
+        "edit_message_id=%s view=%s",
         webhook_key,
         require_reaction,
         bot_channel_purge,
         edit_message_id,
+        view is not None,
     )
     try:
         if edit_message_id is not None:
+            # Component PATCH cannot re-upload files; omit attachments when view set.
             c.edit_webhook_message(
                 webhook_url=webhook_url,
                 message_id=edit_message_id,
                 embeds=embeds,
                 username=username,
-                files=file_factory(),
+                files=None if view is not None else file_factory(),
+                view=view,
                 dry_run=False,
             )
             c.console_print(
@@ -252,6 +267,7 @@ def run_announcer(
                 embeds,
                 username=username,
                 files=file_factory,
+                view=view,
                 state_key=webhook_key,
                 require_reaction=require_reaction,
                 effective_date=False,  # already applied above when requested
@@ -315,7 +331,6 @@ def ds_leadership_embed(
         title="Directorate of Support",
         description=hierarchy_block_description(
             motto=c.DS_MOTTO,
-            classification=c.DS_CLASSIFICATION,
             about=c.DS_ABOUT,
         ),
         color=color,
@@ -367,7 +382,7 @@ def subunit_coc_embeds(
     logo: Path | None = None,
 ) -> list[discord.Embed]:
     """Shared GRS/ESD public CoC layout (unit command only; no parent EL/DS/OSEC blocks)."""
-    return [
+    embeds = [
         c.chain_intro_embed(
             unit=unit_full,
             color=color,
@@ -375,7 +390,7 @@ def subunit_coc_embeds(
             context=(
                 f"The **{unit_full} ({unit_abbrev})** is a sub-unit of the **Office of Security** "
                 "under the **Directorate of Support**. "
-                f"{unit_abbrev} reports through OSEC and DS to Agency leadership. "
+                f"{unit_abbrev} is **open** and reports through OSEC and DS to Agency leadership. "
                 "Parent DS / OSEC Order of Battle is published in those chain-of-command channels."
             ),
         ),
@@ -411,6 +426,7 @@ def subunit_coc_embeds(
             parent_units=("Directorate of Support", "Office of Security"),
         ),
     ]
+    return c.append_classification_block(embeds, c.classification_label("level_1"), color=color)
 
 
 def staff_docs_hero_embed(
@@ -439,21 +455,25 @@ def staff_docs_central_embed(
     drive_link_name: str,
     color: int,
     extra_fields: tuple[tuple[str, str], ...] = (),
+    include_drive_field: bool = True,
 ) -> discord.Embed:
-    """Central Repository block with Drive root and optional extras."""
-    fields = (
-        c.link_field(
-            "Google Drive",
-            c.community_link_label(drive_link_name),
-            c.url(drive_url_key),
-            c.marking_note("STAFF"),
-        ),
-    ) + extra_fields
+    """Central Repository block. Prefer Drive/handbook as link buttons (OIG)."""
+    fields: tuple[tuple[str, str], ...] = ()
+    if include_drive_field:
+        fields = (
+            c.link_field(
+                "Google Drive",
+                c.community_link_label(drive_link_name),
+                c.url(drive_url_key),
+                c.marking_note("LEVEL 2"),
+            ),
+        )
+    fields = fields + extra_fields
     return c.embed(
         title="Central Repository",
         description=(
             f"Primary Google Drive folder for {unit_abbrev} handbooks, guides, forms, and "
-            "internal files. Use Drive for materials not listed below."
+            "internal files. Use the buttons below for Drive and key documents."
         ),
         color=color,
         fields=fields,
@@ -477,13 +497,9 @@ def staff_docs_section_embed(
 
 
 def staff_docs_handling_embed(*, unit_full: str, color: int) -> discord.Embed:
-    """Restricted Classification & Handling closer for staff-docs channels."""
-    return c.classification_handling_embed(
-        unit=unit_full,
-        authority=f"CIA {unit_full}",
-        color=color,
-        restricted=True,
-    )
+    """Deprecated closer — prefer append_classification_block(LEVEL 2) like OIG."""
+    _ = unit_full
+    return c.classification_embed(c.classification_label("level_2"), color=color)
 
 
 def staff_docs_link(
@@ -491,13 +507,31 @@ def staff_docs_link(
     link_name: str,
     url_key: str,
 ) -> tuple[str, str]:
-    """STAFF-marked link field with standard CIA DS | label."""
+    """LEVEL 2 link field with standard CIA DS | label."""
     return c.link_field(
         name,
         c.community_link_label(link_name),
         c.url(url_key),
-        c.marking_note("STAFF"),
+        c.marking_note("LEVEL 2"),
     )
+
+
+def staff_docs_drive_view(
+    *,
+    drive_url_key: str,
+    handbook_url_key: str | None = None,
+    drive_label: str = "📁 Drive",
+    handbook_label: str = "📖 Handbook",
+    extra_items: tuple[tuple[str, str] | tuple[str, str, int], ...] = (),
+) -> discord.ui.View:
+    """Emoji link buttons for staff Drive / handbook (and optional extras)."""
+    items: list[tuple[str, str] | tuple[str, str, int]] = [
+        (drive_label, c.url(drive_url_key), 0),
+    ]
+    if handbook_url_key:
+        items.append((handbook_label, c.url(handbook_url_key), 0))
+    items.extend(extra_items)
+    return c.link_view(items)
 
 
 def info_hero_embed(
@@ -587,10 +621,11 @@ def info_tryout_requirements_embed(
     combat_requirement: str,
     color: int,
 ) -> discord.Embed:
-    """Shared GRS/ESD tryout eligibility block."""
+    """Shared GRS/ESD tryout eligibility block (units are open)."""
     return c.embed(
         title="Tryout Requirements",
         description=(
+            f"**{unit_abbrev} is open** for qualified applicants.\n\n"
             f"Minimum eligibility for {unit_abbrev} tryouts and applications:\n"
             f"{c.tryout_requirements_text(combat_requirement=combat_requirement)}"
         ),
@@ -621,13 +656,20 @@ def info_public_link(
     link_name: str,
     url_value: str,
 ) -> tuple[str, str]:
-    """PUBLIC-marked document link with CIA DS | label."""
+    """LEVEL 1 document link with CIA DS | label."""
     return c.link_field(
         name,
         c.community_link_label(link_name),
         url_value,
-        c.marking_note("PUBLIC"),
+        c.marking_note("LEVEL 1"),
     )
+
+
+def info_community_link_view(
+    items: Sequence[tuple[str, str] | tuple[str, str, int]],
+) -> discord.ui.View:
+    """Emoji link-button view for public-information community hubs."""
+    return c.link_view(items)
 
 
 def logo_files(*keys: str) -> list[discord.File]:

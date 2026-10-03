@@ -4,20 +4,10 @@
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
-#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
-#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
-#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
-#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-#   - 2026-07-15 | docshamxo | Attach DS logo on server regulations hero.
+#   - 2026-10-03 | docshamxo | OIG Levels closer + policy link buttons; drop Disclaimer.
 # === END FILE HEADER ===
 
-"""
-CIA DS server regulations announcer.
-
-Posts the Directorate of Support communications server regulations
-to a Discord webhook.
-"""
+"""CIA DS server regulations announcer."""
 
 from __future__ import annotations
 
@@ -36,6 +26,7 @@ def send_server_regulations() -> None:
         webhook_key="WEBHOOK_DS_SERVER_REGULATIONS",
         username=c.BOT_DS,
         build_embeds=_build_embeds,
+        build_view=c.rules_policy_view,
         files=[c.logo_file(c.LOGOS["ds"])],
         dry_run="--dry-run" in sys.argv,
     )

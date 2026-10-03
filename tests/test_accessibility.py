@@ -24,8 +24,8 @@ def test_command_band_label_expands_known_bands() -> None:
 
 
 def test_marking_note_is_text_not_color() -> None:
-    assert c.marking_note("public") == "Marking: PUBLIC."
-    assert "STAFF" in c.marking_note("STAFF", "Authorized OSEC staff only.")
+    assert c.marking_note("public") == "Classification: LEVEL 1."
+    assert "LEVEL 2" in c.marking_note("STAFF", "Authorized OSEC staff only.")
     assert "Authorized OSEC staff only." in c.marking_note("STAFF", "Authorized OSEC staff only.")
 
 

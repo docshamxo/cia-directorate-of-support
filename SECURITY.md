@@ -19,7 +19,7 @@ Modified:
   - 2026-07-17 | docshamxo | Loud checkmark default, sibling purge, bot channel cleanup.
   - 2026-07-17 | docshamxo | Secret-split taxonomy, least privilege, supply chain, CODEOWNERS docs.
   - 2026-07-17 | docshamxo | Link branch protection checklist and pre-commit gitleaks.
-  - 2026-07-17 | docshamxo | Add Inter Studios proprietary property notice.
+  - 2026-07-17 | docshamxo | Add Invictus Studios proprietary property notice.
   - 2026-07-17 | docshamxo | Strengthen affiliation banner; link LICENSE and BRAND.md.
   - 2026-07-17 | docshamxo | Privacy / data governance section; applicant env overlays.
 === END FILE HEADER ===
@@ -31,7 +31,7 @@ Webhook URLs and bot tokens can post (and react) in Discord channels. Keep them 
 
 **Affiliation:** This repository supports an **unofficial Roblox community roleplay**. It is **not affiliated with**, endorsed by, or connected to the United States Government or the Central Intelligence Agency. Nothing here is an official government communication. Community markings (`PUBLIC` / `STAFF` / `CANDIDATE`) are roleplay vocabulary only. See [LICENSE](LICENSE) and [BRAND.md](docs/BRAND.md).
 
-**Property of the Central Intelligence Agency (ROBLOX), Inter Studios** — see [NOTICE](docs/NOTICE).
+**Property of the Central Intelligence Agency (ROBLOX), Invictus Studios** — see [NOTICE](docs/NOTICE).
 
 ## Privacy / data governance
 

@@ -17,11 +17,12 @@
 #   - 2026-09-28 | docshamxo | Align OSEC/OTE/GRS/ESD about blurbs with canonical office copy.
 #   - 2026-08-30 | docshamxo | Tighten disclaimer / handling copy; property notice once via footer helper.
 #   - 2026-08-30 | docshamxo | Add shared GRS/ESD tryout requirements and unit combat notes.
+#   - 2026-10-03 | docshamxo | Invictus Studios; OIG Levels vocabulary; GRS/ESD open framing.
 # === END FILE HEADER ===
 
 ds:
   motto: WE GO AS ONE
-  classification: PUBLIC
+  classification: LEVEL 1
   about: 'The **Directorate of Support (DS)** is the Agency''s backbone -- internal security,
     physical protection, and officer readiness.
 
@@ -58,10 +59,12 @@ ote:
       Agency standards.
 grs:
   about: 'OSEC''s rapid-response element, deployed to secure Agency personnel and assets
-    wherever they are threatened.'
+    wherever they are threatened. GRS is **open** for qualified applicants who meet tryout
+    requirements.'
   tryout_combat_requirement: Strong **offensive** combat ability
 esd:
-  about: Provides close protection for Agency leadership and high-value personnel.
+  about: 'Provides close protection for Agency leadership and high-value personnel. ESD is
+    **open** for qualified applicants who meet tryout requirements.'
   tryout_combat_requirement: Strong **defensive** combat ability
 copy:
   chain_of_command_intro: 'Use the chain. Raise concerns with your immediate supervisor first.
@@ -71,50 +74,48 @@ copy:
     at a time.'
   affiliation_notice: '**Community project -- not USG/CIA.** This project is **not affiliated with**,
     endorsed by, sponsored by, or connected to the United States Government or the Central Intelligence
-    Agency. Community markings (**PUBLIC** / **STAFF** / **CANDIDATE**) are roleplay vocabulary only.'
-  property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
+    Agency. Classification labels (**LEVEL 1** … **LEVEL X**) are roleplay vocabulary only.'
+  property_notice: Property of the Central Intelligence Agency (ROBLOX), Invictus Studios
   disclaimer: '**Community project -- not USG/CIA.**
 
 
-    All text here is marked **PUBLIC**.
+    All text here is **CLASSIFICATION LEVEL 1**.
 
 
     Fiction for a Roblox community. **Not affiliated with** the United States Government or the
-    Central Intelligence Agency. Markings are roleplay vocabulary only.'
+    Central Intelligence Agency. Levels are roleplay vocabulary only.'
   disclaimer_links: '**Community project -- not USG/CIA.**
 
 
-    All text and links listed here are marked **PUBLIC** unless a link note says otherwise.
+    All text and links listed here are **CLASSIFICATION LEVEL 1** unless a link note says otherwise.
 
 
     Links are community / Roblox resources. **Not affiliated with** the United States Government or
-    the Central Intelligence Agency. Markings are roleplay vocabulary only.'
+    the Central Intelligence Agency. Levels are roleplay vocabulary only.'
   disclaimer_staff: '**Community project -- not USG/CIA.**
 
 
-    Channel text uses community markings (**PUBLIC** / **STAFF** / **CANDIDATE**). Linked staff
-    materials are **STAFF** unless otherwise noted.
+    Channel text uses community classification levels. Linked staff materials are
+    **CLASSIFICATION LEVEL 2** unless otherwise noted.
 
 
-    Staff markings are community access rules -- **not** USG classification. **Not affiliated with**
+    Levels are community access rules -- **not** USG classification. **Not affiliated with**
     the US Government or CIA.'
   important_notice: 'Follow Agency regulations and the **{chain}** chain of command.
 
 
     Unauthorized direct contact with command teams is **not permitted**.'
-  staff_handling_notice: '**STAFF** -- authorized {unit} personnel only.
+  staff_handling_notice: '**CLASSIFICATION LEVEL 2** -- authorized {unit} personnel only.
 
 
-    Unauthorized disclosure may result in a **BLACKLIST** from the **{authority}**. Do not share
-    outside authorized channels.'
-  staff_handling_notice_restricted: 'Marked **STAFF** unless otherwise noted.
+    Do not share outside authorized channels.'
+  staff_handling_notice_restricted: 'Marked **CLASSIFICATION LEVEL 2** unless otherwise noted.
 
 
-    Unauthorized disclosure results in a **BLACKLIST** from the **{authority}**. Do not share
-    outside authorized channels.'
-  marking_public: 'Marking: PUBLIC.'
-  marking_staff: 'Marking: STAFF.'
-  marking_candidate: 'Marking: CANDIDATE.'
+    Do not share outside authorized channels.'
+  marking_public: 'Classification: LEVEL 1.'
+  marking_staff: 'Classification: LEVEL 2.'
+  marking_candidate: 'Classification: LEVEL 1.'
 
 # === FILE FOOTER ===
 # End of file: config/organization.yaml
