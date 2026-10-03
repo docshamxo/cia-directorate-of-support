@@ -119,11 +119,7 @@ def preview_embeds(
         desc_len = len(embed.description or "")
         c.console_print(f"  {index}. {title}  fields={field_count}  description_chars={desc_len}")
     if view is not None:
-        buttons = [
-            child.label
-            for child in view.children
-            if isinstance(child, discord.ui.Button)
-        ]
+        buttons = [child.label for child in view.children if isinstance(child, discord.ui.Button)]
         c.console_print(f"  buttons: {buttons}")
 
 

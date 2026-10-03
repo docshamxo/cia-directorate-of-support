@@ -54,9 +54,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             fields=(),
         ),
     ]
-    return c.append_classification_block(
-        embeds, c.classification_label("level_1"), color=_COLOR
-    )
+    return c.append_classification_block(embeds, c.classification_label("level_1"), color=_COLOR)
 
 
 def _build_view() -> c.discord.ui.View:

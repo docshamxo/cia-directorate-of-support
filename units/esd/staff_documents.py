@@ -124,9 +124,7 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
         ),
     ]
-    return c.append_classification_block(
-        embeds, c.classification_label("level_2"), color=_COLOR
-    )
+    return c.append_classification_block(embeds, c.classification_label("level_2"), color=_COLOR)
 
 
 def _build_view() -> c.discord.ui.View:

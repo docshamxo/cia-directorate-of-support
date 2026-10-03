@@ -1104,9 +1104,7 @@ def server_regulations_embeds(
         )
     )
     # OIG-aligned: no Disclaimer embed on live rules; Classification block closes.
-    return append_classification_block(
-        embeds, classification_label("level_1"), color=embed_color
-    )
+    return append_classification_block(embeds, classification_label("level_1"), color=embed_color)
 
 
 def validate_embed_limits(embeds: Sequence[discord.Embed]) -> None:
@@ -1650,9 +1648,7 @@ def _parse_webhook_url(webhook_url: str) -> tuple[str, str]:
         idx = parts.index("webhooks")
         webhook_id, token = parts[idx + 1], parts[idx + 2]
     except (ValueError, IndexError) as exc:
-        raise ValueError(
-            "Invalid webhook URL (expected .../webhooks/{id}/{token})"
-        ) from exc
+        raise ValueError("Invalid webhook URL (expected .../webhooks/{id}/{token})") from exc
     if not webhook_id.isdigit() or not token:
         raise ValueError("Invalid webhook URL id/token")
     return webhook_id, token
@@ -1704,9 +1700,7 @@ def edit_webhook_message(
             "components": view.to_components(),
         }
         webhook_id, token = _parse_webhook_url(webhook_url)
-        api_url = (
-            f"{DISCORD_API_BASE}/webhooks/{webhook_id}/{token}/messages/{int(message_id)}"
-        )
+        api_url = f"{DISCORD_API_BASE}/webhooks/{webhook_id}/{token}/messages/{int(message_id)}"
         try:
             response = requests.patch(
                 api_url,
@@ -1725,8 +1719,7 @@ def edit_webhook_message(
         if response.status_code >= 400:
             body = (response.text or "")[:500]
             raise RuntimeError(
-                f"Webhook edit failed via {masked} "
-                f"(HTTP {response.status_code}): {body}"
+                f"Webhook edit failed via {masked} (HTTP {response.status_code}): {body}"
             )
         logger.info(
             "event=edit_ok message_id=%s embeds=%s components=yes webhook=%s",
