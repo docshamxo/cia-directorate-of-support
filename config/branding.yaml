@@ -13,10 +13,13 @@
 #   - 2026-07-17 | docshamxo | Community/RP bot display names (anti-impersonation).
 #   - 2026-09-08 | docshamxo | Office-named CIA … Bot webhook display names.
 #   - 2026-09-08 | docshamxo | ESD Discord embed accent: crimson → silver.
+#   - 2026-10-03 | docshamxo | Rename Inter Studios → Invictus Studios (align OIG); add studio key.
 # === END FILE HEADER ===
 
-# Legal / brand line (Discord closers load from organization.yaml copy)
-property_notice: Property of the Central Intelligence Agency (ROBLOX), Inter Studios
+# Invictus Studios — unofficial Roblox CIA RP (not U.S. Government).
+studio: "Invictus Studios"
+# Legal / brand line (Discord closers use Classification Levels; property lives in docs/NOTICE).
+property_notice: "Property of the Central Intelligence Agency (ROBLOX), Invictus Studios"
 
 colors:
   ds: '0x1E3F78'
@@ -37,6 +40,8 @@ bots:
   ote: CIA Office of Training & Education Bot
   grs: CIA Global Response Staff Bot
   esd: CIA Executive Security Detail Bot
+
+link_label_prefix: "CIA DS"
 
 # === FILE FOOTER ===
 # End of file: config/branding.yaml

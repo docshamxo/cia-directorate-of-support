@@ -4,36 +4,22 @@
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
-#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
-#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
-#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
-#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-#   - 2026-07-15 | docshamxo | Standardize eyebrow, link grammar, and public-info template.
-#   - 2026-07-17 | docshamxo | Tighten public hero supporting line.
-#   - 2026-08-30 | docshamxo | Wire ESD Roblox group link into community embed.
-#   - 2026-08-30 | docshamxo | Split OSEC and OTE Discord invites in community links.
+#   - 2026-10-03 | docshamxo | OIG Levels closer + community emoji link buttons.
 # === END FILE HEADER ===
 
-"""
-CIA DS public information announcer.
-
-Posts the Directorate of Support organizational bulletin and community links
-to a Discord webhook.
-"""
+"""CIA DS public information announcer."""
 
 from __future__ import annotations
 
 import sys
 
 from common import cia_common as c
-from common.announcer import run_announcer
+from common.announcer import info_community_link_view, run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
-
-    return [
+    embeds = [
         c.hero_embed(
             title="PUBLIC INFORMATION",
             unit="Directorate of Support",
@@ -42,9 +28,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="About the Directorate",
-            description=(
-                f"{c.motto_line(c.DS_MOTTO, classification=c.DS_CLASSIFICATION)}\n\n{c.DS_ABOUT}"
-            ),
+            description=f"{c.motto_line(c.DS_MOTTO)}\n\n{c.DS_ABOUT}",
             fields=(
                 ("Leadership", c.roles_text(*c.DS_LEADERSHIP)),
                 ("Offices", c.bullets(*c.DS_OFFICES)),
@@ -52,7 +36,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Office of Security",
-            description=(f"{c.motto_line(c.OSEC_MOTTO)}\n\n{c.OSEC_ABOUT}"),
+            description=f"{c.motto_line(c.OSEC_MOTTO)}\n\n{c.OSEC_ABOUT}",
             logo=c.LOGOS["osec"],
             fields=(
                 ("Global Response Staff (GRS)", c.GRS_ABOUT),
@@ -61,7 +45,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ),
         c.embed(
             title="Office of Training & Education",
-            description=(f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}"),
+            description=f"{c.motto_line(c.OTE_MOTTO)}\n\n{c.OTE_ABOUT}",
             logo=c.LOGOS["ote"],
             fields=ote_pillars,
         ),
@@ -69,47 +53,27 @@ def _build_embeds() -> list[c.discord.Embed]:
             title="Community Links",
             description=(
                 "Official Roblox groups and Discord for the Directorate, its offices, "
-                "and sub-units."
-            ),
-            fields=(
-                c.link_field(
-                    "Directorate of Support",
-                    c.community_link_label("Directorate of Support"),
-                    c.URL_ROBLOX_GROUP_DS,
-                ),
-                c.link_field(
-                    "Office of Security",
-                    c.community_link_label("OSEC"),
-                    c.URL_ROBLOX_GROUP_OSEC,
-                ),
-                c.link_field(
-                    "Global Response Staff",
-                    c.community_link_label("GRS"),
-                    c.URL_ROBLOX_GROUP_GRS,
-                ),
-                c.link_field(
-                    "Executive Security Detail",
-                    c.community_link_label("ESD"),
-                    c.URL_ROBLOX_GROUP_ESD,
-                ),
-                c.link_field(
-                    "Office of Training & Education",
-                    c.community_link_label("OTE"),
-                    c.URL_ROBLOX_GROUP_OTE,
-                ),
-                c.link_field(
-                    "Office of Security (Discord)",
-                    c.community_link_label("OSEC Discord"),
-                    c.discord_osec_invite_url(),
-                ),
-                c.link_field(
-                    "Office of Training & Education (Discord)",
-                    c.community_link_label("OTE Discord"),
-                    c.discord_ote_invite_url(),
-                ),
+                "and sub-units. Use the buttons below."
             ),
         ),
     ]
+    return c.append_classification_block(
+        embeds, c.classification_label("level_1"), color=c.COLOR_DS
+    )
+
+
+def _build_view() -> c.discord.ui.View:
+    return info_community_link_view(
+        [
+            ("🎮 DS Roblox", c.URL_ROBLOX_GROUP_DS, 0),
+            ("🎮 OSEC Roblox", c.URL_ROBLOX_GROUP_OSEC, 0),
+            ("🎮 GRS Roblox", c.URL_ROBLOX_GROUP_GRS, 0),
+            ("🎮 ESD Roblox", c.URL_ROBLOX_GROUP_ESD, 1),
+            ("🎮 OTE Roblox", c.URL_ROBLOX_GROUP_OTE, 1),
+            ("🏛️ OSEC Discord", c.discord_osec_invite_url(), 2),
+            ("🏛️ OTE Discord", c.discord_ote_invite_url(), 2),
+        ]
+    )
 
 
 def send_public_information() -> None:
@@ -117,6 +81,7 @@ def send_public_information() -> None:
         webhook_key="WEBHOOK_DS_PUBLIC_INFORMATION",
         username=c.BOT_DS,
         build_embeds=_build_embeds,
+        build_view=_build_view,
         files=lambda: [
             c.logo_file(c.LOGOS["ds"]),
             c.logo_file(c.LOGOS["osec"]),

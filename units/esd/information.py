@@ -4,25 +4,10 @@
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
-#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
-#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
-#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
-#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-#   - 2026-07-15 | docshamxo | Align public-info template and link grammar.
-#   - 2026-08-04 | docshamxo | Align ESD information hero with PUBLIC channel template.
-#   - 2026-08-04 | docshamxo | Omit Disclaimer embed on ESD public information.
-#   - 2026-08-30 | docshamxo | Wire ESD Roblox group link into community embed.
-#   - 2026-08-30 | docshamxo | Add ESD tryout / application requirements embed.
-#   - 2026-09-08 | docshamxo | Refactor onto shared information-channel frame builders.
+#   - 2026-10-03 | docshamxo | OIG Levels + community link buttons; ESD open framing.
 # === END FILE HEADER ===
 
-"""
-CIA ESD public information announcer.
-
-Posts the Executive Security Detail overview and community links
-to a Discord webhook.
-"""
+"""CIA ESD public information announcer."""
 
 from __future__ import annotations
 
@@ -31,6 +16,7 @@ import sys
 from common import cia_common as c
 from common.announcer import (
     info_about_embed,
+    info_community_link_view,
     info_community_links_embed,
     info_hero_embed,
     info_tryout_requirements_embed,
@@ -43,12 +29,16 @@ _COLOR = c.COLOR_ESD
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         info_hero_embed(
             unit_full=_UNIT,
             unit_abbrev=_ABBREV,
             color=_COLOR,
             logo=c.LOGOS["esd"],
+            supporting=(
+                f"Public overview of {_ABBREV}. The unit is **open** for qualified "
+                "applicants — mission, tryout requirements, and community resources."
+            ),
         ),
         info_about_embed(
             unit_full=_UNIT,
@@ -65,25 +55,24 @@ def _build_embeds() -> list[c.discord.Embed]:
         info_community_links_embed(
             unit_abbrev=_ABBREV,
             color=_COLOR,
-            fields=(
-                c.link_field(
-                    "Executive Security Detail",
-                    c.community_link_label("ESD"),
-                    c.URL_ROBLOX_GROUP_ESD,
-                ),
-                c.link_field(
-                    "Office of Security",
-                    c.community_link_label("OSEC"),
-                    c.URL_ROBLOX_GROUP_OSEC,
-                ),
-                c.link_field(
-                    "Directorate of Support",
-                    c.community_link_label("Directorate of Support"),
-                    c.URL_ROBLOX_GROUP_DS,
-                ),
+            description=(
+                f"Official Roblox communities for {_ABBREV} and related Agency services. "
+                "Use the buttons below."
             ),
+            fields=(),
         ),
     ]
+    return c.append_classification_block(embeds, c.classification_label("level_1"), color=_COLOR)
+
+
+def _build_view() -> c.discord.ui.View:
+    return info_community_link_view(
+        [
+            ("🎮 ESD Roblox", c.URL_ROBLOX_GROUP_ESD, 0),
+            ("🎮 OSEC Roblox", c.URL_ROBLOX_GROUP_OSEC, 0),
+            ("🎮 DS Roblox", c.URL_ROBLOX_GROUP_DS, 0),
+        ]
+    )
 
 
 def send_esd_information() -> None:
@@ -91,6 +80,7 @@ def send_esd_information() -> None:
         webhook_key="WEBHOOK_ESD_INFORMATION",
         username=c.BOT_ESD,
         build_embeds=_build_embeds,
+        build_view=_build_view,
         files=[c.logo_file(c.LOGOS["esd"])],
         dry_run="--dry-run" in sys.argv,
     )

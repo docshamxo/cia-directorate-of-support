@@ -22,8 +22,9 @@ Editable data for the announcers. Change these files instead of hardcoding value
 
 | File | What to edit here |
 |------|-------------------|
-| [`branding.yaml`](branding.yaml) | Colors, bot usernames, logo filenames, property notice |
+| [`branding.yaml`](branding.yaml) | Colors, bot usernames, logos, studio / property notice (Invictus Studios) |
 | [`organization.yaml`](organization.yaml) | Mottos, about text, offices, disclaimers, affiliation / property notices |
+| [`classification.yaml`](classification.yaml) | OIG Levels vocabulary (LEVEL 1–X) for embed closers |
 | [`personnel.yaml`](personnel.yaml) | Chain-of-command names and ranks (high command and small command teams only) |
 | [`links.yaml`](links.yaml) | Public document and Roblox URLs (staff Drive / ORBAT via local overlay; applicant forms via `.env`) |
 | [`links.staff.example.yaml`](links.staff.example.yaml) | Example staff Drive / ORBAT overlay (copy → `links.staff.local.yaml`) |
@@ -40,8 +41,8 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | **Hero** | ALL CAPS `title=` + bold `**{Unit}**` + one short supporting sentence. Rules channels use the DIRECTORATE OF SUPPORT stack (office + Community Server Regulations + one unofficial-RP line). |
 | **Body section titles** | Title Case |
 | **Links** | `[CIA {UNIT} \| {Document}](url)` with optional italic note; community groups: `CIA \| {Group}` |
-| **Link notes** | Prefer shared Marking: PUBLIC. / Marking: STAFF. / Marking: CANDIDATE. (c.MARKING_*). Put authorization detail in the Handling Notice, not on every field. |
-| **Closers (order)** | optional Classification & Handling Notice → optional Important Notice. **Disclaimer · Community** only on OTE/OSEC Rules (`server_regulations`) |
+| **Link notes** | Prefer `Classification: LEVEL 1.` / `LEVEL 2.` (`c.marking_note`). Prefer emoji link buttons for hub URLs. |
+| **Closers (order)** | optional Important Notice → **Classification** LEVEL block. No Disclaimer on live channels (OIG-aligned). |
 | **Logo** | Thumbnail on the **first** branded embed; attach matching logo file(s) |
 
 ### Closing-stack vocabulary
@@ -49,19 +50,19 @@ Discord supports markdown emphasis only — no custom fonts. Typography means `*
 | Title | Use for |
 |-------|---------|
 | **Important Notice** | Chain of command / conduct only |
-| **Classification & Handling Notice** | Restricted document hubs (community marking language -- not USG classification) |
+| **Classification** | Final LEVEL block (`append_classification_block`) — LEVEL 1 public / LEVEL 2 staff |
 | **Important Information** | Application rules only |
-| **Disclaimer** | **Rules channels only** (OTE + OSEC/DS Server Regulations). Title `Disclaimer · Community`. Do not append on other announcers. |
 
-Community marking vocabulary: **PUBLIC** / **STAFF** / **CANDIDATE** (roleplay only — not USG classification). The phrase **Unofficial Roblox Roleplay Community** and the Disclaimer closer appear **once each** on OTE/OSEC Rules only. Bot usernames and brand rules: [BRAND.md](../docs/BRAND.md).
+Community classification vocabulary: **LEVEL 1** … **LEVEL X** (roleplay only — not USG; see `classification.yaml`). Property notice (Invictus Studios) lives in config/docs only — not Discord footers. Bot usernames: [BRAND.md](../docs/BRAND.md).
 
-**Tone:** Public channels stay welcoming and scannable. Staff / candidate channels stay need-to-know -- short heroes, short link notes, one handling closer.
+**Tone:** Public channels stay welcoming and scannable. Staff channels stay need-to-know — short heroes, Drive/handbook buttons, one Classification closer.
 
 ### Channel templates
 
-- **Public info:** hero → about → community links → links disclaimer
-- **Internal info:** hero → about → reference docs → Classification & Handling Notice → classified disclaimer
-- **Staff documents:** hero → Central Repository → topic sections (Title Case, no numbers) → Classification & Handling Notice → classified disclaimer
+- **Public info:** hero → about → community links (+ buttons) → Classification LEVEL 1
+- **Internal info:** hero → about → reference docs → Classification LEVEL 2
+- **Staff documents:** hero → Central Repository → topic sections → Classification LEVEL 2 (+ Drive/handbook buttons)
+- **Rules:** regulations → Governing Policies → Classification LEVEL 1 (+ TOS/CAC buttons)
 
 
 ### Accessibility

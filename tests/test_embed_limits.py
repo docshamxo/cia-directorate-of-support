@@ -118,12 +118,14 @@ def test_server_regulations_embeds_within_limits() -> None:
     assert "based on race,\n" not in blob
     assert "without Office of Security leadership\n" not in blob
     policy = next(e for e in embeds if e.title == "Governing Policies")
-    field_names = [f.name for f in policy.fields]
-    assert "Discord Terms of Service" in field_names
-    assert "Roblox Terms of Use" in field_names
-    assert "Code of Agency Conduct" in field_names
-    assert "discord.com/terms" in (policy.fields[0].value or "")
-    assert "roblox.com/info/terms" in "\n".join(f.value for f in policy.fields)
+    assert "bound by the policies linked below" in (policy.description or "")
+    assert embeds[-1].title == "Classification"
+    assert "LEVEL 1" in (embeds[-1].description or "")
+    view = c.rules_policy_view()
+    labels = [child.label for child in view.children]
+    assert any("Discord Terms" in (label or "") for label in labels)
+    assert any("Roblox Terms" in (label or "") for label in labels)
+    assert any("Code of Agency Conduct" in (label or "") for label in labels)
 
 
 def test_ote_server_regulations_embeds_use_ote_office() -> None:
@@ -179,13 +181,16 @@ def test_apply_effective_date_footer_stamps_last() -> None:
     assert embeds[0].footer.text is None or embeds[0].footer.text == ""
     assert embeds[-1].footer and "Effective" in (embeds[-1].footer.text or "")
     assert "(community)" not in (embeds[-1].footer.text or "")
-    assert "Inter Studios" in (embeds[-1].footer.text or "")
+    # Property notice is docs/config only (OIG-aligned), not Discord footers.
+    assert "Invictus Studios" not in (embeds[-1].footer.text or "")
+    assert "Inter Studios" not in (embeds[-1].footer.text or "")
     assert "roleplay" not in (embeds[-1].footer.text or "").lower()
 
 
 def test_disclaimer_does_not_duplicate_property_notice() -> None:
     text = c.disclaimer_embed(color=c.COLOR_DS).description or ""
     assert "not affiliated" in text.lower()
+    assert "Invictus Studios" not in text
     assert "Inter Studios" not in text
     assert "Property of the Central Intelligence Agency" not in text
 
@@ -308,9 +313,8 @@ def test_staff_documents_share_standard_frame(builder, abbrev: str, unit_full: s
         embeds[0].description or ""
     )
     assert embeds[1].title == "Central Repository"
-    assert embeds[-1].title == "Classification & Handling Notice"
-    assert unit_full in (embeds[-1].description or "")
-    assert f"CIA {unit_full}" in (embeds[-1].description or "")
+    assert embeds[-1].title == "Classification"
+    assert "LEVEL 2" in (embeds[-1].description or "")
     blob = "\n".join(
         [
             *(e.description or "" for e in embeds),
@@ -318,7 +322,8 @@ def test_staff_documents_share_standard_frame(builder, abbrev: str, unit_full: s
         ]
     )
     assert "CIA OTE |" not in blob
-    assert "CIA DS |" in blob
+    assert "CIA DS |" in blob or "buttons below" in blob.lower()
+    _ = unit_full  # retained for parametrize readability
 
 
 def test_information_channels_share_standard_frame() -> None:
@@ -328,24 +333,28 @@ def test_information_channels_share_standard_frame() -> None:
     esd = esd_info._build_embeds()
     for embeds in (osec, ote, grs, esd):
         c.validate_embed_limits(embeds)
+        assert embeds[-1].title == "Classification"
 
     assert osec[0].title == "INFORMATION"
     assert "Reference hub for OSEC records" in (osec[0].description or "")
     assert osec[1].title == "About the Office"
     assert osec[2].title == "Reference Documents"
+    assert "LEVEL 2" in (osec[-1].description or "")
 
     for embeds, abbrev in ((ote, "OTE"), (grs, "GRS"), (esd, "ESD")):
         assert embeds[0].title == "PUBLIC INFORMATION"
-        assert f"Public overview of {abbrev}, its mission, and official community resources." in (
-            embeds[0].description or ""
-        )
-        assert embeds[-1].title == "Community Links"
+        assert abbrev in (embeds[0].description or "")
+        assert "LEVEL 1" in (embeds[-1].description or "")
+        assert any((e.title or "") == "Community Links" for e in embeds)
 
     assert grs[1].title == "About GRS"
     assert esd[1].title == "About ESD"
     assert ote[1].title == "About the Office"
     assert grs[2].title == "Tryout Requirements"
     assert esd[2].title == "Tryout Requirements"
+    assert "open" in (grs[2].description or "").lower()
+    assert "open" in (esd[2].description or "").lower()
+    assert "not yet open" not in (grs[2].description or "").lower()
 
 
 # === FILE FOOTER ===

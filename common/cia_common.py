@@ -31,6 +31,7 @@
 #   - 2026-08-30 | docshamxo | Property notice only in effective-date footer (no body duplicate).
 #   - 2026-09-08 | docshamxo | Rules Governing Policies: Discord/Roblox ToS + Code of Agency Conduct.
 #   - 2026-09-28 | docshamxo | Add edit_webhook_message for announcer PATCH by message ID.
+#   - 2026-10-03 | docshamxo | OIG Levels, Invictus Studios, link buttons, with_components edits.
 # === END FILE HEADER ===
 
 """
@@ -43,6 +44,7 @@ Editable data lives in config/*.yaml - not in this file:
   - config/links.yaml         public document / form / channel URLs
   - config/links.staff.local.yaml  optional staff Drive overlay (gitignored)
   - config/regulations.yaml   server regulations prose
+  - config/classification.yaml OIG Levels vocabulary (LEVEL 1–X)
 """
 
 from __future__ import annotations
@@ -292,6 +294,16 @@ def _regulations() -> dict[str, Any]:
     return _load_yaml("regulations.yaml")
 
 
+@lru_cache(maxsize=1)
+def _classification() -> dict[str, Any]:
+    return _load_yaml("classification.yaml")
+
+
+def classification() -> dict[str, Any]:
+    """Public accessor for config/classification.yaml."""
+    return _classification()
+
+
 def _parse_color(value: str | int) -> int:
     if isinstance(value, int):
         return value
@@ -366,6 +378,9 @@ BOT_OSEC = _bots["osec"]
 BOT_OTE = _bots["ote"]
 BOT_GRS = _bots["grs"]
 BOT_ESD = _bots["esd"]
+
+STUDIO = str(_b.get("studio") or "Invictus Studios").strip()
+LINK_LABEL_PREFIX = str(_b.get("link_label_prefix") or "CIA DS").strip()
 
 
 def confined_logo_path(filename: str | Path) -> Path:
@@ -516,7 +531,7 @@ AFFILIATION_NOTICE = _copy.get(
 PROPERTY_NOTICE = str(
     _copy.get(
         "property_notice",
-        "Property of the Central Intelligence Agency (ROBLOX), Inter Studios",
+        "Property of the Central Intelligence Agency (ROBLOX), Invictus Studios",
     )
 ).strip()
 DISCLAIMER_TEXT = _copy["disclaimer"]
@@ -529,9 +544,9 @@ STAFF_HANDLING_NOTICE = _copy["staff_handling_notice"]
 STAFF_HANDLING_NOTICE_RESTRICTED = _copy.get("staff_handling_notice_restricted") or _copy.get(
     "staff_handling_notice_secret", STAFF_HANDLING_NOTICE
 )
-MARKING_PUBLIC = _copy.get("marking_public", "Marking: PUBLIC.")
-MARKING_STAFF = _copy.get("marking_staff", "Marking: STAFF.")
-MARKING_CANDIDATE = _copy.get("marking_candidate", "Marking: CANDIDATE.")
+MARKING_PUBLIC = _copy.get("marking_public", "Classification: LEVEL 1.")
+MARKING_STAFF = _copy.get("marking_staff", "Classification: LEVEL 2.")
+MARKING_CANDIDATE = _copy.get("marking_candidate", "Classification: LEVEL 1.")
 
 # ── Personnel ─────────────────────────────────────────────────────────────────
 
@@ -674,12 +689,156 @@ def command_band_label(band: str) -> str:
     return COMMAND_BAND_LABELS.get(key, band.strip())
 
 
+_LEVEL_ALIASES = {
+    "PUBLIC": "LEVEL 1",
+    "STAFF": "LEVEL 2",
+    "CANDIDATE": "LEVEL 1",
+    "OSEC PERSONNEL": "LEVEL 2",
+    "CIA PERSONNEL": "LEVEL 2",
+    "LEVEL 1": "LEVEL 1",
+    "LEVEL 2": "LEVEL 2",
+    "LEVEL_1": "LEVEL 1",
+    "LEVEL_2": "LEVEL 2",
+    "CLASSIFICATION LEVEL 1": "LEVEL 1",
+    "CLASSIFICATION LEVEL 2": "LEVEL 2",
+}
+
+
+def resolve_level_short(marking: str) -> str:
+    """Map legacy PUBLIC/STAFF/CANDIDATE (and aliases) to LEVEL N short form."""
+    raw = str(marking or "").strip()
+    if not raw:
+        return "LEVEL 1"
+    key = raw.upper().replace("_", " ")
+    key = re.sub(r"^CLASSIFICATION\s*:?\s*", "", key).strip()
+    if key in _LEVEL_ALIASES:
+        return _LEVEL_ALIASES[key]
+    if key.startswith("LEVEL "):
+        return key
+    return key
+
+
 def marking_note(marking: str, extra: str | None = None) -> str:
-    """Community marking as readable text (never color-only sensitivity)."""
-    text = f"Marking: {marking.strip().upper()}."
+    """Community classification note as readable text (never color-only)."""
+    text = f"Classification: {resolve_level_short(marking)}."
     if extra:
         text = f"{text} {extra.strip()}"
     return text
+
+
+def classification_label(level_key: str = "level_1") -> str:
+    """Resolve a short marking string from config/classification.yaml ``markings``."""
+    markings = classification().get("markings") or {}
+    value = markings.get(level_key) or level_key
+    return str(value).strip()
+
+
+def classification_footer(level: str) -> str:
+    """Footer text. Prefer full ``CLASSIFICATION LEVEL N`` labels as-is."""
+    text = str(level).strip()
+    upper = text.upper()
+    if upper.startswith("CLASSIFICATION LEVEL") or upper.startswith("CLASSIFICATION:"):
+        return text
+    if text.lower().startswith("classification:"):
+        return text
+    short = resolve_level_short(text)
+    if short.upper().startswith("LEVEL"):
+        return f"CLASSIFICATION {short.upper()}"
+    return f"Classification: {text}"
+
+
+def classification_block_value(level: str) -> str:
+    """Display value for the final Classification block."""
+    text = classification_footer(level).strip()
+    text = re.sub(r"(?i)^classification\s*:?\s*", "", text).strip()
+    return text.upper()
+
+
+def apply_classification(
+    embed: discord.Embed,
+    level: str,
+) -> discord.Embed:
+    """Set embed footer to a concise classification marking."""
+    embed.set_footer(text=classification_footer(level)[:2048])
+    return embed
+
+
+def classification_embed(level: str, *, color: int = COLOR_DS) -> discord.Embed:
+    """Dedicated bottom classification block for an announcer message (OIG-aligned)."""
+    return embed(
+        title="Classification",
+        description=f"**{classification_block_value(level)}**",
+        color=color,
+    )
+
+
+def append_classification_block(
+    embeds: Sequence[discord.Embed],
+    level: str,
+    *,
+    color: int = COLOR_DS,
+) -> list[discord.Embed]:
+    """Append one classification block after all content embeds."""
+    return [*embeds, classification_embed(level, color=color)]
+
+
+def url_host_ok(url_value: str) -> bool:
+    try:
+        return bool(urlparse(url_value).netloc)
+    except Exception:
+        return False
+
+
+def link_button(label: str, url_value: str, *, row: int | None = None) -> discord.ui.Button:
+    """Discord link button. Put Unicode emoji in ``label`` (max 80 chars)."""
+    text = " ".join(str(label).split())
+    if not text:
+        raise ValueError("link_button label must be non-empty")
+    url_clean = str(url_value).strip()
+    if not url_clean or not url_host_ok(url_clean):
+        raise ValueError(f"link_button requires a valid http(s) URL (got {url_value!r})")
+    kwargs: dict[str, Any] = {
+        "style": discord.ButtonStyle.link,
+        "label": text[:80],
+        "url": url_clean,
+    }
+    if row is not None:
+        if not 0 <= int(row) <= 4:
+            raise ValueError(f"link_button row must be 0–4 (got {row})")
+        kwargs["row"] = int(row)
+    return discord.ui.Button(**kwargs)
+
+
+def link_view(items: Sequence[tuple[str, str] | tuple[str, str, int]]) -> discord.ui.View:
+    """Persistent link-button view. Items: ``(label, url)`` or ``(label, url, row)``.
+
+    discord.py 2.6+ requires a running event loop to construct ``View``; sync
+    announcers create one ephemerally via ``asyncio.run``.
+    """
+    import asyncio
+
+    async def _build() -> discord.ui.View:
+        view = discord.ui.View(timeout=None)
+        added = 0
+        for item in items:
+            if len(item) == 3:
+                label, url_value, row = item  # type: ignore[misc]
+                row_arg: int | None = int(row)
+            else:
+                label, url_value = item  # type: ignore[misc]
+                row_arg = None
+            url_clean = str(url_value or "").strip()
+            if not url_clean or not url_host_ok(url_clean):
+                continue
+            view.add_item(link_button(str(label), url_clean, row=row_arg))
+            added += 1
+        if added == 0:
+            raise ValueError("link_view requires at least one valid (label, url) item")
+        if added > 25:
+            raise ValueError(f"link_view exceeds Discord max of 25 buttons (got {added})")
+        return view
+
+    return asyncio.run(_build())
 
 
 def has_text_signal(value: str) -> bool:
@@ -722,13 +881,12 @@ def agency_eyebrow(unit: str) -> str:
 
 def community_link_label(name: str) -> str:
     """Discord link text: CIA DS prefix + document/group name."""
-    return f"CIA DS | {name}"
+    return f"{LINK_LABEL_PREFIX} | {name}"
 
 
 def motto_line(motto: str, *, classification: str | None = None) -> str:
-    """Italic motto line, optionally with community marking."""
-    if classification:
-        return f"*{motto} · Marking: {classification}*"
+    """Italic motto line. Classification is message-level (OIG: motto only on cards)."""
+    _ = classification  # retained for call-site compatibility; do not inline Levels
     return f"*{motto}*"
 
 
@@ -757,17 +915,15 @@ def set_logo(embed: discord.Embed, path: Path) -> None:
 def apply_effective_date_footer(
     embeds: Sequence[discord.Embed], *, when: date | None = None
 ) -> None:
-    """Stamp effective date + property notice on the last embed footer (mutates in place).
+    """Stamp effective date on the last embed footer (mutates in place).
 
-    Property notice lives here only — do not also append it in disclaimer body copy.
+    Property notice lives in config/docs (OIG-aligned) — not Discord embed footers.
+    Classification Levels are a dedicated final embed block.
     """
     if not embeds:
         return
     stamp = when or date.today()
-    footer = f"Effective {stamp.isoformat()}"
-    if PROPERTY_NOTICE:
-        footer = f"{footer} · {PROPERTY_NOTICE}"
-    embeds[-1].set_footer(text=footer)
+    embeds[-1].set_footer(text=f"Effective {stamp.isoformat()}")
 
 
 def format_display_date(when: date | None = None) -> str:
@@ -886,6 +1042,22 @@ def classification_handling_embed(
     )
 
 
+def rules_policy_view() -> discord.ui.View:
+    """Emoji link buttons for Discord/Roblox ToS + Code of Agency Conduct (rules channels)."""
+    return link_view(
+        [
+            ("📜 Discord Terms of Service", url("community.discord_tos"), 0),
+            ("📜 Discord Guidelines", url("community.discord_guidelines"), 0),
+            ("📜 Roblox Terms of Use", url("community.roblox_tos"), 0),
+            (
+                "📜 Code of Agency Conduct",
+                url("osec.information.code_of_agency_conduct"),
+                1,
+            ),
+        ]
+    )
+
+
 def server_regulations_embeds(
     *,
     office: str = "Office of Security",
@@ -927,38 +1099,12 @@ def server_regulations_embeds(
     embeds.append(
         embed(
             title="Governing Policies",
-            description=(
-                "Members must follow these platform and agency policies in addition to "
-                "the regulations above."
-            ),
+            description="Members are also bound by the policies linked below.",
             color=embed_color,
-            fields=(
-                link_field(
-                    "Discord Terms of Service",
-                    "Discord Terms of Service",
-                    url("community.discord_tos"),
-                ),
-                link_field(
-                    "Discord Community Guidelines",
-                    "Discord Community Guidelines",
-                    url("community.discord_guidelines"),
-                ),
-                link_field(
-                    "Roblox Terms of Use",
-                    "Roblox Terms of Use",
-                    url("community.roblox_tos"),
-                ),
-                link_field(
-                    "Code of Agency Conduct",
-                    community_link_label("Code of Agency Conduct"),
-                    url("osec.information.code_of_agency_conduct"),
-                    marking_note("PUBLIC"),
-                ),
-            ),
         )
     )
-    embeds.append(disclaimer_embed(color=embed_color))
-    return embeds
+    # OIG-aligned: no Disclaimer embed on live rules; Classification block closes.
+    return append_classification_block(embeds, classification_label("level_1"), color=embed_color)
 
 
 def validate_embed_limits(embeds: Sequence[discord.Embed]) -> None:
@@ -1494,6 +1640,20 @@ def _react_to_messages(
         raise RuntimeError("Required checkmark reactions failed: no messages reacted")
 
 
+def _parse_webhook_url(webhook_url: str) -> tuple[str, str]:
+    """Return ``(webhook_id, token)`` from a Discord webhook URL."""
+    parsed = urlparse(str(webhook_url).strip().rstrip("/"))
+    parts = [p for p in parsed.path.split("/") if p]
+    try:
+        idx = parts.index("webhooks")
+        webhook_id, token = parts[idx + 1], parts[idx + 2]
+    except (ValueError, IndexError) as exc:
+        raise ValueError("Invalid webhook URL (expected .../webhooks/{id}/{token})") from exc
+    if not webhook_id.isdigit() or not token:
+        raise ValueError("Invalid webhook URL id/token")
+    return webhook_id, token
+
+
 def edit_webhook_message(
     *,
     webhook_url: str,
@@ -1501,12 +1661,16 @@ def edit_webhook_message(
     embeds: list[discord.Embed],
     username: str | None = None,
     files: list[discord.File] | None = None,
+    view: discord.ui.View | None = None,
     dry_run: bool = False,
 ) -> None:
     """PATCH an existing Discord webhook message by snowflake ID.
 
     Webhook edits cannot change the display username; ``username`` is logged only.
-    Attach logo files via ``attachments=`` (discord.py does not accept ``files=``).
+    When ``view`` is set, uses a raw HTTP PATCH with ``?with_components=true``
+    (discord.py 2.6 SyncWebhook.edit_message omits that flag).
+    File re-upload on component edits is not supported — pass files only for
+    embeds-only SyncWebhook edits.
     """
     from discord import SyncWebhook
 
@@ -1517,12 +1681,51 @@ def edit_webhook_message(
         console_print(
             f"[dry-run] edit message {message_id} via {masked} "
             f"as {username or '(unchanged)'} - {len(embeds)} embed(s)"
+            + (f" view={len(view.children)} btn" if view is not None else "")
         )
         logger.info(
-            "event=dry_run_edit message_id=%s username=%s embeds=%s",
+            "event=dry_run_edit message_id=%s username=%s embeds=%s view=%s",
             message_id,
             username or "(unchanged)",
             len(embeds),
+            view is not None,
+        )
+        return
+
+    if view is not None:
+        # Raw PATCH required so Discord applies components on webhook edits.
+        payload: dict[str, Any] = {
+            "embeds": [e.to_dict() for e in embeds],
+            "allowed_mentions": discord.AllowedMentions.none().to_dict(),
+            "components": view.to_components(),
+        }
+        webhook_id, token = _parse_webhook_url(webhook_url)
+        api_url = f"{DISCORD_API_BASE}/webhooks/{webhook_id}/{token}/messages/{int(message_id)}"
+        try:
+            response = requests.patch(
+                api_url,
+                params={"with_components": "true"},
+                data=json.dumps(payload),
+                headers={"Content-Type": "application/json"},
+                timeout=DEFAULT_HTTP_TIMEOUT,
+            )
+        except requests.RequestException as exc:
+            raise RuntimeError(f"Webhook edit failed via {masked}: {exc}") from exc
+        if response.status_code == 404:
+            raise RuntimeError(
+                f"Message {message_id} not found via {masked} (404). "
+                "Only the webhook that created the message can edit it."
+            )
+        if response.status_code >= 400:
+            body = (response.text or "")[:500]
+            raise RuntimeError(
+                f"Webhook edit failed via {masked} (HTTP {response.status_code}): {body}"
+            )
+        logger.info(
+            "event=edit_ok message_id=%s embeds=%s components=yes webhook=%s",
+            message_id,
+            len(embeds),
+            masked,
         )
         return
 
@@ -1552,6 +1755,7 @@ def send_webhook(
     *,
     username: str,
     files: list[discord.File] | Callable[[], list[discord.File]] | None = None,
+    view: discord.ui.View | None = None,
     state_key: str | None = None,
     require_reaction: bool = True,
     effective_date: bool = False,
@@ -1610,13 +1814,23 @@ def send_webhook(
                 len(attempt_files),
             )
             posted_messages: list[Any] = []
-            message = webhook.send(
-                embeds=embeds,
-                username=username,
-                files=attempt_files,
-                wait=True,
-                allowed_mentions=discord.AllowedMentions.none(),
-            )
+            if view is not None:
+                message = webhook.send(
+                    embeds=embeds,
+                    username=username,
+                    files=attempt_files,
+                    view=view,
+                    wait=True,
+                    allowed_mentions=discord.AllowedMentions.none(),
+                )
+            else:
+                message = webhook.send(
+                    embeds=embeds,
+                    username=username,
+                    files=attempt_files,
+                    wait=True,
+                    allowed_mentions=discord.AllowedMentions.none(),
+                )
             if message is not None:
                 posted_messages.append(message)
 

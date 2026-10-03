@@ -1,0 +1,59 @@
+# === FILE HEADER ===
+# Title: Classification
+# Path: config/classification.yaml
+# Created: 2026-10-03
+# Created by: docshamxo
+# Modified:
+#   - 2026-10-03 | docshamxo | Port OIG Levels vocabulary for DS/OSEC/OTE/GRS/ESD embeds.
+# === END FILE HEADER ===
+
+# Community RP classification levels for DS embeds and markings.
+# Not USG classification — roleplay access vocabulary only.
+# Aligned with CIA OIG (docshamxo/cia-oig) classification.yaml.
+
+policy: >-
+  Public information, rules, and open-positions channels are
+  **CLASSIFICATION LEVEL 1**. Staff-documents channel material (Drive,
+  handbooks, ORBAT, Groups, and staff-posted training) is
+  **CLASSIFICATION LEVEL 2** — Agency Low Command, Middle Command and above.
+  Do not treat staff Drive, ORBAT, or handbooks as LEVEL 1.
+
+# Short footer / field markings used by announcers.
+markings:
+  level_1: "CLASSIFICATION LEVEL 1"
+  level_2: "CLASSIFICATION LEVEL 2"
+  # Legacy aliases → Levels (former PUBLIC / STAFF / CANDIDATE).
+  public: "CLASSIFICATION LEVEL 1"
+  staff: "CLASSIFICATION LEVEL 2"
+  candidate: "CLASSIFICATION LEVEL 1"
+
+levels:
+  - id: "1"
+    label: "CLASSIFICATION LEVEL 1"
+    access: "Any individual"
+  - id: "2"
+    label: "CLASSIFICATION LEVEL 2"
+    access: "Agency Low Command, Middle Command and above"
+  - id: "3"
+    label: "CLASSIFICATION LEVEL 3"
+    access: "Agency High Command and above"
+  - id: "4"
+    label: "CLASSIFICATION LEVEL 4"
+    access: "Agency Headquarters and above"
+  - id: "5"
+    label: "CLASSIFICATION LEVEL 5"
+    access: "Only CIC, OIG, Executive Leadership"
+  - id: "6"
+    label: "CLASSIFICATION LEVEL 6"
+    access: "Only CIC and Executive Leadership"
+  - id: "7"
+    label: "CLASSIFICATION LEVEL 7"
+    access: "Only Executive Leadership"
+  - id: "X"
+    label: "CLASSIFICATION LEVEL X"
+    access: "Only OWNERSHIP Staff (NDA)"
+
+# === FILE FOOTER ===
+# End of file: config/classification.yaml
+# Maintained by: docshamxo
+# === END FILE FOOTER ===

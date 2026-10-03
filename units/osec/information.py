@@ -44,7 +44,7 @@ _COLOR = c.COLOR_OSEC
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         info_hero_embed(
             unit_full=_UNIT,
             unit_abbrev=_ABBREV,
@@ -68,7 +68,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     c.community_link_label("OSEC Order of Battle (ORBAT)"),
                     c.url("osec.information.orbat"),
                     c.marking_note(
-                        "OSEC PERSONNEL",
+                        "LEVEL 2",
                         "Personnel roster — authorized OSEC personnel only.",
                     ),
                 ),
@@ -76,34 +76,24 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Handbook",
                     c.community_link_label("OSEC Handbook"),
                     c.url("osec.information.handbook"),
-                    c.marking_note("OSEC PERSONNEL"),
+                    c.marking_note("LEVEL 2"),
                 ),
                 c.link_field(
                     "Code of Agency Conduct",
                     c.community_link_label("OSEC Code of Agency Conduct"),
                     c.url("osec.information.code_of_agency_conduct"),
-                    c.marking_note("PUBLIC"),
+                    c.marking_note("LEVEL 1"),
                 ),
                 c.link_field(
                     "Civilian Access",
                     c.community_link_label("OSEC Civilian Access"),
                     c.url("osec.information.civilian_access"),
-                    c.marking_note("PUBLIC"),
+                    c.marking_note("LEVEL 1"),
                 ),
             ),
         ),
-        c.embed(
-            title="Classification & Handling Notice",
-            description=(
-                "**Handbook** and **Order of Battle (ORBAT)** -- **OSEC PERSONNEL**. "
-                "Unauthorized disclosure or redistribution will result in a **BLACKLIST** "
-                "from the **CIA Office of Security**.\n\n"
-                "**Code of Agency Conduct** and **Civilian Access** -- **PUBLIC**.\n\n"
-                "Do not share restricted documents outside authorized channels or personnel."
-            ),
-            color=_COLOR,
-        ),
     ]
+    return c.append_classification_block(embeds, c.classification_label("level_2"), color=_COLOR)
 
 
 def send_osec_information() -> None:

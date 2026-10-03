@@ -35,7 +35,7 @@ from common.announcer import (
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         c.chain_intro_embed(
             unit="Office of Training & Education",
             color=c.COLOR_OTE,
@@ -50,7 +50,7 @@ def _build_embeds() -> list[c.discord.Embed]:
         ds_leadership_embed(color=c.COLOR_OTE, logo=c.LOGOS["ds"]),
         office_command_embed(
             title="Office of Training & Education",
-            motto=c.OTE_MOTTO,
+            motto=None,  # motto once on intro (OIG-aligned)
             about=c.OTE_ABOUT,
             roles=c.OTE_HIGH_COMMAND,
             color=c.COLOR_OTE,
@@ -66,6 +66,9 @@ def _build_embeds() -> list[c.discord.Embed]:
             unit="OTE", color=c.COLOR_OTE, parent_units=("Directorate of Support",)
         ),
     ]
+    return c.append_classification_block(
+        embeds, c.classification_label("level_1"), color=c.COLOR_OTE
+    )
 
 
 def send_chain_of_command() -> None:

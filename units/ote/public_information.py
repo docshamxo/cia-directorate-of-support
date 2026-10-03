@@ -4,23 +4,10 @@
 # Created: 2026-07-14
 # Created by: docshamxo
 # Modified:
-#   - 2026-07-14 | docshamxo | Initial CIA Directorate of Support announcer repo.
-#   - 2026-07-14 | docshamxo | Move editable data out of hardcoded Python into YAML config.
-#   - 2026-07-14 | docshamxo | Add required file headers and footers across the repository.
-#   - 2026-07-14 | docshamxo | Refresh file header modification logs after banner rollout.
-#   - 2026-07-14 | docshamxo | Fix misleading CI badge and harden README presentation. (#7)
-#   - 2026-07-15 | docshamxo | Add Google Drive links to unit staff documents. (#10)
-#   - 2026-07-15 | docshamxo | Align public-info template, hero, and link grammar.
-#   - 2026-07-17 | docshamxo | Accessible marking notes on public links.
-#   - 2026-09-08 | docshamxo | Refactor onto shared information-channel frame builders.
+#   - 2026-10-03 | docshamxo | OIG Levels closer + community/document link buttons.
 # === END FILE HEADER ===
 
-"""
-CIA OTE public information announcer.
-
-Posts the Office of Training & Education overview and community links
-to a Discord webhook.
-"""
+"""CIA OTE public information announcer."""
 
 from __future__ import annotations
 
@@ -29,9 +16,9 @@ import sys
 from common import cia_common as c
 from common.announcer import (
     info_about_embed,
+    info_community_link_view,
     info_community_links_embed,
     info_hero_embed,
-    info_public_link,
     run_announcer,
 )
 
@@ -42,8 +29,7 @@ _COLOR = c.COLOR_OTE
 
 def _build_embeds() -> list[c.discord.Embed]:
     ote_pillars = tuple(c.pillar_field(title, desc) for title, desc in c.OTE_PILLARS)
-
-    return [
+    embeds = [
         info_hero_embed(
             unit_full=_UNIT,
             unit_abbrev=_ABBREV,
@@ -63,27 +49,26 @@ def _build_embeds() -> list[c.discord.Embed]:
             color=_COLOR,
             description=(
                 "Official documents and Roblox groups for the Office of Training & Education "
-                "and its parent Directorate of Support."
+                "and its parent Directorate of Support. Use the buttons below."
             ),
-            fields=(
-                info_public_link(
-                    "Program Overview",
-                    "OTE Program Overview",
-                    c.url("ote.public_information.program_overview"),
-                ),
-                c.link_field(
-                    "Office of Training & Education",
-                    c.community_link_label("OTE"),
-                    c.URL_ROBLOX_GROUP_OTE,
-                ),
-                c.link_field(
-                    "Directorate of Support",
-                    c.community_link_label("Directorate of Support"),
-                    c.URL_ROBLOX_GROUP_DS,
-                ),
-            ),
+            fields=(),
         ),
     ]
+    return c.append_classification_block(embeds, c.classification_label("level_1"), color=_COLOR)
+
+
+def _build_view() -> c.discord.ui.View:
+    return info_community_link_view(
+        [
+            (
+                "📄 Program Overview",
+                c.url("ote.public_information.program_overview"),
+                0,
+            ),
+            ("🎮 OTE Roblox", c.URL_ROBLOX_GROUP_OTE, 1),
+            ("🎮 DS Roblox", c.URL_ROBLOX_GROUP_DS, 1),
+        ]
+    )
 
 
 def send_ote_public_information() -> None:
@@ -91,6 +76,7 @@ def send_ote_public_information() -> None:
         webhook_key="WEBHOOK_OTE_PUBLIC_INFORMATION",
         username=c.BOT_OTE,
         build_embeds=_build_embeds,
+        build_view=_build_view,
         files=[c.logo_file(c.LOGOS["ote"])],
         dry_run="--dry-run" in sys.argv,
     )

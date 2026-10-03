@@ -36,7 +36,7 @@ from common import cia_common as c
 from common.announcer import (
     run_announcer,
     staff_docs_central_embed,
-    staff_docs_handling_embed,
+    staff_docs_drive_view,
     staff_docs_hero_embed,
     staff_docs_link,
     staff_docs_section_embed,
@@ -48,7 +48,7 @@ _COLOR = c.COLOR_OSEC
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         staff_docs_hero_embed(
             unit_full=_UNIT,
             unit_abbrev=_ABBREV,
@@ -171,8 +171,16 @@ def _build_embeds() -> list[c.discord.Embed]:
                 ),
             ),
         ),
-        staff_docs_handling_embed(unit_full=_UNIT, color=_COLOR),
     ]
+    return c.append_classification_block(embeds, c.classification_label("level_2"), color=_COLOR)
+
+
+def _build_view() -> c.discord.ui.View:
+    return staff_docs_drive_view(
+        drive_url_key="osec.staff_documents.google_drive",
+        drive_label="📁 OSEC Drive",
+        handbook_label="📖 Handbook",
+    )
 
 
 def send_osec_staff_documents() -> None:
@@ -180,6 +188,7 @@ def send_osec_staff_documents() -> None:
         webhook_key="WEBHOOK_OSEC_STAFF_DOCUMENTS",
         username=c.BOT_OSEC,
         build_embeds=_build_embeds,
+        build_view=_build_view,
         files=[c.logo_file(c.LOGOS["osec"])],
         dry_run="--dry-run" in sys.argv,
     )

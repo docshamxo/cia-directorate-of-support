@@ -27,7 +27,7 @@ from common.announcer import run_announcer
 
 
 def _build_embeds() -> list[c.discord.Embed]:
-    return [
+    embeds = [
         c.hero_embed(
             title="CHIEF MARSHAL HUB",
             unit="Office of Security",
@@ -51,7 +51,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                 (
                     "Access Marking",
                     c.marking_note(
-                        "STAFF",
+                        "LEVEL 2",
                         "Chief Marshal need-to-know. Do not share outside authorized channels.",
                     ),
                 ),
@@ -155,7 +155,7 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Google Group",
                     "CIA DS | OSEC ORBAT Google Group",
                     c.url("osec.marshal_information.google_groups"),
-                    c.marking_note("STAFF", "Membership required to edit the ORBAT."),
+                    c.marking_note("LEVEL 2", "Membership required to edit the ORBAT."),
                 ),
                 (
                     "How to Get Access",
@@ -183,17 +183,14 @@ def _build_embeds() -> list[c.discord.Embed]:
                     "Chief Marshal Guide",
                     "CIA DS | OSEC Chief Marshal Guide",
                     c.url("osec.marshal_information.cm_guide"),
-                    c.marking_note("STAFF", "Required reading on promotion."),
+                    c.marking_note("LEVEL 2", "Required reading on promotion."),
                 ),
             ),
         ),
-        c.classification_handling_embed(
-            unit="Office of Security",
-            authority="CIA Office of Security",
-            color=c.COLOR_OSEC,
-            restricted=True,
-        ),
     ]
+    return c.append_classification_block(
+        embeds, c.classification_label("level_2"), color=c.COLOR_OSEC
+    )
 
 
 def send_osec_marshal_information() -> None:
