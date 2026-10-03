@@ -10,6 +10,7 @@ Modified:
   - 2026-09-28 | docshamxo | Record OSEC open positions message ID.
   - 2026-10-03 | docshamxo | Refresh OTE CoC MESSAGE_ID after re-post (old ID 404).
   - 2026-10-03 | docshamxo | Refresh OTE Open Positions MESSAGE_ID (old ID 404).
+  - 2026-10-03 | docshamxo | Register DS CoC + OTE staff docs MESSAGE_IDs (post-#85 live).
 === END FILE HEADER ===
 -->
 
@@ -25,13 +26,15 @@ Set the matching `*_MESSAGE_ID` keys in local `.env` (see `.env.example`).
 Announcers also honor `{webhook_key}_MESSAGE_ID` when set: they PATCH that message
 instead of posting a new one (see `common/announcer.py`).
 
-## Recorded anchors (2026-09-28; OTE CoC / Open Positions refreshed 2026-10-03)
+## Recorded anchors (2026-09-28; refreshed 2026-10-03)
 
 | Purpose | Env key | Message ID | Channel | Guild |
 |---------|---------|------------|---------|-------|
 | OTE Open Positions | `WEBHOOK_OTE_OPEN_POSITIONS_MESSAGE_ID` | `1554099625789624432` | `1505011919269007440` | `1450874817459912789` (OTE) |
 | OTE Program Overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW_MESSAGE_ID` | `1554039682675900467` | `1450874818504298566` | `1450874817459912789` (OTE) |
 | OTE Chain of Command | `WEBHOOK_OTE_COC_MESSAGE_ID` | `1555969021181173842` | `1450874818328264811` | `1450874817459912789` (OTE) |
+| OTE Staff Documents | `WEBHOOK_OTE_STAFF_DOCUMENTS_MESSAGE_ID` | `1555967545205456898` | `1450874818646773980` | `1450874817459912789` (OTE) |
+| DS Chain of Command | `WEBHOOK_DS_COC_MESSAGE_ID` | `1555967574628503592` | `1442014373538168934` | `1442014369507446918` (DS/OSEC) |
 | OSEC Chain of Command | `WEBHOOK_OSEC_COC_MESSAGE_ID` | `1554041066376790046` | `1442014373538168934` | `1442014369507446918` (OSEC) |
 | OSEC Open Positions | `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID` | `1554285150685233232` | `1495760504596201512` | `1442014369507446918` (OSEC) |
 
@@ -40,6 +43,8 @@ instead of posting a new one (see `common/announcer.py`).
 - [OTE Open Positions](https://discord.com/channels/1450874817459912789/1505011919269007440/1554099625789624432)
 - [OTE Program Overview](https://discord.com/channels/1450874817459912789/1450874818504298566/1554039682675900467)
 - [OTE CoC](https://discord.com/channels/1450874817459912789/1450874818328264811/1555969021181173842)
+- [OTE Staff Documents](https://discord.com/channels/1450874817459912789/1450874818646773980/1555967545205456898)
+- [DS CoC](https://discord.com/channels/1442014369507446918/1442014373538168934/1555967574628503592)
 - [OSEC CoC](https://discord.com/channels/1442014369507446918/1442014373538168934/1554041066376790046)
 - [OSEC Open Positions](https://discord.com/channels/1442014369507446918/1495760504596201512/1554285150685233232)
 
@@ -50,10 +55,12 @@ Message ID env keys follow the webhook key + `_MESSAGE_ID`:
 - `WEBHOOK_OTE_OPEN_POSITIONS` → `WEBHOOK_OTE_OPEN_POSITIONS_MESSAGE_ID`
 - `WEBHOOK_OTE_PROGRAM_OVERVIEW` → `WEBHOOK_OTE_PROGRAM_OVERVIEW_MESSAGE_ID`
 - `WEBHOOK_OTE_COC` → `WEBHOOK_OTE_COC_MESSAGE_ID`
+- `WEBHOOK_OTE_STAFF_DOCUMENTS` → `WEBHOOK_OTE_STAFF_DOCUMENTS_MESSAGE_ID`
 - `WEBHOOK_OSEC_OPEN_POSITIONS` → `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID`
 - OSEC CoC has no announcer webhook key in-repo yet; use `WEBHOOK_OSEC_COC_MESSAGE_ID` for the live CoC channel message.
 - Roblox CoC sync uses `WEBHOOK_DS_COC_MESSAGE_ID` (`WEBHOOK_DS_CHAIN_OF_COMMAND`) and
   `WEBHOOK_OTE_COC_MESSAGE_ID` (`WEBHOOK_OTE_COC`) — see `docs/ROBLOX_COC_SYNC.md`.
+  Local `.env` may also set `WEBHOOK_DS_CHAIN_OF_COMMAND_MESSAGE_ID` as an alias of the same snowflake.
 
 ## How to capture another ID
 
