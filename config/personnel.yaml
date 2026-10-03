@@ -37,6 +37,7 @@
 #   - 2026-09-28 | docshamxo | OSEC HC: DS rattler_29, DDS Shaikhuu, ADS crazybijij2, S Astroshard21.
 #   - 2026-10-03 | docshamxo | Agency EL: DDIR ashlyn, EDIR DustyInvictus, CIS VintInvictus.
 #   - 2026-10-03 | docshamxo | Vacate GRS CM (qv4_pendragon) and DCM (idk_manti).
+#   - 2026-10-03 | docshamxo | Vacate OSEC ADS (crazybijij2) and ESD CM (xBlq_h).
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -112,8 +113,7 @@ osec_high_command:
   discord_id: "718133092916920360"
 - abbrev: ADS
   title: Assistant Deputy Director of Security
-  holder: crazybijij2
-  discord_id: "1198235273570554022"
+  holder: VACANT
 - abbrev: S
   title: Superintendent
   holder: Astroshard21
@@ -128,8 +128,7 @@ grs_command:
 esd_command:
 - abbrev: CM
   title: Chief Marshal
-  holder: xBlq_h
-  discord_id: "588330054287753217"
+  holder: VACANT
 - abbrev: DCM
   title: Deputy Chief Marshal
   holder: jayheart592010
