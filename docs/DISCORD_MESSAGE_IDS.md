@@ -8,6 +8,7 @@ Modified:
   - 2026-09-28 | docshamxo | Record OTE + OSEC webhook message snowflakes for edit-in-place.
   - 2026-09-28 | docshamxo | Note OTE/DS CoC IDs are consumed by roblox_coc_sync.
   - 2026-09-28 | docshamxo | Record OSEC open positions message ID.
+  - 2026-10-03 | docshamxo | Refresh OTE CoC MESSAGE_ID after re-post (old ID 404).
 === END FILE HEADER ===
 -->
 
@@ -23,13 +24,13 @@ Set the matching `*_MESSAGE_ID` keys in local `.env` (see `.env.example`).
 Announcers also honor `{webhook_key}_MESSAGE_ID` when set: they PATCH that message
 instead of posting a new one (see `common/announcer.py`).
 
-## Recorded anchors (2026-09-28)
+## Recorded anchors (2026-09-28; OTE CoC refreshed 2026-10-03)
 
 | Purpose | Env key | Message ID | Channel | Guild |
 |---------|---------|------------|---------|-------|
 | OTE Open Positions | `WEBHOOK_OTE_OPEN_POSITIONS_MESSAGE_ID` | `1546939157899780249` | `1505011919269007440` | `1450874817459912789` (OTE) |
 | OTE Program Overview | `WEBHOOK_OTE_PROGRAM_OVERVIEW_MESSAGE_ID` | `1554039682675900467` | `1450874818504298566` | `1450874817459912789` (OTE) |
-| OTE Chain of Command | `WEBHOOK_OTE_COC_MESSAGE_ID` | `1554041080259805256` | `1450874818328264811` | `1450874817459912789` (OTE) |
+| OTE Chain of Command | `WEBHOOK_OTE_COC_MESSAGE_ID` | `1555969021181173842` | `1450874818328264811` | `1450874817459912789` (OTE) |
 | OSEC Chain of Command | `WEBHOOK_OSEC_COC_MESSAGE_ID` | `1554041066376790046` | `1442014373538168934` | `1442014369507446918` (OSEC) |
 | OSEC Open Positions | `WEBHOOK_OSEC_OPEN_POSITIONS_MESSAGE_ID` | `1554285150685233232` | `1495760504596201512` | `1442014369507446918` (OSEC) |
 
@@ -37,7 +38,7 @@ instead of posting a new one (see `common/announcer.py`).
 
 - [OTE Open Positions](https://discord.com/channels/1450874817459912789/1505011919269007440/1546939157899780249)
 - [OTE Program Overview](https://discord.com/channels/1450874817459912789/1450874818504298566/1554039682675900467)
-- [OTE CoC](https://discord.com/channels/1450874817459912789/1450874818328264811/1554041080259805256)
+- [OTE CoC](https://discord.com/channels/1450874817459912789/1450874818328264811/1555969021181173842)
 - [OSEC CoC](https://discord.com/channels/1442014369507446918/1442014373538168934/1554041066376790046)
 - [OSEC Open Positions](https://discord.com/channels/1442014369507446918/1495760504596201512/1554285150685233232)
 
