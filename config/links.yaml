@@ -23,6 +23,7 @@
 #   - 2026-09-07 | docshamxo | Add ESD After Action Report Google Form link.
 #   - 2026-09-08 | docshamxo | Add OSEC Chief Marshal Hub guide placeholder.
 #   - 2026-09-08 | docshamxo | Add Discord/Roblox ToS URLs for rules Governing Policies.
+#   - 2026-10-03 | docshamxo | Drop unused ote.staff_documents.standard_training_guide.
 # === END FILE HEADER ===
 
 # Public-safe links only. Discord invite + channel snowflakes live in .env.
@@ -80,7 +81,6 @@ ote:
     tryout_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
 
     graduation_ceremony_procedures: https://example.invalid/STAFF_LOCAL_REQUIRED
-    standard_training_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     weapons_st_guide: https://example.invalid/STAFF_LOCAL_REQUIRED
     staff_database: https://example.invalid/STAFF_LOCAL_REQUIRED
   program_overview:

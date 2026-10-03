@@ -8,6 +8,7 @@
 #   - 2026-07-18 | docshamxo | Add restored OSEC training/event/certification placeholders.
 #   - 2026-08-03 | docshamxo | Drop unused GRS information handbook link.
 #   - 2026-09-08 | docshamxo | Add OSEC Chief Marshal Guide placeholder.
+#   - 2026-10-03 | docshamxo | Drop unused ote.staff_documents.standard_training_guide.
 # === END FILE HEADER ===
 
 # Copy this file to config/links.staff.local.yaml and replace placeholders with real
@@ -49,7 +50,6 @@ ote:
     tryout_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
 
     graduation_ceremony_procedures: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
-    standard_training_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
     weapons_st_guide: https://docs.google.com/document/d/REPLACE_ME/edit?usp=sharing
     staff_database: https://docs.google.com/spreadsheets/d/REPLACE_ME/edit?usp=sharing
 grs:

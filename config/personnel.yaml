@@ -35,6 +35,7 @@
 #   - 2026-09-19 | docshamxo | Vacate OTE Dean (MythicalArlo).
 #   - 2026-09-28 | docshamxo | GRS DCM idk_manti; OTE DTE DeviantReyes, Dean zieahnwwechampion; ADTE vacant.
 #   - 2026-09-28 | docshamxo | OSEC HC: DS rattler_29, DDS Shaikhuu, ADS crazybijij2, S Astroshard21.
+#   - 2026-10-03 | docshamxo | Agency EL: DDIR ashlyn, EDIR DustyInvictus, CIS VintInvictus.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -53,16 +54,16 @@ agency_executive:
   discord_id: "268496346040893441"
 - abbrev: DDIR
   title: Deputy Director of the Central Intelligence Agency
-  holder: laks_l
-  discord_id: "500975857230151700"
-- abbrev: EDIR
-  title: Executive Director of the Central Intelligence Agency
   holder: ashlyn
   discord_id: "650283793374249011"
-- abbrev: CIS
-  title: Chief of Intelligence Staff
+- abbrev: EDIR
+  title: Executive Director of the Central Intelligence Agency
   holder: DustyInvictus
   discord_id: "735921422286717038"
+- abbrev: CIS
+  title: Chief of Intelligence Staff
+  holder: VintInvictus
+  discord_id: "412361178463993856"
 - abbrev: IG
   title: Inspector General
   holder: JenynInvictus

@@ -20,6 +20,7 @@
 #   - 2026-08-30 | docshamxo | Drop duplicate General Information; regroup training links.
 #   - 2026-09-08 | docshamxo | Refactor onto shared staff-docs frame; fix CIA DS | labels.
 #   - 2026-09-28 | docshamxo | Replace retired General Info & CoC with Handbook.
+#   - 2026-10-03 | docshamxo | Drop OTE Standard Training Guide; keep GST + Weapons ST.
 # === END FILE HEADER ===
 
 
@@ -122,11 +123,6 @@ def _build_embeds() -> list[c.discord.Embed]:
             ),
             color=_COLOR,
             fields=(
-                staff_docs_link(
-                    "Standard Training",
-                    "OTE Standard Training Guide",
-                    "ote.staff_documents.standard_training_guide",
-                ),
                 staff_docs_link(
                     "Weapons Standard Training",
                     "OTE Weapons Standard Training Guide",
