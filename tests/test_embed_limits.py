@@ -224,9 +224,7 @@ def test_ds_coc_reflects_dcdsd_and_osec_hc_rotation() -> None:
     ds_coc = _load_unit_module("units/ds/chain_of_command.py", "ds_chain_of_command")
     embeds = ds_coc._build_embeds()
     c.validate_embed_limits(embeds)
-    blob = "\n".join(
-        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds]
-    )
+    blob = "\n".join([(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds])
     assert "AndyShotSecond" not in blob
     assert "rattler_29" in blob
     assert "Shaikhuu" in blob
