@@ -39,6 +39,7 @@
 #   - 2026-10-03 | docshamxo | Vacate GRS CM (qv4_pendragon) and DCM (idk_manti).
 #   - 2026-10-03 | docshamxo | Vacate OSEC ADS (crazybijij2) and ESD CM (xBlq_h).
 #   - 2026-10-05 | docshamxo | DCDSD rattler_29; remove AndyShotSecond; DS Shaikhuu; vacate DDS.
+#   - 2026-10-05 | docshamxo | OSEC HC: DDS Astroshard21; ADS 1nfantrys; S brotheman1.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -110,14 +111,16 @@ osec_high_command:
   discord_id: "718133092916920360"
 - abbrev: DDS
   title: Deputy Director of Security
-  holder: VACANT
-- abbrev: ADS
-  title: Assistant Deputy Director of Security
-  holder: VACANT
-- abbrev: S
-  title: Superintendent
   holder: Astroshard21
   discord_id: "929378869524443158"
+- abbrev: ADS
+  title: Assistant Deputy Director of Security
+  holder: 1nfantrys
+  discord_id: "1203761102580883471"
+- abbrev: S
+  title: Superintendent
+  holder: brotheman1
+  discord_id: "964203698077204581"
 grs_command:
 - abbrev: CM
   title: Chief Marshal
