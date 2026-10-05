@@ -9,6 +9,7 @@
 #   - 2026-09-28 | docshamxo | Load open_positions via importlib (units are scripts).
 #   - 2026-10-03 | docshamxo | Expect VACANT for vacated GRS CM/DCM in open-positions embeds.
 #   - 2026-10-03 | docshamxo | Expect VACANT for vacated OSEC ADS / ESD CM in open-positions embeds.
+#   - 2026-10-05 | docshamxo | Expect DCDSD/DS/DDS rotation (Andy gone; DDS vacant).
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
@@ -219,6 +220,22 @@ def test_announcer_catalog_nonempty() -> None:
     assert "WEBHOOK_ESD_OPEN_POSITIONS" in keys
 
 
+def test_ds_coc_reflects_dcdsd_and_osec_hc_rotation() -> None:
+    ds_coc = _load_unit_module("units/ds/chain_of_command.py", "ds_chain_of_command")
+    embeds = ds_coc._build_embeds()
+    c.validate_embed_limits(embeds)
+    blob = "\n".join(
+        [(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds]
+    )
+    assert "AndyShotSecond" not in blob
+    assert "rattler_29" in blob
+    assert "Shaikhuu" in blob
+    assert "VACANT" in blob
+    # rattler is DCDSD only; DS slot is Shaikhuu.
+    assert blob.count("rattler_29") == 1
+    assert blob.count("Shaikhuu") == 1
+
+
 def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv(
         "GRS_MIDCOM_APPLICATION_URL",
@@ -297,6 +314,10 @@ def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyP
     assert "idk_manti" not in blob
     assert "crazybijij2" not in blob
     assert "xBlq_h" not in blob
+    assert "AndyShotSecond" not in blob
+    assert "Shaikhuu" in blob
+    assert "rattler_29" not in blob
+    assert "Astroshard21" in blob
     assert "exempted for 1 week" in blob
     assert "SSA+" in blob
     assert "instant denial" in blob
