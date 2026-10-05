@@ -38,6 +38,7 @@
 #   - 2026-10-03 | docshamxo | Agency EL: DDIR ashlyn, EDIR DustyInvictus, CIS VintInvictus.
 #   - 2026-10-03 | docshamxo | Vacate GRS CM (qv4_pendragon) and DCM (idk_manti).
 #   - 2026-10-03 | docshamxo | Vacate OSEC ADS (crazybijij2) and ESD CM (xBlq_h).
+#   - 2026-10-05 | docshamxo | DCDSD rattler_29; remove AndyShotSecond; DS Shaikhuu; vacate DDS.
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -77,8 +78,8 @@ ds_leadership:
   discord_id: "333881654227763200"
 - abbrev: DCDSD
   title: Deputy Component Director, Directorate of Support
-  holder: AndyShotSecond
-  discord_id: "386957636542922762"
+  holder: rattler_29
+  discord_id: "1349431013469851688"
 ote_high_command:
 - abbrev: DTE
   title: Director of Training and Education
@@ -105,12 +106,11 @@ ote_staff_ranks:
 osec_high_command:
 - abbrev: DS
   title: Director of Security
-  holder: rattler_29
-  discord_id: "1349431013469851688"
-- abbrev: DDS
-  title: Deputy Director of Security
   holder: Shaikhuu
   discord_id: "718133092916920360"
+- abbrev: DDS
+  title: Deputy Director of Security
+  holder: VACANT
 - abbrev: ADS
   title: Assistant Deputy Director of Security
   holder: VACANT
