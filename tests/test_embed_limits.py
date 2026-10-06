@@ -11,6 +11,7 @@
 #   - 2026-10-03 | docshamxo | Expect VACANT for vacated OSEC ADS / ESD CM in open-positions embeds.
 #   - 2026-10-05 | docshamxo | Expect DCDSD/DS/DDS rotation (Andy gone; DDS vacant).
 #   - 2026-10-05 | docshamxo | Expect OSEC HC: DDS Astroshard21; ADS 1nfantrys; S brotheman1.
+#   - 2026-10-06 | docshamxo | Expect OSEC DS/DDS VACANT (Shaikhuu / Astroshard21 removed).
 # === END FILE HEADER ===
 
 """Regression tests for Discord embed preflight validation."""
@@ -228,18 +229,17 @@ def test_ds_coc_reflects_dcdsd_and_osec_hc_rotation() -> None:
     blob = "\n".join([(e.description or "") + "\n".join(f.value for f in e.fields) for e in embeds])
     assert "AndyShotSecond" not in blob
     assert "rattler_29" in blob
-    assert "Shaikhuu" in blob
-    assert "Astroshard21" in blob
-    assert "929378869524443158" in blob
+    assert "Shaikhuu" not in blob
+    assert "Astroshard21" not in blob
+    assert "718133092916920360" not in blob
+    assert "929378869524443158" not in blob
     assert "1nfantrys" in blob
     assert "1203761102580883471" in blob
     assert "brotheman1" in blob
     assert "964203698077204581" in blob
-    assert "VACANT" in blob  # ADTE / GRS CM/DCM / ESD CM remain vacant
-    # rattler is DCDSD only; DS slot is Shaikhuu.
+    assert "VACANT" in blob  # OSEC DS/DDS + ADTE / GRS CM/DCM / ESD CM
+    # rattler is DCDSD only; OSEC DS/DDS vacated.
     assert blob.count("rattler_29") == 1
-    assert blob.count("Shaikhuu") == 1
-    assert blob.count("Astroshard21") == 1
 
 
 def test_grs_esd_open_positions_embeds_within_limits(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -321,15 +321,15 @@ def test_osec_open_positions_includes_grs_esd_midcom(monkeypatch: pytest.MonkeyP
     assert "crazybijij2" not in blob
     assert "xBlq_h" not in blob
     assert "AndyShotSecond" not in blob
-    assert "Shaikhuu" in blob
-    assert "Astroshard21" in blob
-    assert "929378869524443158" in blob
+    assert "Shaikhuu" not in blob
+    assert "Astroshard21" not in blob
+    assert "718133092916920360" not in blob
+    assert "929378869524443158" not in blob
     assert "1nfantrys" in blob
     assert "1203761102580883471" in blob
     assert "brotheman1" in blob
     assert "964203698077204581" in blob
     assert "rattler_29" not in blob
-    assert blob.count("Astroshard21") == 1
     assert "exempted for 1 week" in blob
     assert "SSA+" in blob
     assert "instant denial" in blob

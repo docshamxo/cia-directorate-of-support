@@ -40,6 +40,7 @@
 #   - 2026-10-03 | docshamxo | Vacate OSEC ADS (crazybijij2) and ESD CM (xBlq_h).
 #   - 2026-10-05 | docshamxo | DCDSD rattler_29; remove AndyShotSecond; DS Shaikhuu; vacate DDS.
 #   - 2026-10-05 | docshamxo | OSEC HC: DDS Astroshard21; ADS 1nfantrys; S brotheman1.
+#   - 2026-10-06 | docshamxo | Vacate OSEC DS (Shaikhuu) and DDS (Astroshard21).
 # === END FILE HEADER ===
 
 # Keep committed holders to high-command / small command teams only — no bulk
@@ -107,12 +108,10 @@ ote_staff_ranks:
 osec_high_command:
 - abbrev: DS
   title: Director of Security
-  holder: Shaikhuu
-  discord_id: "718133092916920360"
+  holder: VACANT
 - abbrev: DDS
   title: Deputy Director of Security
-  holder: Astroshard21
-  discord_id: "929378869524443158"
+  holder: VACANT
 - abbrev: ADS
   title: Assistant Deputy Director of Security
   holder: 1nfantrys
